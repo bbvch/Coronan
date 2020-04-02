@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Covidnan
+project(Coronan
     VERSION 0.1 
     DESCRIPTION "Conan example project showing Covid-19 cases."
     LANGUAGES CXX
