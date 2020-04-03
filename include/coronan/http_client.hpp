@@ -5,6 +5,7 @@
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 #include <string>
@@ -34,7 +35,7 @@ private:
   std::string response_str_;
 };
 
-template <typename SessionT = Poco::Net::HTTPClientSession,
+template <typename SessionT = Poco::Net::HTTPSClientSession,
           typename HTTPRequestT = Poco::Net::HTTPRequest>
 struct HTTPClient
 {
