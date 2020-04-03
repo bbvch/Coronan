@@ -7,11 +7,18 @@ project(
     LANGUAGES CXX
 )
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(clang)
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
+include(conan)
+conan_cmake_run(
+    CONANFILE conanfile.txt BASIC_SETUP
+    CMAKE_TARGETS BUILD missing
+)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 

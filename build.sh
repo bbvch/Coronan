@@ -53,7 +53,6 @@ fi
 [[ -d "${BUILD_DIR}" ]] || mkdir ${BUILD_DIR}
 
 
-(cd ${BUILD_DIR} && conan install ..)
 (cd ${BUILD_DIR} && ${CMAKE} ..)
 
 num_threads=`grep -c '^processor' /proc/cpuinfo`
