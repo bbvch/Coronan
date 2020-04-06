@@ -18,3 +18,6 @@ Further a recent version of [CMake](https://cmake.org/) (> 3.10), a modern C++ c
 ```bash
 #> ./build.sh
 ```
+
+### Source Code formatting
+For source code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files and [cmake-format](https://pypi.org/project/cmake-format/) for the CMake files are used.

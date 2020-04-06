@@ -15,14 +15,14 @@ namespace coronan {
 /**
  * A HTTPResponse containing response status and payload
  */
- class HTTPResponse
+class HTTPResponse
 {
 public:
-/**
- *  Consructor
- * @param response http response status
- * @param response_body http response body
- */ 
+  /**
+   *  Consructor
+   * @param response http response status
+   * @param response_body http response body
+   */
   explicit HTTPResponse(Poco::Net::HTTPResponse const& response,
                         std::string const& response_body)
       : response_{response}, response_body_{response_body}
@@ -31,20 +31,20 @@ public:
 
   /**
    * Return the HTTP status code
-   */ 
+   */
   Poco::Net::HTTPResponse::HTTPStatus get_status() const
   {
     return response_.getStatus();
   }
 
-   /**
+  /**
    * Return the HTTP reason phrase
-   */ 
+   */
   std::string get_reason() const { return response_.getReason(); }
 
   /**
    * Return the HTTP response body
-   */ 
+   */
   std::string get_response_body() const { return response_body_; }
 
 private:
@@ -54,7 +54,7 @@ private:
 
 /**
  * Simple Stateless HTTP Client using by default a HTTPS Session
- */ 
+ */
 template <typename SessionT = Poco::Net::HTTPSClientSession,
           typename HTTPRequestT = Poco::Net::HTTPRequest>
 struct HTTPClientT
