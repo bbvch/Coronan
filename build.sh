@@ -11,7 +11,7 @@ cat << EOM
 Usage: build.sh [options] build_dir
   Available options:
     -h          Print this help
-    --cmake     Path to cmake (default is teh system cmake)
+    --cmake     Path to cmake (default is the system cmake)
 EOM
 }
 
