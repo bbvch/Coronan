@@ -11,7 +11,9 @@ add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 add_executable(coronan::UnitTest ALIAS ${PROJECT_NAME})
 
 target_sources(
-    ${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/http_client_test.cpp
+    ${PROJECT_NAME}
+    PRIVATE ${CMAKE_CURRENT_LIST_DIR}/http_client_test.cpp
+            ${CMAKE_CURRENT_LIST_DIR}/corona-api_json_parser_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE coronan::lib CONAN_PKG::doctest)

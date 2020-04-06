@@ -1,16 +1,20 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(
-    covidan_app
+    coronan_cli
     VERSION 0.1
     LANGUAGES CXX
 )
 
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
-add_executable(coronan::App ALIAS ${PROJECT_NAME})
+add_executable(coronan::Cmd ALIAS ${PROJECT_NAME})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE coronan::lib)
+target_link_libraries(
+    ${PROJECT_NAME}
+    PRIVATE coronan::lib
+    PRIVATE CONAN_PKG::lyra
+)
 
 target_compile_options(
     ${PROJECT_NAME}
@@ -18,7 +22,6 @@ target_compile_options(
             -Wextra
             -Werror
             -Wcast-align
-            -Wconversion
             -Wunused
             -Wpointer-arith
             -Wcast-qual
@@ -33,6 +36,7 @@ target_compile_options(
             -Woverloaded-virtual
             -Wredundant-decls
             -Wshadow
+            -Wconversion
             -Wsign-conversion
             -Wstrict-overflow=5
             -Wswitch-default

@@ -74,7 +74,7 @@ TEST_CASE("HTTPClient get")
   {
     auto uri = "http://server.com:80/";
     auto resonse =
-        coronan::HTTPClient<TestHTTPSession, TestHTTPRequest>::get(uri);
+        coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
 
     REQUIRE(TestHTTPSession::host_ == "server.com");
     REQUIRE(TestHTTPSession::port_ == 80);
@@ -84,7 +84,7 @@ TEST_CASE("HTTPClient get")
   {
     auto uri = "http://server.com:80/test";
     auto resonse =
-        coronan::HTTPClient<TestHTTPSession, TestHTTPRequest>::get(uri);
+        coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
     REQUIRE(TestHTTPRequest::request_ == HTTPRequest::HTTP_GET);
     REQUIRE(TestHTTPRequest::type_ == HTTPMessage::HTTP_1_1);
     REQUIRE(TestHTTPRequest::path_ == "/test");
@@ -102,7 +102,7 @@ TEST_CASE("HTTPClient get")
 
     auto uri = "http://server.com:80/test";
     auto resonse =
-        coronan::HTTPClient<TestHTTPSession, TestHTTPRequest>::get(uri);
+        coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
 
     REQUIRE(resonse.get_status() == expected_status);
     REQUIRE(resonse.get_reason() == expected_reason);

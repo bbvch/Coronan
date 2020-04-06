@@ -37,7 +37,7 @@ private:
 
 template <typename SessionT = Poco::Net::HTTPSClientSession,
           typename HTTPRequestT = Poco::Net::HTTPRequest>
-struct HTTPClient
+struct HTTPClientT
 {
   static HTTPResponse get(std::string const& uri_str)
   {
@@ -66,5 +66,7 @@ struct HTTPClient
     return HTTPResponse{response, response_content};
   }
 };
+
+using HTTPClient = HTTPClientT<>;
 
 } // namespace coronan

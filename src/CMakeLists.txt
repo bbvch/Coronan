@@ -8,19 +8,27 @@ project(
 
 set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.hpp"
 )
 
-add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME} STATIC ${HEADER_LIST})
 
 add_library(coronan::lib ALIAS ${PROJECT_NAME})
 
 target_include_directories(
-    ${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../include
+    ${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
 
-target_sources(${PROJECT_NAME} INTERFACE ${HEADER_LIST})
+target_sources(
+    ${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
+                            ${HEADER_LIST}
+)
 
-target_link_libraries(${PROJECT_NAME} INTERFACE CONAN_PKG::poco)
+target_link_libraries(
+    ${PROJECT_NAME}
+    INTERFACE CONAN_PKG::poco
+    PUBLIC CONAN_PKG::rapidjson
+)
 
 # IDE stuff
 source_group(

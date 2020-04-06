@@ -15,10 +15,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(clang)
 
 include(conan)
-conan_cmake_run(
-    CONANFILE conanfile.txt BASIC_SETUP
-    CMAKE_TARGETS BUILD missing
-)
+
+conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS BUILD missing)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
@@ -36,4 +34,4 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(tests)
-add_subdirectory(apps)
+add_subdirectory(apps/cmd)
