@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     // std::cout << response.get_status() << " " << response.get_reason() <<
     // "\n";
 
-    auto const& data = coronan::api_parser::parse(response.get_response());
+    auto const& data = coronan::api_parser::parse(response.get_response_body());
     std::cout << "\"datetime\", \"confirmed\", \"death\", \"recovered\", "
                  "\"active\"\n";
 

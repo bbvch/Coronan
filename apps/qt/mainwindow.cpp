@@ -41,7 +41,7 @@ QChart* CoronanWidget::createLineChart() const
 {
   auto const http_response = coronan::HTTPClient::get(m_url);
   auto const json_object =
-      coronan::api_parser::parse(http_response.get_response());
+      coronan::api_parser::parse(http_response.get_response_body());
 
   auto* chart = new QChart{};
   chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(

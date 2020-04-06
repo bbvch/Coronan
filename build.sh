@@ -57,5 +57,6 @@ fi
 
 num_threads=`grep -c '^processor' /proc/cpuinfo`
 ${CMAKE} --build ${BUILD_DIR} -- -j${num_threads}
+${CMAKE} --build ${BUILD_DIR} --target docs -- -j${num_threads}
 
 exit 0

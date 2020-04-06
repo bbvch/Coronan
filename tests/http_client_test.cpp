@@ -106,7 +106,7 @@ TEST_CASE("HTTPClient get")
 
     REQUIRE(resonse.get_status() == expected_status);
     REQUIRE(resonse.get_reason() == expected_reason);
-    REQUIRE(resonse.get_response() == expected_response);
+    REQUIRE(resonse.get_response_body() == expected_response);
   }
 }
 

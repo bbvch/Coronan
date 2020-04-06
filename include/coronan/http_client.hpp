@@ -12,37 +12,61 @@
 
 namespace coronan {
 
-class HTTPResponse
+/**
+ * A HTTPResponse containing response status and payload
+ */
+ class HTTPResponse
 {
 public:
+/**
+ *  Consructor
+ * @param response http response status
+ * @param response_body http response body
+ */ 
   explicit HTTPResponse(Poco::Net::HTTPResponse const& response,
-                        std::string const& response_str)
-      : response_{response}, response_str_{response_str}
+                        std::string const& response_body)
+      : response_{response}, response_body_{response_body}
   {
   }
 
+  /**
+   * Return the HTTP status code
+   */ 
   Poco::Net::HTTPResponse::HTTPStatus get_status() const
   {
     return response_.getStatus();
   }
 
+   /**
+   * Return the HTTP reason phrase
+   */ 
   std::string get_reason() const { return response_.getReason(); }
 
-  std::string get_response() const { return response_str_; }
+  /**
+   * Return the HTTP response body
+   */ 
+  std::string get_response_body() const { return response_body_; }
 
 private:
-  Poco::Net::HTTPResponse response_;
-  std::string response_str_;
+  Poco::Net::HTTPResponse response_{};
+  std::string response_body_{};
 };
 
+/**
+ * Simple Stateless HTTP Client using by default a HTTPS Session
+ */ 
 template <typename SessionT = Poco::Net::HTTPSClientSession,
           typename HTTPRequestT = Poco::Net::HTTPRequest>
 struct HTTPClientT
 {
-  static HTTPResponse get(std::string const& uri_str)
+  /**
+   * Execute a HTTP GET
+   * @param url GET url
+   */
+  static HTTPResponse get(std::string const& url)
   {
 
-    Poco::URI uri{uri_str};
+    Poco::URI uri{url};
     SessionT session(uri.getHost(), uri.getPort());
 
     auto const path = [uri]() {
