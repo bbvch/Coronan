@@ -34,4 +34,5 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(tests)
-add_subdirectory(apps/cmd)
+add_subdirectory(apps/cli)
+add_subdirectory(apps/qt)

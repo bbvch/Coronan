@@ -50,9 +50,11 @@ QChart* CoronanWidget::createLineChart() const
   auto const confirmed_serie_name =
       std::string{"Confirmed ("} +
       std::to_string(json_object.latest.confirmed) + std::string{")"};
+
   auto const death_serie_name = std::string{"Death ("} +
                                 std::to_string(json_object.latest.deaths) +
                                 std::string{")"};
+
   auto const recovered_serie_name =
       std::string{"Recovered ("} +
       std::to_string(json_object.latest.recovered) + std::string{")"};
@@ -68,8 +70,6 @@ QChart* CoronanWidget::createLineChart() const
 
   std::array<QLineSeries*, 4> series = {
       {death_serie, confirmed_serie, active_serie, recovered_serie}};
-
-  auto const max_cases = json_object.latest.confirmed;
 
   for (auto const& data_point : json_object.timeline)
   {
@@ -87,14 +87,16 @@ QChart* CoronanWidget::createLineChart() const
   chart->addSeries(active_serie);
   chart->addSeries(recovered_serie);
 
-  auto* axisX = new QDateTimeAxis;
+  auto* axisX = new QDateTimeAxis{};
   axisX->setFormat("dd/MM  ");
   axisX->setTitleText("Date");
   chart->addAxis(axisX, Qt::AlignBottom);
 
-  auto* axisY = new QValueAxis();
+  auto* axisY = new QValueAxis{};
   axisY->setTitleText("Cases");
   axisY->setLabelFormat("%i  ");
+
+  auto const max_cases = json_object.latest.confirmed;
   axisY->setRange(0, max_cases);
   axisY->setLinePenColor(confirmed_serie->pen().color());
   axisY->setLabelsColor(confirmed_serie->pen().color());
