@@ -1,35 +1,15 @@
 #include "coronan/corona-api_parser.hpp"
 #include "coronan/http_client.hpp"
+#include "coronan/ssl_initializer.hpp"
 
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/SSLException.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/SharedPtr.h>
-#include <iostream>
 #include <lyra/lyra.hpp>
 
-using namespace Poco;
-using namespace Poco::Net;
+#include <iostream>
 
-class SSLInitializer
-{
-public:
-  SSLInitializer() { initializeSSL(); }
-
-  ~SSLInitializer() { uninitializeSSL(); }
-};
 
 int main(int argc, char* argv[])
 {
-  SSLInitializer sslInitializer;
-
-  SharedPtr<InvalidCertificateHandler> ptrCert =
-      new AcceptCertificateHandler(false);
-  Context::Ptr ptrContext =
-      new Context(Context::CLIENT_USE, "", "", "", Context::VERIFY_RELAXED, 9,
-                  false, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
-  SSLManager::instance().initializeClient(0, ptrCert, ptrContext);
-
+  static auto const ssl_initializer_handler = coronan::SSLInitializer::initialize_with_accept_certificate_handler();
   try
   {
     std::string country = "ch";
@@ -65,9 +45,10 @@ int main(int argc, char* argv[])
                 << data_points.active << "\n";
     }
   }
-  catch (Poco::Net::SSLException const& ex)
+  catch (coronan::SSLException const& ex)
   {
-    std::cout << "Exception: " << ex.displayText() << "\n";
+    std::cerr << "SSL Exception: " << ex.displayText() << "\n";
+    exit(EXIT_FAILURE);
   }
   exit(EXIT_SUCCESS);
 }

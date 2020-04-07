@@ -1,41 +1,32 @@
 #include "mainwindow.h"
 
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/SSLException.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/SharedPtr.h>
+#include "coronan/ssl_initializer.hpp"
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 
-constexpr auto api_url = "https://corona-api.com/countries/ch";
+#include <QDebug>
 
-using namespace Poco;
-using namespace Poco::Net;
+#include <iostream>
 
-class SSLInitializer
-{
-public:
-  SSLInitializer() { initializeSSL(); }
-
-  ~SSLInitializer() { uninitializeSSL(); }
-};
+constexpr auto api_url = "https://corona-api.com/countries";
 
 int main(int argc, char* argv[])
 {
-  SSLInitializer sslInitializer;
-
-  SharedPtr<InvalidCertificateHandler> ptrCert =
-      new AcceptCertificateHandler(false);
-  Context::Ptr ptrContext =
-      new Context(Context::CLIENT_USE, "", "", "", Context::VERIFY_RELAXED, 9,
-                  false, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
-  SSLManager::instance().initializeClient(0, ptrCert, ptrContext);
-
-  QApplication a(argc, argv);
-  QMainWindow window;
-  CoronanWidget* widget = new CoronanWidget(api_url);
-  window.setCentralWidget(widget);
-  window.resize(900, 600);
-  window.show();
-  return a.exec();
+  static auto const ssl_initializer_handler = coronan::SSLInitializer::initialize_with_accept_certificate_handler();
+  try
+  {
+ 
+    QApplication a(argc, argv);
+    QMainWindow window;
+    CoronanWidget* widget = new CoronanWidget(api_url);
+    window.setCentralWidget(widget);
+    window.resize(900, 600);
+    window.show();
+    return a.exec();
+  }
+  catch (coronan::SSLException const& ex)
+  {
+    qCritical() << "SSL Exception: " << ex.displayText().c_str() << "\n";
+    exit(EXIT_FAILURE);
+  }
 }

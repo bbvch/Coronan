@@ -9,6 +9,7 @@ project(
 set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_initializer.hpp"
 )
 
 add_library(${PROJECT_NAME} STATIC ${HEADER_LIST})
@@ -19,14 +20,16 @@ target_include_directories(
     ${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
 
-target_sources(
-    ${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
-                            ${HEADER_LIST}
+target_sources(${PROJECT_NAME} 
+    PRIVATE 
+        ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ssl_initializer.cpp
+        ${HEADER_LIST}
 )
 
 target_link_libraries(
     ${PROJECT_NAME}
-    INTERFACE CONAN_PKG::poco
+    PUBLIC CONAN_PKG::poco
     PUBLIC CONAN_PKG::rapidjson
 )
 
