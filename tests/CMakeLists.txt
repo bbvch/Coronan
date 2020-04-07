@@ -58,18 +58,12 @@ elseif(CMAKE_COMPILER_IS_CLANGCXX)
 
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-target_compile_options(
-    ${PROJECT_NAME} PUBLIC "$<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>"
-                           "$<$<BOOL:UNIX>:-fPIC;>"
-)
-
 if(CLANG_TIDY_EXE AND NOT CMAKE_COMPILER_IS_GNUCXX)
     set_target_properties(
         ${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_PROPERTIES}"
     )
 endif()
 
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
 add_test(NAME coronan_test COMMAND $<TARGET_FILE:coronan::UnitTest>)
