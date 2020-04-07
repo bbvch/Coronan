@@ -88,8 +88,11 @@ TEST_CASE("The corona-api parser")
     REQUIRE(json_object.latest.critical == 348);
     REQUIRE(json_object.latest.death_rate == 2.8469750889679712);
     REQUIRE(json_object.latest.recovery_rate == 21.315132522441175);
+    REQUIRE_FALSE(json_object.latest.recovered_vs_death_ratio.has_value());
     REQUIRE(json_object.latest.cases_per_million_population == 2175);
   }
+
+
 
   SUBCASE("returns the timeline data ascending")
   {

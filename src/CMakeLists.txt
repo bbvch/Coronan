@@ -20,11 +20,10 @@ target_include_directories(
     ${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
 
-target_sources(${PROJECT_NAME} 
-    PRIVATE 
-        ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ssl_initializer.cpp
-        ${HEADER_LIST}
+target_sources(
+    ${PROJECT_NAME}
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/ssl_initializer.cpp ${HEADER_LIST}
 )
 
 target_link_libraries(
@@ -39,7 +38,6 @@ source_group(
     PREFIX "Header Files"
     FILES ${HEADER_LIST}
 )
-
 
 target_compile_options(
     ${PROJECT_NAME}

@@ -25,10 +25,19 @@ auto parse_lates_data(auto const& json_dom_object)
   latest.recovered = json_dom_object["recovered"].GetInt();
   latest.critical = json_dom_object["critical"].GetInt();
   auto const calculated = json_dom_object["calculated"].GetObject();
-  latest.death_rate = calculated["death_rate"].GetDouble();
-  latest.recovery_rate = calculated["recovery_rate"].GetDouble();
-  latest.cases_per_million_population =
+  if (calculated["death_rate"].IsNumber()) {
+    latest.death_rate = calculated["death_rate"].GetDouble();
+  }
+  if (calculated["recovery_rate"].IsNumber()) {
+    latest.recovery_rate = calculated["recovery_rate"].GetDouble();
+  }
+  if (calculated["recovered_vs_death_ratio"].IsNumber()) {
+    latest.recovered_vs_death_ratio = calculated["recovered_vs_death_ratio"].GetDouble();
+  }
+  if (calculated["cases_per_million_population"].IsNumber()) {
+    latest.cases_per_million_population =
       calculated["cases_per_million_population"].GetDouble();
+  }
   return latest;
 }
 
