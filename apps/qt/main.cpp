@@ -1,21 +1,20 @@
+#include "coronan/ssl_initializer.hpp"
 #include "mainwindow.h"
 
-#include "coronan/ssl_initializer.hpp"
+#include <QDebug>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-
-#include <QDebug>
-
 #include <iostream>
 
 constexpr auto api_url = "https://corona-api.com/countries";
 
 int main(int argc, char* argv[])
 {
-  static auto const ssl_initializer_handler = coronan::SSLInitializer::initialize_with_accept_certificate_handler();
+  static auto const ssl_initializer_handler =
+      coronan::SSLInitializer::initialize_with_accept_certificate_handler();
   try
   {
- 
+
     QApplication a(argc, argv);
     QMainWindow window;
     CoronanWidget* widget = new CoronanWidget(api_url);

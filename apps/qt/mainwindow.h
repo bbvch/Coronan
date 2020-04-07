@@ -1,8 +1,10 @@
 #pragma once
 
+#include "coronan/corona-api_parser.hpp"
+
 #include <QtCharts/QChartGlobal>
-#include <QtWidgets/QWidget>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QWidget>
 #include <string>
 
 QT_BEGIN_NAMESPACE
@@ -28,10 +30,11 @@ public:
   ~CoronanWidget();
 
 private Q_SLOTS:
-    void update_ui();
+  void update_ui();
 
 private:
-  QChart* create_line_chart(std::string const & country_code) const;
+  QChart* create_line_chart(coronan::CountryObject const& country_data) const;
+  coronan::CountryObject get_country_data(std::string const& country_code) const;
   void populate_country_box();
 
 private:

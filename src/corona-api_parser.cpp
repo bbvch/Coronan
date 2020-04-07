@@ -25,18 +25,23 @@ auto parse_lates_data(auto const& json_dom_object)
   latest.recovered = json_dom_object["recovered"].GetInt();
   latest.critical = json_dom_object["critical"].GetInt();
   auto const calculated = json_dom_object["calculated"].GetObject();
-  if (calculated["death_rate"].IsNumber()) {
+  if (calculated["death_rate"].IsNumber())
+  {
     latest.death_rate = calculated["death_rate"].GetDouble();
   }
-  if (calculated["recovery_rate"].IsNumber()) {
+  if (calculated["recovery_rate"].IsNumber())
+  {
     latest.recovery_rate = calculated["recovery_rate"].GetDouble();
   }
-  if (calculated["recovered_vs_death_ratio"].IsNumber()) {
-    latest.recovered_vs_death_ratio = calculated["recovered_vs_death_ratio"].GetDouble();
+  if (calculated["recovered_vs_death_ratio"].IsNumber())
+  {
+    latest.recovered_vs_death_ratio =
+        calculated["recovered_vs_death_ratio"].GetDouble();
   }
-  if (calculated["cases_per_million_population"].IsNumber()) {
+  if (calculated["cases_per_million_population"].IsNumber())
+  {
     latest.cases_per_million_population =
-      calculated["cases_per_million_population"].GetDouble();
+        calculated["cases_per_million_population"].GetDouble();
   }
   return latest;
 }
@@ -85,17 +90,17 @@ CountryObject parse(std::string const& json)
 
 OverviewObject parse_countries(std::string const& json)
 {
-    rapidjson::Document document;
-    document.Parse(json.c_str());
-    auto overview_object = OverviewObject{};
-    for (auto const& country_data : document["data"].GetArray())
-    {
-        OverviewObject::country_t country;
-        country.name = country_data["name"].GetString();
-        country.code = country_data["code"].GetString();
-        overview_object.countries.emplace_back(country);
-    }
-    return overview_object;
+  rapidjson::Document document;
+  document.Parse(json.c_str());
+  auto overview_object = OverviewObject{};
+  for (auto const& country_data : document["data"].GetArray())
+  {
+    OverviewObject::country_t country;
+    country.name = country_data["name"].GetString();
+    country.code = country_data["code"].GetString();
+    overview_object.countries.emplace_back(country);
+  }
+  return overview_object;
 }
 
 } // namespace api_parser

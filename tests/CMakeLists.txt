@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(
-    covidan_tests
+    coronan_tests
     VERSION 0.1
     LANGUAGES CXX
 )

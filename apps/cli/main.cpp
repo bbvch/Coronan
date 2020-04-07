@@ -2,14 +2,13 @@
 #include "coronan/http_client.hpp"
 #include "coronan/ssl_initializer.hpp"
 
-#include <lyra/lyra.hpp>
-
 #include <iostream>
-
+#include <lyra/lyra.hpp>
 
 int main(int argc, char* argv[])
 {
-  static auto const ssl_initializer_handler = coronan::SSLInitializer::initialize_with_accept_certificate_handler();
+  static auto const ssl_initializer_handler =
+      coronan::SSLInitializer::initialize_with_accept_certificate_handler();
   try
   {
     std::string country = "ch";

@@ -14,9 +14,58 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <algorithm>
 #include <array>
 #include <string>
-#include <algorithm>
+
+namespace {
+
+template <class... Ts> struct overloaded : Ts...
+{
+  using Ts::operator()...;
+};
+template <class... Ts>
+overloaded(Ts...)->overloaded<Ts...>; // not needed as of C++20
+
+void update_country_overview_table(auto* table, auto const& country_data)
+{
+  auto const label_col_index = 0;
+  auto const value_col_index = 1;
+  auto row_index = 0;
+  std::vector<
+      std::pair<char const*, std::variant<uint32_t, std::optional<double>>>>
+      overview_table_entries = {
+          {std::make_pair("Population:", country_data.population),
+           std::make_pair("Confirmed:", country_data.latest.confirmed),
+           std::make_pair("Death:", country_data.latest.deaths),
+           std::make_pair("Recovered:", country_data.latest.recovered),
+           std::make_pair("Critical:", country_data.latest.critical),
+           std::make_pair("Death rate:", country_data.latest.death_rate),
+           std::make_pair("Recovery rate::",
+                          country_data.latest.recovery_rate)}};
+
+  table->setRowCount(overview_table_entries.size());
+  for (auto const& pair : overview_table_entries)
+  {
+    table->setItem(row_index, label_col_index,
+                   new QTableWidgetItem{pair.first});
+    auto const value_str = std::visit(
+        overloaded{
+            [](uint32_t arg) { return QString::number(arg); },
+            [](std::optional<double> arg) {
+              return arg.has_value() ? QString::number(arg.value())
+                                     : QString{"--"};
+            },
+        },
+        pair.second);
+
+    table->setItem(row_index, value_col_index, new QTableWidgetItem{value_str});
+
+    row_index++;
+  }
+}
+
+} // namespace
 
 CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
     : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{api_url}
@@ -25,68 +74,73 @@ CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
 
   populate_country_box();
 
+  auto country_code =
+      m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
+          .toString();
 
-  auto country_code = m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex()).toString();
-  m_chartView = new QChartView{create_line_chart(country_code.toStdString())};
+  auto const country_data = get_country_data(country_code.toStdString());
+  m_chartView = new QChartView{create_line_chart(country_data)};
   m_chartView->setRenderHint(QPainter::Antialiasing, true);
 
   m_ui->gridLayout->addWidget(m_chartView, 2, 1);
+
+  m_ui->overviewTable->horizontalHeader()->setSectionResizeMode(
+      0, QHeaderView::ResizeToContents);
+
+  update_country_overview_table(m_ui->overviewTable, country_data);
 
   // Set the colors from the light theme as default ones
   auto pal = qApp->palette();
   pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
   pal.setColor(QPalette::WindowText, QRgb(0x404044));
   qApp->setPalette(pal);
-
 }
 
 CoronanWidget::~CoronanWidget() { delete m_ui; }
 
 void CoronanWidget::populate_country_box()
 {
-    auto const http_response = coronan::HTTPClient::get(m_url);
-    auto const json_object = coronan::api_parser::parse_countries(http_response.get_response_body());
+  auto const http_response = coronan::HTTPClient::get(m_url);
+  auto const json_object =
+      coronan::api_parser::parse_countries(http_response.get_response_body());
 
-    auto* countryComboBox = m_ui->countryComboBox;
-    auto countries = json_object.countries;
+  auto* countryComboBox = m_ui->countryComboBox;
+  auto countries = json_object.countries;
 
-    std::sort(std::begin(countries), std::end(countries), [](auto const & a, auto const & b) {
-      return a.name < b.name;
-    });
+  std::sort(std::begin(countries), std::end(countries),
+            [](auto const& a, auto const& b) { return a.name < b.name; });
 
-    for (auto const & country : countries)
-    {
-      countryComboBox->addItem(country.name.c_str(), country.code.c_str());
-    }
+  for (auto const& country : countries)
+  {
+    countryComboBox->addItem(country.name.c_str(), country.code.c_str());
+  }
 
-    int index = countryComboBox->findData("CH");
-    if ( index != -1 ) { // -1 for not found
-      countryComboBox->setCurrentIndex(index);
-    }
+  int index = countryComboBox->findData("CH");
+  if (index != -1)
+  { // -1 for not found
+    countryComboBox->setCurrentIndex(index);
+  }
 }
 
-QChart* CoronanWidget::create_line_chart(std::string const & country_code) const
+coronan::CountryObject
+CoronanWidget::get_country_data(std::string const& country_code) const
 {
-  auto const http_response = coronan::HTTPClient::get(m_url+std::string{"/"} + country_code);
-  auto const json_object =
-      coronan::api_parser::parse(http_response.get_response_body());
+  auto const http_response =
+      coronan::HTTPClient::get(m_url + std::string{"/"} + country_code);
+  return coronan::api_parser::parse(http_response.get_response_body());
+}
 
+QChart* CoronanWidget::create_line_chart(
+    coronan::CountryObject const& country_data) const
+{
   auto* chart = new QChart{};
-  
+
   chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
-      json_object.country_name.c_str()));
+      country_data.country_name.c_str()));
 
-  auto const confirmed_serie_name =
-      std::string{"Confirmed ("} +
-      std::to_string(json_object.latest.confirmed) + std::string{")"};
-
-  auto const death_serie_name = std::string{"Death ("} +
-                                std::to_string(json_object.latest.deaths) +
-                                std::string{")"};
-
-  auto const recovered_serie_name =
-      std::string{"Recovered ("} +
-      std::to_string(json_object.latest.recovered) + std::string{")"};
+  auto const confirmed_serie_name = std::string{"Confirmed"};
+  auto const death_serie_name = std::string{"Death"};
+  auto const recovered_serie_name = std::string{"Recovered"};
 
   auto* death_serie = new QLineSeries{};
   death_serie->setName(death_serie_name.c_str());
@@ -100,7 +154,7 @@ QChart* CoronanWidget::create_line_chart(std::string const & country_code) const
   std::array<QLineSeries*, 4> series = {
       {death_serie, confirmed_serie, active_serie, recovered_serie}};
 
-  for (auto const& data_point : json_object.timeline)
+  for (auto const& data_point : country_data.timeline)
   {
     QDateTime date = QDateTime::fromString(data_point.date.c_str(),
                                            "yyyy-MM-ddThh:mm:ss.zZ");
@@ -125,7 +179,7 @@ QChart* CoronanWidget::create_line_chart(std::string const & country_code) const
   axisY->setTitleText("Cases");
   axisY->setLabelFormat("%i  ");
 
-  auto const max_cases = json_object.latest.confirmed;
+  auto const max_cases = country_data.latest.confirmed;
   axisY->setRange(0, max_cases);
   axisY->setLinePenColor(confirmed_serie->pen().color());
   axisY->setLabelsColor(confirmed_serie->pen().color());
@@ -146,10 +200,13 @@ QChart* CoronanWidget::create_line_chart(std::string const & country_code) const
 
 void CoronanWidget::update_ui()
 {
-  auto country_code = m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex()).toString();
-  auto* new_chartView = new QChartView{create_line_chart(country_code.toStdString())};
+  auto country_code =
+      m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
+          .toString();
+  auto const country_data = get_country_data(country_code.toStdString());
+  auto* new_chartView = new QChartView{create_line_chart(country_data)};
   new_chartView->setRenderHint(QPainter::Antialiasing, true);
   m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
   m_chartView = new_chartView;
-
+  update_country_overview_table(m_ui->overviewTable, country_data);
 }

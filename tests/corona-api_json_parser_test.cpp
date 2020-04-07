@@ -92,8 +92,6 @@ TEST_CASE("The corona-api parser")
     REQUIRE(json_object.latest.cases_per_million_population == 2175);
   }
 
-
-
   SUBCASE("returns the timeline data ascending")
   {
     REQUIRE(json_object.timeline[0].date == "2020-04-03T00:20:32.326Z");
@@ -202,7 +200,8 @@ constexpr auto test_country_json = "{ \
 TEST_CASE("The corona-api country parser")
 {
 
-  auto json_overview_object = coronan::api_parser::parse_countries(test_country_json);
+  auto json_overview_object =
+      coronan::api_parser::parse_countries(test_country_json);
   SUBCASE("returns the country data")
   {
     REQUIRE(json_overview_object.countries[0].name == "Austria");
