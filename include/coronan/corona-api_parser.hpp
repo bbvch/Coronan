@@ -53,6 +53,18 @@ struct CountryObject
   std::vector<timeline_t> timeline; /**< array of (daily) data */
 };
 
+struct OverviewObject
+{
+    struct country_t
+    {
+        std::string name{}; /**< Country name */
+        std::string code{}; /**< Country Code , e.g. ch */
+    };
+
+    std::vector<country_t> countries; /**< array of available countries */
+};
+
+
 namespace api_parser {
 /**
  * Parse a json.
@@ -60,6 +72,8 @@ namespace api_parser {
  * https://about-corona.net/documentation
  */
 CountryObject parse(std::string const& json);
+
+OverviewObject parse_countries(std::string const& json);
 } // namespace api_parser
 
 } // namespace coronan

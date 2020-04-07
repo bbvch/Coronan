@@ -2,6 +2,7 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QTableWidget>
 #include <string>
 
 QT_BEGIN_NAMESPACE
@@ -26,11 +27,15 @@ public:
   explicit CoronanWidget(std::string const& api_url, QWidget* parent = 0);
   ~CoronanWidget();
 
-private:
-  QChart* createLineChart() const;
+private Q_SLOTS:
+    void update_ui();
 
 private:
-  QList<QChartView*> m_charts;
-  Ui_CoronanWidgetForm* m_ui;
+  QChart* create_line_chart(std::string const & country_code) const;
+  void populate_country_box();
+
+private:
+  QChartView* m_chartView = nullptr;
+  Ui_CoronanWidgetForm* m_ui = nullptr;
   std::string m_url{};
 };

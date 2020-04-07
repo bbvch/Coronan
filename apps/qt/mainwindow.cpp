@@ -11,39 +11,68 @@
 #include <QtCharts/QDateTimeAxis>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
-#include <QtGlobal>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHeaderView>
 #include <array>
 #include <string>
+#include <algorithm>
 
 CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
     : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{api_url}
 {
   m_ui->setupUi(this);
 
-  // create chart
-  auto* chartView = new QChartView{createLineChart()};
-  chartView->setRenderHint(QPainter::Antialiasing, true);
-  m_ui->gridLayout->addWidget(chartView, 1, 2);
-  m_charts << chartView;
+  populate_country_box();
+
+
+  auto country_code = m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex()).toString();
+  m_chartView = new QChartView{create_line_chart(country_code.toStdString())};
+  m_chartView->setRenderHint(QPainter::Antialiasing, true);
+
+  m_ui->gridLayout->addWidget(m_chartView, 2, 1);
 
   // Set the colors from the light theme as default ones
   auto pal = qApp->palette();
   pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
   pal.setColor(QPalette::WindowText, QRgb(0x404044));
   qApp->setPalette(pal);
+
 }
 
 CoronanWidget::~CoronanWidget() { delete m_ui; }
 
-QChart* CoronanWidget::createLineChart() const
+void CoronanWidget::populate_country_box()
 {
-  auto const http_response = coronan::HTTPClient::get(m_url);
+    auto const http_response = coronan::HTTPClient::get(m_url);
+    auto const json_object = coronan::api_parser::parse_countries(http_response.get_response_body());
+
+    auto* countryComboBox = m_ui->countryComboBox;
+    auto countries = json_object.countries;
+
+    std::sort(std::begin(countries), std::end(countries), [](auto const & a, auto const & b) {
+      return a.name < b.name;
+    });
+
+    for (auto const & country : countries)
+    {
+      countryComboBox->addItem(country.name.c_str(), country.code.c_str());
+    }
+
+    int index = countryComboBox->findData("CH");
+    if ( index != -1 ) { // -1 for not found
+      countryComboBox->setCurrentIndex(index);
+    }
+}
+
+QChart* CoronanWidget::create_line_chart(std::string const & country_code) const
+{
+  auto const http_response = coronan::HTTPClient::get(m_url+std::string{"/"} + country_code);
   auto const json_object =
       coronan::api_parser::parse(http_response.get_response_body());
 
   auto* chart = new QChart{};
+  
   chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
       json_object.country_name.c_str()));
 
@@ -82,10 +111,10 @@ QChart* CoronanWidget::createLineChart() const
     recovered_serie->append(QPointF(msecs_since_epoche, data_point.recovered));
   }
 
-  chart->addSeries(death_serie);
-  chart->addSeries(confirmed_serie);
-  chart->addSeries(active_serie);
-  chart->addSeries(recovered_serie);
+  for (auto* serie : series)
+  {
+    chart->addSeries(serie);
+  }
 
   auto* axisX = new QDateTimeAxis{};
   axisX->setFormat("dd/MM  ");
@@ -113,4 +142,14 @@ QChart* CoronanWidget::createLineChart() const
   chart->legend()->show();
 
   return chart;
+}
+
+void CoronanWidget::update_ui()
+{
+  auto country_code = m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex()).toString();
+  auto* new_chartView = new QChartView{create_line_chart(country_code.toStdString())};
+  new_chartView->setRenderHint(QPainter::Antialiasing, true);
+  m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
+  m_chartView = new_chartView;
+
 }

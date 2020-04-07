@@ -73,6 +73,22 @@ CountryObject parse(std::string const& json)
       parse_timeline(country_data_object["timeline"].GetArray());
   return country_object;
 }
+
+OverviewObject parse_countries(std::string const& json)
+{
+    rapidjson::Document document;
+    document.Parse(json.c_str());
+    auto overview_object = OverviewObject{};
+    for (auto const& country_data : document["data"].GetArray())
+    {
+        OverviewObject::country_t country;
+        country.name = country_data["name"].GetString();
+        country.code = country_data["code"].GetString();
+        overview_object.countries.emplace_back(country);
+    }
+    return overview_object;
+}
+
 } // namespace api_parser
 
 } // namespace coronan
