@@ -33,8 +33,8 @@ private Q_SLOTS:
   void update_ui();
 
 private:
-  QChart* create_line_chart(coronan::CountryObject const& country_data) const;
-  coronan::CountryObject get_country_data(std::string const& country_code) const;
+  coronan::CountryObject
+  get_country_data(std::string const& country_code) const;
   void populate_country_box();
 
 private:

@@ -27,13 +27,15 @@ template <class... Ts> struct overloaded : Ts...
 template <class... Ts>
 overloaded(Ts...)->overloaded<Ts...>; // not needed as of C++20
 
-void update_country_overview_table(auto* table, auto const& country_data)
-{
+constexpr auto update_country_overview_table = [](auto* table,
+                                                  auto const& country_data) {
   auto const label_col_index = 0;
   auto const value_col_index = 1;
   auto row_index = 0;
-  std::vector<
-      std::pair<char const*, std::variant<uint32_t, std::optional<double>>>>
+  constexpr auto no_table_entries = 7;
+  std::array<
+      std::pair<char const*, std::variant<uint32_t, std::optional<double>>>,
+      no_table_entries>
       overview_table_entries = {
           {std::make_pair("Population:", country_data.population),
            std::make_pair("Confirmed:", country_data.latest.confirmed),
@@ -44,94 +46,28 @@ void update_country_overview_table(auto* table, auto const& country_data)
            std::make_pair("Recovery rate::",
                           country_data.latest.recovery_rate)}};
 
-  table->setRowCount(overview_table_entries.size());
+  table->setRowCount(no_table_entries);
   for (auto const& pair : overview_table_entries)
   {
     table->setItem(row_index, label_col_index,
                    new QTableWidgetItem{pair.first});
-    auto const value_str = std::visit(
-        overloaded{
-            [](uint32_t arg) { return QString::number(arg); },
-            [](std::optional<double> arg) {
-              return arg.has_value() ? QString::number(arg.value())
-                                     : QString{"--"};
-            },
-        },
-        pair.second);
+    auto const value_str =
+        std::visit(overloaded{
+                       [](uint32_t arg) { return QString::number(arg); },
+                       [](std::optional<double> arg) {
+                         return arg.has_value() ? QString::number(arg.value())
+                                                : QString{"--"};
+                       },
+                   },
+                   pair.second);
 
     table->setItem(row_index, value_col_index, new QTableWidgetItem{value_str});
 
     row_index++;
   }
-}
+};
 
-} // namespace
-
-CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{api_url}
-{
-  m_ui->setupUi(this);
-
-  populate_country_box();
-
-  auto country_code =
-      m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
-          .toString();
-
-  auto const country_data = get_country_data(country_code.toStdString());
-  m_chartView = new QChartView{create_line_chart(country_data)};
-  m_chartView->setRenderHint(QPainter::Antialiasing, true);
-
-  m_ui->gridLayout->addWidget(m_chartView, 2, 1);
-
-  m_ui->overviewTable->horizontalHeader()->setSectionResizeMode(
-      0, QHeaderView::ResizeToContents);
-
-  update_country_overview_table(m_ui->overviewTable, country_data);
-
-  // Set the colors from the light theme as default ones
-  auto pal = qApp->palette();
-  pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
-  pal.setColor(QPalette::WindowText, QRgb(0x404044));
-  qApp->setPalette(pal);
-}
-
-CoronanWidget::~CoronanWidget() { delete m_ui; }
-
-void CoronanWidget::populate_country_box()
-{
-  auto const http_response = coronan::HTTPClient::get(m_url);
-  auto const json_object =
-      coronan::api_parser::parse_countries(http_response.get_response_body());
-
-  auto* countryComboBox = m_ui->countryComboBox;
-  auto countries = json_object.countries;
-
-  std::sort(std::begin(countries), std::end(countries),
-            [](auto const& a, auto const& b) { return a.name < b.name; });
-
-  for (auto const& country : countries)
-  {
-    countryComboBox->addItem(country.name.c_str(), country.code.c_str());
-  }
-
-  int index = countryComboBox->findData("CH");
-  if (index != -1)
-  { // -1 for not found
-    countryComboBox->setCurrentIndex(index);
-  }
-}
-
-coronan::CountryObject
-CoronanWidget::get_country_data(std::string const& country_code) const
-{
-  auto const http_response =
-      coronan::HTTPClient::get(m_url + std::string{"/"} + country_code);
-  return coronan::api_parser::parse(http_response.get_response_body());
-}
-
-QChart* CoronanWidget::create_line_chart(
-    coronan::CountryObject const& country_data) const
+constexpr auto create_line_chart = [] (coronan::CountryObject const& country_data)
 {
   auto* chart = new QChart{};
 
@@ -196,6 +132,71 @@ QChart* CoronanWidget::create_line_chart(
   chart->legend()->show();
 
   return chart;
+};
+
+} // namespace
+
+CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
+    : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{api_url}
+{
+  m_ui->setupUi(this);
+
+  populate_country_box();
+
+  auto country_code =
+      m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
+          .toString();
+
+  auto const country_data = get_country_data(country_code.toStdString());
+  m_chartView = new QChartView{create_line_chart(country_data)};
+  m_chartView->setRenderHint(QPainter::Antialiasing, true);
+
+  m_ui->gridLayout->addWidget(m_chartView, 2, 1);
+
+  m_ui->overviewTable->horizontalHeader()->setSectionResizeMode(
+      0, QHeaderView::ResizeToContents);
+
+  update_country_overview_table(m_ui->overviewTable, country_data);
+
+  // Set the colors from the light theme as default ones
+  auto pal = qApp->palette();
+  pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
+  pal.setColor(QPalette::WindowText, QRgb(0x404044));
+  qApp->setPalette(pal);
+}
+
+CoronanWidget::~CoronanWidget() { delete m_ui; }
+
+void CoronanWidget::populate_country_box()
+{
+  auto const http_response = coronan::HTTPClient::get(m_url);
+  auto const json_object =
+      coronan::api_parser::parse_countries(http_response.get_response_body());
+
+  auto* countryComboBox = m_ui->countryComboBox;
+  auto countries = json_object.countries;
+
+  std::sort(std::begin(countries), std::end(countries),
+            [](auto const& a, auto const& b) { return a.name < b.name; });
+
+  for (auto const& country : countries)
+  {
+    countryComboBox->addItem(country.name.c_str(), country.code.c_str());
+  }
+
+  int index = countryComboBox->findData("CH");
+  if (index != -1)
+  { // -1 for not found
+    countryComboBox->setCurrentIndex(index);
+  }
+}
+
+coronan::CountryObject
+CoronanWidget::get_country_data(std::string const& country_code) const
+{
+  auto const http_response =
+      coronan::HTTPClient::get(m_url + std::string{"/"} + country_code);
+  return coronan::api_parser::parse(http_response.get_response_body());
 }
 
 void CoronanWidget::update_ui()
