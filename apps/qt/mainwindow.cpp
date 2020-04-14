@@ -165,7 +165,7 @@ CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
   qApp->setPalette(pal);
 }
 
-CoronanWidget::~CoronanWidget() { delete m_ui; }
+CoronanWidget::~CoronanWidget() { delete m_ui;}
 
 void CoronanWidget::populate_country_box()
 {
@@ -191,8 +191,7 @@ void CoronanWidget::populate_country_box()
   }
 }
 
-coronan::CountryObject
-CoronanWidget::get_country_data(std::string const& country_code) const
+coronan::CountryObject CoronanWidget::get_country_data(std::string const& country_code) const
 {
   auto const http_response =
       coronan::HTTPClient::get(m_url + std::string{"/"} + country_code);
@@ -207,7 +206,8 @@ void CoronanWidget::update_ui()
   auto const country_data = get_country_data(country_code.toStdString());
   auto* new_chartView = new QChartView{create_line_chart(country_data)};
   new_chartView->setRenderHint(QPainter::Antialiasing, true);
-  m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
+  auto* old_layout = m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
+  delete old_layout;
   m_chartView = new_chartView;
   update_country_overview_table(m_ui->overviewTable, country_data);
 }

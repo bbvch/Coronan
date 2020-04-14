@@ -72,6 +72,15 @@ elseif(CMAKE_COMPILER_IS_CLANGCXX)
     )
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    target_compile_options(
+        ${PROJECT_NAME} PRIVATE -fsanitize=address -fno-omit-frame-pointer
+    )
+    target_link_libraries(
+        ${PROJECT_NAME} PUBLIC "-fno-omit-frame-pointer -fsanitize=address"
+    )
+endif()
+
 target_compile_options(
     ${PROJECT_NAME} PUBLIC "$<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>"
                            "$<$<BOOL:UNIX>:-fPIC;>"
