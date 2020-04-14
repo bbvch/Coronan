@@ -6,6 +6,8 @@ project(
     LANGUAGES CXX
 )
 
+find_package(lyra REQUIRED)
+
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
 add_executable(coronan::Cmd ALIAS ${PROJECT_NAME})
@@ -13,7 +15,7 @@ add_executable(coronan::Cmd ALIAS ${PROJECT_NAME})
 target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE coronan::lib
-    PRIVATE CONAN_PKG::lyra
+    PRIVATE lyra::lyra
 )
 
 target_compile_options(

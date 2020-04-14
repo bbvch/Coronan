@@ -19,7 +19,15 @@ include(clang)
 
 include(conan)
 
-conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS BUILD poco missing)
+conan_cmake_run(REQUIRES doctest/2.3.7
+                         poco/1.10.1
+                         rapidjson/1.1.0
+                         lyra/1.3.0
+                NO_LOAD 1 
+                BUILD poco missing
+                GENERATORS cmake_find_package cmake_paths)
+
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 

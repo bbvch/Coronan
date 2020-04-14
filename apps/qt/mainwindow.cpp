@@ -5,7 +5,7 @@
 #include "ui_mainwindow.h"
 
 #include <QDateTime>
-#include <QLabel>
+#include <QtWidgets/QLabel>
 #include <QString>
 #include <QtCharts/QChartView>
 #include <QtCharts/QDateTimeAxis>
