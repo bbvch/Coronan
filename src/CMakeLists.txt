@@ -65,6 +65,7 @@ target_compile_options(
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
+            -fconcepts
 )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
