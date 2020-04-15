@@ -36,8 +36,9 @@ target_link_libraries(
 target_compile_options(
     ${PROJECT_NAME}
     PRIVATE -Wall
-            -Wextra
             -Werror
+            -Wextra
+            -pedantic
             -Wcast-align
             -Wunused
             -Wpointer-arith
@@ -54,24 +55,31 @@ target_compile_options(
             -Wredundant-decls
             -Wshadow
             -Wsign-conversion
-            -Wno-narrowing
+            -Wsign-promo
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
-            -fconcepts
 )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     target_compile_options(
         ${PROJECT_NAME} PRIVATE -Wlogical-op -Wnoexcept -Wstrict-null-sentinel
+                                -fconcepts
     )
 elseif(CMAKE_COMPILER_IS_CLANGCXX)
     target_compile_options(
-        ${PROJECT_NAME} PRIVATE -pedantic
-                                -Wno-gnu-zero-variadic-macro-arguments
+        ${PROJECT_NAME} PRIVATE -Wno-gnu-zero-variadic-macro-arguments
     )
-
 endif(CMAKE_COMPILER_IS_GNUCXX)
+
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    target_compile_options(
+        ${PROJECT_NAME} PRIVATE -fsanitize=address -fno-omit-frame-pointer
+    )
+    target_link_libraries(
+        ${PROJECT_NAME} PUBLIC "-fno-omit-frame-pointer -fsanitize=address"
+    )
+endif()
 
 target_compile_options(
     ${PROJECT_NAME} PUBLIC "$<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>"

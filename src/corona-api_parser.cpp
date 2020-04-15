@@ -4,21 +4,18 @@
 
 #include <algorithm>
 
-namespace coronan {
-
-namespace api_parser {
+namespace coronan::api_parser {
 
 namespace {
-auto parse_today_data(auto const& json_dom_object)
-{
+
+constexpr auto parse_today_data = [](auto const& json_dom_object) {
   CountryObject::today_t today{};
   today.deaths = json_dom_object["deaths"].GetInt();
   today.confirmed = json_dom_object["confirmed"].GetInt();
   return today;
-}
+};
 
-auto parse_lates_data(auto const& json_dom_object)
-{
+constexpr auto parse_lates_data = [](auto const& json_dom_object) {
   CountryObject::latest_t latest{};
   latest.deaths = json_dom_object["deaths"].GetInt();
   latest.confirmed = json_dom_object["confirmed"].GetInt();
@@ -44,10 +41,9 @@ auto parse_lates_data(auto const& json_dom_object)
         calculated["cases_per_million_population"].GetDouble();
   }
   return latest;
-}
+};
 
-auto parse_timeline(auto const& json_dom_array)
-{
+constexpr auto parse_timeline = [](auto const& json_dom_array) {
   std::vector<CountryObject::timeline_t> timeline;
   for (auto const& data_point : json_dom_array)
   {
@@ -63,7 +59,7 @@ auto parse_timeline(auto const& json_dom_array)
     timeline.emplace_back(timepoint);
   }
   return timeline;
-}
+};
 
 } // namespace
 
@@ -103,6 +99,4 @@ OverviewObject parse_countries(std::string const& json)
   return overview_object;
 }
 
-} // namespace api_parser
-
-} // namespace coronan
+} // namespace coronan::api_parser

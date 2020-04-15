@@ -34,7 +34,8 @@ struct CountryObject
     std::optional<double> death_rate{}; /**< calculated death rate */
     std::optional<double> recovery_rate{}; /**< calculated recovery rate */
     std::optional<double> recovered_vs_death_ratio{}; /**< calculated recovered vs death rate */
-    std::optional<double> cases_per_million_population{}; /**< calculated cases per millions of the population */
+    std::optional<double> cases_per_million_population{}; /**< calculated cases per millions of
+                                           the population */
   };
 
   latest_t latest{}; /**< Lates actual cases  */

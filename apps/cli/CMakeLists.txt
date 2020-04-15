@@ -19,9 +19,11 @@ target_link_libraries(
 target_compile_options(
     ${PROJECT_NAME}
     PRIVATE -Wall
-            -Wextra
             -Werror
+            -Wextra
+            -pedantic
             -Wcast-align
+            -Wconversion
             -Wunused
             -Wpointer-arith
             -Wcast-qual
@@ -36,8 +38,8 @@ target_compile_options(
             -Woverloaded-virtual
             -Wredundant-decls
             -Wshadow
-            -Wconversion
             -Wsign-conversion
+            -Wsign-promo
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
@@ -46,13 +48,12 @@ target_compile_options(
 if(CMAKE_COMPILER_IS_GNUCXX)
     target_compile_options(
         ${PROJECT_NAME} PRIVATE -Wlogical-op -Wnoexcept -Wstrict-null-sentinel
+                                -fconcepts
     )
 elseif(CMAKE_COMPILER_IS_CLANGCXX)
     target_compile_options(
-        ${PROJECT_NAME} PRIVATE -pedantic
-                                -Wno-gnu-zero-variadic-macro-arguments
+        ${PROJECT_NAME} PRIVATE -Wno-gnu-zero-variadic-macro-arguments
     )
-
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 target_compile_options(
