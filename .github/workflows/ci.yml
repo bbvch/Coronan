@@ -14,16 +14,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        name: [ubuntu-gcc-9, ubuntu-clang-9]
+        name: [ubuntu-gcc-9]
         include:
           - name: ubuntu-gcc-9
             os: ubuntu-latest
             compiler: g++-9
 
-          - name: ubuntu-clang-9
-            os: ubuntu-latest
-            compiler: clang++-9
-
+          # - name: ubuntu-clang-9
+          #   os: ubuntu-latest
+          #   compiler: clang++-9
           # - name: macos-appleclang-11
           #   os: macos-latest
 
@@ -32,7 +31,7 @@ jobs:
       - name: dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt install ninja-build clang-tidy python3-pip python3-setuptools -y
+          sudo apt install ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev -y
           sudo pip3 install conan
 
       - name: dependecies (macos)
