@@ -22,7 +22,7 @@ jobs:
 
           - name: ubuntu-clang-9
             os: ubuntu-latest
-            compiler: clang-9
+            compiler: clang++-9
 
           # - name: macos-appleclang-11
           #   os: macos-latest
