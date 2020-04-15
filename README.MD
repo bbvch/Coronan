@@ -13,7 +13,7 @@ It reads the current data of Corona (Covid-19) cases for Switzerland from the _T
 
 ## Development
 
-To build the project you need python and [conan](https://conan.io/):
+To build the project you need python and [conan (version 1.24 or newer)](https://conan.io/):
 ```bash
 #> pip install conan
 ```
