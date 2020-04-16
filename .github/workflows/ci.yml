@@ -48,6 +48,8 @@ jobs:
             echo "::set-env name=CXX::${{ matrix.compiler }}"
             echo "::set-env name=CC::${{matrix.ccompiler }}"
           fi
+          conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
         shell: bash
 
       - name: make-build-dir
