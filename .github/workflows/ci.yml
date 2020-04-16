@@ -19,6 +19,7 @@ jobs:
           - name: ubuntu-gcc-9
             os: ubuntu-latest
             compiler: g++-9
+            ccompiler: gcc-9
 
           # - name: ubuntu-clang-9
           #   os: ubuntu-latest
@@ -45,6 +46,7 @@ jobs:
         run: |
           if [ "${{ matrix.compiler }}" != "" ]; then
             echo "::set-env name=CXX::${{ matrix.compiler }}"
+            echo "::set-env name=CC::${{matrix.ccompiler }}"
           fi
         shell: bash
 
