@@ -1,0 +1,54 @@
+language: cpp
+os: linux
+
+services:
+   - docker
+
+cache: # see https://docs.travis-ci.com/user/caching/
+- directories:
+    - $HOME/.cache
+
+addons:
+    apt:
+    packages: lcov
+
+env:
+  matrix:
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7 COVERAGE=1 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang50 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang60 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9 COVERAGE=0 BUILD_TYPE=Release
+
+notifications:
+  email:
+    recipients:
+      - michel.estermann@bbv.ch
+    on_success: change
+    on_failure: always
+
+before_install:
+  - DOCKER_WORKDIR="/workspace"
+  - docker pull ${DOCKER_IMAGE}
+  - BUILD_CMD="./build.sh build"
+  - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh --cov build" ; fi
+  - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -r build" ; fi
+
+script:
+  - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${BUILD_CMD}"
+
+after_success:
+  # Create lcov report
+  # capture coverage info
+  - lcov --directory . --capture --output-file coverage.info
+  # filter out system and extra files.
+  # To also not include test code in coverage add them with full path to the patterns: 
+  - lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' '*/tests/*' --output-file coverage.info
+  # output coverage data for debugging (optional)
+  - lcov --list coverage.info
+  # Uploading to CodeCov
+  # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
