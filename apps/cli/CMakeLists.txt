@@ -43,6 +43,7 @@ target_compile_options(
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
+            $<$<CONFIG:Release>:-O3>
 )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -57,8 +58,8 @@ elseif(CMAKE_COMPILER_IS_CLANGCXX)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 target_compile_options(
-    ${PROJECT_NAME} PUBLIC "$<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>"
-                           "$<$<BOOL:UNIX>:-fPIC;>"
+    ${PROJECT_NAME} PUBLIC $<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>
+                           $<$<BOOL:UNIX>:-fPIC;>
 )
 
 if(CLANG_TIDY_EXE AND NOT CMAKE_COMPILER_IS_GNUCXX)
