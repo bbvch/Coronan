@@ -9,17 +9,17 @@ cache: # see https://docs.travis-ci.com/user/caching/
     - $HOME/.cache
 
 addons:
-    apt:
+  apt:
     packages: lcov
 
 env:
   matrix:
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7 COVERAGE=1 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang50 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang60 COVERAGE=0 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7 COVERAGE=1 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9 COVERAGE=0 BUILD_TYPE=Release
 
