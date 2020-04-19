@@ -9,9 +9,6 @@ lyra/1.3.0
 cmake
 
 [options]
-poco:enable_xml=False
-poco:enable_json=False
 poco:enable_mongodb=False
 poco:enable_data=False
 poco:enable_data_sqlite=False
-poco:enable_zip=False
