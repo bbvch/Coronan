@@ -39,9 +39,8 @@ before_install:
   - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh --cov build" ; fi
   - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -r build" ; fi
 
-script:
-  - ls -la /usr/bin/gcov*
-  - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${BUILD_CMD}"
+before_script: ls -la /usr/bin/gcov*
+script: docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${BUILD_CMD}"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
