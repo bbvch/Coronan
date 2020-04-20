@@ -10,7 +10,9 @@ cache: # see https://docs.travis-ci.com/user/caching/
 
 addons:
   apt:
-    packages: lcov
+    packages: 
+      - lcov
+      - ggcov
 
 env:
   matrix:
@@ -38,6 +40,7 @@ before_install:
   - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -r build" ; fi
 
 script:
+  - ls -la /usr/bin/gcov*
   - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${BUILD_CMD}"
 
 after_success:
