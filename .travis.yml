@@ -9,12 +9,6 @@ cache: # see https://docs.travis-ci.com/user/caching/
 - directories:
     - $HOME/.cache
 
-addons:
-  apt:
-    packages: 
-      - lcov
-      - ggcov
-
 env:
   matrix:
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7 COVERAGE=1 BUILD_TYPE=Debug
@@ -37,11 +31,12 @@ before_install:
   - DOCKER_WORKDIR="/workspace"
   - docker pull ${DOCKER_IMAGE}
   - BUILD_CMD="./build.sh build"
-  - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh --cov build" ; fi
+  - COVERAGE_FILE="coverage.info"
+  - touch ${COVERAGE_FILE}
+  - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh --cov ${COVERAGE_FILE} build" ; fi
   - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -r build" ; fi
 
-before_script: ls -la /usr/bin/gcov*
 script: docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${BUILD_CMD}"
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  - if [ "${COVERAGE}" = '1' ] ; then bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports' ; fi
