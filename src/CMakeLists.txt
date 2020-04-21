@@ -66,6 +66,7 @@ target_compile_options(
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
+            $<$<CONFIG:Release>:-O3>
 )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -74,15 +75,19 @@ if(CMAKE_COMPILER_IS_GNUCXX)
                                 -fconcepts
     )
 elseif(CMAKE_COMPILER_IS_CLANGCXX)
-    target_compile_options(
-        ${PROJECT_NAME} PRIVATE -Wno-gnu-zero-variadic-macro-arguments
+    target_compile_options(${PROJECT_NAME} 
+        PRIVATE 
+            -Wno-gnu-zero-variadic-macro-arguments 
     )
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 target_compile_options(
-    ${PROJECT_NAME} PUBLIC "$<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>"
-                           "$<$<BOOL:UNIX>:-fPIC;>"
+    ${PROJECT_NAME} PUBLIC $<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>
+                           $<$<BOOL:UNIX>:-fPIC;>
 )
+
+# Include code-coverage settings:
+target_link_libraries(${PROJECT_NAME} PUBLIC code_coverage::config)
 
 if(CLANG_TIDY_EXE AND NOT CMAKE_COMPILER_IS_GNUCXX)
     set_target_properties(
