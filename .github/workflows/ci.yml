@@ -14,18 +14,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        name: [ubuntu-gcc-9]
+        name: [ubuntu-gcc-9, ubuntu-clang-9]
         include:
           - name: ubuntu-gcc-9
             os: ubuntu-latest
             compiler: g++-9
             ccompiler: gcc-9
 
-          # - name: ubuntu-clang-9
-          #   os: ubuntu-latest
-          #   compiler: clang++-9
-          # - name: macos-appleclang-11
-          #   os: macos-latest
+          - name: ubuntu-clang-9
+            os: ubuntu-latest
+            compiler: clang++-9
+            ccompiler: clang-9
 
     steps:
       - uses: actions/checkout@v1
