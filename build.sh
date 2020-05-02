@@ -77,6 +77,7 @@ else
     (cd ${BUILD_DIR} && ${CMAKE} -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${SOURCE_DIR})
 fi
 
+source ${BUILD_DIR}/activate_run.sh
 num_threads=`grep -c '^processor' /proc/cpuinfo`
 ${CMAKE} --build ${BUILD_DIR} -- -j${num_threads}
 ${CMAKE} --build ${BUILD_DIR} --target docs -- -j${num_threads}
@@ -85,5 +86,6 @@ if [ "$COVERAGE" = true ] ; then
     lcov --capture --directory . --output-file ${COVERAGE_OUT}
     lcov --remove coverage.info '/usr/*' --output-file ${COVERAGE_OUT}
 fi
+source ${BUILD_DIR}/deactivate_run.sh
 
 exit 0

@@ -19,14 +19,23 @@ include(clang)
 
 include(conan)
 
+conan_add_remote(NAME bincrafters INDEX 1
+                 URL https://api.bintray.com/conan/bincrafters/public-conan)
+
 conan_cmake_run(REQUIRES doctest/2.3.7
                          poco/1.10.1
                          rapidjson/1.1.0
                          lyra/1.3.0
-                NO_LOAD 1 
-                BUILD poco missing
-                GENERATORS cmake_find_package cmake_paths)
+                         openssl/1.0.2t  # resolve conflict between poco and qt
+                         qt/5.12.7@bincrafters/stable
+                OPTIONS *:shared=True
+                        qt:qtcharts=True
+# For qt we need the original CMake files provided through CMAKE_PREFIX_PATH
+                BASIC_SETUP KEEP_RPATHS
+                BUILD missing
+                GENERATORS cmake_find_package cmake_paths virtualrunenv)
 
+# The other libraries use the conan generated Find***.cmake files provided by "cmake_find_package"
 include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
