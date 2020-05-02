@@ -3,10 +3,14 @@ doctest/2.3.7
 poco/1.10.1
 rapidjson/1.1.0
 lyra/1.3.0
+openssl/1.1.1d
+qt/5.14.2@bincrafters/stable
 
 
 [generators]
 cmake
+cmake_find_package
+cmake_paths
 
 [options]
 poco:enable_mongodb=False

@@ -6,6 +6,9 @@ project(
     LANGUAGES CXX
 )
 
+find_package(Poco REQUIRED)
+find_package(RapidJSON REQUIRED)
+
 set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.hpp"
@@ -28,8 +31,8 @@ target_sources(
 
 target_link_libraries(
     ${PROJECT_NAME}
-    PUBLIC CONAN_PKG::poco
-    PUBLIC CONAN_PKG::rapidjson
+    PUBLIC Poco::Poco
+    PUBLIC RapidJSON::RapidJSON
 )
 
 # IDE stuff
