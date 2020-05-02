@@ -40,7 +40,7 @@ conan_cmake_run(REQUIRES doctest/2.3.7
                         qt:qtcharts=True
 # For qt we need the original CMake files provided through CMAKE_PREFIX_PATH
                 BASIC_SETUP KEEP_RPATHS
-                BUILD missing
+                BUILD missing sqlite3
                 GENERATORS cmake_find_package cmake_paths virtualrunenv)
 
 # The other libraries use the conan generated Find***.cmake files provided by "cmake_find_package"
