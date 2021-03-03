@@ -1,0 +1,4 @@
+image: bbvch/conan_qt-5.14.2_builder_clang9
+
+tasks:
+  - init: cmake .
