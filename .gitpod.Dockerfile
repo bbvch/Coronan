@@ -4,15 +4,30 @@ FROM gitpod/workspace-full-vnc
 
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 
-#install qt
-COPY --from=bbvch/qt:5.14.2 /usr/local/Qt /usr/local/Qt
-ENV Qt5_DIR=/usr/local/Qt
-
 #install qt dependencies
-RUN sudo apt-get -qq install -y mesa-common-dev libglu1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev
 
-RUN sudo apt-get -qq  install -y lcov doxygen graphviz
+RUN sudo cp /etc/apt/sources.list /etc/apt/sources.list~ \
+ && sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
+ && sudo apt-get update
+RUN sudo apt-get -qq build-dep -y qt5-default
+RUN sudo apt-get -qq install -y libxcb-xinerama0-dev \
+ && sudo apt-get -qq install -y '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
+ && sudo apt-get -qq install -y perl 
 
+#install qt
+USER root
+COPY --from=bbvch/qt:5.14.2 /usr/local/Qt /usr/local/Qt/5.14.2
+ENV Qt5_DIR=/usr/local/Qt/5.14.2
+# Install some fonts
+RUN wget https://altushost-swe.dl.sourceforge.net/project/dejavu/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2 \
+&& tar -xf dejavu-fonts-ttf-2.37.tar.bz2 && rm dejavu-fonts-ttf-2.37.tar.bz2 \
+ && mv dejavu-fonts-ttf-2.37/ttf /usr/local/Qt/lib/fonts
+
+USER gitpod
+# lcov and doxygen
+RUN sudo apt-get -qq install -y lcov doxygen graphviz
+
+# conan
 RUN pip3 install conan
 RUN conan profile new default --detect
 
