@@ -1,4 +1,4 @@
-FROM gitpod/workspace-full
+FROM gitpod/workspace-full-vnc
 
 # More information: https://www.gitpod.io/docs/config-docker/
 
