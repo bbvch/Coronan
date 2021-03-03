@@ -4,7 +4,9 @@ set -e
 
 BUILD_DIR=""
 CMAKE=cmake
+CONAN=conan
 COVERAGE=false
+BUILD_DEP=false
 COVERAGE_OUT=""
 BUILD_TYPE=Debug
 
@@ -15,9 +17,11 @@ cat << EOM
 Usage: build.sh [options] build_dir
   Available options:
     -h|--help          Print this help
+    -i|--init          Install dependencies first
     --cov output_file  Build debug version with coverage enabled.
     -r|--release       Build release version. Note: is ignored when --cov is enabled
-    --cmake  path          Path to cmake (default is the system cmake)
+    --conan  path      Path to conan (default is the system conan)
+    --cmake  path      Path to cmake (default is the system cmake)
 EOM
 }
 
@@ -43,8 +47,17 @@ if [ $# -ge 1 ]; then
             BUILD_TYPE=Release
             shift # past argument
             ;;
+        -i|--init)
+            BUILD_DEP=true
+            shift # past argument
+            ;;
         --cmake)
             CMAKE="$2"
+            shift # past argument
+            shift # past value
+            ;;
+        --conan)
+            CONAN="$2"
             shift # past argument
             shift # past value
             ;;
@@ -68,6 +81,11 @@ if [ -z "${BUILD_DIR}" ]; then
 fi
 
 [[ -d "${BUILD_DIR}" ]] || mkdir ${BUILD_DIR}
+
+
+if [ "$BUILD_DEP" = true ] ; then
+    (cd ${BUILD_DIR} && ${CONAN} install --build poco --build missing ..)
+fi
 
 if [ "$COVERAGE" = true ] ; then
     (cd ${BUILD_DIR} && ${CMAKE} -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ..)
