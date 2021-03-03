@@ -43,16 +43,17 @@ jobs:
 
       - name: set-compiler-env
         run: |
-          if [ "${{ matrix.compiler }}" != "" ]; then
-            echo "::set-env name=CXX::${{ matrix.compiler }}"
-            echo "::set-env name=CC::${{matrix.ccompiler }}"
-          fi
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
         shell: bash
-
+        env: 
+          CXX: ${{ matrix.compiler }}
+          CC: ${{ matrix.ccompiler }}
       - name: make-build-dir
         run: mkdir build
+      - name: install-conan-dependencies
+        run: conan install --build poco --build missing ..
+        working-directory: ./build
       - name: cmake-configure-debug
         run: cmake -DCMAKE_BUILD_TYPE=Debug ..
         working-directory: ./build
