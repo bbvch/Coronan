@@ -25,6 +25,9 @@ jobs:
             os: ubuntu-latest
             compiler: clang++-9
             ccompiler: clang-9
+    env: 
+      CXX: ${{ matrix.compiler }}
+      CC: ${{ matrix.ccompiler }}
 
     steps:
       - uses: actions/checkout@v1
@@ -43,16 +46,15 @@ jobs:
 
       - name: set-compiler-env
         run: |
-          if [ "${{ matrix.compiler }}" != "" ]; then
-            echo "::set-env name=CXX::${{ matrix.compiler }}"
-            echo "::set-env name=CC::${{matrix.ccompiler }}"
-          fi
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
         shell: bash
 
       - name: make-build-dir
         run: mkdir build
+      - name: build-conan-packages
+        run:  conan install --build poco --build missing ..
+        working-directory: ./build
       - name: cmake-configure-debug
         run: cmake -DCMAKE_BUILD_TYPE=Debug ..
         working-directory: ./build
