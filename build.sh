@@ -17,7 +17,7 @@ cat << EOM
 Usage: build.sh [options] build_dir
   Available options:
     -h|--help          Print this help
-    -i                 Build and install dependencies first
+    -i|--init          Build and install dependencies first
     --cov output_file  Build debug version with coverage enabled.
     -r|--release       Build release version. Note: is ignored when --cov is enabled
     --cmake  path      Path to cmake cmd (default is the system cmake)
@@ -43,7 +43,7 @@ if [ $# -ge 1 ]; then
             shift # past argument
             shift # past value
             ;;
-        -i)
+        -i|--init)
             BUILD_DEPENDENCIES=true
             shift # past argument
             ;;          

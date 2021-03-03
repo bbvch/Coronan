@@ -2,7 +2,7 @@ image: bbvch/conan_qt-5.14.2_builder_clang9
 
 tasks:
   - before: pip3 install --upgrade conan
-    init: mkdir build && (cd build && conan install --build poco --build missing ..)
+    init: ./build.sh --init build
     command: ./build.sh build
 
 vscode:
