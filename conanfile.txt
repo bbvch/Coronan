@@ -12,3 +12,5 @@ cmake
 poco:enable_mongodb=False
 poco:enable_data=False
 poco:enable_data_sqlite=False
+poco:enable_data_mysql=False
+poco:enable_data_postgresql=False

@@ -19,7 +19,7 @@ include(clang)
 
 include(conan)
 
-conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS BUILD poco missing)
+conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS BUILD missing)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 

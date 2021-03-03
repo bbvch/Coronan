@@ -1,4 +1,11 @@
 image: bbvch/conan_qt-5.14.2_builder_clang9
 
 tasks:
-  - init: cmake .
+  - before: pip3 install --upgrade conan
+    init: mkdir build && (cd build && conan install --build poco --build missing ..)
+    command: ./build.sh build
+
+vscode:
+  extensions:
+    - ms-vscode.cmake-tools@1.6.0:lvoCR5usjseB5thI3sZhWA==
+    - twxs.cmake@0.0.17:aQNzlYa74rJFJ5/BnUF1yA==
