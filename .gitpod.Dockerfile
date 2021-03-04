@@ -21,7 +21,7 @@ ENV Qt5_DIR=/usr/local/Qt/5.14.2
 # Install some fonts
 RUN wget https://altushost-swe.dl.sourceforge.net/project/dejavu/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2 \
 && tar -xf dejavu-fonts-ttf-2.37.tar.bz2 && rm dejavu-fonts-ttf-2.37.tar.bz2 \
- && mv dejavu-fonts-ttf-2.37/ttf /usr/local/Qt/lib/fonts
+ && mv dejavu-fonts-ttf-2.37/ttf /usr/local/Qt/5.14.2/lib/fonts
 
 USER gitpod
 # lcov and doxygen
