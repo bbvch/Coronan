@@ -67,7 +67,7 @@ TEST_CASE("The corona-api parser")
   auto json_object = coronan::api_parser::parse(test_json);
   SUBCASE("returns the country data")
   {
-    REQUIRE(json_object.country_name == "Switzerland");
+    REQUIRE(json_object.name == "Switzerland");
     REQUIRE(json_object.country_code == "CH");
     REQUIRE(json_object.population == 7581000);
   }

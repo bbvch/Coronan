@@ -1,5 +1,7 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/bbvch/Coronan)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/bbvch/Coronan.svg?branch=master)](https://travis-ci.org/bbvch/Coronan)
+[![Build Status Travis](https://travis-ci.org/bbvch/Coronan.svg?branch=master)](https://travis-ci.org/bbvch/Coronan)
+[![CI](https://github.com/bbvch/Coronan/actions/workflows/ci.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg)](https://codecov.io/gh/bbvch/Coronan)
 
 # Documentation for Co[ro]nan
@@ -13,11 +15,14 @@ It reads the current data of Corona (Covid-19) cases for a country from the _The
 
 ## Development
 
-To build the project you need python and [conan (version 1.24 or newer)](https://conan.io/):
+To build the project you need python and a recent [conan version](https://conan.io/):
 ```bash
 #> pip install conan
 ```
 Further a recent version of [CMake](https://cmake.org/) (> 3.10), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
+
+## Gitpod
+To start right away without installing anything on you local machine, you can simply use the [Gitpod ready-to-code](https://gitpod.io/#https://github.com/bbvch/Coronan) Button on top of this README.
 
 ### How to build
 First time to install conan packages and build the project in `build` execute:
