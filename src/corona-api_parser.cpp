@@ -69,7 +69,7 @@ CountryObject parse(std::string const& json)
   document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str());
   auto country_object = CountryObject{};
   auto const country_data_object = document["data"].GetObject();
-  country_object.country_name = country_data_object["name"].GetString();
+  country_object.name = country_data_object["name"].GetString();
   country_object.country_code = country_data_object["code"].GetString();
   country_object.population = country_data_object["population"].GetInt();
   country_object.today =

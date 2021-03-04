@@ -37,11 +37,11 @@ int main(int argc, char* argv[])
     std::cout << "\"datetime\", \"confirmed\", \"death\", \"recovered\", "
                  "\"active\"\n";
 
-    for (auto const& data_points : data.timeline)
+    for (auto const& data_point : data.timeline)
     {
-      std::cout << data_points.date << ", " << data_points.confirmed << ", "
-                << data_points.deaths << ", " << data_points.recovered << ", "
-                << data_points.active << "\n";
+      std::cout << data_point.date << ", " << data_point.confirmed << ", "
+                << data_point.deaths << ", " << data_point.recovered << ", "
+                << data_point.active << "\n";
     }
   }
   catch (coronan::SSLException const& ex)

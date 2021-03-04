@@ -11,7 +11,7 @@ namespace coronan {
  */
 struct CountryObject
 {
-  std::string country_name{}; /**< Country name */
+  std::string name{};         /**< Country name */
   std::string country_code{}; /**< Country Code , e.g. ch */
   int32_t population{};       /**< Country population */
 

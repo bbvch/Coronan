@@ -73,7 +73,7 @@ constexpr auto create_line_chart = [] (coronan::CountryObject const& country_dat
   auto* chart = new QChart{};
 
   chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
-      country_data.country_name.c_str()));
+      country_data.name.c_str()));
 
   auto const confirmed_serie_name = std::string{"Confirmed"};
   auto const death_serie_name = std::string{"Death"};
