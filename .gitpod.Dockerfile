@@ -31,3 +31,6 @@ RUN sudo apt-get -qq install -y lcov doxygen graphviz
 RUN pip3 install conan
 RUN conan profile new default --detect
 
+# cmake-format
+RUN pip3 install cmake-format
+
