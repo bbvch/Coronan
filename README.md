@@ -21,9 +21,6 @@ To build the project you need python and a recent [conan version](https://conan.
 ```
 Further a recent version of [CMake](https://cmake.org/) (> 3.10), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
 
-## Gitpod
-To start right away without installing anything on you local machine, you can simply use the ![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg) Button at the top of this README.
-
 ### How to build
 First time to install conan packages and build the project in `build` execute:
 ```bash
@@ -44,8 +41,8 @@ You can also build it yourself:
 #> cmake --build build
 ```
 
-
-
-
 ### Source Code formatting
 For source code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files and [cmake-format](https://pypi.org/project/cmake-format/) for the CMake files are used.
+
+## Gitpod
+To start right away without installing anything on you local machine, you can simply use the ![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg) Button at the top of this README.
