@@ -1,0 +1,62 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "./build.sh build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "build coverage",
+            "command": "./build.sh --cov build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [ ]
+        },        
+        {
+            "label": "build init",
+            "command": "./build.sh -i build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "/usr/bin/rm -rf build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "unttests",
+            "type": "shell",
+            "command": "/home/linuxbrew/.linuxbrew/bin/cmake --build build --target run_unittests",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "format files",
+            "type": "shell",
+            "command": "./format_source_files.sh",
+            "problemMatcher": [ ]
+        }
+
+    ]
+}
