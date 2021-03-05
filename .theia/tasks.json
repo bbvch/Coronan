@@ -15,7 +15,8 @@
         },
         {
             "label": "build coverage",
-            "command": "./build.sh --cov build",
+            "type": "shell",
+            "command": "./build.sh --cov coverage.info build",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -24,6 +25,7 @@
         },        
         {
             "label": "build init",
+            "type": "shell",
             "command": "./build.sh -i build",
             "group": {
                 "kind": "build",
