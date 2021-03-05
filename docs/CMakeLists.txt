@@ -4,6 +4,6 @@ set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md")
 
 doxygen_add_docs(
     docs coronan/http_client.hpp coronan/corona-api_parser.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md" WORKING_DIRECTORY
-    "${PROJECT_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md"
+    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
 )

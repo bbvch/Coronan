@@ -26,7 +26,7 @@ template <class... Ts> struct overloaded : Ts...
   using Ts::operator()...;
 };
 template <class... Ts>
-overloaded(Ts...)->overloaded<Ts...>; // not needed as of C++20
+overloaded(Ts...) -> overloaded<Ts...>; // not needed as of C++20
 
 constexpr auto update_country_overview_table = [](auto* table,
                                                   auto const& country_data) {
@@ -36,16 +36,14 @@ constexpr auto update_country_overview_table = [](auto* table,
   constexpr auto no_table_entries = 7;
   std::array<
       std::pair<char const*, std::variant<uint32_t, std::optional<double>>>,
-      no_table_entries>
-      overview_table_entries = {
-          {std::make_pair("Population:", country_data.population),
-           std::make_pair("Confirmed:", country_data.latest.confirmed),
-           std::make_pair("Death:", country_data.latest.deaths),
-           std::make_pair("Recovered:", country_data.latest.recovered),
-           std::make_pair("Critical:", country_data.latest.critical),
-           std::make_pair("Death rate:", country_data.latest.death_rate),
-           std::make_pair("Recovery rate::",
-                          country_data.latest.recovery_rate)}};
+      no_table_entries> const overview_table_entries = {
+      {std::make_pair("Population:", country_data.population),
+       std::make_pair("Confirmed:", country_data.latest.confirmed),
+       std::make_pair("Death:", country_data.latest.deaths),
+       std::make_pair("Recovered:", country_data.latest.recovered),
+       std::make_pair("Critical:", country_data.latest.critical),
+       std::make_pair("Death rate:", country_data.latest.death_rate),
+       std::make_pair("Recovery rate::", country_data.latest.recovery_rate)}};
 
   table->setRowCount(no_table_entries);
   for (auto const& pair : overview_table_entries)
@@ -68,72 +66,74 @@ constexpr auto update_country_overview_table = [](auto* table,
   }
 };
 
-constexpr auto create_line_chart = [] (coronan::CountryObject const& country_data)
-{
-  auto* chart = new QChart{};
+constexpr auto create_line_chart =
+    [](coronan::CountryObject const& country_data) {
+      auto* chart = new QChart{};
 
-  chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
-      country_data.name.c_str()));
+      chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
+          country_data.name.c_str()));
 
-  auto const confirmed_serie_name = std::string{"Confirmed"};
-  auto const death_serie_name = std::string{"Death"};
-  auto const recovered_serie_name = std::string{"Recovered"};
+      auto const confirmed_serie_name = std::string{"Confirmed"};
+      auto const death_serie_name = std::string{"Death"};
+      auto const recovered_serie_name = std::string{"Recovered"};
 
-  auto* death_serie = new QLineSeries{};
-  death_serie->setName(death_serie_name.c_str());
-  auto* confirmed_serie = new QLineSeries{};
-  confirmed_serie->setName(confirmed_serie_name.c_str());
-  auto* active_serie = new QLineSeries{};
-  active_serie->setName("Active");
-  auto* recovered_serie = new QLineSeries{};
-  recovered_serie->setName(recovered_serie_name.c_str());
+      auto* death_serie = new QLineSeries{};
+      death_serie->setName(death_serie_name.c_str());
+      auto* confirmed_serie = new QLineSeries{};
+      confirmed_serie->setName(confirmed_serie_name.c_str());
+      auto* active_serie = new QLineSeries{};
+      active_serie->setName("Active");
+      auto* recovered_serie = new QLineSeries{};
+      recovered_serie->setName(recovered_serie_name.c_str());
 
-  std::array<QLineSeries*, 4> series = {
-      {death_serie, confirmed_serie, active_serie, recovered_serie}};
+      std::array<QLineSeries*, 4> series = {
+          {death_serie, confirmed_serie, active_serie, recovered_serie}};
 
-  for (auto const& data_point : country_data.timeline)
-  {
-    QDateTime date = QDateTime::fromString(data_point.date.c_str(),
-                                           "yyyy-MM-ddThh:mm:ss.zZ");
-    auto const msecs_since_epoche = date.toMSecsSinceEpoch();
-    death_serie->append(QPointF(msecs_since_epoche, data_point.deaths));
-    confirmed_serie->append(QPointF(msecs_since_epoche, data_point.confirmed));
-    active_serie->append(QPointF(msecs_since_epoche, data_point.active));
-    recovered_serie->append(QPointF(msecs_since_epoche, data_point.recovered));
-  }
+      for (auto const& data_point : country_data.timeline)
+      {
+        QDateTime date = QDateTime::fromString(data_point.date.c_str(),
+                                               "yyyy-MM-ddThh:mm:ss.zZ");
+        auto const msecs_since_epoche = date.toMSecsSinceEpoch();
+        death_serie->append(QPointF(msecs_since_epoche, data_point.deaths));
+        confirmed_serie->append(
+            QPointF(msecs_since_epoche, data_point.confirmed));
+        active_serie->append(QPointF(msecs_since_epoche, data_point.active));
+        recovered_serie->append(
+            QPointF(msecs_since_epoche, data_point.recovered));
+      }
 
-  for (auto* serie : series)
-  {
-    chart->addSeries(serie);
-  }
+      for (auto* serie : series)
+      {
+        chart->addSeries(serie);
+      }
 
-  auto* axisX = new QDateTimeAxis{};
-  axisX->setFormat("dd/MM  ");
-  axisX->setTitleText("Date");
-  chart->addAxis(axisX, Qt::AlignBottom);
+      auto* axisX = new QDateTimeAxis{};
+      axisX->setFormat("dd/MM  ");
+      axisX->setTitleText("Date");
+      chart->addAxis(axisX, Qt::AlignBottom);
 
-  auto* axisY = new QValueAxis{};
-  axisY->setTitleText("Cases");
-  axisY->setLabelFormat("%i  ");
+      auto* axisY = new QValueAxis{};
+      axisY->setTitleText("Cases");
+      axisY->setLabelFormat("%i  ");
 
-  auto const max_cases = country_data.latest.confirmed;
-  axisY->setRange(0, max_cases);
-  axisY->setLinePenColor(confirmed_serie->pen().color());
-  axisY->setLabelsColor(confirmed_serie->pen().color());
-  axisY->setGridLineColor(confirmed_serie->pen().color());
-  chart->addAxis(axisY, Qt::AlignLeft);
+      auto const max_cases = country_data.latest.confirmed;
+      axisY->setRange(0, max_cases);
+      axisY->setLinePenColor(confirmed_serie->pen().color());
+      axisY->setLabelsColor(confirmed_serie->pen().color());
+      axisY->setGridLineColor(confirmed_serie->pen().color());
+      chart->addAxis(axisY, Qt::AlignLeft);
 
-  for (auto* serie : series)
-  {
-    serie->attachAxis(axisX);
-    serie->attachAxis(axisY);
-  }
-  chart->setTheme(QChart::ChartThemeDark);
-  chart->legend()->setAlignment(Qt::AlignTop);
-  chart->legend()->show();
+      for (auto* serie : series)
+      {
+        serie->attachAxis(axisX);
+        serie->attachAxis(axisY);
+      }
+      chart->setTheme(QChart::ChartThemeDark);
+      chart->legend()->setAlignment(Qt::AlignTop);
+      chart->legend()->show();
 
-  return chart;
-};
+      return chart;
+    };
 
 } // namespace
 
@@ -166,7 +166,7 @@ CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
   qApp->setPalette(pal);
 }
 
-CoronanWidget::~CoronanWidget() { delete m_ui;}
+CoronanWidget::~CoronanWidget() { delete m_ui; }
 
 void CoronanWidget::populate_country_box()
 {
@@ -192,7 +192,8 @@ void CoronanWidget::populate_country_box()
   }
 }
 
-coronan::CountryObject CoronanWidget::get_country_data(std::string const& country_code) const
+coronan::CountryObject
+CoronanWidget::get_country_data(std::string const& country_code) const
 {
   auto const http_response =
       coronan::HTTPClient::get(m_url + std::string{"/"} + country_code);
@@ -207,7 +208,8 @@ void CoronanWidget::update_ui()
   auto const country_data = get_country_data(country_code.toStdString());
   auto* new_chartView = new QChartView{create_line_chart(country_data)};
   new_chartView->setRenderHint(QPainter::Antialiasing, true);
-  auto* old_layout = m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
+  auto* old_layout =
+      m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
   delete old_layout;
   m_chartView = new_chartView;
   update_country_overview_table(m_ui->overviewTable, country_data);

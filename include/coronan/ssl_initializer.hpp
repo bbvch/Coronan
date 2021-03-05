@@ -21,7 +21,8 @@ public:
 
   ~SSLInitializer();
 
-  [[nodiscard]] static std::unique_ptr<SSLInitializer> initialize_with_accept_certificate_handler();
+  [[nodiscard]] static std::unique_ptr<SSLInitializer>
+  initialize_with_accept_certificate_handler();
 
 private:
   Poco::SharedPtr<InvalidCertificateHandler> certificate_handler_ptr;

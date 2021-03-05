@@ -75,9 +75,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
                                 -fconcepts
     )
 elseif(CMAKE_COMPILER_IS_CLANGCXX)
-    target_compile_options(${PROJECT_NAME} 
-        PRIVATE 
-            -Wno-gnu-zero-variadic-macro-arguments 
+    target_compile_options(
+        ${PROJECT_NAME} PRIVATE -Wno-gnu-zero-variadic-macro-arguments
     )
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
