@@ -89,7 +89,9 @@ target_compile_options(
                            $<$<BOOL:UNIX>:-fPIC;>
 )
 
-install(TARGETS coronan_qt
+install(
+    TARGETS coronan_qt
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

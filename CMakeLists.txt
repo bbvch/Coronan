@@ -73,38 +73,44 @@ include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
 configure_package_config_file(
-    ${PROJECT_SOURCE_DIR}/cmake/Coronan.cmake.in
-    ${PROJECT_NAME}Config.cmake
-    INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake)
+    ${PROJECT_SOURCE_DIR}/cmake/Coronan.cmake.in ${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+)
 
 write_basic_package_version_file(
     ${PROJECT_NAME}ConfigVersion.cmake
     VERSION ${PACKAGE_VERSION}
-    COMPATIBILITY AnyNewerVersion)
+    COMPATIBILITY AnyNewerVersion
+)
 
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
 
-install(TARGETS coronan coverage_config
+install(
+    TARGETS coronan coverage_config
     EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
-install(EXPORT ${PROJECT_NAME}Targets
+install(
+    EXPORT ${PROJECT_NAME}Targets
     FILE ${PROJECT_NAME}Targets.cmake
     NAMESPACE coronan::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/html
-    DESTINATION ${CMAKE_INSTALL_DOCDIR})
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}
+)
 
-install(FILES LICENSE
-    DESTINATION ${CMAKE_INSTALL_DOCDIR})
+install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 include(CPackConfig.cmake)
