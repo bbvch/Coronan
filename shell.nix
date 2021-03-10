@@ -18,12 +18,14 @@ in mkShell {
     ninja
     clang
     clang-tools
+    dpkg
     cmake
     ccache
     qt5.full
     libGLU
     python-with-my-packages
     lcov
+    perl
     doxygen
     graphviz
   ];

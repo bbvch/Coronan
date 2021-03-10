@@ -8,6 +8,7 @@ CONAN=conan
 COVERAGE=false
 COVERAGE_OUT=""
 BUILD_TYPE=Debug
+BUILD_TARGET=""
 
 
 
@@ -20,6 +21,8 @@ Usage: build.sh [options] build_dir
     -r|--release       Build release version. Note: is ignored when --cov is enabled
     --conan  path      Path to conan (default is the system conan)
     --cmake  path      Path to cmake (default is the system cmake)
+    -i                 Install
+    -p                 Create package
 EOM
 }
 
@@ -59,6 +62,14 @@ if [ $# -ge 1 ]; then
             print_usage
             exit 1
             ;;
+        -i)
+            BUILD_TARGET="--target install"
+            shift # past argument
+            ;;
+        -p)
+            BUILD_TARGET="--target package"
+            shift # past argument
+            ;;
         *)
             BUILD_DIR=$1
             shift # past argument
@@ -84,12 +95,13 @@ fi
 if [ "$COVERAGE" = true ] ; then
     (cd ${BUILD_DIR} && ${CMAKE} ${CMAKE_GENERATOR} -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ..)
 else
-    (cd ${BUILD_DIR} && ${CMAKE} ${CMAKE_GENERATOR} -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..)
+    (cd ${BUILD_DIR} && ${CMAKE} ${CMAKE_GENERATOR} -DCODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..)
 fi
 
 num_threads=`grep -c '^processor' /proc/cpuinfo`
-${CMAKE} --build ${BUILD_DIR} -- -j${num_threads}
 ${CMAKE} --build ${BUILD_DIR} --target docs -- -j${num_threads}
+${CMAKE} --build ${BUILD_DIR} ${BUILD_TARGET} -- -j${num_threads}
+
 
 if [ "$COVERAGE" = true ] ; then
     lcov --capture --directory . --output-file ${COVERAGE_OUT}
