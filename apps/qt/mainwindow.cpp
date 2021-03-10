@@ -48,8 +48,8 @@ constexpr auto update_country_overview_table = [](auto* table,
   table->setRowCount(no_table_entries);
   for (auto const& pair : overview_table_entries)
   {
-    table->setItem(row_index, label_col_index,
-                   new QTableWidgetItem{pair.first});
+    auto* const label_widget = new QTableWidgetItem{pair.first};
+    table->setItem(row_index, label_col_index, label_widget);
     auto const value_str =
         std::visit(overloaded{
                        [](uint32_t arg) { return QString::number(arg); },
@@ -60,7 +60,8 @@ constexpr auto update_country_overview_table = [](auto* table,
                    },
                    pair.second);
 
-    table->setItem(row_index, value_col_index, new QTableWidgetItem{value_str});
+    auto* const value_widget = new QTableWidgetItem{value_str};
+    table->setItem(row_index, value_col_index, value_widget);
 
     row_index++;
   }
@@ -68,7 +69,7 @@ constexpr auto update_country_overview_table = [](auto* table,
 
 constexpr auto create_line_chart =
     [](coronan::CountryObject const& country_data) {
-      auto* chart = new QChart{};
+      auto* const chart = new QChart{};
 
       chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
           country_data.name.c_str()));
@@ -77,13 +78,13 @@ constexpr auto create_line_chart =
       auto const death_serie_name = std::string{"Death"};
       auto const recovered_serie_name = std::string{"Recovered"};
 
-      auto* death_serie = new QLineSeries{};
+      auto* const death_serie = new QLineSeries{};
       death_serie->setName(death_serie_name.c_str());
-      auto* confirmed_serie = new QLineSeries{};
+      auto* const confirmed_serie = new QLineSeries{};
       confirmed_serie->setName(confirmed_serie_name.c_str());
-      auto* active_serie = new QLineSeries{};
+      auto* const active_serie = new QLineSeries{};
       active_serie->setName("Active");
-      auto* recovered_serie = new QLineSeries{};
+      auto* const recovered_serie = new QLineSeries{};
       recovered_serie->setName(recovered_serie_name.c_str());
 
       std::array<QLineSeries*, 4> series = {
@@ -107,12 +108,12 @@ constexpr auto create_line_chart =
         chart->addSeries(serie);
       }
 
-      auto* axisX = new QDateTimeAxis{};
+      auto* const axisX = new QDateTimeAxis{};
       axisX->setFormat("dd/MM  ");
       axisX->setTitleText("Date");
       chart->addAxis(axisX, Qt::AlignBottom);
 
-      auto* axisY = new QValueAxis{};
+      auto* const axisY = new QValueAxis{};
       axisY->setTitleText("Cases");
       axisY->setLabelFormat("%i  ");
 
@@ -206,7 +207,7 @@ void CoronanWidget::update_ui()
       m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
           .toString();
   auto const country_data = get_country_data(country_code.toStdString());
-  auto* new_chartView = new QChartView{create_line_chart(country_data)};
+  auto* const new_chartView = new QChartView{create_line_chart(country_data)};
   new_chartView->setRenderHint(QPainter::Antialiasing, true);
   auto* old_layout =
       m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);

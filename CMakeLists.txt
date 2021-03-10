@@ -7,6 +7,11 @@ project(
     LANGUAGES CXX
 )
 
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
+endif()
+
 option(BUILD_TESTING "Build the testing tree." ON)
 option(CODE_COVERAGE "Enable coverage reporting" OFF)
 
@@ -56,8 +61,8 @@ endif()
 add_subdirectory(src)
 
 # Only build tests if we are the top-level project
+include(CTest)
 if(BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
-    include(CTest)
     add_subdirectory(tests)
 endif()
 

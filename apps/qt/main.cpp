@@ -15,13 +15,15 @@ int main(int argc, char* argv[])
   try
   {
 
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     QMainWindow window;
-    CoronanWidget* widget = new CoronanWidget(api_url);
+    auto* const widget = new CoronanWidget(api_url);
     window.setCentralWidget(widget);
-    window.resize(900, 600);
+    auto const window_width = 900;
+    auto const window_height = 600;
+    window.resize(window_width, window_height);
     window.show();
-    return a.exec();
+    return app.exec();
   }
   catch (coronan::SSLException const& ex)
   {

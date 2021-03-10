@@ -18,7 +18,8 @@ add_executable(
     ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui
 )
 
-add_executable(coronan::App ALIAS ${PROJECT_NAME})
+add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME coronanApp)
 
 find_package(
     Qt5
@@ -29,7 +30,7 @@ find_package(Qt5Core CONFIG REQUIRED)
 
 target_link_libraries(
     ${PROJECT_NAME}
-    PRIVATE coronan::lib
+    PRIVATE coronan::coronan_lib
     PRIVATE Qt5::Charts
 )
 
@@ -59,6 +60,7 @@ target_compile_options(
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
+            $<$<CONFIG:Debug>:-Og>
             $<$<CONFIG:Release>:-O3>
 )
 
@@ -86,9 +88,3 @@ target_compile_options(
     ${PROJECT_NAME} PUBLIC $<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>
                            $<$<BOOL:UNIX>:-fPIC;>
 )
-
-if(CLANG_TIDY_EXE AND NOT CMAKE_COMPILER_IS_GNUCXX)
-    set_target_properties(
-        ${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_PROPERTIES}"
-    )
-endif()

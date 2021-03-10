@@ -8,11 +8,12 @@ project(
 
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
-add_executable(coronan::Cmd ALIAS ${PROJECT_NAME})
+add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME coronan)
 
 target_link_libraries(
     ${PROJECT_NAME}
-    PRIVATE coronan::lib
+    PRIVATE coronan::coronan_lib
     PRIVATE CONAN_PKG::lyra
 )
 
@@ -43,6 +44,7 @@ target_compile_options(
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
+            $<$<CONFIG:Debug>:-Og>
             $<$<CONFIG:Release>:-O3>
 )
 

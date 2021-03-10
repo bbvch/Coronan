@@ -74,7 +74,8 @@ CountryObject parse(std::string const& json)
   country_object.population = country_data_object["population"].GetInt();
   country_object.today =
       parse_today_data(country_data_object["today"].GetObject());
-  auto const current_date = country_data_object["updated_at"].GetString();
+  auto const* const current_date =
+      country_data_object["updated_at"].GetString();
   country_object.today.date = current_date;
   country_object.latest =
       parse_lates_data(country_data_object["latest_data"].GetObject());
