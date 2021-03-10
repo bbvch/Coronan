@@ -13,7 +13,7 @@ RUN sudo apt-get -qq build-dep -y qt5-default
 RUN sudo apt-get -qq install -y libxcb-xinerama0-dev \
  && sudo apt-get -qq install -y '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
  && sudo apt-get -qq install -y perl 
-RUN sudo apt-get -qq install -y clang-11
+
 
 #install qt
 USER root
@@ -34,4 +34,7 @@ RUN conan profile new default --detect
 
 # cmake-format
 RUN pip3 install cmake-format
+
+# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
+RUN sudo apt-get -qq install -y clang-11 clang-10
 
