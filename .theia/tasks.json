@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "./build.sh build",
+            "command": "./build.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -16,23 +16,23 @@
         {
             "label": "build coverage",
             "type": "shell",
-            "command": "./build.sh --cov coverage.info build",
+            "command": "./build.sh --cov=coverage.info",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [ ]
-        },        
+        }, 
         {
-            "label": "build init",
+            "label": "build release",
             "type": "shell",
-            "command": "./build.sh -i build",
+            "command": "./build.sh -r",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [ ]
-        },
+        },         
         {
             "label": "clean",
             "type": "shell",
@@ -44,7 +44,7 @@
             "problemMatcher": [ ]
         },
         {
-            "label": "unttests",
+            "label": "unittests",
             "type": "shell",
             "command": "/home/linuxbrew/.linuxbrew/bin/cmake --build build --target run_unittests",
             "group": {

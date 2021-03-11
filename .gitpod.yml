@@ -2,9 +2,9 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - before: pip3 install --upgrade conan
-    init: ./build.sh build
-    command: ./build.sh build
+  - init: pip3 install --upgrade conan
+    command: ./build.sh
+
 
 vscode:
   extensions:

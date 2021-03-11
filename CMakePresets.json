@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "coverage",
+      "hidden": true,
+      "description": "Configure coverage",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CODE_COVERAGE": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      }
+    },
+    {
+      "name": "linux",
+      "description": "Sets generator, build and install directory",
+      "binaryDir": "${sourceDir}/build",
+      "generator": "Unix Makefiles",
+      "cacheVariables": {
+        "CODE_COVERAGE": {
+          "type": "BOOL",
+          "value": "OFF"
+        },
+        "BUILD_TESTING": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      }
+    },
+    {
+      "name": "linux-coverage",
+      "description": "Configure coverage",
+      "inherits": ["coverage", "linux" ]
+    },
+    {
+      "name": "linux-ninja",
+      "description": "Configure debug build",
+      "inherits": "linux",
+      "generator": "Ninja"
+    },
+    {
+      "name": "linux-coverage-ninja",
+      "description": "Configure coverage",
+      "inherits": [ "coverage", "linux-ninja" ]
+    }
+  ]
+}
