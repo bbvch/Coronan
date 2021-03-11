@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10..3.16)
 
 project(
-    coronan_lib
+    coronan
     VERSION 0.1
     LANGUAGES CXX
 )
@@ -14,10 +14,12 @@ set(HEADER_LIST
 
 add_library(${PROJECT_NAME} STATIC ${HEADER_LIST})
 
-add_library(coronan::lib ALIAS ${PROJECT_NAME})
+add_library(${PROJECT_NAME}::coronan_lib ALIAS ${PROJECT_NAME})
 
 target_include_directories(
-    ${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include
+    ${PROJECT_NAME}
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 target_sources(
@@ -66,6 +68,7 @@ target_compile_options(
             -Wstrict-overflow=5
             -Wswitch-default
             -Wundef
+            $<$<CONFIG:Debug>:-Og>
             $<$<CONFIG:Release>:-O3>
 )
 

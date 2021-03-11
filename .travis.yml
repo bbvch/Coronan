@@ -31,11 +31,11 @@ before_install:
   - DOCKER_WORKDIR="/workspace"
   - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
   - docker pull ${DOCKER_IMAGE}
-  - BUILD_CMD="./build.sh -i build"
+  - BUILD_CMD="./build.sh build"
   - COVERAGE_FILE="coverage.info"
   - touch ${COVERAGE_FILE}
-  - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh -i --cov ${COVERAGE_FILE} build" ; fi
-  - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -i -r build" ; fi
+  - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh --cov ${COVERAGE_FILE} build" ; fi
+  - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -r build" ; fi
 
 script: docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ${BUILD_CMD}"
 

@@ -3,7 +3,7 @@ image:
 
 tasks:
   - before: pip3 install --upgrade conan
-    init: ./build.sh --init build
+    init: ./build.sh build
     command: ./build.sh build
 
 vscode:

@@ -2,10 +2,15 @@ cmake_minimum_required(VERSION 3.10)
 
 project(
     Coronan
-    VERSION 0.1
+    VERSION 0.1.0
     DESCRIPTION "Conan example project showing Covid-19 cases."
     LANGUAGES CXX
 )
+
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
+endif()
 
 option(BUILD_TESTING "Build the testing tree." ON)
 option(CODE_COVERAGE "Enable coverage reporting" OFF)
@@ -56,10 +61,56 @@ endif()
 add_subdirectory(src)
 
 # Only build tests if we are the top-level project
+include(CTest)
 if(BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
-    include(CTest)
     add_subdirectory(tests)
 endif()
 
 add_subdirectory(apps/cli)
 add_subdirectory(apps/qt)
+
+include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
+
+configure_package_config_file(
+    ${PROJECT_SOURCE_DIR}/cmake/Coronan.cmake.in ${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+)
+
+write_basic_package_version_file(
+    ${PROJECT_NAME}ConfigVersion.cmake
+    VERSION ${PACKAGE_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+install(
+    TARGETS coronan coverage_config
+    EXPORT ${PROJECT_NAME}Targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(
+    EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    NAMESPACE coronan::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/html
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}
+)
+
+install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DOCDIR})
+
+include(CPackConfig.cmake)

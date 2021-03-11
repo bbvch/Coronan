@@ -16,13 +16,15 @@ target_sources(
             ${CMAKE_CURRENT_LIST_DIR}/corona-api_json_parser_test.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE coronan::lib CONAN_PKG::doctest)
+target_link_libraries(
+    ${PROJECT_NAME} PRIVATE coronan::coronan_lib CONAN_PKG::doctest
+)
 
 target_compile_options(
     ${PROJECT_NAME}
     PRIVATE -Wall
-            -Werror
             -Wextra
+            -Werror
             -pedantic
             -Wcast-align
             -Wconversion
@@ -57,12 +59,6 @@ elseif(CMAKE_COMPILER_IS_CLANGCXX)
         ${PROJECT_NAME} PRIVATE -Wno-gnu-zero-variadic-macro-arguments
     )
 endif(CMAKE_COMPILER_IS_GNUCXX)
-
-if(CLANG_TIDY_EXE AND NOT CMAKE_COMPILER_IS_GNUCXX)
-    set_target_properties(
-        ${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_PROPERTIES}"
-    )
-endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 

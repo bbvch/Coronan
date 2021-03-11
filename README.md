@@ -45,3 +45,6 @@ For source code formatting [clang-format](https://clang.llvm.org/docs/ClangForma
 
 ## Gitpod
 To start right away without installing anything on you local machine, you can simply use the ![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg) Button at the top of this README.
+
+## direnv & Nix
+If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you preface clang (clang_11) change it in [.envrc](.envrc)
