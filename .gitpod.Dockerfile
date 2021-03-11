@@ -6,17 +6,6 @@ FROM gitpod/workspace-full-vnc:commit-0d86f18fcb06832838d2cb77636d2c1a6a7dbe6c
 
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 
-#install qt dependencies
-
-USER root
-RUN cp /etc/apt/sources.list /etc/apt/sources.list~ \
- && sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
- && apt-get update
-RUN apt-get -qq build-dep -y qt5-default
-RUN apt-get -qq install -y --no-install-recommends libxcb-xinerama0-dev \
- && apt-get -qq install -y --no-install-recommends '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
- && apt-get -qq install -y --no-install-recommends perl 
-
 #install qt
 
 COPY --from=qt_builder /usr/local/Qt /usr/local/Qt/5.14.2
@@ -25,6 +14,16 @@ ENV Qt5_DIR=/usr/local/Qt/5.14.2
 RUN wget https://altushost-swe.dl.sourceforge.net/project/dejavu/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2 \
 && tar -xf dejavu-fonts-ttf-2.37.tar.bz2 && rm dejavu-fonts-ttf-2.37.tar.bz2 \
  && mv dejavu-fonts-ttf-2.37/ttf /usr/local/Qt/5.14.2/lib/fonts
+
+#install qt dependencies
+
+USER root
+RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
+ && apt-get update
+RUN apt-get -qq build-dep -y qt5-default
+RUN apt-get -qq install -y --no-install-recommends libxcb-xinerama0-dev \
+ && apt-get -qq install -y --no-install-recommends '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
+ && apt-get -qq install -y --no-install-recommends perl 
 
 # lcov and doxygen
 RUN apt-get -qq install -y --no-install-recommends lcov doxygen graphviz
