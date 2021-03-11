@@ -4,16 +4,31 @@ with pkgs;
 let
   gcc = gcc10;
   clang = clang_11;
-  my-python-packages = python-packages:
-    with python-packages; [
-      conan
+  mach-nix = import (builtins.fetchGit {
+    url = "https://github.com/DavHau/mach-nix/";
+    ref = "refs/tags/3.1.1";
+  }) {
+    python = "python38";
+  };
+ 
+  conan-python = mach-nix.buildPythonPackage {
+    src = builtins.fetchGit{
+      url = "https://github.com/conan-io/conan.git";
+      ref = "1.34.1";
+    };
+  };
+ 
+ cmake-format-python = mach-nix.mkPython {
+    requirements = ''
       cmake-format
-    ];
-  python-with-my-packages = python3.withPackages my-python-packages;
+    '';
+  };
 
 in mkShell {
   hardeningDisable = [ "all" ];
   buildInputs = [
+    conan-python
+    cmake-format-python
     gcc
     ninja
     clang
@@ -23,7 +38,6 @@ in mkShell {
     ccache
     qt5.full
     libGLU
-    python-with-my-packages
     lcov
     perl
     doxygen
