@@ -10,6 +10,8 @@ cache: # see https://docs.travis-ci.com/user/caching/
     - $HOME/.cache
 
 env:
+  global:
+    - CODACY_PROJECT_TOKEN=03851e6e31c544248a4f5f799a7eac4c
   matrix:
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7 COVERAGE=1 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8 COVERAGE=0 BUILD_TYPE=Debug
@@ -41,3 +43,4 @@ script: docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKD
 
 after_success:
   - if [ "${COVERAGE}" = '1' ] ; then bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports' ; fi
+  - if [ "${COVERAGE}" = '1' ] ; then bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports' ; fi
