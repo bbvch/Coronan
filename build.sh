@@ -80,7 +80,6 @@ fi
 
 [[ -d "${BUILD_DIR}" ]] || mkdir "${BUILD_DIR}"
 
-
 if command -v ninja &> /dev/null ]
 then
     CMAKE_GENERATOR="-G Ninja"
@@ -95,7 +94,6 @@ fi
 num_threads=$(grep -c '^processor' /proc/cpuinfo)
 "${CMAKE}" --build "${BUILD_DIR}" --target docs -- -j"${num_threads}"
 "${CMAKE}" --build "${BUILD_DIR}" ${BUILD_TARGET} -- -j"${num_threads}"
-
 
 if [ "$COVERAGE" = true ] ; then
     lcov --capture --directory . --output-file "${COVERAGE_OUT}"

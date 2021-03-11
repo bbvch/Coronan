@@ -46,3 +46,6 @@ RUN pip3 install cmake-format==0.6.13
 
 
 
+# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
+RUN sudo apt-get -qq install -y clang-11 clang-10
+
