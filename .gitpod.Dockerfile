@@ -31,6 +31,9 @@ RUN apt-get -qq install -y --no-install-recommends clang-11 clang-10
 
 RUN apt-get -qq install -y --no-install-recommends ninja-build
 
+# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
+RUN apt-get -qq install -y clang-11 clang-10
+
 RUN apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -43,6 +46,5 @@ RUN conan profile new default --detect
 # cmake-format
 RUN pip3 install cmake-format==0.6.13
 
-# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
-RUN sudo apt-get -qq install -y clang-11 clang-10
+
 
