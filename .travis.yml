@@ -7,8 +7,7 @@ services:
 
 cache: # see https://docs.travis-ci.com/user/caching/
 - directories:
-    - $HOME/.cache
-    - $HOME/nix.store
+    - $HOME/.ccache
     - $HOME/.conan/data
 
 env:
@@ -16,10 +15,6 @@ env:
     - CODACY_PROJECT_TOKEN=03851e6e31c544248a4f5f799a7eac4c
     - DOCKER_WORKDIR="/workspace"
     - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
-
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7 COVERAGE=0 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8 COVERAGE=0 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9 COVERAGE=0 BUILD_TYPE=Release
 
 notifications:
   email:
@@ -97,13 +92,6 @@ jobs:
       name: "nix build ninja gcc10"
       before_script:
       - sudo mkdir -p /etc/nix && echo 'sandbox = true' | sudo tee /etc/nix/nix.conf
-      before_cache:
-        - mkdir -p $HOME/nix.store
-        - nix copy --to file://$HOME/nix.store -f ${TRAVIS_BUILD_DIR}/default.nix buildInputs
-      before_install:
-      - sudo mkdir -p /etc/nix
-      - echo "substituters = https://cache.nixos.org/ file://$HOME/nix.store" | sudo tee -a /etc/nix/nix.conf > /dev/null
-      - echo 'require-sigs = false' | sudo tee -a /etc/nix/nix.conf > /dev/null
       script:
         - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
         - nix-shell --command "cmake --build build"
