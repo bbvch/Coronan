@@ -4,9 +4,9 @@
 	"version": "2.0.0",
 	"tasks": [
         {
-            "label": "build gcc",
+            "label": "build gcc debug",
             "type": "shell",
-            "command": "cmake -S . --preset=linux-ninja && cmake --build build",
+            "command": "cmake --build build",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -14,44 +14,75 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": [ ]
+            "problemMatcher": [ ],
+            "dependsOn": "configure gcc"
         },
         {
             "label": "build gcc release",
             "type": "shell",
-            "command": "cmake -S . --preset=linux-release-ninja && cmake --build build",
+            "command": "cmake --build build",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [ ]
+            "group": "build",
+            "problemMatcher": [ ],
+            "dependsOn": "configure gcc release"
         },
         {
-            "label": "build clang",
+            "label": "build clang debug",
             "type": "shell",
-            "command": "cmake -S . --preset=linux-ninja-clang && cmake --build build",
+            "command": "cmake --build build",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [ ]
+            "group": "build",
+            "problemMatcher": [ ],
+            "dependsOn": "configure clang"
         },
         {
             "label": "build clang release",
             "type": "shell",
-            "command": "cmake -S . --preset=linux-release-ninja-clang && cmake --build build",
+            "command": "cmake --build build",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "group": {
-                "kind": "build",
-                "isDefault": true
+            "group": "build",
+            "problemMatcher": [ ],
+            "dependsOn": "configure clang release"
+        },
+        {
+            "label": "configure gcc",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-ninja",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "configure gcc release",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-release-ninja",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "configure clang",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-ninja-clang",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "configure clang release",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-release-ninja-clang",
+            "options": {
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [ ]
         },          
@@ -59,16 +90,16 @@
             "label": "clean",
             "type": "shell",
             "command": "/usr/bin/rm -rf build",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "problemMatcher": [ ]
         },
         {
             "label": "unittests",
             "type": "shell",
-            "command": "/home/linuxbrew/.linuxbrew/bin/cmake --build build --target run_unittests",
+            "command": "cmake --build build --target run_unittests",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": {
                 "kind": "test",
                 "isDefault": true
