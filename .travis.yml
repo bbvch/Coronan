@@ -12,12 +12,9 @@ cache: # see https://docs.travis-ci.com/user/caching/
 env:
   global:
     - CODACY_PROJECT_TOKEN=03851e6e31c544248a4f5f799a7eac4c
-  matrix:
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7 COVERAGE=1 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8 COVERAGE=0 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9 COVERAGE=0 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang50 COVERAGE=0 BUILD_TYPE=Debug
-    - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang60 COVERAGE=0 BUILD_TYPE=Debug
+    - DOCKER_WORKDIR="/workspace"
+    - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
+
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8 COVERAGE=0 BUILD_TYPE=Debug
     - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9 COVERAGE=0 BUILD_TYPE=Release
@@ -31,17 +28,59 @@ notifications:
 
 before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - DOCKER_WORKDIR="/workspace"
-  - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
-  - docker pull ${DOCKER_IMAGE}
-  - BUILD_CMD="./build.sh"
-  - COVERAGE_FILE="coverage.info"
-  - touch ${COVERAGE_FILE}
-  - if [ "${COVERAGE}" == '1' ] ; then BUILD_CMD="./build.sh --cov=${COVERAGE_FILE}" ; fi
-  - if [ "${BUILD_TYPE}" == 'Release' ] ; then BUILD_CMD="./build.sh -r" ; fi
 
-script: docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ${BUILD_CMD}"
+jobs:
+  include:
+    - language: cpp
+      name: "gcc7 coverage"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh --cov=${COVERAGE_FILE}"
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
+        - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
+    - language: cpp
+      name: "gcc8 debug"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+    - language: cpp
+      name: "gcc9 debug"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+    - language: cpp
+      name: "gcc9 release"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
+    - language: cpp
+      name: "clang7 debug"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+    - language: cpp
+      name: "clang9 debug"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+    - language: cpp
+      name: "clang9 release"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
+      - COVERAGE_FILE="coverage.info"
+      script:
+        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
 
-after_success:
-  - if [ "${COVERAGE}" = '1' ] ; then bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports' ; fi
-  - if [ "${COVERAGE}" = '1' ] ; then bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports' ; fi
