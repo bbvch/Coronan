@@ -103,7 +103,7 @@ jobs:
       - nix-shell --command "cmake --build --preset=linux-build"
       - mkdir -p $HOME/nix.store
       before_cache:
-      - nix copy --to file://$HOME/nix.store -f default.nix $(type -p cmake) $(type -p conan) $(type -p cmake-format)
+      - nix-shell --command "nix copy --to file://$HOME/nix.store -f default.nix $(type -p cmake) $(type -p conan) $(type -p cmake-format)"
 
     - language: nix
       name: "nix build ninja clang11"
