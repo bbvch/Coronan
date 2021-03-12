@@ -4,6 +4,7 @@ with pkgs;
 let
   gcc = gcc10;
   clang = clang_11;
+  
   mach-nix = import (builtins.fetchGit {
     url = "https://github.com/DavHau/mach-nix/";
     ref = "refs/tags/3.1.1";
@@ -20,7 +21,7 @@ let
  
  cmake-format-python = mach-nix.mkPython {
     requirements = ''
-      cmake-format
+      cmake-format>=0.6.13
     '';
   };
 
