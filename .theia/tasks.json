@@ -4,49 +4,102 @@
 	"version": "2.0.0",
 	"tasks": [
         {
-            "label": "build",
+            "label": "build gcc debug",
             "type": "shell",
-            "command": "./build.sh build",
+            "command": "cmake --build build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "problemMatcher": [ ],
+            "dependsOn": "configure gcc"
+        },
+        {
+            "label": "build gcc release",
+            "type": "shell",
+            "command": "cmake --build build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [ ],
+            "dependsOn": "configure gcc release"
+        },
+        {
+            "label": "build clang debug",
+            "type": "shell",
+            "command": "cmake --build build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [ ],
+            "dependsOn": "configure clang"
+        },
+        {
+            "label": "build clang release",
+            "type": "shell",
+            "command": "cmake --build build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [ ],
+            "dependsOn": "configure clang release"
+        },
+        {
+            "label": "configure gcc",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-ninja",
+            "options": {
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [ ]
         },
         {
-            "label": "build coverage",
+            "label": "configure gcc release",
             "type": "shell",
-            "command": "./build.sh --cov coverage.info build",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [ ]
-        },        
-        {
-            "label": "build init",
-            "type": "shell",
-            "command": "./build.sh -i build",
-            "group": {
-                "kind": "build",
-                "isDefault": true
+            "command": "cmake -S . --preset=linux-release-ninja",
+            "options": {
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [ ]
         },
+        {
+            "label": "configure clang",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-ninja-clang",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [ ]
+        },
+        {
+            "label": "configure clang release",
+            "type": "shell",
+            "command": "cmake -S . --preset=linux-release-ninja-clang",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [ ]
+        },          
         {
             "label": "clean",
             "type": "shell",
             "command": "/usr/bin/rm -rf build",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "problemMatcher": [ ]
         },
         {
-            "label": "unttests",
+            "label": "unittests",
             "type": "shell",
-            "command": "/home/linuxbrew/.linuxbrew/bin/cmake --build build --target run_unittests",
+            "command": "cmake --build build --target run_unittests",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": {
                 "kind": "test",
                 "isDefault": true
