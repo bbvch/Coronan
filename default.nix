@@ -25,6 +25,24 @@ let
     '';
   };
 
+cmake-rc = stdenv.mkDerivation {
+  pname = "cmake";
+  version = "3.20.0-rc4";
+
+  src = fetchurl {
+    url = "https://github.com/Kitware/CMake/releases/download/v3.20.0-rc4/cmake-3.20.0-rc4.tar.gz";
+    sha256 = "34cda5a38a627e799658d8bb15982701ca5e542e112d88396d42596a03037c7c";
+  };
+
+  buildInputs = [
+    openssl
+    cmake
+    ccache
+    ninja
+  ];
+
+};
+
 in mkShell {
   hardeningDisable = [ "all" ];
   buildInputs = [
@@ -35,6 +53,7 @@ in mkShell {
     clang
     clang-tools
     dpkg
+    cmake-rc
     cmake
     ccache
     qt5.full

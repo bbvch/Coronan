@@ -1,8 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 19,
+    "minor": 20,
     "patch": 0
   },
   "configurePresets": [
@@ -92,6 +92,27 @@
       "name": "linux-release-ninja-clang",
       "description": "Configure debug build",
       "inherits":["release", "linux-ninja-clang" ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-build",
+      "configurePreset": "linux"
+    },
+    {
+      "name": "linux-clean-build",
+      "inherits": "linux-build",
+      "cleanFirst": true
+    },
+    {
+      "name": "linux-build-doc",
+      "inherits": "linux-build",
+      "targets": [ "docs" ]
+    },
+    {
+      "name": "linux-build-package",
+      "inherits": "linux-build",
+      "targets": [ "package" ]
     }
   ]
 }
