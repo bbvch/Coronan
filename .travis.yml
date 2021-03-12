@@ -96,3 +96,11 @@ jobs:
         - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
         - nix-shell --command "cmake --build build"
 
+    - language: nix
+      name: "nix build ninja clang11"
+      before_script:
+      - sudo mkdir -p /etc/nix && echo 'sandbox = true' | sudo tee /etc/nix/nix.conf
+      script:
+        - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja-clang"
+        - nix-shell --command "cmake --build build"
+
