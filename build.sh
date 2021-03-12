@@ -79,26 +79,13 @@ fi
 
 if [ command -v ninja &> /dev/null ]
 then
-    NINJA="-ninja"
     CMAKE_GENERATOR="-G Ninja"
 fi
 
-required_cmake_version="3.19.0"
-cmake_version=$("${CMAKE}" --version | head -n1 | cut -d" " -f3)
-
-if [ "$(printf '%s\n' "$required_cmake_version" "$cmake_version" | sort -V | head -n1)" = "$required_cmake_version" ]; then 
-    # Use CMake presets starting from cmake 3.19.0
-    if [ "$COVERAGE" = true ] ; then
-        "${CMAKE}" -S . --preset=linux-coverage"${NINJA}"
-    else
-        "${CMAKE}" -S . --preset=linux"${NINJA}" -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" -DCMAKE_CXX_COMPILER="${COMPILER}"
-    fi
-else   
-    if [ "$COVERAGE" = true ] ; then
-        "${CMAKE}" -S . -B ${BUILD_DIR} $CMAKE_GENERATOR -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
-    else
-        "${CMAKE}" -S . -B ${BUILD_DIR} $CMAKE_GENERATOR -DCMAKE_CXX_COMPILER="${COMPILER}" -DCODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-    fi
+if [ "$COVERAGE" = true ] ; then
+    "${CMAKE}" -S . -B ${BUILD_DIR} $CMAKE_GENERATOR -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
+else
+    "${CMAKE}" -S . -B ${BUILD_DIR} $CMAKE_GENERATOR -DCMAKE_CXX_COMPILER="${COMPILER}" -DCODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
 fi
 
 num_threads=$(grep -c '^processor' /proc/cpuinfo)

@@ -20,11 +20,34 @@
       }
     },
     {
+      "name": "release",
+      "hidden": true,
+      "description": "Configure release build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ninja",
+      "hidden": true,
+      "description": "Configure release build",
+      "generator": "Ninja"
+    },
+    {
+      "name": "clang-11",
+      "hidden": true,
+      "description": "Configure release build",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++-11"
+      }
+    },
+    {
       "name": "linux",
       "description": "Sets generator, build and install directory",
       "binaryDir": "${sourceDir}/build",
       "generator": "Unix Makefiles",
       "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++",
         "CODE_COVERAGE": {
           "type": "BOOL",
           "value": "OFF"
@@ -41,15 +64,34 @@
       "inherits": ["coverage", "linux" ]
     },
     {
+      "name": "linux-release",
+      "description": "Configure coverage",
+      "inherits": ["release", "linux" ]
+    },
+    {
       "name": "linux-ninja",
       "description": "Configure debug build",
-      "inherits": "linux",
-      "generator": "Ninja"
+      "inherits": [ "ninja", "linux"]
+    },
+    {
+      "name": "linux-release-ninja",
+      "description": "Configure debug build",
+      "inherits": ["release", "linux-ninja" ]
     },
     {
       "name": "linux-coverage-ninja",
       "description": "Configure coverage",
       "inherits": [ "coverage", "linux-ninja" ]
+    },
+        {
+      "name": "linux-ninja-clang",
+      "description": "Configure debug build",
+      "inherits": ["ninja", "clang-11", "linux"]
+    },
+    {
+      "name": "linux-release-ninja-clang",
+      "description": "Configure debug build",
+      "inherits":["release", "linux-ninja-clang" ]
     }
   ]
 }
