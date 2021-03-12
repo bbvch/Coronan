@@ -34,11 +34,11 @@
       "generator": "Ninja"
     },
     {
-      "name": "clang-11",
+      "name": "clang",
       "hidden": true,
       "description": "Configure release build",
       "cacheVariables": {
-        "CMAKE_CXX_COMPILER": "clang++-11"
+        "CMAKE_CXX_COMPILER": "clang++"
       }
     },
     {
@@ -86,7 +86,7 @@
         {
       "name": "linux-ninja-clang",
       "description": "Configure debug build",
-      "inherits": ["ninja", "clang-11", "linux"]
+      "inherits": ["ninja", "clang", "linux"]
     },
     {
       "name": "linux-release-ninja-clang",
