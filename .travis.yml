@@ -26,7 +26,7 @@ notifications:
     on_success: change
     on_failure: always
 
-before_install:
+install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 jobs:
@@ -37,10 +37,10 @@ jobs:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7
       - COVERAGE_FILE="coverage.info"
       script:
-        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh --cov=${COVERAGE_FILE}"
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh --cov=${COVERAGE_FILE}"
       after_success:
-        - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
-        - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
+      - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
+      - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
     - language: cpp
       name: "gcc8 debug"
       env: 
@@ -54,33 +54,55 @@ jobs:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
       - COVERAGE_FILE="coverage.info"
       script:
-        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
     - language: cpp
       name: "gcc9 release"
       env: 
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
       - COVERAGE_FILE="coverage.info"
       script:
-        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
     - language: cpp
       name: "clang7 debug"
+      env: 
+      - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7
+      - COVERAGE_FILE="coverage.info"
+      script:
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+    - language: cpp
+      name: "clang8 debug"
       env: 
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
       - COVERAGE_FILE="coverage.info"
       script:
-        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
     - language: cpp
       name: "clang9 debug"
       env: 
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
       - COVERAGE_FILE="coverage.info"
       script:
-        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
     - language: cpp
       name: "clang9 release"
       env: 
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
       - COVERAGE_FILE="coverage.info"
       script:
-        - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
+      - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
+    - language: nix
+      name: "nix build gcc 10 ninja debug"
+      cache:
+        directories:
+        - $HOME/nix.store
+      before_install:
+      - sudo mkdir -p /etc/nix
+      - echo "substituters = https://cache.nixos.org/ file://$HOME/nix.store" | sudo tee -a /etc/nix/nix.conf > /dev/null
+      - echo 'require-sigs = false' | sudo tee -a /etc/nix/nix.conf > /dev/null
+      before_cache:
+      - mkdir -p $HOME/nix.store
+      - nix copy --to file://$HOME/nix.store -f default.nix buildInputs
+      script:
+        - nix-shell --run "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
+        - nix-shell --run "cmake --build build"
 
