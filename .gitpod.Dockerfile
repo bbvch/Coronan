@@ -29,6 +29,8 @@ RUN apt-get -qq install -y --no-install-recommends lcov doxygen graphviz
 # install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
 RUN apt-get -qq install -y --no-install-recommends clang-11 clang-10
 
+RUN apt-get -qq install -y --no-install-recommends ninja-build
+
 RUN apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
