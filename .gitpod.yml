@@ -2,8 +2,10 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: pip3 install --upgrade conan
-    command: ./build.sh
+  - before: pip3 install --upgrade conan
+  - init: cmake -S . --preset=linux-ninja && export num_threads=$(grep -c '^processor' /proc/cpuinfo)
+  - command: cmake --build build -- -j"${num_threads}"" 
+  - command: cmake --build build --target docs
 
 
 vscode:
