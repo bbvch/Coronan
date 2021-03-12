@@ -26,6 +26,7 @@ notifications:
 
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - mkdir -p $HOME/.conan/data
 
 jobs:
   include:
@@ -100,6 +101,9 @@ jobs:
       script:
         - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
         - nix-shell --command "cmake --build --preset=linux-build"
+      before_cache:
+      - mkdir -p $HOME/nix.store
+      - nix copy --to file://$HOME/nix.store -f default.nix buildInputs
 
     - language: nix
       name: "nix build ninja clang11"
