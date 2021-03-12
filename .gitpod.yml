@@ -3,9 +3,8 @@ image:
 
 tasks:
   - before: pip3 install --upgrade conan
-  - init: cmake -S . --preset=linux-ninja && export num_threads=$(grep -c '^processor' /proc/cpuinfo)
-  - command: cmake --build build -- -j"${num_threads}"" 
-  - command: cmake --build build --target docs
+    init: cmake -S . --preset=linux-ninja && export num_threads=$(grep -c '^processor' /proc/cpuinfo)
+    command: cmake --build build -- -j"${num_threads}"
 
 
 vscode:
