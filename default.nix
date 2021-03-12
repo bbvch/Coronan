@@ -45,8 +45,10 @@ cmake-rc = stdenv.mkDerivation {
 
 in mkShell {
   hardeningDisable = [ "all" ];
+  LOCALE_ARCHIVE_2_27 = "${glibcLocales}/lib/locale/locale-archive";
   buildInputs = [
     conan-python
+    glibcLocales
     cmake-format-python
     gcc
     ninja

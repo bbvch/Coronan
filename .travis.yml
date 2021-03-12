@@ -99,9 +99,8 @@ jobs:
       before_script:
       - sudo mkdir -p /etc/nix && echo 'sandbox = true' | sudo tee /etc/nix/nix.conf
       script:
-        - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
-        - nix-shell --command "cmake --build --preset=linux-build"
-      before_cache:
+      - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
+      - nix-shell --command "cmake --build --preset=linux-build"
       - mkdir -p $HOME/nix.store
       - nix copy --to file://$HOME/nix.store -f default.nix buildInputs
 
@@ -110,6 +109,6 @@ jobs:
       before_script:
       - sudo mkdir -p /etc/nix && echo 'sandbox = true' | sudo tee /etc/nix/nix.conf
       script:
-        - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja-clang"
-        - nix-shell --command "cmake --build --preset=linux-build"
+      - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja-clang"
+      - nix-shell --command "cmake --build --preset=linux-build"
 
