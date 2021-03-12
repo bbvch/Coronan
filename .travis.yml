@@ -30,6 +30,7 @@ notifications:
     on_failure: always
 
 before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - DOCKER_WORKDIR="/workspace"
   - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
   - docker pull ${DOCKER_IMAGE}
