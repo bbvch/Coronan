@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15...3.20)
 
 project(
     coronan_cli
@@ -9,7 +9,9 @@ project(
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
 add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME coronan)
+set_target_properties(
+    ${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronan
+)
 
 target_link_libraries(
     ${PROJECT_NAME}
