@@ -31,7 +31,7 @@ jobs:
   include:
     - language: cpp
       name: "gcc7 coverage"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7
       - COVERAGE_FILE="coverage.info"
       script:
@@ -39,56 +39,56 @@ jobs:
       after_success:
       - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
       - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
-    
+
     - language: cpp
       name: "gcc8 debug"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8
       script:
         - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-    
+
     - language: cpp
       name: "gcc9 debug"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
       script:
       - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-    
+
     - language: cpp
       name: "gcc9 release"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
       script:
       - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
-    
+
     - language: cpp
       name: "clang7 debug"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7
       script:
       - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-    
+
     - language: cpp
       name: "clang8 debug"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
       script:
       - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-    
+
     - language: cpp
       name: "clang9 debug"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
       script:
       - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-    
+
     - language: cpp
       name: "clang9 release"
-      env: 
+      env:
       - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
       script:
       - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh -r"
-   
+
     - language: nix
       name: "nix build ninja gcc10"
       script:
@@ -100,4 +100,3 @@ jobs:
       script:
       - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja-clang"
       - nix-shell --command "cmake --build --preset=linux-build"
-

@@ -1,15 +1,13 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  "version": "0.2.0",
   "configurations": [
-      {
-          "type": "gdb",
-          "request": "launch",
-          "name": "Debug Coronan Qt App (GDB)",
-          "target": "./build/bin/coronan_qt",
-          "cwd": "${workspaceRoot}",
-          "valuesFormatting": "parseText"
-      }
-  ]
+    {
+      "cwd": "${workspaceRoot}",
+      "name": "Debug Coronan Qt App (GDB)",
+      "request": "launch",
+      "target": "./build/bin/coronan_qt",
+      "type": "gdb",
+      "valuesFormatting": "parseText"
+    }
+  ],
+  "version": "0.2.0"
 }

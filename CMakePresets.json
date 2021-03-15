@@ -1,5 +1,29 @@
 {
-  "version": 2,
+  "buildPresets": [
+    {
+      "configurePreset": "linux",
+      "name": "linux-build"
+    },
+    {
+      "cleanFirst": true,
+      "inherits": "linux-build",
+      "name": "linux-clean-build"
+    },
+    {
+      "inherits": "linux-build",
+      "name": "linux-build-doc",
+      "targets": [
+        "docs"
+      ]
+    },
+    {
+      "inherits": "linux-build",
+      "name": "linux-build-package",
+      "targets": [
+        "package"
+      ]
+    }
+  ],
   "cmakeMinimumRequired": {
     "major": 3,
     "minor": 20,
@@ -7,9 +31,6 @@
   },
   "configurePresets": [
     {
-      "name": "coverage",
-      "hidden": true,
-      "description": "Configure coverage",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_COMPILER": "g++",
@@ -17,102 +38,107 @@
           "type": "BOOL",
           "value": "ON"
         }
-      }
+      },
+      "description": "Configure coverage",
+      "hidden": true,
+      "name": "coverage"
     },
     {
-      "name": "release",
-      "hidden": true,
-      "description": "Configure release build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
-      }
+      },
+      "description": "Configure release build",
+      "hidden": true,
+      "name": "release"
     },
     {
-      "name": "ninja",
-      "hidden": true,
       "description": "Configure release build",
-      "generator": "Ninja"
+      "generator": "Ninja",
+      "hidden": true,
+      "name": "ninja"
     },
     {
-      "name": "clang",
-      "hidden": true,
-      "description": "Configure release build",
       "cacheVariables": {
         "CMAKE_CXX_COMPILER": "clang++"
-      }
+      },
+      "description": "Configure release build",
+      "hidden": true,
+      "name": "clang"
     },
     {
-      "name": "linux",
-      "description": "Sets generator, build and install directory",
       "binaryDir": "${sourceDir}/build",
-      "generator": "Unix Makefiles",
       "cacheVariables": {
+        "BUILD_TESTING": {
+          "type": "BOOL",
+          "value": "ON"
+        },
         "CMAKE_CXX_COMPILER": "g++",
         "CODE_COVERAGE": {
           "type": "BOOL",
           "value": "OFF"
-        },
-        "BUILD_TESTING": {
-          "type": "BOOL",
-          "value": "ON"
         }
-      }
+      },
+      "description": "Sets generator, build and install directory",
+      "generator": "Unix Makefiles",
+      "name": "linux"
     },
     {
-      "name": "linux-coverage",
       "description": "Configure coverage",
-      "inherits": ["coverage", "linux" ]
+      "inherits": [
+        "coverage",
+        "linux"
+      ],
+      "name": "linux-coverage"
     },
     {
-      "name": "linux-release",
       "description": "Configure coverage",
-      "inherits": ["release", "linux" ]
+      "inherits": [
+        "release",
+        "linux"
+      ],
+      "name": "linux-release"
     },
     {
-      "name": "linux-ninja",
       "description": "Configure debug build",
-      "inherits": [ "ninja", "linux"]
+      "inherits": [
+        "ninja",
+        "linux"
+      ],
+      "name": "linux-ninja"
     },
     {
-      "name": "linux-release-ninja",
       "description": "Configure debug build",
-      "inherits": ["release", "linux-ninja" ]
+      "inherits": [
+        "release",
+        "linux-ninja"
+      ],
+      "name": "linux-release-ninja"
     },
     {
-      "name": "linux-coverage-ninja",
       "description": "Configure coverage",
-      "inherits": [ "coverage", "linux-ninja" ]
-    },
-        {
-      "name": "linux-ninja-clang",
-      "description": "Configure debug build",
-      "inherits": ["ninja", "clang", "linux"]
+      "inherits": [
+        "coverage",
+        "linux-ninja"
+      ],
+      "name": "linux-coverage-ninja"
     },
     {
-      "name": "linux-release-ninja-clang",
       "description": "Configure debug build",
-      "inherits":["release", "linux-ninja-clang" ]
+      "inherits": [
+        "ninja",
+        "clang",
+        "linux"
+      ],
+      "name": "linux-ninja-clang"
+    },
+    {
+      "description": "Configure debug build",
+      "inherits": [
+        "release",
+        "linux-ninja-clang"
+      ],
+      "name": "linux-release-ninja-clang"
     }
   ],
-  "buildPresets": [
-    {
-      "name": "linux-build",
-      "configurePreset": "linux"
-    },
-    {
-      "name": "linux-clean-build",
-      "inherits": "linux-build",
-      "cleanFirst": true
-    },
-    {
-      "name": "linux-build-doc",
-      "inherits": "linux-build",
-      "targets": [ "docs" ]
-    },
-    {
-      "name": "linux-build-package",
-      "inherits": "linux-build",
-      "targets": [ "package" ]
-    }
-  ]
+  "version": 2
 }

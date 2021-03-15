@@ -16,9 +16,9 @@ class QChartView;
 class QChart;
 QT_CHARTS_END_NAMESPACE
 
-typedef QPair<QPointF, QString> Data;
-typedef QList<Data> DataList;
-typedef QList<DataList> DataTable;
+using Data = QPair<QPointF, QString>;
+using DataList = QList<Data>;
+using DataTable = QList<DataList>;
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -26,18 +26,17 @@ class CoronanWidget : public QWidget
 {
   Q_OBJECT
 public:
-  explicit CoronanWidget(std::string const& api_url, QWidget* parent = 0);
+  explicit CoronanWidget(std::string const& api_url, QWidget* parent = nullptr);
   ~CoronanWidget();
 
 private Q_SLOTS:
   void update_ui();
 
 private:
-  coronan::CountryObject
+  [[nodiscard]] coronan::CountryObject
   get_country_data(std::string const& country_code) const;
   void populate_country_box();
 
-private:
   QChartView* m_chartView = nullptr;
   Ui_CoronanWidgetForm* m_ui = nullptr;
   std::string m_url{};

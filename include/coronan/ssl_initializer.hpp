@@ -26,7 +26,7 @@ public:
   initialize_with_accept_certificate_handler();
 
 private:
-  Poco::SharedPtr<InvalidCertificateHandler> certificate_handler_ptr;
+  Poco::SharedPtr<InvalidCertificateHandler> certificate_handler_ptr{};
   Poco::Net::Context::Ptr context_ptr;
 };
 

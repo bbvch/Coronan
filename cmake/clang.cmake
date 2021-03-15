@@ -18,6 +18,6 @@ else()
     set(CLANG_TIDY_PROPERTIES
         "${CLANG_TIDY_EXE}"
         "-p=${PROJECT_BINARY_DIR}"
-        "-checks=-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,modernize-*,-modernize-use-trailing-return-type,performance-*,portability-*,readability-*"
+        "--checks=-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,-modernize-use-trailing-return-type,performance-*,portability-*,readability-*"
     )
 endif()

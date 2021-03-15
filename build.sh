@@ -17,7 +17,7 @@ Usage: build.sh [options] [build_dir]
   Available options:
     -h|--help          Print this help
     --cov=output_file  Build debug version with coverage enabled.
-    -r|--release       Build release version. 
+    -r|--release       Build release version.
                        Note: is ignored when --cov is set
     --cmake=path       Path to cmake (default is the system cmake)
     -i                 Install

@@ -65,7 +65,7 @@ constexpr auto parse_timeline = [](auto const& json_dom_array) {
 
 CountryObject parse(std::string const& json)
 {
-  rapidjson::Document document;
+  rapidjson::Document document{};
   document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str());
   auto country_object = CountryObject{};
   auto const country_data_object = document["data"].GetObject();
@@ -87,7 +87,7 @@ CountryObject parse(std::string const& json)
 
 OverviewObject parse_countries(std::string const& json)
 {
-  rapidjson::Document document;
+  rapidjson::Document document{};
   document.Parse(json.c_str());
   auto overview_object = OverviewObject{};
   for (auto const& country_data : document["data"].GetArray())

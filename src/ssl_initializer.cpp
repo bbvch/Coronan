@@ -36,12 +36,13 @@ SSLInitializer::initialize_with_accept_certificate_handler()
   constexpr auto cipher_list = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH";
   constexpr auto handle_errors_on_server_side = false;
 
+  Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler =
+      new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};
   auto ssl_initializer = std::make_unique<SSLInitializer>(
-      new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side},
-      Context::Ptr{new Context{Context::TLS_CLIENT_USE, private_key_file,
-                               certificate_file, ca_location, verification_mode,
-                               verification_depth, load_default_cas,
-                               cipher_list}});
+      cert_handler, Context::Ptr{new Context{
+                        Context::TLS_CLIENT_USE, private_key_file,
+                        certificate_file, ca_location, verification_mode,
+                        verification_depth, load_default_cas, cipher_list}});
 
   ssl_initializer->initialize();
   return ssl_initializer;
