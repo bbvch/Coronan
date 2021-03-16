@@ -25,7 +25,7 @@ To build the project you need python and a recent [conan version](https://conan.
 #> pip install conan
 ```
 
-Further a recent version of [CMake](https://cmake.org/) (> 3.10), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
+Further a recent version of [CMake](https://cmake.org/) (> 3.15), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
 
 ### How to build
 
@@ -58,7 +58,7 @@ To start right away without installing anything on you local machine, you can si
 
 If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefare clang (clang_11) change it in [.envrc](.envrc)
 
-When using nix. The most resent cmake is available and therefore configure and build [presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used. Do build for clang you can simply call:
+When using nix. The most resent cmake is available and therefore configure and build [presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used. To build for clang you can simply call:
 
 ```bash
 #> cmake -S . --preset=linux-ninja-clang
