@@ -9,6 +9,7 @@ cache: # see https://docs.travis-ci.com/user/caching/
 - directories:
     - $HOME/.ccache
     - $HOME/.conan
+    - $HOME/.conan-clang11
     - nix/store
 
 env:
@@ -16,6 +17,7 @@ env:
     - CODACY_PROJECT_TOKEN=03851e6e31c544248a4f5f799a7eac4c
     - DOCKER_WORKDIR="/workspace"
     - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
+    - CONAN_USER_HOME="${HOME}/.conan"
 
 notifications:
   email:
@@ -97,6 +99,8 @@ jobs:
 
     - language: nix
       name: "nix build ninja clang11"
+      env:
+      - CONAN_USER_HOME="${HOME}/.conan-clang11"
       script:
       - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja-clang"
       - nix-shell --command "cmake --build --preset=linux-build"
