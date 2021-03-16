@@ -1,29 +1,5 @@
 {
-  "buildPresets": [
-    {
-      "configurePreset": "linux",
-      "name": "linux-build"
-    },
-    {
-      "cleanFirst": true,
-      "inherits": "linux-build",
-      "name": "linux-clean-build"
-    },
-    {
-      "inherits": "linux-build",
-      "name": "linux-build-doc",
-      "targets": [
-        "docs"
-      ]
-    },
-    {
-      "inherits": "linux-build",
-      "name": "linux-build-package",
-      "targets": [
-        "package"
-      ]
-    }
-  ],
+  "version": 2,
   "cmakeMinimumRequired": {
     "major": 3,
     "minor": 20,
@@ -31,6 +7,8 @@
   },
   "configurePresets": [
     {
+      "name": "coverage",
+      "description": "Configure coverage",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_COMPILER": "g++",
@@ -39,33 +17,34 @@
           "value": "ON"
         }
       },
-      "description": "Configure coverage",
-      "hidden": true,
-      "name": "coverage"
+      "hidden": true
     },
     {
+      "name": "release",
+      "description": "Configure release build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       },
-      "description": "Configure release build",
-      "hidden": true,
-      "name": "release"
+      "hidden": true
     },
     {
+      "name": "ninja",
       "description": "Configure release build",
       "generator": "Ninja",
-      "hidden": true,
-      "name": "ninja"
+      "hidden": true
     },
     {
+      "name": "clang",
+      "description": "Configure release build",
       "cacheVariables": {
         "CMAKE_CXX_COMPILER": "clang++"
       },
-      "description": "Configure release build",
-      "hidden": true,
-      "name": "clang"
+      "hidden": true
     },
     {
+      "name": "linux",
+      "description": "Sets generator, build and install directory",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "BUILD_TESTING": {
@@ -77,68 +56,90 @@
           "type": "BOOL",
           "value": "OFF"
         }
-      },
-      "description": "Sets generator, build and install directory",
-      "generator": "Unix Makefiles",
-      "name": "linux"
+      }
     },
     {
+      "name": "linux-coverage",
       "description": "Configure coverage",
       "inherits": [
         "coverage",
         "linux"
-      ],
-      "name": "linux-coverage"
+      ]
     },
     {
+      "name": "linux-release",
       "description": "Configure coverage",
       "inherits": [
         "release",
         "linux"
-      ],
-      "name": "linux-release"
+      ]
     },
     {
+      "name": "linux-ninja",
       "description": "Configure debug build",
       "inherits": [
         "ninja",
         "linux"
-      ],
-      "name": "linux-ninja"
+      ]
     },
     {
+      "name": "linux-release-ninja",
       "description": "Configure debug build",
       "inherits": [
         "release",
         "linux-ninja"
-      ],
-      "name": "linux-release-ninja"
+      ]
     },
     {
+      "name": "linux-coverage-ninja",
       "description": "Configure coverage",
       "inherits": [
         "coverage",
         "linux-ninja"
-      ],
-      "name": "linux-coverage-ninja"
+      ]
     },
     {
+      "name": "linux-ninja-clang",
       "description": "Configure debug build",
       "inherits": [
         "ninja",
         "clang",
         "linux"
-      ],
-      "name": "linux-ninja-clang"
+      ]
     },
     {
+      "name": "linux-release-ninja-clang",
       "description": "Configure debug build",
       "inherits": [
         "release",
         "linux-ninja-clang"
-      ],
-      "name": "linux-release-ninja-clang"
+      ]
     }
   ],
-  "version": 2
+  "buildPresets": [
+    {
+      "configurePreset": "linux",
+      "name": "linux-build",
+      "jobs": 16
+    },
+    {
+      "name": "linux-clean-build",
+      "cleanFirst": true,
+      "inherits": "linux-build"
+    },
+    {
+      "name": "linux-build-doc",
+      "inherits": "linux-build",
+      "targets": [
+        "docs"
+      ]
+    },
+    {
+      "name": "linux-build-package",
+      "inherits": "linux-build",
+      "targets": [
+        "package"
+      ]
+    }
+  ]
 }

@@ -1,13 +1,14 @@
 {
+  "version": "2.0.0",
   "tasks": [
     {
-      "command": "cmake --build build",
+      "label": "build gcc debug",
+      "command": "cmake --build -S . --preset=linux-build",
       "dependsOn": "configure gcc",
       "group": {
         "isDefault": true,
         "kind": "build"
       },
-      "label": "build gcc debug",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -15,10 +16,10 @@
       "type": "shell"
     },
     {
-      "command": "cmake --build build",
+      "label": "build gcc release",
+      "command": "cmake --build -S . --preset=linux-build",
       "dependsOn": "configure gcc release",
       "group": "build",
-      "label": "build gcc release",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -26,10 +27,10 @@
       "type": "shell"
     },
     {
-      "command": "cmake --build build",
+      "label": "build clang debug",
+      "command": "cmake --build -S . --preset=linux-build",
       "dependsOn": "configure clang",
       "group": "build",
-      "label": "build clang debug",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -37,10 +38,10 @@
       "type": "shell"
     },
     {
-      "command": "cmake --build build",
+      "label": "build clang release",
+      "command": "cmake --build -S . --preset=linux-build",
       "dependsOn": "configure clang release",
       "group": "build",
-      "label": "build clang release",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -48,8 +49,8 @@
       "type": "shell"
     },
     {
-      "command": "cmake -S . --preset=linux-ninja",
       "label": "configure gcc",
+      "command": "cmake -S . --preset=linux-ninja",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -57,8 +58,8 @@
       "type": "shell"
     },
     {
-      "command": "cmake -S . --preset=linux-release-ninja",
       "label": "configure gcc release",
+      "command": "cmake -S . --preset=linux-release-ninja",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -66,8 +67,8 @@
       "type": "shell"
     },
     {
-      "command": "cmake -S . --preset=linux-ninja-clang",
       "label": "configure clang",
+      "command": "cmake -S . --preset=linux-ninja-clang",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -75,8 +76,8 @@
       "type": "shell"
     },
     {
-      "command": "cmake -S . --preset=linux-release-ninja-clang",
       "label": "configure clang release",
+      "command": "cmake -S . --preset=linux-release-ninja-clang",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -84,19 +85,19 @@
       "type": "shell"
     },
     {
+      "label": "clean",
       "command": "/usr/bin/rm -rf build",
       "group": "build",
-      "label": "clean",
       "problemMatcher": [],
       "type": "shell"
     },
     {
+      "label": "unittests",
       "command": "cmake --build build --target run_unittests",
       "group": {
         "isDefault": true,
         "kind": "test"
       },
-      "label": "unittests",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -104,11 +105,10 @@
       "type": "shell"
     },
     {
-      "command": "./format_source_files.sh",
       "label": "format files",
+      "command": "./format_source_files.sh",
       "problemMatcher": [],
       "type": "shell"
     }
-  ],
-  "version": "2.0.0"
+  ]
 }
