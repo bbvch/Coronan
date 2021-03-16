@@ -16,6 +16,7 @@ in mkShell {
     gcc
     ninja
     clang
+    binutils
     clang-tools
     dpkg
     ccache
