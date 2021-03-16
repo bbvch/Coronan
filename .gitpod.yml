@@ -1,14 +1,15 @@
+---
 image:
-  file: .gitpod.Dockerfile
+    file: .gitpod.Dockerfile
 
 tasks:
-  - before: pip3 install --upgrade conan
-    init: cmake -S . --preset=linux-ninja && export num_threads=$(grep -c '^processor' /proc/cpuinfo)
-    command: cmake --build build -- -j"${num_threads}"
+    - before: pip3 install --upgrade conan
+      init: cmake -S . --preset=linux-ninja && export num_threads=$(grep -c '^processor' /proc/cpuinfo)
+      command: cmake --build build -- -j"${num_threads}"
 
 
 vscode:
-  extensions:
-    - ms-vscode.cmake-tools@1.6.0:lvoCR5usjseB5thI3sZhWA==
-    - twxs.cmake@0.0.17:aQNzlYa74rJFJ5/BnUF1yA==
-    - webfreak.debug@0.25.0:F9uLpAOde6r0l7rgMC8LTQ==
+    extensions:
+        - ms-vscode.cmake-tools@1.6.0:lvoCR5usjseB5thI3sZhWA==
+        - twxs.cmake@0.0.17:aQNzlYa74rJFJ5/BnUF1yA==
+        - webfreak.debug@0.25.0:F9uLpAOde6r0l7rgMC8LTQ==

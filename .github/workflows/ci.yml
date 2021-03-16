@@ -1,65 +1,66 @@
+---
 name: CI
 
 on:
-  push:
-  pull_request:
-  release:
-    types: [published]
+    push:
+    pull_request:
+    release:
+        types: [published]
 
 jobs:
-  ci:
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+    ci:
+        name: ${{ matrix.name }}
+        runs-on: ${{ matrix.os }}
 
-    strategy:
-      fail-fast: true
-      matrix:
-        name: [ubuntu-gcc-9, ubuntu-clang-9]
-        include:
-          - name: ubuntu-gcc-9
-            os: ubuntu-latest
-            compiler: g++-9
-            ccompiler: gcc-9
+        strategy:
+            fail-fast: true
+            matrix:
+                name: [ubuntu-gcc-9, ubuntu-clang-9]
+                include:
+                    - name: ubuntu-gcc-9
+                      os: ubuntu-latest
+                      compiler: g++-9
+                      ccompiler: gcc-9
 
-          - name: ubuntu-clang-9
-            os: ubuntu-latest
-            compiler: clang++-9
-            ccompiler: clang-9
-    env:
-      CXX: ${{ matrix.compiler }}
-      CC: ${{ matrix.ccompiler }}
+                    - name: ubuntu-clang-9
+                      os: ubuntu-latest
+                      compiler: clang++-9
+                      ccompiler: clang-9
+        env:
+            CXX: ${{ matrix.compiler }}
+            CC: ${{ matrix.ccompiler }}
 
-    steps:
-      - uses: actions/checkout@v1
-      - name: dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt install ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev -y
-          sudo pip3 install conan
+        steps:
+            - uses: actions/checkout@v1
+            - name: dependencies (Linux)
+              if: runner.os == 'Linux'
+              run: |
+                  sudo apt install ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev -y
+                  sudo pip3 install conan
 
-      - name: dependecies (macos)
-        if: runner.os == 'macOS'
-        run: brew install ninja clang-tidy
+            - name: dependecies (macos)
+              if: runner.os == 'macOS'
+              run: brew install ninja clang-tidy
 
       # - name: dependencies (windows)
       #   if: runner.os == 'Windows'
 
-      - name: set-compiler-env
-        run: |
-          conan profile new default --detect
-          conan profile update settings.compiler.libcxx=libstdc++11 default
-        shell: bash
+            - name: set-compiler-env
+              run: |
+                  conan profile new default --detect
+                  conan profile update settings.compiler.libcxx=libstdc++11 default
+              shell: bash
 
-      - name: make-build-dir
-        run: mkdir build
-      - name: build-conan-packages
-        run:  conan install --build poco --build missing ..
-        working-directory: ./build
-      - name: cmake-configure-debug
-        run: cmake -DCMAKE_BUILD_TYPE=Debug ..
-        working-directory: ./build
-      - name: build-debug
-        run: cmake --build ./build --config Debug
-      - name: ctest
-        run: ctest -C Debug
-        working-directory: ./build
+            - name: make-build-dir
+              run: mkdir build
+            - name: build-conan-packages
+              run: conan install --build missing ..
+              working-directory: ./build
+            - name: cmake-configure-debug
+              run: cmake -DCMAKE_BUILD_TYPE=Debug ..
+              working-directory: ./build
+            - name: build-debug
+              run: cmake --build ./build --config Debug
+            - name: ctest
+              run: ctest -C Debug
+              working-directory: ./build

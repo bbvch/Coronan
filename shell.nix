@@ -40,5 +40,6 @@ in mkShell {
     source venv/bin/activate
     pip install conan==1.34.0
     pip install cmake-format==0.6.13
+    pip install yamlfmt==1.1.0
   '';
 }
