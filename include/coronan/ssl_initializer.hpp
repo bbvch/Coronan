@@ -12,6 +12,10 @@ namespace coronan {
 
 using SSLException = Poco::Net::SSLException;
 
+/**
+ * An RAII wrapper to initialize & uninitializeSSL the POCO::Net SSL stuff
+ * (Poco::Net::initializeSSL())
+ */
 class SSLInitializer
 {
 public:
