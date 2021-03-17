@@ -4,7 +4,7 @@ image:
 
 tasks:
     - before: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
-      init: cmake -S . --preset=linux-ninja-clang
+      init: rm -rf ./build && cmake -S . --preset=linux-ninja-clang
       command: cmake --build -S . --preset=linux-clean-build
 
 
