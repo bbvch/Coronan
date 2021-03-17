@@ -36,7 +36,7 @@ struct TestHTTPSession
     TestHTTPSession::host_ = host;
   }
 
-  std::ostream& sendRequest(TestHTTPRequest&) { return std::cout; }
+  std::ostream& sendRequest(TestHTTPRequest& /*unused*/) { return std::cout; }
 
   std::istream& receiveResponse(HTTPResponse& response)
   {
@@ -72,7 +72,7 @@ TEST_CASE("HTTPClient get")
 {
   SUBCASE("Initializes a session")
   {
-    auto uri = "http://server.com:80/";
+    auto const* uri = "http://server.com:80/";
     auto resonse =
         coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
 
@@ -82,7 +82,7 @@ TEST_CASE("HTTPClient get")
 
   SUBCASE("Creates a request")
   {
-    auto uri = "http://server.com:80/test";
+    auto const* uri = "http://server.com:80/test";
     auto resonse =
         coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
     REQUIRE(TestHTTPRequest::request_ == HTTPRequest::HTTP_GET);
@@ -93,14 +93,14 @@ TEST_CASE("HTTPClient get")
   SUBCASE("Returns status, reason and response")
   {
     auto const expected_status = HTTPResponse::HTTP_FOUND;
-    auto const expected_reason = "All ok";
-    auto const expected_response = "Test";
+    auto const* const expected_reason = "All ok";
+    auto const* const expected_response = "Test";
 
     TestHTTPSession::set_response_status(expected_status);
     TestHTTPSession::set_response_reason(expected_reason);
     TestHTTPSession::set_response(expected_response);
 
-    auto uri = "http://server.com:80/test";
+    auto const* uri = "http://server.com:80/test";
     auto resonse =
         coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
 

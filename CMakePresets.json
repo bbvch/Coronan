@@ -1,14 +1,13 @@
 {
-  "version": 1,
+  "version": 2,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 19,
+    "minor": 20,
     "patch": 0
   },
   "configurePresets": [
     {
       "name": "coverage",
-      "hidden": true,
       "description": "Configure coverage",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -17,81 +16,131 @@
           "type": "BOOL",
           "value": "ON"
         }
-      }
+      },
+      "hidden": true
     },
     {
       "name": "release",
-      "hidden": true,
       "description": "Configure release build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
-      }
+      },
+      "hidden": true
     },
     {
       "name": "ninja",
-      "hidden": true,
       "description": "Configure release build",
-      "generator": "Ninja"
+      "generator": "Ninja",
+      "hidden": true
     },
     {
       "name": "clang",
-      "hidden": true,
       "description": "Configure release build",
       "cacheVariables": {
-        "CMAKE_CXX_COMPILER": "clang++"
-      }
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CC_COMPILER": "clang"
+      },
+      "hidden": true
     },
     {
       "name": "linux",
       "description": "Sets generator, build and install directory",
-      "binaryDir": "${sourceDir}/build",
       "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
+        "BUILD_TESTING": {
+          "type": "BOOL",
+          "value": "ON"
+        },
         "CMAKE_CXX_COMPILER": "g++",
         "CODE_COVERAGE": {
           "type": "BOOL",
           "value": "OFF"
-        },
-        "BUILD_TESTING": {
-          "type": "BOOL",
-          "value": "ON"
         }
       }
     },
     {
       "name": "linux-coverage",
       "description": "Configure coverage",
-      "inherits": ["coverage", "linux" ]
+      "inherits": [
+        "coverage",
+        "linux"
+      ]
     },
     {
       "name": "linux-release",
       "description": "Configure coverage",
-      "inherits": ["release", "linux" ]
+      "inherits": [
+        "release",
+        "linux"
+      ]
     },
     {
       "name": "linux-ninja",
       "description": "Configure debug build",
-      "inherits": [ "ninja", "linux"]
+      "inherits": [
+        "ninja",
+        "linux"
+      ]
     },
     {
       "name": "linux-release-ninja",
       "description": "Configure debug build",
-      "inherits": ["release", "linux-ninja" ]
+      "inherits": [
+        "release",
+        "linux-ninja"
+      ]
     },
     {
       "name": "linux-coverage-ninja",
       "description": "Configure coverage",
-      "inherits": [ "coverage", "linux-ninja" ]
+      "inherits": [
+        "coverage",
+        "linux-ninja"
+      ]
     },
-        {
+    {
       "name": "linux-ninja-clang",
       "description": "Configure debug build",
-      "inherits": ["ninja", "clang", "linux"]
+      "inherits": [
+        "ninja",
+        "clang",
+        "linux"
+      ]
     },
     {
       "name": "linux-release-ninja-clang",
       "description": "Configure debug build",
-      "inherits":["release", "linux-ninja-clang" ]
+      "inherits": [
+        "release",
+        "linux-ninja-clang"
+      ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "configurePreset": "linux",
+      "name": "linux-build",
+      "jobs": 16
+    },
+    {
+      "name": "linux-clean-build",
+      "cleanFirst": true,
+      "inherits": "linux-build"
+    },
+    {
+      "name": "linux-build-doc",
+      "inherits": "linux-build",
+      "targets": [
+        "docs"
+      ]
+    },
+    {
+      "name": "linux-build-package",
+      "inherits": "linux-build",
+      "targets": [
+        "package"
+      ]
     }
   ]
 }

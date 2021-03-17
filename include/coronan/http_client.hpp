@@ -32,7 +32,7 @@ public:
   /**
    * Return the HTTP status code
    */
-  Poco::Net::HTTPResponse::HTTPStatus get_status() const
+  [[nodiscard]] Poco::Net::HTTPResponse::HTTPStatus get_status() const
   {
     return response_.getStatus();
   }
@@ -40,12 +40,12 @@ public:
   /**
    * Return the HTTP reason phrase
    */
-  std::string get_reason() const { return response_.getReason(); }
+  [[nodiscard]] std::string get_reason() const { return response_.getReason(); }
 
   /**
    * Return the HTTP response body
    */
-  std::string get_response_body() const { return response_body_; }
+  [[nodiscard]] std::string get_response_body() const { return response_body_; }
 
 private:
   Poco::Net::HTTPResponse response_{};

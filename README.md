@@ -20,13 +20,17 @@ _The About Corona Covid-19_ provides statistics via REST API from The [World Hea
 ## Development
 
 To build the project you need python and a recent [conan version](https://conan.io/):
+
 ```bash
 #> pip install conan
 ```
-Further a recent version of [CMake](https://cmake.org/) (> 3.10), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
+
+Further a recent version of [CMake](https://cmake.org/) (> 3.15), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
 
 ### How to build
+
 To build the project in `build` execute:
+
 ```bash
 #> ./build.sh build
 ```
@@ -34,6 +38,7 @@ To build the project in `build` execute:
 See `./build.sh -h` for more options
 
 You can also build it yourself:
+
 ```bash
 #> mkdir build
 #> (cd build && conan install --build poco --build missing ..)
@@ -42,10 +47,22 @@ You can also build it yourself:
 ```
 
 ### Source Code formatting
+
 For source code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files and [cmake-format](https://pypi.org/project/cmake-format/) for the CMake files are used.
 
 ## Gitpod
+
 To start right away without installing anything on you local machine, you can simply use the ![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg) Button at the top of this README.
 
 ## direnv & Nix
-If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you preface clang (clang_11) change it in [.envrc](.envrc)
+
+If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefare clang (clang_11) change it in [.envrc](.envrc)
+
+When using nix. The most resent cmake is available and therefore configure and build [presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used. To build for clang you can simply call:
+
+```bash
+#> cmake -S . --preset=linux-ninja-clang
+#> cmake --build --preset=linux-build"
+```
+
+See [CMakePresets.json](CMakePresets.json) for the available presets.

@@ -1,3 +1,11 @@
+FROM ubuntu:bionic as cmake_builder
+
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends wget
+RUN mkdir /opt/cmake
+RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.20.0-rc4/cmake-3.20.0-rc4-linux-x86_64.sh \
+ && sh ./cmake-3.20.0-rc4-linux-x86_64.sh --skip-license --prefix=/opt/cmake
+
 FROM bbvch/qt:5.14.2 as qt_builder
 
 FROM gitpod/workspace-full-vnc:commit-0d86f18fcb06832838d2cb77636d2c1a6a7dbe6c
@@ -6,8 +14,12 @@ FROM gitpod/workspace-full-vnc:commit-0d86f18fcb06832838d2cb77636d2c1a6a7dbe6c
 
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 
-#install qt
 USER root
+#install cmake
+COPY --from=cmake_builder /opt/cmake /opt/cmake
+RUN ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+
+#install qt
 COPY --from=qt_builder /usr/local/Qt /usr/local/Qt/5.14.2
 ENV Qt5_DIR=/usr/local/Qt/5.14.2
 # Install some fonts
@@ -21,13 +33,15 @@ RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
 RUN apt-get -qq build-dep -y qt5-default
 RUN apt-get -qq install -y --no-install-recommends libxcb-xinerama0-dev \
  && apt-get -qq install -y --no-install-recommends '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
- && apt-get -qq install -y --no-install-recommends perl 
+ && apt-get -qq install -y --no-install-recommends perl
 
 # lcov and doxygen
 RUN apt-get -qq install -y --no-install-recommends lcov doxygen graphviz
 
 # install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
 RUN apt-get -qq install -y --no-install-recommends clang-11 clang-10
+RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 100
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 100
 
 RUN apt-get -qq install -y --no-install-recommends ninja-build
 
@@ -43,6 +57,6 @@ RUN conan profile new default --detect
 # cmake-format
 RUN pip3 install cmake-format==0.6.13
 
-# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
-RUN sudo apt-get -qq install -y clang-11 clang-10
-
+# pre-commit
+RUN pip3 install pre-commit==2.11.1
+RUN echo 'export PIP_USER=false' >> ~/.bashrc

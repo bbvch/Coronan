@@ -1136,9 +1136,9 @@ endfunction()
 macro(conan_config_install)
     # install a full configuration from a local or remote zip file Argument ITEM
     # is required, arguments TYPE, SOURCE, TARGET and VERIFY_SSL are optional
-    # Example usage: conan_config_install(ITEM
-    # https://github.com/conan-io/cmake-conan.git TYPE git SOURCE source-folder
-    # TARGET target-folder VERIFY_SSL false)
+    # Example usage: conan_config_install(ITEM https://github.com/conan-
+    # io/cmake-conan.git TYPE git SOURCE source-folder TARGET target-folder
+    # VERIFY_SSL false)
     set(oneValueArgs ITEM TYPE SOURCE TARGET VERIFY_SSL)
     set(multiValueArgs ARGS)
     cmake_parse_arguments(

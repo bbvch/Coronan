@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15...3.20)
 
 project(
     coronan_qt
@@ -19,7 +19,9 @@ add_executable(
 )
 
 add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME coronanApp)
+set_target_properties(
+    ${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronanApp
+)
 
 find_package(
     Qt5
