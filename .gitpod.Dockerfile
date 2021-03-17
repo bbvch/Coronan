@@ -1,13 +1,10 @@
 FROM ubuntu:bionic as cmake_builder
 
-ARG cmake_version=3.20
-ARG cmake_build=0-rc4
-
 RUN apt-get update
-RUN apt-get install -y wget
-RUN wget https://cmake.org/files/v$cmake_version/cmake-$cmake_version.$cmake_build-linux-x86_64.sh
+RUN apt-get install -y --no-install-recommends wget
 RUN mkdir /opt/cmake
-RUN sh cmake-$cmake_version.$cmake_build-linux-x86_64.sh --skip-license --prefix=/opt/cmake
+RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.20.0-rc4/cmake-3.20.0-rc4-linux-x86_64.sh \
+ && sh ./cmake-3.20.0-rc4-linux-x86_64.sh --skip-license --prefix=/opt/cmake
 
 FROM bbvch/qt:5.14.2 as qt_builder
 
@@ -62,3 +59,4 @@ RUN pip3 install cmake-format==0.6.13
 
 # pre-commit
 RUN pip3 install pre-commit==2.11.1
+RUN echo 'export PIP_USER=false' >> ~/.bashrc

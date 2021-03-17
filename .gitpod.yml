@@ -4,8 +4,8 @@ image:
 
 tasks:
     - before: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
-      init: cmake -S . --preset=linux-ninja-clang && export num_threads=$(grep -c '^processor' /proc/cpuinfo)
-      command: cmake --build -S . --preset=linux-clean-build -- -j"${num_threads}"
+      init: cmake -S . --preset=linux-ninja-clang
+      command: cmake --build -S . --preset=linux-clean-build
 
 
 vscode:
