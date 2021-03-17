@@ -62,7 +62,7 @@ When using nix. The most resent cmake is available and therefore configure and b
 
 ```bash
 #> cmake -S . --preset=linux-ninja-clang
-#> cmake --build --preset=linux-build"
+#> cmake --build -S . --preset=linux-build"
 ```
 
 See [CMakePresets.json](CMakePresets.json) for the available presets.
