@@ -37,7 +37,8 @@
       "name": "clang",
       "description": "Configure release build",
       "cacheVariables": {
-        "CMAKE_CXX_COMPILER": "clang++"
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CC_COMPILER": "clang"
       },
       "hidden": true
     },
