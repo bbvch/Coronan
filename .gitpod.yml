@@ -3,9 +3,8 @@ image:
     file: .gitpod.Dockerfile
 
 tasks:
-    - before: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
-      init: rm -rf ./build && cmake -S . --preset=linux-ninja-clang
-      command: cmake --build -S . --preset=linux-clean-build
+    - init: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
+      command: rm -rf ./build && cmake -S . --preset=linux-ninja-clang
 
 
 vscode:
