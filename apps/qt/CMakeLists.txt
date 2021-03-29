@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.15...3.20)
 
 project(
-    coronan_qt
-    VERSION 0.1.0
-    LANGUAGES CXX
+  coronan_qt
+  VERSION 0.1.0
+  LANGUAGES CXX
 )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -12,7 +12,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 if(DEFINED ENV{Qt5_DIR} AND EXISTS "$ENV{Qt5_DIR}/lib")
-    set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "$ENV{Qt5_DIR}/lib")
+  set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "$ENV{Qt5_DIR}/lib")
 endif()
 
 set(CMAKE_BUILD_WITH_INSTALL_RPATH false)
@@ -22,91 +22,40 @@ set(CMAKE_INSTALL_RPATH ${CMAKE_LIBRARY_PATH})
 message(STATUS "CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}")
 
 add_executable(
-    ${PROJECT_NAME}
-    ${CMAKE_CURRENT_LIST_DIR}/main.cpp ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/mainwindow.h
-    ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui
+  ${PROJECT_NAME}
+  ${CMAKE_CURRENT_LIST_DIR}/main.cpp ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/mainwindow.h
+  ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui
 )
 
 add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 set_target_properties(
-    ${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronanApp
+  ${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronanApp
 )
 
 find_package(
-    Qt5
-    COMPONENTS Charts
-    REQUIRED
+  Qt5
+  COMPONENTS Charts
+  REQUIRED
 )
 find_package(Qt5Core CONFIG REQUIRED)
 
 target_link_libraries(
-    ${PROJECT_NAME}
-    PRIVATE coronan::coronan_lib
-    PRIVATE Qt5::Charts
+  ${PROJECT_NAME}
+  PRIVATE coronan::coronan_lib
+  PRIVATE Qt5::Charts
+  PRIVATE coronan::compile_warnings
+  PRIVATE coronan::compile_options
 )
 
-target_compile_options(
-    ${PROJECT_NAME}
-    PRIVATE -Wall
-            -Werror
-            -Wextra
-            -pedantic
-            -Wcast-align
-            -Wunused
-            -Wpointer-arith
-            -Wcast-qual
-            -Wcast-qual
-            -Wctor-dtor-privacy
-            -Wdisabled-optimization
-            -Wformat=2
-            -Winit-self
-            -Wmissing-declarations
-            -Wmissing-include-dirs
-            -Wold-style-cast
-            -Woverloaded-virtual
-            -Wredundant-decls
-            -Wshadow
-            -Wsign-conversion
-            -Wsign-promo
-            -Wstrict-overflow=5
-            -Wswitch-default
-            -Wundef
-            $<$<CONFIG:Debug>:-Og>
-            $<$<CONFIG:Release>:-O3>
-)
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-    target_compile_options(
-        ${PROJECT_NAME} PRIVATE -Wlogical-op -Wnoexcept -Wstrict-null-sentinel
-                                -fconcepts
-    )
-elseif(CMAKE_COMPILER_IS_CLANGCXX)
-    target_compile_options(
-        ${PROJECT_NAME} PRIVATE -Wno-gnu-zero-variadic-macro-arguments
-    )
-endif(CMAKE_COMPILER_IS_GNUCXX)
-
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-    target_compile_options(
-        ${PROJECT_NAME} PRIVATE -fsanitize=address -fno-omit-frame-pointer
-    )
-    target_link_libraries(
-        ${PROJECT_NAME} PUBLIC "-fno-omit-frame-pointer -fsanitize=address"
-    )
-endif()
-
-target_compile_options(
-    ${PROJECT_NAME} PUBLIC $<$<BOOL:MSVC>:-D_WIN32_WINNT=0x0601>
-                           $<$<BOOL:UNIX>:-fPIC;>
-)
+# include(StaticAnalyzers) enable_static_analysis(${PROJECT_NAME})
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
 install(
-    TARGETS coronan_qt
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  TARGETS coronan_qt
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
