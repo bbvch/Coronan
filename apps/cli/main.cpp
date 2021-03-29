@@ -2,8 +2,9 @@
 #include "coronan/http_client.hpp"
 #include "coronan/ssl_initializer.hpp"
 
-#include <iostream>
+#include <fmt/core.h>
 #include <lyra/lyra.hpp>
+#include <sstream>
 
 int main(int argc, char* argv[])
 {
@@ -16,37 +17,45 @@ int main(int argc, char* argv[])
     auto cli = lyra::cli_parser() | lyra::help(help_request) |
                lyra::opt(country, "country")["-c"]["--country"]("Country Code");
 
+    std::stringstream usage;
+    usage << cli;
+
     auto const result = cli.parse({argc, argv});
     if (!result)
     {
-      std::cerr << "Error in comman line: " << result.errorMessage() << "\n";
+      fmt::print(stderr, "Error in comman line: {}\n", result.errorMessage());
+      fmt::print("{}\n", usage.str());
       exit(EXIT_FAILURE);
     }
 
     if (help_request)
     {
-      std::cout << cli;
+      fmt::print("{}\n", usage.str());
       exit(EXIT_SUCCESS);
     }
 
     auto const url = "https://corona-api.com/countries/" + country;
 
-    auto response = coronan::HTTPClient::get(url);
+    auto const response = coronan::HTTPClient::get(url);
 
     auto const& data = coronan::api_parser::parse(response.get_response_body());
-    std::cout << "\"datetime\", \"confirmed\", \"death\", \"recovered\", "
-                 "\"active\"\n";
+    fmt::print("\"datetime\", \"confirmed\", \"death\", \"recovered\", "
+               "\"active\"\n");
 
     for (auto const& data_point : data.timeline)
     {
-      std::cout << data_point.date << ", " << data_point.confirmed << ", "
-                << data_point.deaths << ", " << data_point.recovered << ", "
-                << data_point.active << "\n";
+      fmt::print("{date}, {confirmed}, {deaths}, {recovered}, {active}\n",
+                 fmt::arg("date", data_point.date),
+                 fmt::arg("confirmed", data_point.confirmed),
+                 fmt::arg("deaths", data_point.deaths),
+                 fmt::arg("recovered", data_point.recovered),
+                 fmt::arg("active", data_point.active));
     }
   }
   catch (coronan::SSLException const& ex)
   {
-    std::cerr << "SSL Exception: " << ex.displayText() << "\n";
+
+    fmt::print(stderr, "SSL Exception: {}\n", ex.displayText());
     exit(EXIT_FAILURE);
   }
   exit(EXIT_SUCCESS);
