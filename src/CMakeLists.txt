@@ -28,8 +28,8 @@ target_sources(
           ${CMAKE_CURRENT_SOURCE_DIR}/ssl_initializer.cpp ${HEADER_LIST}
 )
 
-find_package(Poco REQUIRED)
-find_package(Rapidjson REQUIRED)
+find_package(poco REQUIRED)
+find_package(rapidjson REQUIRED)
 
 target_link_libraries(
   ${PROJECT_NAME}
