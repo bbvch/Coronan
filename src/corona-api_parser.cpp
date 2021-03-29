@@ -1,8 +1,7 @@
 #include "coronan/corona-api_parser.hpp"
 
-#include "rapidjson/document.h"
-
 #include <algorithm>
+#include <rapidjson/document.h>
 
 namespace coronan::api_parser {
 
@@ -15,7 +14,7 @@ constexpr auto parse_today_data = [](auto const& json_dom_object) {
   return today;
 };
 
-constexpr auto parse_lates_data = [](auto const& json_dom_object) {
+constexpr auto parse_latest_data = [](auto const& json_dom_object) {
   CountryObject::latest_t latest{};
   latest.deaths = json_dom_object["deaths"].GetInt();
   latest.confirmed = json_dom_object["confirmed"].GetInt();
@@ -78,7 +77,7 @@ CountryObject parse(std::string const& json)
       country_data_object["updated_at"].GetString();
   country_object.today.date = current_date;
   country_object.latest =
-      parse_lates_data(country_data_object["latest_data"].GetObject());
+      parse_latest_data(country_data_object["latest_data"].GetObject());
   country_object.latest.date = current_date;
   country_object.timeline =
       parse_timeline(country_data_object["timeline"].GetArray());

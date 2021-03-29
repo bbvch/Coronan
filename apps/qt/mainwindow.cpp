@@ -94,7 +94,8 @@ constexpr auto create_line_chart =
       {
         QDateTime date = QDateTime::fromString(data_point.date.c_str(),
                                                "yyyy-MM-ddThh:mm:ss.zZ");
-        auto const msecs_since_epoche = date.toMSecsSinceEpoch();
+        auto const msecs_since_epoche =
+            static_cast<double>(date.toMSecsSinceEpoch());
         death_serie->append(QPointF(msecs_since_epoche, data_point.deaths));
         confirmed_serie->append(
             QPointF(msecs_since_epoche, data_point.confirmed));
@@ -136,10 +137,16 @@ constexpr auto create_line_chart =
       return chart;
     };
 
+constexpr auto create_chart_view = [](auto const& country_data) {
+  auto* const chartView = new QChartView{create_line_chart(country_data)};
+  chartView->setRenderHint(QPainter::Antialiasing, true);
+  return chartView;
+};
+
 } // namespace
 
-CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{api_url}
+CoronanWidget::CoronanWidget(std::string&& api_url, QWidget* parent)
+    : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{std::move(api_url)}
 {
   m_ui->setupUi(this);
 
@@ -148,23 +155,15 @@ CoronanWidget::CoronanWidget(std::string const& api_url, QWidget* parent)
   auto country_code =
       m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
           .toString();
-
   auto const country_data = get_country_data(country_code.toStdString());
-  m_chartView = new QChartView{create_line_chart(country_data)};
-  m_chartView->setRenderHint(QPainter::Antialiasing, true);
 
+  m_chartView = create_chart_view(country_data);
   m_ui->gridLayout->addWidget(m_chartView, 2, 1);
 
   m_ui->overviewTable->horizontalHeader()->setSectionResizeMode(
       0, QHeaderView::ResizeToContents);
 
   update_country_overview_table(m_ui->overviewTable, country_data);
-
-  // Set the colors from the light theme as default ones
-  auto pal = qApp->palette();
-  pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
-  pal.setColor(QPalette::WindowText, QRgb(0x404044));
-  qApp->setPalette(pal);
 }
 
 CoronanWidget::~CoronanWidget() { delete m_ui; }
@@ -207,8 +206,7 @@ void CoronanWidget::update_ui()
       m_ui->countryComboBox->itemData(m_ui->countryComboBox->currentIndex())
           .toString();
   auto const country_data = get_country_data(country_code.toStdString());
-  auto* const new_chartView = new QChartView{create_line_chart(country_data)};
-  new_chartView->setRenderHint(QPainter::Antialiasing, true);
+  auto* const new_chartView = create_chart_view(country_data);
   auto* old_layout =
       m_ui->gridLayout->replaceWidget(m_chartView, new_chartView);
   delete old_layout;

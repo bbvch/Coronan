@@ -26,7 +26,7 @@ class CoronanWidget : public QWidget
 {
   Q_OBJECT
 public:
-  explicit CoronanWidget(std::string const& api_url, QWidget* parent = nullptr);
+  explicit CoronanWidget(std::string&& api_url, QWidget* parent = nullptr);
   ~CoronanWidget();
 
 private Q_SLOTS:
