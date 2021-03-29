@@ -62,6 +62,8 @@ constexpr auto parse_timeline = [](auto const& json_dom_array) {
 
 } // namespace
 
+// cppcheck-suppress unusedFunction
+// Justification: Is used
 CountryObject parse(std::string const& json)
 {
   rapidjson::Document document{};
@@ -84,6 +86,8 @@ CountryObject parse(std::string const& json)
   return country_object;
 }
 
+// cppcheck-suppress unusedFunction
+// Justification: Is used
 OverviewObject parse_countries(std::string const& json)
 {
   rapidjson::Document document{};

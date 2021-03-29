@@ -45,11 +45,10 @@ include(cmake/Sanitizers.cmake)
 enable_sanitizers(project_options)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  # enable doxygen
   include(cmake/Doxygen.cmake)
   enable_doxygen()
 
-  if(ENABLE_DOXYGEN AND Doxygen_FOUND)
+  if(ENABLE_DOXYGEN)
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
     add_subdirectory(docs)
   endif()

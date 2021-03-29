@@ -34,7 +34,7 @@ find_package(Rapidjson REQUIRED)
 target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC poco::poco
-  PUBLIC rapidjson::rapidjson
+  PRIVATE rapidjson::rapidjson
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options
 )

@@ -24,6 +24,9 @@ target_link_libraries(
   PRIVATE coronan::compile_options
 )
 
+include(StaticAnalyzers)
+enable_static_analysis(${PROJECT_NAME})
+
 install(
   TARGETS coronan_cli
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

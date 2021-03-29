@@ -33,7 +33,7 @@ private Q_SLOTS:
   void update_ui();
 
 private:
-  [[nodiscard]] coronan::CountryObject
+  coronan::CountryObject
   get_country_data(std::string const& country_code) const;
   void populate_country_box();
 
