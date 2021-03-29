@@ -12,14 +12,12 @@ add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 set_target_properties(
   ${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronan
 )
-find_package(lyra REQUIRED)
-find_package(fmt REQUIRED)
 
 target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE coronan::coronan_lib
-  PRIVATE lyra::lyra
-  PRIVATE fmt::fmt
+  PRIVATE CONAN_PKG::lyra
+  PRIVATE CONAN_PKG::fmt
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options
 )

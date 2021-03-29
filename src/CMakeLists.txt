@@ -28,13 +28,10 @@ target_sources(
           ${CMAKE_CURRENT_SOURCE_DIR}/ssl_initializer.cpp ${HEADER_LIST}
 )
 
-find_package(poco REQUIRED)
-find_package(rapidjson REQUIRED)
-
 target_link_libraries(
   ${PROJECT_NAME}
-  PUBLIC poco::poco
-  PRIVATE rapidjson::rapidjson
+  PUBLIC CONAN_PKG::poco
+  PRIVATE CONAN_PKG::rapidjson
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options
 )
