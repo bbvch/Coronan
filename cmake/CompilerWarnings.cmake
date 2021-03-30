@@ -34,7 +34,8 @@ function(set_project_warnings project_name)
               # conversion has been implicitly applied
       /permissive- # standards conformance mode for MSVC compiler.
       /experimental:external
-      /external:anglebrackets # treat all headers included via #include <> (as opposed to #include "") as external headers
+      /external:anglebrackets # treat all headers included via #include <> (as
+                              # opposed to #include "") as external headers
       /external:W0 # Disable warnings for external headers
   )
 
