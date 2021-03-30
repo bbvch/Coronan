@@ -49,8 +49,7 @@ jobs:
           before_script:
               - eval "${MATRIX_EVAL}"
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-              - conan profile update settings.compiler=gcc default
-              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Release
+              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_CXX_COMPILER=g++-${GCC_VER} -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
 
@@ -72,6 +71,7 @@ jobs:
               - eval "${MATRIX_EVAL}"
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
               - cmake -S . -B ./build -G"Unix Makefiles"  -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release
+              - (cd build && conan install --build doctest ..)
           script:
               - cmake --build ./build -- -j16
 
