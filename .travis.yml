@@ -47,8 +47,10 @@ jobs:
               - python3 -m pip install conan cmake
               - conan --version
           before_script:
+              - eval "${MATRIX_EVAL}"
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+              - conan profile update settings.compiler=gcc default
+              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
 
@@ -67,8 +69,36 @@ jobs:
               - python3 -m pip install conan cmake
               - conan --version
           before_script:
+              - eval "${MATRIX_EVAL}"
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+              - cmake -S . -B ./build -G"Unix Makefiles"  -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release
+          script:
+              - cmake --build ./build -- -j16
+
+        - os: linux
+          dist: focal
+          compiler: gcc
+          addons:
+              apt:
+                  sources:
+                      - sourceline: ppa:beineri/opt-qt-5.15.2-focal
+                  update: true
+                  packages:
+                      - ninja-build
+                      - qt515base
+                      - qt515charts-no-lgpl
+                      - qt515tools
+                      - libc6-i386
+                      - libgl-dev
+                      - libgl1-mesa-dev
+                      - mesa-common-dev
+          install:
+              - python3 -m pip install --upgrade pip setuptools
+              - python3 -m pip install conan cmake
+              - conan --version
+          before_script:
+              - /opt/qt515/bin/qt515-env.sh
+              - cmake -S . -B ./build -G"Ninja" -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
 
