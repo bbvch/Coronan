@@ -32,27 +32,6 @@ install:
 jobs:
     include:
         - os: osx
-          compiler: gcc
-          osx_image: xcode11.2
-          addons:
-              homebrew:
-                  packages:
-                      - qt
-                  update: false
-          env:
-              - GCC_VER="9"
-              - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
-          install:
-              - python3 -m pip install --upgrade pip setuptools
-              - python3 -m pip install conan cmake
-              - conan --version
-          before_script:
-              - eval "${MATRIX_EVAL}"
-              - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_CXX_COMPILER=g++-${GCC_VER} -DCMAKE_CC_COMPILER=gcc-${GCC_VER} -DENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
-          script:
-              - cmake --build ./build -- -j16
-        - os: osx
           compiler: clang
           osx_image: xcode11.2
           addons:

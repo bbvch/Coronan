@@ -21,8 +21,9 @@ endif()
 function(enable_static_analysis project_name)
 
   if(ENABLE_CPPCHECK)
-    set(CPPCHECK_PROPERTIES "${CPPCHECK}" "--suppress=missingInclude"
-                            "--enable=all" "--inline-suppr" "--inconclusive"
+    set(CPPCHECK_PROPERTIES
+        "${CPPCHECK}" "--suppress=missingInclude" "--enable=all" "--std=c++17"
+        "--inline-suppr" "--inconclusive"
     )
     set_target_properties(
       ${project_name} PROPERTIES CXX_CPPCHECK "${CPPCHECK_PROPERTIES}"
