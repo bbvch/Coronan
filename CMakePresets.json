@@ -12,7 +12,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_CXX_COMPILER": "g++",
-                "CODE_COVERAGE": {
+                "ENABLE_COVERAGE": {
                     "type": "BOOL",
                     "value": "ON"
                 }
@@ -48,12 +48,12 @@
             "generator": "Unix Makefiles",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "BUILD_TESTING": {
+                "ENABLE_TESTING": {
                     "type": "BOOL",
                     "value": "ON"
                 },
                 "CMAKE_CXX_COMPILER": "g++",
-                "CODE_COVERAGE": {
+                "ENABLE_COVERAGE": {
                     "type": "BOOL",
                     "value": "OFF"
                 }
@@ -109,6 +109,29 @@
             ]
         },
         {
+            "name": "linux-ninja-clang-address-sanitizers",
+            "description": "Configure debug build with address sanitizers",
+            "inherits": [
+                "ninja",
+                "clang",
+                "linux"
+            ],
+            "cacheVariables": {
+                "ENABLE_SANITIZER_ADDRESS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "ENABLE_SANITIZER_LEAK": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "ENABLE_SANITIZER_UNDEFINED_BEHAVIOR": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
             "name": "linux-release-ninja-clang",
             "description": "Configure debug build",
             "inherits": [
@@ -119,8 +142,8 @@
     ],
     "buildPresets": [
         {
-            "configurePreset": "linux",
             "name": "linux-build",
+            "configurePreset": "linux",
             "jobs": 16
         },
         {

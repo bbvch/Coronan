@@ -3,10 +3,10 @@ doctest/2.4.4
 poco/1.10.1
 rapidjson/1.1.0
 lyra/1.5.1
-
+fmt/7.1.3
 
 [generators]
-cmake
+CMakeDeps
 
 [options]
 poco:enable_mongodb=False

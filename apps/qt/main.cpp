@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     auto const window_height = 600;
     window.resize(window_width, window_height);
     window.show();
-    return app.exec();
+    return app.exec(); // NOLINT(readability-static-accessed-through-instance)
   }
   catch (coronan::SSLException const& ex)
   {

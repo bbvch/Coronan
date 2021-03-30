@@ -53,9 +53,6 @@ jobs:
 
             - name: make-build-dir
               run: mkdir build
-            - name: build-conan-packages
-              run: conan install --build missing ..
-              working-directory: ./build
             - name: cmake-configure-debug
               run: cmake -DCMAKE_BUILD_TYPE=Debug ..
               working-directory: ./build

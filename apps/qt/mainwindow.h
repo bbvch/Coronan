@@ -26,14 +26,14 @@ class CoronanWidget : public QWidget
 {
   Q_OBJECT
 public:
-  explicit CoronanWidget(std::string const& api_url, QWidget* parent = nullptr);
+  explicit CoronanWidget(std::string&& api_url, QWidget* parent = nullptr);
   ~CoronanWidget();
 
 private Q_SLOTS:
   void update_ui();
 
 private:
-  [[nodiscard]] coronan::CountryObject
+  coronan::CountryObject
   get_country_data(std::string const& country_code) const;
   void populate_country_box();
 

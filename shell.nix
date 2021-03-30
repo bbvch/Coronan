@@ -18,6 +18,8 @@ in mkShell {
     clang
     binutils
     clang-tools
+    include-what-you-use
+    cppcheck
     dpkg
     ccache
     qt514.full
