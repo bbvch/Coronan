@@ -34,6 +34,9 @@ jobs:
         - os: osx
           compiler: gcc
           osx_image: xcode11.2
+          env:
+              - GCC_VER="9"
+              - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
           addons:
               homebrew:
                   packages:
@@ -43,12 +46,17 @@ jobs:
               - python3 -m pip install --upgrade pip setuptools
               - python3 -m pip install conan cmake
               - conan --version
+          before_script:
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
           script:
-              - ./build.sh
+              - cmake --build ./build -- -j16
+
         - os: osx
           compiler: clang
           osx_image: xcode11.2
+          env:
+              - MATRIX_EVAL="CC=clang && CXX=clang++"
           addons:
               homebrew:
                   packages:
@@ -58,10 +66,13 @@ jobs:
               - python3 -m pip install --upgrade pip setuptools
               - python3 -m pip install conan cmake
               - conan --version
+          before_script:
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
           script:
-              - ./build.sh
-        - name: gcc7 coverage
+              - cmake --build ./build -- -j16
+
+        - name: gcc7 coverage (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7
               - COVERAGE_FILE="coverage.info"
@@ -72,38 +83,39 @@ jobs:
               - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
               - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
 
-        - name: gcc9 debug
-          env:
-              - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
-          script:
-              - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
-                -r"
-        - name: gcc9 release
+        - name: gcc9 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
 
-        - name: clang7 debug
+        - name: gcc9 release (docker)
+          env:
+              - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
+          script:
+              - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
+                -r"
+
+        - name: clang7 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
 
-        - name: clang8 debug
+        - name: clang8 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
 
-        - name: clang9 debug
+        - name: clang9 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
 
-        - name: clang9 release
+        - name: clang9 release (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
           script:
