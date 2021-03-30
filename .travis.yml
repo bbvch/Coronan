@@ -44,9 +44,8 @@ jobs:
               - python3 -m pip install conan cmake
               - conan --version
           before_script:
-              - export CXXFLAGS="-stdlib=libc++"
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-              - cmake -S . -B ./build -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+              - cmake -S . -B ./build -G"Unix Makefiles" -DENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
               - (cd build && conan install --build doctest ..)
           script:
               - cmake --build ./build -- -j16
