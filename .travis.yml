@@ -1,7 +1,5 @@
 ---
 language: cpp
-os: linux
-dist: bionic
 
 services:
     - docker
@@ -28,13 +26,40 @@ notifications:
 
 install:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - python3 -m pip install --upgrade pip setuptools
+    - python3 -m pip install conan cmake
+    - conan --version
 
 jobs:
     include:
         - language: cpp
-          name: gcc7 coverage
+          os: osx
+          compiler: gcc
+          osx_image: xcode11.2
+          addons:
+              homebrew:
+                  packages:
+                      - qt
+                  update: true
+          script:
+              - ./build.sh
+        - language: cpp
+          os: osx
+          compiler: clang
+          osx_image: xcode11.2
+          addons:
+              homebrew:
+                  packages:
+                      - qt
+                  update: true
+          script:
+              - ./build.sh
+        - language: cpp
+          os: linux
+          dist: bionic
+          name: gcc9 debug
           env:
-              - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc7
+              - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
               - COVERAGE_FILE="coverage.info"
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
@@ -44,20 +69,8 @@ jobs:
               - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
 
         - language: cpp
-          name: gcc8 debug
-          env:
-              - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc8
-          script:
-              - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
-        - language: cpp
-          name: gcc9 debug
-          env:
-              - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
-          script:
-              - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
-        - language: cpp
+          os: linux
+          dist: bionic
           name: gcc9 release
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
@@ -66,6 +79,8 @@ jobs:
                 -r"
 
         - language: cpp
+          os: linux
+          dist: bionic
           name: clang7 debug
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7
@@ -73,6 +88,8 @@ jobs:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
 
         - language: cpp
+          os: linux
+          dist: bionic
           name: clang8 debug
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
@@ -80,6 +97,8 @@ jobs:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
 
         - language: cpp
+          os: linux
+          dist: bionic
           name: clang9 debug
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
@@ -87,6 +106,8 @@ jobs:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
 
         - language: cpp
+          os: linux
+          dist: bionic
           name: clang9 release
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
@@ -95,6 +116,8 @@ jobs:
                 -r"
 
         - language: nix
+          os: linux
+          dist: bionic
           name: nix build ninja gcc10
           env:
               - CONAN_USER_HOME="${HOME}/.conan"
@@ -103,6 +126,8 @@ jobs:
               - nix-shell --command "cmake --build --preset=linux-build"
 
         - language: nix
+          os: linux
+          dist: bionic
           name: nix build ninja clang11
           env:
               - CONAN_USER_HOME="${HOME}/.conan-clang11"
