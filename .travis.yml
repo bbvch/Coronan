@@ -2,33 +2,28 @@
 language: cpp
 os: linux
 dist: bionic
-
 services:
     - docker
-
-cache: # see https://docs.travis-ci.com/user/caching/
+cache:
     - directories:
           - $HOME/.ccache
           - $HOME/.conan
           - $HOME/.conan-clang11
           - nix/store
-
 env:
     global:
         - CODACY_PROJECT_TOKEN=03851e6e31c544248a4f5f799a7eac4c
         - DOCKER_WORKDIR="/workspace"
         - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
-
+        - secure: JKjz0MBcpd3CTPP8p1ZJiWHLoog40TV9QUEXmfc1SaCvCv+493vzEHbNcVpwr6JfucQ3UcPEwkSaEXJsJguVEIP6/FSJh3j/Y87DFZVUn/H9BiR8D1jRniwyVmNW+eZF/J3fqYcurWKXXxCb3MxzUb55kSft4VaHfgRmvWUONUDGL0Rn+V4535fkDjUvlolsjoDgpE+FngN4n8DLgb3QpHujwrfEZ4rzGtOQ4sHNJJEJ7NmDwoLvz8sG9iSZAhTA5ERGPzAI4eZXy/q5KnsvirIz1sJ757BsySgSEsnRq+RyFD5V2tjrMuBQvG72F+wujmuthA1M0zsWEJAbeWcAd1XSP3H9oFq5/l+V7JLatnThv9XQNEQ33JUZX7w2N7yznya1NwUtY2sv3dXT3nEGnY5Iqh/yKdO+slYChnGjVtoNPzS05mdwN64rmB7VMK/xHl5ssCd5fZ13a1wz2V1c676asE4YiLmrtWsRGIU+wZW0v3ZxBkCKBbly9gAF3XTU1cPXVcdhN1n9CimEqddhDz5ClPFFv3dZIH7sbV06yHpdLn9WQQ/LImykHr5xUZhIrWOEIuXhcQoCdpAy6O5Kw+4UGHAZPQDSGH8ghdmUjV//eB2RGYMDlxmy0ZV1OSVrh7JEC6j9mZtRgnt4WyIAXSJNbC9am1PEADkU8tw5jyo=
 notifications:
     email:
         recipients:
             - michel.estermann@bbv.ch
         on_success: change
         on_failure: always
-
 install:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
 jobs:
     include:
         - os: osx
@@ -48,7 +43,6 @@ jobs:
               - cmake -S . -B ./build -G"Unix Makefiles" -DENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
-
         - os: linux
           dist: focal
           compiler: gcc
@@ -75,6 +69,44 @@ jobs:
               - cmake -S . -B ./build -G"Ninja" -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
+        - os: linux
+          dist: focal
+          compiler: gcc
+          name: coverity scan
+          addons:
+              apt:
+                  sources:
+                      - sourceline: ppa:beineri/opt-qt-5.15.2-focal
+                  update: true
+                  packages:
+                      - ninja-build
+                      - qt515base
+                      - qt515charts-no-lgpl
+                      - qt515tools
+                      - libc6-i386
+                      - libgl-dev
+                      - libgl1-mesa-dev
+                      - mesa-common-dev
+              coverity_scan:
+                  project:
+                      name: bbvch/Coronan
+                      description: Co[ro]nan is an example C++17 project using conan and cmake.
+                  notification_email: estermann.michel@gmail.com
+                  build_command_prepend: cmake -S . -B ./build -GNinja -DCMAKE_BUILD_TYPE=Debug
+                  build_command: cmake --build ./build -- -j16
+                  branch_pattern: coverity_scan
+          before_install:
+              - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+          install:
+              - python3 -m pip install --upgrade pip setuptools
+              - python3 -m pip install conan cmake
+              - conan --version
+              - /opt/qt515/bin/qt515-env.sh
+          before_script:
+              - cmake -S . -B ./build -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+          script:
+              - cmake --build ./build -- -j16
 
         - name: gcc7 coverage (docker)
           env:
@@ -86,46 +118,39 @@ jobs:
           after_success:
               - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
               - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
-
         - name: gcc9 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
-
         - name: gcc9 release (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
-
         - name: clang7 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
         - name: clang8 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
         - name: clang9 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
         - name: clang9 release (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
-
         - language: nix
           name: nix build ninja gcc10
           env:
@@ -133,7 +158,6 @@ jobs:
           script:
               - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
               - nix-shell --command "cmake --build --preset=linux-build"
-
         - language: nix
           name: nix build ninja clang11
           env:
