@@ -1,5 +1,5 @@
 with builtins;
-let lock = fromTOML (readFile ./lock.toml);
+let lock = fromTOML (readFile ./nix-lock.toml);
 in rec {
   pkgs = import (fetchTarball {
     name = "nixpkgs";
