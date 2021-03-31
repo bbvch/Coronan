@@ -53,7 +53,7 @@ void SSLInitializer::initialize()
 
 SSLInitializer::~SSLInitializer() { Poco::Net::uninitializeSSL(); }
 
-std::unique_ptr<SSLInitializer>
+std::unique_ptr<SSLInitializer> // cppcheck-suppress unusedFunction
 SSLInitializer::initialize_with_accept_certificate_handler()
 {
   constexpr auto handle_errors_on_server_side = false;

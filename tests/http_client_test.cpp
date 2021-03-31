@@ -2,7 +2,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <doctest/doctest.h>
+#include <catch2/catch.hpp>
 #include <iostream>
 #include <sstream>
 
@@ -68,9 +68,9 @@ struct TestHTTPSession
   inline static std::istringstream response_{""};
 };
 
-TEST_CASE("HTTPClient get")
+TEST_CASE("HTTPClient get", "[HTTPClient]")
 {
-  SUBCASE("Initializes a session")
+  SECTION("Initializes a session")
   {
     auto const* uri = "http://server.com:80/";
     auto resonse =
@@ -80,7 +80,7 @@ TEST_CASE("HTTPClient get")
     REQUIRE(TestHTTPSession::port_ == 80);
   }
 
-  SUBCASE("Creates a request")
+  SECTION("Creates a request")
   {
     auto const* uri = "http://server.com:80/test";
     auto resonse =
@@ -90,7 +90,7 @@ TEST_CASE("HTTPClient get")
     REQUIRE(TestHTTPRequest::path_ == "/test");
   }
 
-  SUBCASE("Returns status, reason and response")
+  SECTION("Returns status, reason and response")
   {
     auto const expected_status = HTTPResponse::HTTP_FOUND;
     auto const* const expected_reason = "All ok";
