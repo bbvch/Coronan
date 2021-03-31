@@ -39,7 +39,7 @@ You have the following options to build the project
 
 __Use build script__:
 
-In a linux shell you can build the project with the provided `buuild.sh`script. E.g. to build in folder `build` execute:
+In a linux shell you can build the project with the provided `build.sh`script. E.g. to build in folder `build` execute:
 
 ```bash
 #> ./build.sh build
