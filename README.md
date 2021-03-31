@@ -47,7 +47,7 @@ In a linux shell you can build the project with the provided `build.sh`script. E
 
 See `./build.sh -h` for more options
 
-__CMake__
+__CMake__:
 
 You can also build it yourself using CMake:
 
@@ -79,7 +79,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_TESTING`: Build (and run) unittests. _Default_: `ON`
 * `ENABLE_BUILD_WITH_TIME_TRACE`: Enable [Clang Time Trace Feature](https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature). _Default: `OFF`_
 * `ENABLE_PCH`: Enable [Precompiled Headers](hhttps://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
-* `ENABLE_CACHE`: Enable caching if available, e.g. [cchache](https://ccache.dev/) or [sccache](https://github.com/mozilla/sccache). _Default: `ON`_
+* `ENABLE_CACHE`: Enable caching if available, e.g. [ccache](https://ccache.dev/) or [sccache](https://github.com/mozilla/sccache). _Default: `ON`_
 * `ENABLE_COVERAGE`: Enable coverage reporting for gcc/clang. _Default: `OFF`_
 * `ENABLE_DOXYGEN`: Enable doxygen documentation build ([doxygen](https://www.doxygen.nl/index.html) with [graphviz dot](https://graphviz.org/) must be installed). _Default: `ON`_
 * `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `OFF`_
@@ -117,7 +117,7 @@ Please install pre-commit hooks before commiting any code.
 
 ## Gitpod
 
-To start right away without installing anything on you local machine, you can simply use the ![](https://gitpod.io/button/open-in-gitpod.svg | height=15) Button at the top of this README.
+To start right away without installing anything on you local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> Button at the top of this README.
 
 ## direnv & Nix
 
