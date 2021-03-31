@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![version](https://img.shields.io/badge/version-0.1.0-blue)
+![version](https://img.shields.io/badge/version-0.2.0-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
 
 [![Build Status Travis](https://travis-ci.org/bbvch/Coronan.svg?branch=master)](https://travis-ci.org/bbvch/Coronan)
@@ -44,10 +44,18 @@ You can also build it yourself:
 
 ```bash
 #> mkdir build
-#> (cd build && conan install --build poco --build missing ..)
 #> (cd build && cmake ..)
 #> cmake --build build
 ```
+
+or with cmake >= 3.20
+
+```bash
+#> cmake -S . --preset=linux-ninja
+#> cmake --build -S . --preset=linux-build
+```
+
+or any other presets
 
 ### Source Code formatting
 
@@ -55,7 +63,7 @@ For source code formatting [clang-format](https://clang.llvm.org/docs/ClangForma
 
 ## Gitpod
 
-To start right away without installing anything on you local machine, you can simply use the ![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg) Button at the top of this README.
+To start right away without installing anything on you local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> Button at the top of this README.
 
 ## direnv & Nix
 
@@ -65,7 +73,7 @@ When using nix. The most resent cmake is available and therefore configure and b
 
 ```bash
 #> cmake -S . --preset=linux-ninja-clang
-#> cmake --build -S . --preset=linux-build"
+#> cmake --build -S . --preset=linux-build
 ```
 
 See [CMakePresets.json](CMakePresets.json) for the available presets.
