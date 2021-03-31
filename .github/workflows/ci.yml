@@ -38,13 +38,6 @@ jobs:
                   sudo apt install ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev -y
                   sudo pip3 install conan
 
-            - name: dependecies (macos)
-              if: runner.os == 'macOS'
-              run: brew install ninja clang-tidy
-
-      # - name: dependencies (windows)
-      #   if: runner.os == 'Windows'
-
             - name: set-compiler-env
               run: |
                   conan profile new default --detect
