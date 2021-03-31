@@ -60,8 +60,8 @@ SSLInitializer::initialize_with_accept_certificate_handler()
 
   Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler =
       new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};
-  auto ssl_initializer =
-      std::make_unique<SSLInitializer>(cert_handler, create_NetSSL_context());
+  auto ssl_initializer = std::make_unique<SSLInitializer>(
+      std::move(cert_handler), create_NetSSL_context());
 
   ssl_initializer->initialize();
   return ssl_initializer;

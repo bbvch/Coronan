@@ -2,33 +2,29 @@
 language: cpp
 os: linux
 dist: bionic
-
 services:
     - docker
-
-cache: # see https://docs.travis-ci.com/user/caching/
+cache:
     - directories:
           - $HOME/.ccache
           - $HOME/.conan
           - $HOME/.conan-clang11
           - nix/store
-
 env:
     global:
-        - CODACY_PROJECT_TOKEN=03851e6e31c544248a4f5f799a7eac4c
         - DOCKER_WORKDIR="/workspace"
         - CONAN_UPDATE_CMD="pip3 install --upgrade conan"
-
+        - secure: B2z2fRKdw0VJlg8LTSw4k8oBS68wzmD0FiXJXUUo2dc0Y/oO7dJw+0IiX6TSP6WFmKNgHlnAKwAwovslB/+YwMj2PNBXvAp57gnul0m2MdmZvUnwK/4JjGqvZ3Hr2OF5xSmzeyAYwxFOomssnzXknX5CtX8FotAvxgLTFmDRb02i1EqQzlWakmTa93EX4tXX21qSU5cyRftPLKJHmTKKnK805Z7BNcRrF9epA6WzG+5lasn7JfNk+6v5BJlPnPA+XfUXTtJufOjKumNtW3n29PxB6NtPEB+fkLvhu/9bKKvnl+xdfW8+qC/o8MW7wg0a+NivmILW9Fom9pn+T/MJDbuAex1AfD6542UWVpwppGGrrGIPVzQSurs0r0tZBUv39LAC4N/aXzc3UwLCIxg7/d/oX9jGa6b8GL7I1My3tiBswEriKJAZ9jSY06eHaWAA17M17PvT7U+coaFDN4kcxxfkUq8GUWnxpz+IBBzYG+pzJ17ZCyucNN0YX0FHu8DfK1mptyd010xV8GKOEc4I/3OOG1WLk7XU5HbchIlSNeiUDPTa7m85Jxu5rg2rtzPqpjOS/c2JE1ay8yIiXK4JEWo3/2zzLeKcoLt1bSGTtSfx0hvxlBZdfwxxlkUyw0nhhdVUX4HxElNk52rhATvvxqSgJ7MdiKjonLmrS8mNw9E=
+        - secure: h2dqGVJ8AKq0vSUN1CTd3gOQQyuXpyq4ep9+oitl413Y2PusaH1+BniTTB0Ln6CO6Ue6mtbAeRAOW1rCiZuhh+GsDyiFpL07Wgcb416MmJYuq431sNwODcHN2Fa8BuyiHb3fzU6PaLekJIc3S5TRK7moq2fneTg23yfX93vUanAsiiYVspNUs9NmQOBHFOBaYlM8O29OyJjgBMiUrs9ipm8iQoNvg5y9EJ3N1lAY9rS6ZfWjmBr1N/lfOjAQ8lVt8rheoxmaA3rX/jUrxYE0nujlAVOqYOl14+yAAC7FGaMx34ZP4lYIVhSz9wppxYrISxeVn0/UbQ2F5C9hQeIGq3WaCoi5QzBjL9RQ9Tv+20G6r30d29Xezxv2nSjjqAUUme5zUrWlLAJ7quDl7siF8eJ+8yYN5AxffG8gPfn4pme6H7ITCMdvR9YxTOV4IM0m1nz9Xl8wLUrhPln92O5Ov5jtqnKt830VOvyJgcPuGdQn/ko1jHVvYEZ2gfpSe2gGa2zV3h+gU/tIDXaLGeRUPUkKDTYmZiVlxxc0w/esXxaevL8G6V6EX6MpNwXCKAQ7g+CznEOXfYx5MYq1hC0aKu0ZqZNELELPlFVd2JINnky53OjWh7j4XtWMCvCmlIdMSmK4FAUGtQSkEi80bFpRyQURk9D/n4laZ+8s8zNdRgg=
+        - secure: Okkd2a8fdBN4sE9dzlfty2b16z5fV62JDnOQA870bjJN6+IFauHPDgmu6SEhGeilPu56jJAeHfoeNOVLKEBpNeWAaVc9pzTPARxRJbC6CbbuzNX2JL2jV4DBCxeDf1zHgAfretQSjYG3EYSkbzsh7pYb+rP/fc8yCwC63G9lct0yl6YoTQM7QVEmL+ZFAoVKz/4WMmYVmqNN7OR6K8mnhj7JO6WgTKu1jA/IP1KiMviERxh/Cc2I8bJJrcURDYVkMWvUEoCz/0ZfZBIOCX8E7AC+vReu76TCcz2A7KxYQjkwuZGnZ2jnSUl1bm+WBzZ3dMINLf3SQOuU1jZMmTbBnwZco+Q3p1dMjiUqxuxAaFNhxFdE5ABeWnI66fe6TD7wX9Hxo8h02BjSC0/b0h12wkEvAfNeprOrpMPUwtq96LJc3/z1KMfcmiEjJGiTxT6JmpMgI81S2lvO+BBNh/Og0bn5eVHYSLkavgAhcnWOXgtIZHgqbdJ9GRj8/rRr3rC+L2Gpz4mhZ87JSVKZg4hRprRgP4iHpjIL7ofHP9/KYxiKHtR+kgR5H4ZZQXXtVdsGxDzxqxkAOM14LZugFucFNo6aMJayc4nskuLP/uImxPBAA89IHM0odHaaUPuxWjLzKvlOCl6FEc8z+dhf2+6Ho3zpqcIWhEcHz5jEZxo/XPY=
 notifications:
     email:
         recipients:
             - michel.estermann@bbv.ch
         on_success: change
         on_failure: always
-
 install:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
 jobs:
     include:
         - os: osx
@@ -48,7 +44,6 @@ jobs:
               - cmake -S . -B ./build -G"Unix Makefiles" -DENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
-
         - os: linux
           dist: focal
           compiler: gcc
@@ -75,6 +70,45 @@ jobs:
               - cmake -S . -B ./build -G"Ninja" -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
+        - os: linux
+          dist: focal
+          compiler: gcc
+          name: coverity scan
+          env:
+              - secure: JKjz0MBcpd3CTPP8p1ZJiWHLoog40TV9QUEXmfc1SaCvCv+493vzEHbNcVpwr6JfucQ3UcPEwkSaEXJsJguVEIP6/FSJh3j/Y87DFZVUn/H9BiR8D1jRniwyVmNW+eZF/J3fqYcurWKXXxCb3MxzUb55kSft4VaHfgRmvWUONUDGL0Rn+V4535fkDjUvlolsjoDgpE+FngN4n8DLgb3QpHujwrfEZ4rzGtOQ4sHNJJEJ7NmDwoLvz8sG9iSZAhTA5ERGPzAI4eZXy/q5KnsvirIz1sJ757BsySgSEsnRq+RyFD5V2tjrMuBQvG72F+wujmuthA1M0zsWEJAbeWcAd1XSP3H9oFq5/l+V7JLatnThv9XQNEQ33JUZX7w2N7yznya1NwUtY2sv3dXT3nEGnY5Iqh/yKdO+slYChnGjVtoNPzS05mdwN64rmB7VMK/xHl5ssCd5fZ13a1wz2V1c676asE4YiLmrtWsRGIU+wZW0v3ZxBkCKBbly9gAF3XTU1cPXVcdhN1n9CimEqddhDz5ClPFFv3dZIH7sbV06yHpdLn9WQQ/LImykHr5xUZhIrWOEIuXhcQoCdpAy6O5Kw+4UGHAZPQDSGH8ghdmUjV//eB2RGYMDlxmy0ZV1OSVrh7JEC6j9mZtRgnt4WyIAXSJNbC9am1PEADkU8tw5jyo=
+          addons:
+              apt:
+                  sources:
+                      - sourceline: ppa:beineri/opt-qt-5.15.2-focal
+                  update: true
+                  packages:
+                      - ninja-build
+                      - qt515base
+                      - qt515charts-no-lgpl
+                      - qt515tools
+                      - libc6-i386
+                      - libgl-dev
+                      - libgl1-mesa-dev
+                      - mesa-common-dev
+              coverity_scan:
+                  project:
+                      name: bbvch/Coronan
+                      description: Co[ro]nan is an example C++17 project using conan and cmake.
+                  notification_email: estermann.michel@gmail.com
+                  build_command_prepend: cmake -S . -B ./build -GNinja -DCMAKE_BUILD_TYPE=Debug
+                  build_command: cmake --build ./build -- -j16
+                  branch_pattern: coverity_scan
+          before_install:
+              - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+          install:
+              - python3 -m pip install --upgrade pip setuptools
+              - python3 -m pip install conan cmake
+              - conan --version
+              - /opt/qt515/bin/qt515-env.sh
+          before_script:
+              - cmake -S . -B ./build -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+          script:
+              - cmake --build ./build -- -j16
 
         - name: gcc7 coverage (docker)
           env:
@@ -86,46 +120,39 @@ jobs:
           after_success:
               - bash <(curl -s https://codecov.io/bash) -f ${COVERAGE_FILE} || echo 'Codecov did not collect coverage reports'
               - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ${COVERAGE_FILE} || echo 'codacy did not collect coverage reports'
-
         - name: gcc9 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
-
         - name: gcc9 release (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_gcc9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
-
         - name: clang7 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang7
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
         - name: clang8 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang8
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
         - name: clang9 debug (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh"
-
         - name: clang9 release (docker)
           env:
               - DOCKER_IMAGE=bbvch/conan_qt-5.14.2_builder_clang9
           script:
               - docker run -t -v ${TRAVIS_BUILD_DIR}:${DOCKER_WORKDIR} -w ${DOCKER_WORKDIR} ${DOCKER_IMAGE} /bin/bash -c "${CONAN_UPDATE_CMD} && ./build.sh
                 -r"
-
         - language: nix
           name: nix build ninja gcc10
           env:
@@ -133,7 +160,6 @@ jobs:
           script:
               - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
               - nix-shell --command "cmake --build --preset=linux-build"
-
         - language: nix
           name: nix build ninja clang11
           env:
