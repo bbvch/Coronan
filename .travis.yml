@@ -41,9 +41,10 @@ jobs:
               - conan --version
           before_script:
               - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-              - cmake -S . -B ./build -G"Unix Makefiles" -DENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
+              - cmake -S . -B ./build -G"Unix Makefiles" -DENABLE_TESTING=ON -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
+              - (cd ./build && ctest -j2)
         - os: linux
           dist: focal
           compiler: gcc
@@ -70,6 +71,7 @@ jobs:
               - cmake -S . -B ./build -G"Ninja" -DCMAKE_BUILD_TYPE=Release
           script:
               - cmake --build ./build -- -j16
+              - (cd ./build && ctest -j2)
         - os: linux
           dist: focal
           compiler: gcc
