@@ -8,7 +8,6 @@ COVERAGE=false
 COVERAGE_OUT=""
 BUILD_TYPE=Debug
 BUILD_TARGET=""
-NINJA=""
 COMPILER="g++"
 CLEAR_BUILD=false
 
@@ -85,17 +84,17 @@ fi
 
 if [[ $(command -v ninja) ]] ; then
     echo "Ninja found. Use it."
-    CMAKE_GENERATOR="-G Ninja"
+    CMAKE_GENERATOR="-GNinja"
 fi
 
 if [ "${CLEAR_BUILD}" = true ] ; then
-    rm -rf ${BUILD_DIR}
+    rm -rf "${BUILD_DIR}"
 fi
 
 if [ "${COVERAGE}" = true ] ; then
-    "${CMAKE}" -S . -B ${BUILD_DIR} ${CMAKE_GENERATOR} -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
+    "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
 else
-    "${CMAKE}" -S . -B ${BUILD_DIR} ${CMAKE_GENERATOR} -DCMAKE_CXX_COMPILER="${COMPILER}" -DENABLE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
+    "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DCMAKE_CXX_COMPILER="${COMPILER}" -DENABLE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
 fi
 
 num_threads=$(grep -c '^processor' /proc/cpuinfo)

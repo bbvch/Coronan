@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
       exit(EXIT_SUCCESS);
     }
 
-    auto const url = "https://corona-api.com/countries/" + country;
+    auto const url = std::string{"https://corona-api.com/countries/"} + country;
 
     auto const response = coronan::HTTPClient::get(url);
 
