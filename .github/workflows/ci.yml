@@ -35,10 +35,12 @@ jobs:
             - name: dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
-                  sudo apt install ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev -y
+                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev
+                  sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen graphviz
                   sudo pip3 install conan
 
             - name: set-compiler-env
+              if: ${{ matrix.compiler }} == 'g++-9'
               run: |
                   conan profile new default --detect
                   conan profile update settings.compiler.libcxx=libstdc++11 default
@@ -54,3 +56,7 @@ jobs:
             - name: ctest
               run: ctest -C Debug
               working-directory: ./build
+            - name: build-package
+              run: |
+                  cmake --build ./build --target docs
+                  cmake --build ./build --target package
