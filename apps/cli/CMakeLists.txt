@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15...3.20)
 
 project(
   coronan_cli
-  VERSION 0.1.0
+  VERSION 0.2.0
   LANGUAGES CXX
 )
 
