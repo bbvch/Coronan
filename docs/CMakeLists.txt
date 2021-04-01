@@ -9,3 +9,9 @@ doxygen_add_docs(
   WORKING_DIRECTORY
   "${PROJECT_SOURCE_DIR}/include"
 )
+
+include(GNUInstallDirs)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/html
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}
+)

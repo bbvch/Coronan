@@ -24,6 +24,11 @@ repos:
       rev: v0.6.9
       hooks:
           - id: cmake-format
+    - repo: https://github.com/adrienverge/yamllint.git
+      rev: v1.21.0  # or higher tag
+      hooks:
+          - id: yamllint
+            args: [--format, parsable, -d, relaxed]
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
       rev: 0.1.0
       hooks:

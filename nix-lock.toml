@@ -1,8 +1,3 @@
-[mach-nix]
-ref = "3.2.0"
-rev = "ac62255e8112e547432ca0f09bfe8f4d1920fbb8"
-sha256 = "0qhg36l3c1i6p0p2l346fpj9zsh5kl0xpjmyasi1qcn7mbdfjb0m"
-
 [nixpkgs]
 ref = "20.09"
 rev = "cd63096d6d887d689543a0b97743d28995bc9bc3"

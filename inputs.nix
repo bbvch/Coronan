@@ -1,5 +1,5 @@
 with builtins;
-let lock = fromTOML (readFile ./lock.toml);
+let lock = fromTOML (readFile ./nix-lock.toml);
 in rec {
   pkgs = import (fetchTarball {
     name = "nixpkgs";
@@ -8,12 +8,5 @@ in rec {
   }) {
     config = { };
     overlays = [ ];
-  };
-  mach-nix = import (fetchTarball {
-    url = "https://github.com/DavHau/mach-nix/tarball/${lock.mach-nix.rev}";
-    sha256 = "${lock.mach-nix.sha256}";
-  }) {
-    python = "python38";
-    inherit pkgs;
   };
 }

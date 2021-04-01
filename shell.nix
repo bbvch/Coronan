@@ -11,7 +11,6 @@ in mkShell {
   buildInputs = [
     cmake-rc.cmake
     cmake # required otherwise cmake can not find GL/gl.h. Important: must be after cmake-rc.cmake
-    mach-nix.mach-nix
     glibcLocales
     gcc
     ninja
