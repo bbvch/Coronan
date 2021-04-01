@@ -56,7 +56,7 @@ jobs:
             - name: ctest
               run: ctest -C Debug
               working-directory: ./build
-            - name: build-package
-              run: |
-                  cmake --build ./build --target docs
-                  cmake --build ./build --target package
+            - name: build-docs
+              run: cmake --build ./build --target docs
+            - name: build-debpackage
+              run: cmake --build ./build --target package
