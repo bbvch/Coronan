@@ -5,14 +5,15 @@ let
   clang = clang_11;
   cmake-rc = (import ./cmake.nix);
 
-in mkShell {
+in stdenvNoCC.mkDerivation {
+  name = "shell";
   hardeningDisable = [ "all" ];
   LOCALE_ARCHIVE_2_27 = "${glibcLocales}/lib/locale/locale-archive";
   buildInputs = [
+    gcc
     cmake-rc.cmake
     cmake # required otherwise cmake can not find GL/gl.h. Important: must be after cmake-rc.cmake
     glibcLocales
-    gcc
     ninja
     clang
     binutils
