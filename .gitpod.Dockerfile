@@ -3,8 +3,8 @@ FROM ubuntu:bionic as cmake_builder
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends wget
 RUN mkdir /opt/cmake
-RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.20.0-rc4/cmake-3.20.0-rc4-linux-x86_64.sh \
- && sh ./cmake-3.20.0-rc4-linux-x86_64.sh --skip-license --prefix=/opt/cmake
+RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.20.1/cmake-3.20.1-linux-x86_64.sh \
+ && sh ./cmake-3.20.1-linux-x86_64.sh --skip-license --prefix=/opt/cmake
 
 FROM bbvch/qt:5.14.2 as qt_builder
 

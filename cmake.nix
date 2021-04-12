@@ -1,7 +1,9 @@
 with builtins;
-with (import ./inputs.nix);
+with (import ./sources.nix);
 
-let lock = fromTOML (readFile ./nix-lock.toml);
+let
+  lock = fromTOML (readFile ./nix-lock.toml);
+  pkgs = nixpkgs;
 in {
   cmake = pkgs.stdenv.mkDerivation {
     pname = "cmake";
