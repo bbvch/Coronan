@@ -4,8 +4,7 @@ project(
   Coronan
   VERSION 0.2.0
   DESCRIPTION "Conan example project showing Covid-19 cases."
-  LANGUAGES CXX
-)
+  LANGUAGES CXX)
 
 option(ENABLE_TESTING "Enable Test Builds" ON)
 
@@ -22,8 +21,7 @@ target_compile_features(project_options INTERFACE cxx_std_17)
 if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
   option(ENABLE_BUILD_WITH_TIME_TRACE
          "Enable -ftime-trace to generate time tracing .json files on clang"
-         OFF
-  )
+         OFF)
   if(ENABLE_BUILD_WITH_TIME_TRACE)
     target_compile_options(project_options INTERFACE -ftime-trace)
   endif()
@@ -60,9 +58,8 @@ if(ENABLE_PCH)
   # This sets a global PCH parameter, each project will build its own PCH, which
   # is a good idea if any #define's change
   #
-  target_precompile_headers(
-    project_options INTERFACE <vector> <string> <map> <utility>
-  )
+  target_precompile_headers(project_options INTERFACE <vector> <string> <map>
+                            <utility>)
 endif()
 
 include(cmake/Conan.cmake)
@@ -87,38 +84,32 @@ include(GNUInstallDirs)
 
 configure_package_config_file(
   ${PROJECT_SOURCE_DIR}/cmake/Coronan.cmake.in ${PROJECT_NAME}Config.cmake
-  INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
-)
+  INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake)
 
 write_basic_package_version_file(
   ${PROJECT_NAME}ConfigVersion.cmake
   VERSION ${PACKAGE_VERSION}
-  COMPATIBILITY AnyNewerVersion
-)
+  COMPATIBILITY AnyNewerVersion)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
 install(
   TARGETS coronan project_warnings project_options
   EXPORT ${PROJECT_NAME}Targets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(
   EXPORT ${PROJECT_NAME}Targets
   FILE ${PROJECT_NAME}Targets.cmake
   NAMESPACE coronan::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
