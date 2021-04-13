@@ -11,3 +11,4 @@ SHELL ["/bin/bash", "-c"]
 
 RUN . /home/gitpod/.nix-profile/etc/profile.d/nix.sh && nix-env -i direnv
 RUN . /home/gitpod/.nix-profile/etc/profile.d/nix.sh && direnv hook bash >> ~/.bashrc
+RUN mkdir -p /home/gitpod/.config/nix && echo "sandbox = false" > /home/gitpod/.config/nix/nix.conf
