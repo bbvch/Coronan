@@ -3,7 +3,7 @@ with nixpkgs;
 let
   gcc = gcc10;
   clang = clang_11;
-  cmake-rc = (import ./cmake.nix);
+  cmake = (import ./cmake.nix).cmake;
 
 in stdenvNoCC.mkDerivation {
   name = "shell";
@@ -11,8 +11,7 @@ in stdenvNoCC.mkDerivation {
   LOCALE_ARCHIVE_2_27 = "${glibcLocales}/lib/locale/locale-archive";
   buildInputs = [
     gcc
-    cmake-rc.cmake
-    cmake # required otherwise cmake can not find GL/gl.h. Important: must be after cmake-rc.cmake
+    cmake
     glibcLocales
     ninja
     clang
