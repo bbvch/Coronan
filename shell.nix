@@ -1,18 +1,19 @@
-with (import ./inputs.nix);
-with pkgs;
+with (import ./sources.nix);
+with nixpkgs;
 let
   gcc = gcc10;
   clang = clang_11;
-  cmake-rc = (import ./cmake.nix);
+  cmake_320 = (import ./cmake.nix).cmake;
 
-in mkShell {
+in stdenvNoCC.mkDerivation {
+  name = "shell";
   hardeningDisable = [ "all" ];
   LOCALE_ARCHIVE_2_27 = "${glibcLocales}/lib/locale/locale-archive";
   buildInputs = [
-    cmake-rc.cmake
-    cmake # required otherwise cmake can not find GL/gl.h. Important: must be after cmake-rc.cmake
-    glibcLocales
     gcc
+    cmake_320
+    cmake
+    glibcLocales
     ninja
     clang
     binutils
@@ -21,8 +22,10 @@ in mkShell {
     cppcheck
     dpkg
     ccache
-    qt514.full
     libGLU
+    libGL
+    qt5.qtbase
+    qt5.qtcharts
     lcov
     perl
     doxygen
@@ -30,6 +33,7 @@ in mkShell {
     pkg-config
     pre-commit
     python3
+    cmake-format
     python3Packages.setuptools
     python3Packages.pip
     python3Packages.virtualenv
@@ -39,8 +43,7 @@ in mkShell {
     pre-commit install -f --hook-type pre-commit
     virtualenv venv
     source venv/bin/activate
-    pip install conan==1.34.0
-    pip install cmake-format==0.6.13
-    pip install yamlfmt==1.1.0
+    python3 -m pip install conan==1.35.0
+    python3 -m pip install yamlfmt==1.1.0
   '';
 }

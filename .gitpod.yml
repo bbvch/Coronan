@@ -3,8 +3,8 @@ image:
     file: .gitpod.Dockerfile
 
 tasks:
-    - init: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
-      command: rm -rf ./build && cmake -S . --preset=linux-ninja-clang
+    - init: direnv allow
+      command: direnv allow && rm -rf ./build && cmake -S . --preset=linux-ninja-clang
 
 
 vscode:

@@ -8,8 +8,7 @@ set(CPACK_PACKAGE_VERSION
 
 # general settings
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
-    "Present the current data of Corona (Covid-19) cases for a country."
-)
+    "Present the current data of Corona (Covid-19) cases for a country.")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_VENDOR "Michel Estermann")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY
@@ -23,8 +22,7 @@ set(CPACK_DEBIAN_PACKAGE_NAME "coronan")
 set(CPACK_PACKAGE_VENDOR "bbv Software Services AG")
 set(CPACK_PACKAGE_CONTACT "michel.estermann@bbv.ch")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER
-    "Michel Estermann <michel.estermann@bbv.ch>"
-)
+    "Michel Estermann <michel.estermann@bbv.ch>")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/bbvch/Coronan")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5widgets5,libQt5Charts5")
 
