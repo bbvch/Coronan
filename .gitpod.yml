@@ -4,7 +4,7 @@ image:
 
 tasks:
     - init: direnv allow
-      command: rm -rf ./build && cmake -S . --preset=linux-ninja-clang
+      command: direnv allow && rm -rf ./build && cmake -S . --preset=linux-ninja-clang
 
 
 vscode:
