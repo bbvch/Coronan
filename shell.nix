@@ -24,8 +24,7 @@ in stdenvNoCC.mkDerivation {
     ccache
     libGLU
     libGL
-    qt5.qtbase
-    qt5.qtcharts
+    qt514.full
     lcov
     perl
     doxygen

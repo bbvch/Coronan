@@ -5,6 +5,7 @@
 #include "ui_mainwindow.h"
 
 #include <QDateTime>
+#include <QDebug>
 #include <QLabel>
 #include <QString>
 #include <QtCharts/QChartView>
@@ -14,6 +15,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QMessageBox>
 #include <algorithm>
 #include <array>
 #include <string>
@@ -34,9 +36,9 @@ constexpr auto update_country_overview_table = [](auto* table,
   auto const value_col_index = 1;
   auto row_index = 0;
   constexpr auto no_table_entries = 7;
-  std::array<
-      std::pair<char const*, std::variant<uint32_t, std::optional<double>>>,
-      no_table_entries> const overview_table_entries = {
+  std::array<std::pair<char const*, std::variant<std::optional<uint32_t>,
+                                                 std::optional<double>>>,
+             no_table_entries> const overview_table_entries = {
       {std::make_pair("Population:", country_data.population),
        std::make_pair("Confirmed:", country_data.latest.confirmed),
        std::make_pair("Death:", country_data.latest.deaths),
@@ -52,7 +54,10 @@ constexpr auto update_country_overview_table = [](auto* table,
     table->setItem(row_index, label_col_index, label_widget);
     auto const value_str =
         std::visit(overloaded{
-                       [](uint32_t arg) { return QString::number(arg); },
+                       [](std::optional<uint32_t> arg) {
+                         return arg.has_value() ? QString::number(arg.value())
+                                                : QString{"--"};
+                       },
                        [](std::optional<double> arg) {
                          return arg.has_value() ? QString::number(arg.value())
                                                 : QString{"--"};
@@ -96,12 +101,26 @@ constexpr auto create_line_chart =
                                                "yyyy-MM-ddThh:mm:ss.zZ");
         auto const msecs_since_epoche =
             static_cast<double>(date.toMSecsSinceEpoch());
-        death_serie->append(QPointF(msecs_since_epoche, data_point.deaths));
-        confirmed_serie->append(
-            QPointF(msecs_since_epoche, data_point.confirmed));
-        active_serie->append(QPointF(msecs_since_epoche, data_point.active));
-        recovered_serie->append(
-            QPointF(msecs_since_epoche, data_point.recovered));
+        if (data_point.deaths.has_value())
+        {
+          death_serie->append(
+              QPointF(msecs_since_epoche, data_point.deaths.value()));
+        }
+        if (data_point.confirmed.has_value())
+        {
+          confirmed_serie->append(
+              QPointF(msecs_since_epoche, data_point.confirmed.value()));
+        }
+        if (data_point.active.has_value())
+        {
+          active_serie->append(
+              QPointF(msecs_since_epoche, data_point.active.value()));
+        }
+        if (data_point.recovered.has_value())
+        {
+          recovered_serie->append(
+              QPointF(msecs_since_epoche, data_point.recovered.value()));
+        }
       }
 
       for (auto* serie : series)
@@ -118,7 +137,7 @@ constexpr auto create_line_chart =
       axisY->setTitleText("Cases");
       axisY->setLabelFormat("%i  ");
 
-      auto const max_cases = country_data.latest.confirmed;
+      auto const max_cases = country_data.latest.confirmed.value_or(0);
       axisY->setRange(0, max_cases);
       axisY->setLinePenColor(confirmed_serie->pen().color());
       axisY->setLabelsColor(confirmed_serie->pen().color());
@@ -142,6 +161,17 @@ constexpr auto create_chart_view = [](auto const& country_data) {
   chartView->setRenderHint(QPainter::Antialiasing, true);
   return chartView;
 };
+
+constexpr auto show_fetch_error_msg_box =
+    [](QWidget* parent, std::string const& url,
+       coronan::HTTPResponse const& response) {
+      auto const error_msg =
+          QString("Error fetching url \"%1\".\n Response Status: %2 (%3).")
+              .arg(QString::fromStdString(url),
+                   QString::fromStdString(response.get_reason()),
+                   QString::number(response.get_status()));
+      QMessageBox::warning(parent, "Error", error_msg);
+    };
 
 } // namespace
 
@@ -170,34 +200,70 @@ CoronanWidget::~CoronanWidget() { delete m_ui; }
 
 void CoronanWidget::populate_country_box()
 {
-  auto const http_response = coronan::HTTPClient::get(m_url);
-  auto const json_object =
-      coronan::api_parser::parse_countries(http_response.get_response_body());
-
-  auto* countryComboBox = m_ui->countryComboBox;
-  auto countries = json_object.countries;
-
-  std::sort(std::begin(countries), std::end(countries),
-            [](auto const& a, auto const& b) { return a.name < b.name; });
-
-  for (auto const& country : countries)
+  if (auto const http_response = coronan::HTTPClient::get(m_url);
+      http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
   {
-    countryComboBox->addItem(country.name.c_str(), country.code.c_str());
-  }
+    auto const json_object =
+        coronan::api_parser::parse_countries(http_response.get_response_body());
 
-  int index = countryComboBox->findData("CH");
-  if (index != -1)
-  { // -1 for not found
-    countryComboBox->setCurrentIndex(index);
+    auto* countryComboBox = m_ui->countryComboBox;
+    auto countries = json_object.countries;
+
+    std::sort(begin(countries), end(countries),
+              [](auto const& a, auto const& b) { return a.name < b.name; });
+
+    for (auto const& country : countries)
+    {
+      countryComboBox->addItem(country.name.c_str(), country.code.c_str());
+    }
+
+    if (int const index = countryComboBox->findData("CH"); index != -1)
+    { // -1 for not found
+      countryComboBox->setCurrentIndex(index);
+    }
+  }
+  else
+  {
+    auto const exception_msg =
+        std::string{"Error fetching country data from url \""} + m_url +
+        std::string{"\".\n\n Response status: "} + http_response.get_reason() +
+        std::string{" ("} + std::to_string(http_response.get_status()) +
+        std::string{")."};
+    throw coronan::HTTPClientException{exception_msg};
   }
 }
 
 coronan::CountryObject
-CoronanWidget::get_country_data(std::string const& country_code) const
+CoronanWidget::get_country_data(std::string const& country_code)
 {
-  auto const http_response =
-      coronan::HTTPClient::get(m_url + std::string{"/"} + country_code);
-  return coronan::api_parser::parse(http_response.get_response_body());
+  auto const country_url = m_url + std::string{"/"} + country_code;
+  try
+  {
+
+    if (auto const http_response = coronan::HTTPClient::get(country_url);
+        http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
+    {
+      return coronan::api_parser::parse_country(
+          http_response.get_response_body());
+    }
+    else
+    {
+      show_fetch_error_msg_box(this, m_url, http_response);
+    }
+  }
+  catch (coronan::HTTPClientException const& ex)
+  {
+    QMessageBox::warning(this, "Exception", QString::fromStdString(ex.what()));
+  }
+  catch (std::exception const& ex)
+  {
+    auto const exception_msg =
+        QString("Error fetching url \"%1\".\n\n Exception occured: %2")
+            .arg(QString::fromStdString(country_url),
+                 QString::fromStdString(ex.what()));
+    QMessageBox::warning(this, "Exception", exception_msg);
+  }
+  return {};
 }
 
 void CoronanWidget::update_ui()

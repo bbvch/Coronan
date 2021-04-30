@@ -6,11 +6,10 @@
 
 namespace {
 using Poco::Net::Context;
-#ifdef WIN32
-constexpr auto certificate_file = "";
+
 constexpr auto ca_location = "";
 constexpr auto verification_mode = Context::VERIFY_RELAXED;
-
+#ifdef WIN32
 constexpr auto create_NetSSL_context = []() {
   return Context::Ptr{
       new Context{Context::TLS_CLIENT_USE, ca_location, verification_mode}};
@@ -18,8 +17,6 @@ constexpr auto create_NetSSL_context = []() {
 #else
 constexpr auto private_key_file = "";
 constexpr auto certificate_file = "";
-constexpr auto ca_location = "";
-constexpr auto verification_mode = Context::VERIFY_RELAXED;
 constexpr auto verification_depth = 9;
 constexpr auto load_default_cas = false;
 constexpr auto cipher_list = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH";
@@ -36,6 +33,8 @@ namespace coronan {
 
 using Poco::Net::Context;
 
+SSLInitializer::~SSLInitializer() { Poco::Net::uninitializeSSL(); }
+
 SSLInitializer::SSLInitializer(
     Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> certificate_handler,
     Poco::Net::Context::Ptr context)
@@ -45,13 +44,11 @@ SSLInitializer::SSLInitializer(
   Poco::Net::initializeSSL();
 }
 
-void SSLInitializer::initialize()
+void SSLInitializer::initialize_client()
 {
   Poco::Net::SSLManager::instance().initializeClient(
       nullptr, certificate_handler_ptr, context_ptr);
 }
-
-SSLInitializer::~SSLInitializer() { Poco::Net::uninitializeSSL(); }
 
 std::unique_ptr<SSLInitializer>
 // cppcheck-suppress unusedFunction
@@ -61,10 +58,11 @@ SSLInitializer::initialize_with_accept_certificate_handler()
 
   Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler =
       new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};
-  auto ssl_initializer = std::make_unique<SSLInitializer>(
-      std::move(cert_handler), create_NetSSL_context());
+  // Using `new` to access a non-public constructor.
+  auto ssl_initializer = std::unique_ptr<SSLInitializer>{
+      new SSLInitializer{std::move(cert_handler), create_NetSSL_context()}};
 
-  ssl_initializer->initialize();
+  ssl_initializer->initialize_client();
   return ssl_initializer;
 }
 
