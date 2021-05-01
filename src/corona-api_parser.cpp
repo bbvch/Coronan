@@ -17,7 +17,29 @@ std::optional<Ret_T> get_value(DOM_T const& json_dom_object,
   {
     if (auto const& value = member_it->value; value.IsNumber())
     {
-      return value.GetDouble();
+      if constexpr (std::is_floating_point<Ret_T>::value)
+      {
+        if (value.IsDouble())
+        {
+          return value.GetDouble();
+        }
+      }
+      else if constexpr (std::is_same<Ret_T, unsigned>::value)
+      {
+        return value.GetUint();
+      }
+      else if constexpr (std::is_same<Ret_T, int>::value)
+      {
+        return value.GetInt();
+      }
+      else if constexpr (std::is_same<Ret_T, uint64_t>::value)
+      {
+        return value.GetUint64();
+      }
+      else if constexpr (std::is_same<Ret_T, int64_t>::value)
+      {
+        return value.GetInt64();
+      }
     }
   }
   return std::nullopt;
@@ -73,7 +95,7 @@ constexpr auto parse_latest_data = [](auto const& json_dom_object) {
       latest.recovered_vs_death_ratio =
           get_value<double>(calculated, "recovered_vs_death_ratio");
       latest.cases_per_million_population =
-          get_value<double>(calculated, "cases_per_million_population");
+          get_value<uint32_t>(calculated, "cases_per_million_population");
     }
   }
   return latest;
