@@ -58,7 +58,7 @@ jobs:
                       - qt515base
                       - qt515charts-no-lgpl
                       - qt515tools
-                      - libc6-i386
+                      - libc6-amd64
                       - libgl-dev
                       - libgl1-mesa-dev
                       - mesa-common-dev
@@ -88,7 +88,7 @@ jobs:
                       - qt515base
                       - qt515charts-no-lgpl
                       - qt515tools
-                      - libc6-i386
+                      - libc6-amd64
                       - libgl-dev
                       - libgl1-mesa-dev
                       - mesa-common-dev
