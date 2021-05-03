@@ -7,7 +7,7 @@
 #include <QtWidgets/QMessageBox>
 #include <iostream>
 
-constexpr auto api_url = "https://corona-api.com/countries";
+constexpr auto api_url = "https://corona-api.com";
 
 int main(int argc, char* argv[])
 {

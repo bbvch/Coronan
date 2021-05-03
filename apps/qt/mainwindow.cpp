@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 
-#include "coronan/corona-api_parser.hpp"
-#include "coronan/http_client.hpp"
+#include "coronan/corona-api_client.hpp"
 #include "ui_mainwindow.h"
 
 #include <QDateTime>
@@ -162,21 +161,10 @@ constexpr auto create_chart_view = [](auto const& country_data) {
   return chartView;
 };
 
-constexpr auto show_fetch_error_msg_box =
-    [](QWidget* parent, std::string const& url,
-       coronan::HTTPResponse const& response) {
-      auto const error_msg =
-          QString("Error fetching url \"%1\".\n Response Status: %2 (%3).")
-              .arg(QString::fromStdString(url),
-                   QString::fromStdString(response.get_reason()),
-                   QString::number(response.get_status()));
-      QMessageBox::warning(parent, "Error", error_msg);
-    };
-
 } // namespace
 
 CoronanWidget::CoronanWidget(std::string&& api_url, QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_url{std::move(api_url)}
+    : QWidget{parent}, m_ui{new Ui_CoronanWidgetForm}, m_api_client{api_url}
 {
   m_ui->setupUi(this);
 
@@ -200,56 +188,31 @@ CoronanWidget::~CoronanWidget() { delete m_ui; }
 
 void CoronanWidget::populate_country_box()
 {
-  if (auto const http_response = coronan::HTTPClient::get(m_url);
-      http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
+  auto countries = m_api_client.get_countries();
+
+  auto* countryComboBox = m_ui->countryComboBox;
+
+  std::sort(begin(countries), end(countries),
+            [](auto const& a, auto const& b) { return a.name < b.name; });
+
+  for (auto const& country : countries)
   {
-    auto const json_object =
-        coronan::api_parser::parse_countries(http_response.get_response_body());
-
-    auto* countryComboBox = m_ui->countryComboBox;
-    auto countries = json_object.countries;
-
-    std::sort(begin(countries), end(countries),
-              [](auto const& a, auto const& b) { return a.name < b.name; });
-
-    for (auto const& country : countries)
-    {
-      countryComboBox->addItem(country.name.c_str(), country.code.c_str());
-    }
-
-    if (int const index = countryComboBox->findData("CH"); index != -1)
-    { // -1 for not found
-      countryComboBox->setCurrentIndex(index);
-    }
+    countryComboBox->addItem(country.name.c_str(), country.code.c_str());
   }
-  else
-  {
-    auto const exception_msg =
-        std::string{"Error fetching country data from url \""} + m_url +
-        std::string{"\".\n\n Response status: "} + http_response.get_reason() +
-        std::string{" ("} + std::to_string(http_response.get_status()) +
-        std::string{")."};
-    throw coronan::HTTPClientException{exception_msg};
+
+  if (int const index = countryComboBox->findData("CH"); index != -1)
+  { // -1 for not found
+    countryComboBox->setCurrentIndex(index);
   }
 }
 
 coronan::CountryObject
 CoronanWidget::get_country_data(std::string const& country_code)
 {
-  auto const country_url = m_url + std::string{"/"} + country_code;
   try
   {
 
-    if (auto const http_response = coronan::HTTPClient::get(country_url);
-        http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
-    {
-      return coronan::api_parser::parse_country(
-          http_response.get_response_body());
-    }
-    else
-    {
-      show_fetch_error_msg_box(this, m_url, http_response);
-    }
+    return m_api_client.get_country_data(country_code);
   }
   catch (coronan::HTTPClientException const& ex)
   {
@@ -258,9 +221,7 @@ CoronanWidget::get_country_data(std::string const& country_code)
   catch (std::exception const& ex)
   {
     auto const exception_msg =
-        QString("Error fetching url \"%1\".\n\n Exception occured: %2")
-            .arg(QString::fromStdString(country_url),
-                 QString::fromStdString(ex.what()));
+        QString("Exception occured: %1").arg(QString::fromStdString(ex.what()));
     QMessageBox::warning(this, "Exception", exception_msg);
   }
   return {};

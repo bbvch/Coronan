@@ -1,6 +1,6 @@
 #pragma once
 
-#include "coronan/corona-api_parser.hpp"
+#include "coronan/corona-api_client.hpp"
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QTableWidget>
@@ -38,5 +38,5 @@ private:
 
   QChartView* m_chartView = nullptr;
   Ui_CoronanWidgetForm* m_ui = nullptr;
-  std::string m_url{};
+  coronan::CoronaAPIClient<> m_api_client;
 };

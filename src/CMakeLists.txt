@@ -8,6 +8,7 @@ project(
 set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_client.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_initializer.hpp")
 
 add_library(${PROJECT_NAME} STATIC ${HEADER_LIST})
