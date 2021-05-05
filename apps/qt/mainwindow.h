@@ -1,9 +1,8 @@
 #pragma once
 
-#include "coronan/corona-api_client.hpp"
+#include "coronan/corona-api_parser.hpp"
 
 #include <QtCharts/QChartGlobal>
-#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 #include <string>
 
@@ -26,17 +25,16 @@ class CoronanWidget : public QWidget
 {
   Q_OBJECT
 public:
-  explicit CoronanWidget(std::string&& api_url, QWidget* parent = nullptr);
+  explicit CoronanWidget(QWidget* parent = nullptr);
   virtual ~CoronanWidget();
 
 private Q_SLOTS:
   void update_ui();
 
 private:
-  coronan::CountryObject get_country_data(std::string const& country_code);
+  coronan::CountryData get_country_data(std::string const& country_code);
   void populate_country_box();
 
-  QChartView* m_chartView = nullptr;
-  Ui_CoronanWidgetForm* m_ui = nullptr;
-  coronan::CoronaAPIClient<> m_api_client;
+  QChartView* chartView = nullptr;
+  Ui_CoronanWidgetForm* ui = nullptr;
 };

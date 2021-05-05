@@ -6,7 +6,6 @@
 
 int main(int argc, char* argv[])
 {
-
   try
   {
     std::string country = "ch";
@@ -30,31 +29,32 @@ int main(int argc, char* argv[])
       exit(EXIT_SUCCESS);
     }
 
-    auto const& data =
-        coronan::CoronaAPIClient{"https://corona-api.com"}.get_country_data(
-            country);
+    auto const& country_data =
+        coronan::CoronaAPIClient{}.get_country_data(country);
     fmt::print("\"datetime\", \"confirmed\", \"death\", \"recovered\", "
                "\"active\"\n");
 
-    for (auto const& data_point : data.timeline)
+    constexpr auto optional_to_string = [](auto const& value) {
+      return value.has_value() ? std::to_string(value.value()) : "--";
+    };
+
+    for (auto const& data_point : country_data.timeline)
     {
-      fmt::print("{date}, {confirmed}, {deaths}, {recovered}, {active}\n",
-                 fmt::arg("date", data_point.date),
-                 fmt::arg("confirmed", data_point.confirmed.value_or(0)),
-                 fmt::arg("deaths", data_point.deaths.value_or(0)),
-                 fmt::arg("recovered", data_point.recovered.value_or(0)),
-                 fmt::arg("active", data_point.active.value_or(0)));
+      fmt::print("{}, {}, {}, {}, {}\n", data_point.date,
+                 optional_to_string(data_point.confirmed),
+                 optional_to_string(data_point.deaths),
+                 optional_to_string(data_point.recovered),
+                 optional_to_string(data_point.active));
     }
   }
   catch (coronan::SSLException const& ex)
   {
-
-    fmt::print(stderr, "SSL Exception: {}\n", ex.displayText());
+    fmt::print(stderr, "SSL Exception: {}\n", ex.what());
     exit(EXIT_FAILURE);
   }
   catch (coronan::HTTPClientException const& ex)
   {
-    fmt::print(stderr, "HTTPClientException: {}\n", ex.what());
+    fmt::print(stderr, "HTTP Client Exception: {}\n", ex.what());
     exit(EXIT_FAILURE);
   }
   catch (std::exception const& ex)

@@ -21,8 +21,10 @@ HTTPResponse::get_status() const
 {
   return response_.getStatus();
 }
+
 // cppcheck-suppress unusedFunction
 std::string HTTPResponse::get_reason() const { return response_.getReason(); }
+
 // cppcheck-suppress unusedFunction
 std::string HTTPResponse::get_response_body() const { return response_body_; }
 

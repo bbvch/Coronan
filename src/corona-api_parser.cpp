@@ -68,7 +68,7 @@ Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
 }
 
 constexpr auto parse_today_data = [](auto const& json_dom_object) {
-  CountryObject::today_t today{};
+  CountryData::TodayData today{};
   if (json_dom_object.HasMember("today"))
   {
     auto const today_object = json_dom_object["today"].GetObject();
@@ -79,7 +79,7 @@ constexpr auto parse_today_data = [](auto const& json_dom_object) {
 };
 
 constexpr auto parse_latest_data = [](auto const& json_dom_object) {
-  CountryObject::latest_t latest{};
+  CountryData::LatestData latest{};
   if (json_dom_object.HasMember("latest_data"))
   {
     auto const latest_data = json_dom_object["latest_data"].GetObject();
@@ -102,12 +102,12 @@ constexpr auto parse_latest_data = [](auto const& json_dom_object) {
 };
 
 constexpr auto parse_timeline = [](auto const& json_dom_object) {
-  std::vector<CountryObject::timeline_t> timeline;
+  std::vector<CountryData::TimelineData> timeline;
   if (json_dom_object.HasMember("timeline"))
   {
     for (auto const& data_point : json_dom_object["timeline"].GetArray())
     {
-      CountryObject::timeline_t timepoint;
+      CountryData::TimelineData timepoint;
       timepoint.date = get_value<std::string>(data_point, "updated_at");
       timepoint.deaths = get_value<uint32_t>(data_point, "deaths");
       timepoint.confirmed = get_value<uint32_t>(data_point, "confirmed");
@@ -127,46 +127,45 @@ constexpr auto parse_timeline = [](auto const& json_dom_object) {
 } // namespace
 
 // cppcheck-suppress unusedFunction
-// Justification: Is used
-CountryObject parse_country(std::string const& json)
+CountryData parse_country(std::string const& json)
 {
   rapidjson::Document document;
   document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str());
-  auto country_object = CountryObject{};
+  auto country_data = CountryData{};
   if (document.HasMember("data"))
   {
     auto const country_data_object = document["data"].GetObject();
-    country_object.name = get_value<std::string>(country_data_object, "name");
-    country_object.country_code =
+    country_data.info.name =
+        get_value<std::string>(country_data_object, "name");
+    country_data.info.iso_code =
         get_value<std::string>(country_data_object, "code");
-    country_object.population =
+    country_data.info.population =
         get_value<uint32_t>(country_data_object, "population");
-    country_object.today = parse_today_data(country_data_object);
+    country_data.today = parse_today_data(country_data_object);
 
     auto const current_date =
         get_value<std::string>(country_data_object, "updated_at");
-    country_object.today.date = current_date;
-    country_object.latest = parse_latest_data(country_data_object);
-    country_object.latest.date = current_date;
-    country_object.timeline = parse_timeline(country_data_object);
+    country_data.today.date = current_date;
+    country_data.latest = parse_latest_data(country_data_object);
+    country_data.latest.date = current_date;
+    country_data.timeline = parse_timeline(country_data_object);
   }
-  return country_object;
+  return country_data;
 }
 // cppcheck-suppress unusedFunction
-// Justification: Is used
-OverviewObject parse_countries(std::string const& json)
+CountryListObject parse_countries(std::string const& json)
 {
   rapidjson::Document document;
   document.Parse(json.c_str());
-  auto overview_object = OverviewObject{};
+  auto country_list = CountryListObject{};
   for (auto const& country_data : document["data"].GetArray())
   {
-    OverviewObject::country_t country;
+    CountryInfo country;
     country.name = get_value<std::string>(country_data, "name");
-    country.code = get_value<std::string>(country_data, "code");
-    overview_object.countries.emplace_back(country);
+    country.iso_code = get_value<std::string>(country_data, "code");
+    country_list.countries.emplace_back(country);
   }
-  return overview_object;
+  return country_list;
 }
 
 } // namespace coronan::api_parser

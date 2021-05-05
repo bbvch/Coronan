@@ -63,9 +63,9 @@ TEST_CASE("The corona-api parser parsing a full json", "[corona-api parser")
   auto json_object = coronan::api_parser::parse_country(test_json);
   SECTION("returns the country data")
   {
-    REQUIRE(json_object.name == "Switzerland");
-    REQUIRE(json_object.country_code == "CH");
-    REQUIRE(json_object.population == 7581000);
+    REQUIRE(json_object.info.name == "Switzerland");
+    REQUIRE(json_object.info.iso_code == "CH");
+    REQUIRE(json_object.info.population == 7581000);
   }
 
   SECTION("returns the today cases")
@@ -127,7 +127,7 @@ TEST_CASE("The corona-api parser parsing a json", "[corona-api parser")
 
     auto json_object = coronan::api_parser::parse_country(test_json);
 
-    REQUIRE_FALSE(json_object.population.has_value());
+    REQUIRE_FALSE(json_object.info.population.has_value());
   }
 
   SECTION("with missing today cases return no today cases")
@@ -260,11 +260,11 @@ TEST_CASE("The corona-api country parser", "[corona-api parser")
   SECTION("returns the country data")
   {
     REQUIRE(json_overview_object.countries[0].name == "Austria");
-    REQUIRE(json_overview_object.countries[0].code == "AT");
+    REQUIRE(json_overview_object.countries[0].iso_code == "AT");
     REQUIRE(json_overview_object.countries[1].name == "Italy");
-    REQUIRE(json_overview_object.countries[1].code == "IT");
+    REQUIRE(json_overview_object.countries[1].iso_code == "IT");
     REQUIRE(json_overview_object.countries[2].name == "Switzerland");
-    REQUIRE(json_overview_object.countries[2].code == "CH");
+    REQUIRE(json_overview_object.countries[2].iso_code == "CH");
   }
 }
 

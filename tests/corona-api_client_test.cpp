@@ -1,5 +1,4 @@
 #include "coronan/corona-api_client.hpp"
-#include "coronan/http_client.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -45,8 +44,7 @@ SCENARIO("CoronaAPIClient retrieved country list", "[CoronaAPIClient]")
   {
     TestHTTPClient::get_called = false;
     TestHTTPClient::get_url = "";
-    auto testee =
-        coronan::CoronaAPIClient<TestHTTPClient>{"https://corona-api.com"};
+    auto testee = coronan::CoronaAPIClientT<TestHTTPClient>{};
 
     WHEN("the http client returns an not OK response status")
     {
@@ -88,11 +86,11 @@ SCENARIO("CoronaAPIClient retrieved country list", "[CoronaAPIClient]")
       {
         REQUIRE(countries.size() == 3);
         REQUIRE_THAT(countries[0].name, Equals("Austria"));
-        REQUIRE_THAT(countries[0].code, Equals("AT"));
+        REQUIRE_THAT(countries[0].iso_code, Equals("AT"));
         REQUIRE_THAT(countries[1].name, Equals("Italy"));
-        REQUIRE_THAT(countries[1].code, Equals("IT"));
+        REQUIRE_THAT(countries[1].iso_code, Equals("IT"));
         REQUIRE_THAT(countries[2].name, Equals("Switzerland"));
-        REQUIRE_THAT(countries[2].code, Equals("CH"));
+        REQUIRE_THAT(countries[2].iso_code, Equals("CH"));
       }
     }
   }
@@ -105,8 +103,7 @@ SCENARIO("CoronaAPIClient retrieved country data for Switzerland",
   {
     TestHTTPClient::get_called = false;
     TestHTTPClient::get_url = "";
-    auto testee =
-        coronan::CoronaAPIClient<TestHTTPClient>{"https://corona-api.com"};
+    auto testee = coronan::CoronaAPIClientT<TestHTTPClient>{};
 
     WHEN("the http client returns an not OK response status")
     {
@@ -182,9 +179,9 @@ SCENARIO("CoronaAPIClient retrieved country data for Switzerland",
 
       THEN("the country data is returned.")
       {
-        REQUIRE(country_data.name == "Switzerland");
-        REQUIRE(country_data.country_code == "CH");
-        REQUIRE(country_data.population == 7581000);
+        REQUIRE(country_data.info.name == "Switzerland");
+        REQUIRE(country_data.info.iso_code == "CH");
+        REQUIRE(country_data.info.population == 7581000);
       }
     }
   }
