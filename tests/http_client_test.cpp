@@ -2,7 +2,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <doctest/doctest.h>
+#include <catch2/catch.hpp>
 #include <iostream>
 #include <sstream>
 
@@ -68,29 +68,30 @@ struct TestHTTPSession
   inline static std::istringstream response_{""};
 };
 
-TEST_CASE("HTTPClient get")
+using TesteeT = coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest,
+                                     Poco::Net::HTTPResponse>;
+
+TEST_CASE("HTTPClient get", "[HTTPClient]")
 {
-  SUBCASE("Initializes a session")
+  SECTION("Initializes a session")
   {
     auto const* uri = "http://server.com:80/";
-    auto resonse =
-        coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
+    auto resonse = TesteeT::get(uri);
 
     REQUIRE(TestHTTPSession::host_ == "server.com");
     REQUIRE(TestHTTPSession::port_ == 80);
   }
 
-  SUBCASE("Creates a request")
+  SECTION("Creates a request")
   {
     auto const* uri = "http://server.com:80/test";
-    auto resonse =
-        coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
+    auto resonse = TesteeT::get(uri);
     REQUIRE(TestHTTPRequest::request_ == HTTPRequest::HTTP_GET);
     REQUIRE(TestHTTPRequest::type_ == HTTPMessage::HTTP_1_1);
     REQUIRE(TestHTTPRequest::path_ == "/test");
   }
 
-  SUBCASE("Returns status, reason and response")
+  SECTION("Returns status, reason and response")
   {
     auto const expected_status = HTTPResponse::HTTP_FOUND;
     auto const* const expected_reason = "All ok";
@@ -101,8 +102,7 @@ TEST_CASE("HTTPClient get")
     TestHTTPSession::set_response(expected_response);
 
     auto const* uri = "http://server.com:80/test";
-    auto resonse =
-        coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest>::get(uri);
+    auto resonse = TesteeT::get(uri);
 
     REQUIRE(resonse.get_status() == expected_status);
     REQUIRE(resonse.get_reason() == expected_reason);

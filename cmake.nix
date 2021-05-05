@@ -1,9 +1,11 @@
 with builtins;
-with (import ./inputs.nix);
+with (import ./sources.nix);
 
-let lock = fromTOML (readFile ./lock.toml);
+let
+  lock = fromTOML (readFile ./nix-lock.toml);
+  pkgs = nixpkgs;
 in {
-  cmake = pkgs.stdenv.mkDerivation {
+  cmake = pkgs.gcc10Stdenv.mkDerivation {
     pname = "cmake";
     version = "${lock.cmake.rev}";
 
@@ -13,7 +15,9 @@ in {
       sha256 = "${lock.cmake.sha256}";
     };
 
-    buildInputs = [ pkgs.openssl pkgs.cmake pkgs.ccache pkgs.ninja ];
+    buildInputs = [ pkgs.cmake pkgs.openssl pkgs.libGL pkgs.libGLU ];
+    configureFlags = [ ];
+    doCheck = false;
 
   };
 }

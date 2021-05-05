@@ -7,5 +7,9 @@ doxygen_add_docs(
   coronan/ssl_initializer.hpp
   "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md"
   WORKING_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/include"
-)
+  "${PROJECT_SOURCE_DIR}/include")
+
+include(GNUInstallDirs)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
+        DESTINATION ${CMAKE_INSTALL_DOCDIR})

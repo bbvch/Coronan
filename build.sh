@@ -8,8 +8,8 @@ COVERAGE=false
 COVERAGE_OUT=""
 BUILD_TYPE=Debug
 BUILD_TARGET=""
-NINJA=""
 COMPILER="g++"
+CLEAR_BUILD=false
 
 print_usage() {
 cat << EOM
@@ -17,6 +17,7 @@ Usage: build.sh [options] [build_dir]
   Available options:
     -h|--help          Print this help
     --cov=output_file  Build debug version with coverage enabled.
+    -c|--clear         Delete <build_dir> if it exists
     -r|--release       Build release version.
                        Note: is ignored when --cov is set
     --cmake=path       Path to cmake (default is the system cmake)
@@ -24,7 +25,7 @@ Usage: build.sh [options] [build_dir]
     -p                 Create package
     --clang=version    Build with clang (ver: version).
                        Note: is ignored when --cov is set
-   build_dir:      Directory to build in (default: build)
+    build_dir:         Directory to build in (default: build)
 EOM
 }
 
@@ -40,6 +41,10 @@ if [ $# -ge 1 ]; then
             ;;
         -r|--release)
             BUILD_TYPE=Release
+            shift # past argument
+            ;;
+        -c|--clear)
+            CLEAR_BUILD=true
             shift # past argument
             ;;
         --clang=*)
@@ -70,29 +75,33 @@ if [ $# -ge 1 ]; then
     done
 fi
 
-if [ "$COVERAGE" = true -a -z "${COVERAGE_OUT}" ]; then
+if [ "${COVERAGE}" = true -a -z "${COVERAGE_OUT}" ]; then
     echo "Error: Please specify the coverage output_file."
     echo ""
     print_usage
     exit 1
 fi
 
-if [ command -v ninja &> /dev/null ]
-then
-    CMAKE_GENERATOR="-G Ninja"
+if [[ $(command -v ninja) ]] ; then
+    echo "Ninja found. Use it."
+    CMAKE_GENERATOR="-GNinja"
 fi
 
-if [ "$COVERAGE" = true ] ; then
-    "${CMAKE}" -S . -B ${BUILD_DIR} $CMAKE_GENERATOR -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
+if [ "${CLEAR_BUILD}" = true ] ; then
+    rm -rf "${BUILD_DIR}"
+fi
+
+if [ "${COVERAGE}" = true ] ; then
+    "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
 else
-    "${CMAKE}" -S . -B ${BUILD_DIR} $CMAKE_GENERATOR -DCMAKE_CXX_COMPILER="${COMPILER}" -DENABLE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
+    "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DCMAKE_CXX_COMPILER="${COMPILER}" -DENABLE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
 fi
 
 num_threads=$(grep -c '^processor' /proc/cpuinfo)
 "${CMAKE}" --build "${BUILD_DIR}" --target docs -- -j"${num_threads}"
 "${CMAKE}" --build "${BUILD_DIR}" ${BUILD_TARGET} -- -j"${num_threads}"
 
-if [ "$COVERAGE" = true ] ; then
+if [ "${COVERAGE}" = true ] ; then
     lcov --capture --directory . --output-file "${COVERAGE_OUT}"
     lcov --remove "${COVERAGE_OUT}" '/usr/*' --output-file "${COVERAGE_OUT}"
 fi
