@@ -16,8 +16,10 @@ add_executable(unittests ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 add_executable(coronan::UnitTest ALIAS unittests)
 
 target_sources(
-  unittests PRIVATE ${CMAKE_CURRENT_LIST_DIR}/http_client_test.cpp
-                    ${CMAKE_CURRENT_LIST_DIR}/corona-api_json_parser_test.cpp)
+  unittests
+  PRIVATE ${CMAKE_CURRENT_LIST_DIR}/http_client_test.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/corona-api_json_parser_test.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/corona-api_client_test.cpp)
 
 target_link_libraries(
   unittests

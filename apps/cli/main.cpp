@@ -1,6 +1,4 @@
-#include "coronan/corona-api_parser.hpp"
-#include "coronan/http_client.hpp"
-#include "coronan/ssl_initializer.hpp"
+#include "coronan/corona-api_client.hpp"
 
 #include <fmt/core.h>
 #include <lyra/lyra.hpp>
@@ -8,8 +6,6 @@
 
 int main(int argc, char* argv[])
 {
-  static auto const ssl_initializer_handler =
-      coronan::SSLInitializer::initialize_with_accept_certificate_handler();
   try
   {
     std::string country = "ch";
@@ -20,8 +16,7 @@ int main(int argc, char* argv[])
     std::stringstream usage;
     usage << cli;
 
-    auto const result = cli.parse({argc, argv});
-    if (!result)
+    if (auto const result = cli.parse({argc, argv}); !result)
     {
       fmt::print(stderr, "Error in comman line: {}\n", result.errorMessage());
       fmt::print("{}\n", usage.str());
@@ -34,28 +29,37 @@ int main(int argc, char* argv[])
       exit(EXIT_SUCCESS);
     }
 
-    auto const url = std::string{"https://corona-api.com/countries/"} + country;
-
-    auto const response = coronan::HTTPClient::get(url);
-
-    auto const& data = coronan::api_parser::parse(response.get_response_body());
+    auto const& country_data =
+        coronan::CoronaAPIClient{}.get_country_data(country);
     fmt::print("\"datetime\", \"confirmed\", \"death\", \"recovered\", "
                "\"active\"\n");
 
-    for (auto const& data_point : data.timeline)
+    constexpr auto optional_to_string = [](auto const& value) {
+      return value.has_value() ? std::to_string(value.value()) : "--";
+    };
+
+    for (auto const& data_point : country_data.timeline)
     {
-      fmt::print("{date}, {confirmed}, {deaths}, {recovered}, {active}\n",
-                 fmt::arg("date", data_point.date),
-                 fmt::arg("confirmed", data_point.confirmed),
-                 fmt::arg("deaths", data_point.deaths),
-                 fmt::arg("recovered", data_point.recovered),
-                 fmt::arg("active", data_point.active));
+      fmt::print("{}, {}, {}, {}, {}\n", data_point.date,
+                 optional_to_string(data_point.confirmed),
+                 optional_to_string(data_point.deaths),
+                 optional_to_string(data_point.recovered),
+                 optional_to_string(data_point.active));
     }
   }
   catch (coronan::SSLException const& ex)
   {
-
-    fmt::print(stderr, "SSL Exception: {}\n", ex.displayText());
+    fmt::print(stderr, "SSL Exception: {}\n", ex.what());
+    exit(EXIT_FAILURE);
+  }
+  catch (coronan::HTTPClientException const& ex)
+  {
+    fmt::print(stderr, "HTTP Client Exception: {}\n", ex.what());
+    exit(EXIT_FAILURE);
+  }
+  catch (std::exception const& ex)
+  {
+    fmt::print(stderr, "{}\n", ex.what());
     exit(EXIT_FAILURE);
   }
   exit(EXIT_SUCCESS);

@@ -1,33 +1,45 @@
+#include "coronan/corona-api_client.hpp"
+#include "coronan/http_client.hpp"
 #include "coronan/ssl_initializer.hpp"
 #include "mainwindow.h"
 
 #include <QDebug>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMessageBox>
 #include <iostream>
-
-constexpr auto api_url = "https://corona-api.com/countries";
 
 int main(int argc, char* argv[])
 {
-  static auto const ssl_initializer_handler =
-      coronan::SSLInitializer::initialize_with_accept_certificate_handler();
+  QApplication app(argc, argv);
+  QMainWindow window;
   try
   {
-
-    QApplication app(argc, argv);
-    QMainWindow window;
-    auto* const widget = new CoronanWidget(api_url);
-    window.setCentralWidget(widget);
+    window.show();
+    window.setWindowTitle("Co[ro]nan");
     auto const window_width = 900;
     auto const window_height = 600;
     window.resize(window_width, window_height);
-    window.show();
+    auto* const widget = new CoronanWidget();
+    window.setCentralWidget(widget);
     return app.exec(); // NOLINT(readability-static-accessed-through-instance)
+  }
+  catch (coronan::HTTPClientException const& ex)
+  {
+    qCritical() << ex.what();
+    QMessageBox::critical(&window, "Http Exception", QString{ex.what()});
+    app.exit(EXIT_FAILURE);
   }
   catch (coronan::SSLException const& ex)
   {
-    qCritical() << "SSL Exception: " << ex.displayText().c_str() << "\n";
-    exit(EXIT_FAILURE);
+    qCritical() << ex.what();
+    QMessageBox::critical(&window, "SSL Exception", QString{ex.what()});
+    app.exit(EXIT_FAILURE);
+  }
+  catch (std::exception const& ex)
+  {
+    qCritical() << ex.what();
+    QMessageBox::critical(&window, "Exception", QString{ex.what()});
+    app.exit(EXIT_FAILURE);
   }
 }
