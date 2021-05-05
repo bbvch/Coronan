@@ -13,7 +13,7 @@ using Catch::Matchers::Equals;
 class TestHTTPClient
 {
 public:
-  static coronan::HTTPResponse get(std::string const& url)
+  static coronan::HTTPResponse get(std::string_view url)
   {
     get_called = true;
     get_url = url;
@@ -21,7 +21,7 @@ public:
                                  response_payload};
   }
 
-  static bool get_was_called_with(std::string const& url)
+  static bool get_was_called_with(std::string_view url)
   {
     return (get_called && (get_url == url));
   }

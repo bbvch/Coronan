@@ -28,6 +28,8 @@ std::optional<Ret_T> get_value(DOM_T const& json_dom_object,
       {
         return value.GetUint();
       }
+      // cppcheck-suppress identicalConditionAfterEarlyExit
+      // cppcheck-suppress multiCondition
       else if constexpr (std::is_same<Ret_T, int>::value)
       {
         return value.GetInt();

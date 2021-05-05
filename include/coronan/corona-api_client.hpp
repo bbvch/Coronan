@@ -21,7 +21,7 @@ template <typename ClientT> class CoronaAPIClientT
 {
 public:
   std::vector<CountryInfo> get_countries() const;
-  CountryData get_country_data(std::string const& country_code) const;
+  CountryData get_country_data(std::string_view country_code) const;
 
 private:
   std::string const api_url = corona_api_url;
@@ -54,11 +54,11 @@ std::vector<CountryInfo> CoronaAPIClientT<ClientT>::get_countries() const
 }
 
 template <typename ClientT>
-CountryData CoronaAPIClientT<ClientT>::get_country_data(
-    std::string const& country_code) const
+CountryData
+CoronaAPIClientT<ClientT>::get_country_data(std::string_view country_code) const
 {
   auto const countries_url =
-      api_url + std::string{"/countries/"} + country_code;
+      api_url + std::string{"/countries/"} + std::string{country_code};
   if (auto const http_response = ClientT::get(countries_url);
       http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
 

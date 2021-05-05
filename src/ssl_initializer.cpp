@@ -61,7 +61,7 @@ SSLClient::create_with_accept_certificate_handler()
   // Using `new` to access a non-public constructor.
   auto ssl_client = SSLClientPtr{
       new SSLClient{std::move(cert_handler), create_NetSSL_context()},
-      [](SSLClient*) { Poco::Net::uninitializeSSL(); }};
+      [](SSLClient* /*unused*/) { Poco::Net::uninitializeSSL(); }};
 
   ssl_client->initialize();
   return ssl_client;

@@ -175,7 +175,7 @@ void CoronanWidget::populate_country_box()
 }
 
 coronan::CountryData
-CoronanWidget::get_country_data(std::string const& country_code)
+CoronanWidget::get_country_data(std::string_view country_code)
 {
   try
   {
