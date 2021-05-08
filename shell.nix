@@ -42,7 +42,7 @@ in stdenvNoCC.mkDerivation {
     pre-commit install -f --hook-type pre-commit
     virtualenv venv
     source venv/bin/activate
-    python3 -m pip install conan==1.35.0
+    python3 -m pip install conan==1.36.0
     python3 -m pip install yamlfmt==1.1.0
   '';
 }

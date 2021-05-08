@@ -1,13 +1,12 @@
-#include "coronan/corona-api_client.hpp"
 #include "coronan/http_client.hpp"
-#include "coronan/ssl_initializer.hpp"
+#include "coronan/ssl_client.hpp"
 #include "mainwindow.h"
 
 #include <QDebug>
+#include <QString>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMessageBox>
-#include <iostream>
 
 int main(int argc, char* argv[])
 {
@@ -17,10 +16,10 @@ int main(int argc, char* argv[])
   {
     window.show();
     window.setWindowTitle("Co[ro]nan");
-    auto const window_width = 900;
-    auto const window_height = 600;
+    auto const window_width = 1600;
+    auto const window_height = 1200;
     window.resize(window_width, window_height);
-    auto* const widget = new CoronanWidget();
+    auto* const widget = new coronan_gui::CoronanWidget();
     window.setCentralWidget(widget);
     return app.exec(); // NOLINT(readability-static-accessed-through-instance)
   }

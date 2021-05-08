@@ -4,7 +4,7 @@ doxygen_add_docs(
   docs
   coronan/http_client.hpp
   coronan/corona-api_parser.hpp
-  coronan/ssl_initializer.hpp
+  coronan/ssl_client.hpp
   "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md"
   WORKING_DIRECTORY
   "${PROJECT_SOURCE_DIR}/include")
