@@ -12,6 +12,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc",
                 "ENABLE_COVERAGE": {
                     "type": "BOOL",
                     "value": "ON"
@@ -29,21 +30,23 @@
         },
         {
             "name": "ninja",
-            "description": "Configure release build",
+            "description": "Configure ninja build",
             "generator": "Ninja",
             "hidden": true
         },
         {
             "name": "clang",
-            "description": "Configure release build",
+            "description": "Configure clang build",
             "cacheVariables": {
-                "CMAKE_CXX_COMPILER": "clang++"
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_COMPILER": "clang"
             },
             "hidden": true
         },
         {
             "name": "linux",
-            "description": "Sets generator, build and install directory",
+            "displayName": "Unix Makefile Debug",
+            "description": "Configure (Unix Makefile, gcc)",
             "generator": "Unix Makefiles",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
@@ -52,6 +55,7 @@
                     "value": "ON"
                 },
                 "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc",
                 "ENABLE_COVERAGE": {
                     "type": "BOOL",
                     "value": "OFF"
@@ -60,7 +64,8 @@
         },
         {
             "name": "linux-coverage",
-            "description": "Configure coverage",
+            "displayName": "Coverage (Unix Makefile)",
+            "description": "Configure Coverage",
             "inherits": [
                 "coverage",
                 "linux"
@@ -68,7 +73,8 @@
         },
         {
             "name": "linux-release",
-            "description": "Configure coverage",
+            "displayName": "Release (Unix Makefile)",
+            "description": "Configure Release",
             "inherits": [
                 "release",
                 "linux"
@@ -76,7 +82,8 @@
         },
         {
             "name": "linux-ninja",
-            "description": "Configure debug build",
+            "description": "Configure (Ninja, gcc)",
+            "displayName": "Ninja Debug",
             "inherits": [
                 "ninja",
                 "linux"
@@ -84,7 +91,8 @@
         },
         {
             "name": "linux-release-ninja",
-            "description": "Configure debug build",
+            "displayName": "Ninja Release",
+            "description": "Configure Release (Ninja)",
             "inherits": [
                 "release",
                 "linux-ninja"
@@ -92,7 +100,8 @@
         },
         {
             "name": "linux-coverage-ninja",
-            "description": "Configure coverage",
+            "displayName": "Ninja Coverage",
+            "description": "Configure Coverage (Ninja)",
             "inherits": [
                 "coverage",
                 "linux-ninja"
@@ -100,7 +109,8 @@
         },
         {
             "name": "linux-ninja-clang",
-            "description": "Configure debug build",
+            "description": "Configure (Ninja, clang)",
+            "displayName": "Clang Debug (Ninja)",
             "inherits": [
                 "ninja",
                 "clang",
@@ -109,7 +119,8 @@
         },
         {
             "name": "linux-ninja-clang-address-sanitizers",
-            "description": "Configure debug build with address sanitizers",
+            "description": "Configure clang build with address sanitizers",
+            "displayName": "Address sanitizers",
             "inherits": [
                 "ninja",
                 "clang",
@@ -132,7 +143,8 @@
         },
         {
             "name": "linux-release-ninja-clang",
-            "description": "Configure debug build",
+            "description": "Configure release (Ninja, clang)",
+            "displayName": "Clang Release (Ninja)",
             "inherits": [
                 "release",
                 "linux-ninja-clang"
@@ -141,30 +153,107 @@
     ],
     "buildPresets": [
         {
-            "name": "linux-build",
+            "name": "clang-debug",
+            "description": "Ninja clang debug build.",
+            "displayName": "Debug",
+            "configurePreset": "linux-ninja-clang",
+            "jobs": 16
+        },
+        {
+            "name": "clang-release",
+            "description": "Ninja clang clean release build.",
+            "displayName": "Release",
+            "configurePreset": "linux-release-ninja-clang",
+            "jobs": 16,
+            "cleanFirst": true
+        },
+        {
+            "name": "clang-address-sanitizers",
+            "description": "Ninja clang address sanitizers build.",
+            "displayName": "Address Sanitizers",
+            "configurePreset": "linux-ninja-clang-address-sanitizers",
+            "jobs": 16
+        },
+        {
+            "name": "gcc-ninja",
+            "description": "Ninja gcc debug build.",
+            "displayName": "Debug",
+            "configurePreset": "linux-ninja",
+            "jobs": 16
+        },
+        {
+            "name": "gcc-ninja-coverage",
+            "description": "Ninja gcc debug with coverage.",
+            "displayName": "Coverage",
+            "configurePreset": "linux-coverage-ninja",
+            "jobs": 16
+        },
+        {
+            "name": "gcc-ninja-release",
+            "description": "Ninja gcc clean release build.",
+            "displayName": "Release",
+            "configurePreset": "linux-release-ninja",
+            "jobs": 16,
+            "cleanFirst": true
+        },
+        {
+            "name": "gcc-build",
+            "description": "gcc debug build.",
+            "displayName": "Debug",
             "configurePreset": "linux",
             "jobs": 16
         },
         {
-            "name": "linux-clean-build",
-            "cleanFirst": true,
-            "inherits": "linux-build"
+            "name": "gcc-coverage",
+            "description": "gcc debug with coverage.",
+            "displayName": "Coverage",
+            "configurePreset": "linux-coverage",
+            "jobs": 16
         },
         {
-            "name": "linux-build-doc",
-            "inherits": "linux-build",
+            "name": "gcc-release",
+            "description": "gcc clean release build.",
+            "displayName": "Release",
+            "configurePreset": "linux-release",
+            "jobs": 16,
+            "cleanFirst": true
+        },
+        {
+            "name": "doc",
+            "description": "gcc debug build.",
+            "displayName": "Documentation",
+            "configurePreset": "linux",
+            "jobs": 16,
+            "inherits": "gcc-build",
             "targets": [
                 "docs"
             ]
         },
         {
             "name": "package",
-            "inherits": "linux-build",
+            "configurePreset": "linux",
+            "displayName": "Package",
+            "jobs": 16,
+            "inherits": "gcc-build",
             "targets": [
                 "coronan_qt",
                 "docs",
                 "package"
             ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "Unittest Coverage (gcc)",
+            "description": "",
+            "displayName": "Unittest Coverage",
+            "configurePreset": "linux-coverage"
+        },
+        {
+            "name": "Unittest",
+            "description": "",
+            "displayName": "Unittest",
+            "configurePreset": "linux-ninja-clang"
         }
     ]
 }
