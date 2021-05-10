@@ -1,6 +1,6 @@
 #pragma once
-
 #include "coronan/corona-api_parser.hpp"
+#include "country_overview_table.hpp"
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QWidget>
@@ -10,14 +10,8 @@ QT_BEGIN_NAMESPACE
 class Ui_CoronanWidgetForm;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
-class QChartView;
-class QChart;
-QT_CHARTS_END_NAMESPACE
-
-using Data = QPair<QPointF, QString>;
-using DataList = QList<Data>;
-using DataTable = QList<DataList>;
+namespace coronan_gui {
+class CountryChartView;
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -35,6 +29,10 @@ private:
   coronan::CountryData get_country_data(std::string_view country_code);
   void populate_country_box();
 
-  QChartView* chartView = nullptr;
+  CountryChartView* chartView = nullptr;
   Ui_CoronanWidgetForm* ui = nullptr;
+
+  CountryOverviewTable overview_table{};
 };
+
+} // namespace coronan_gui

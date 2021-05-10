@@ -20,15 +20,27 @@ set(CMAKE_INSTALL_RPATH ${CMAKE_LIBRARY_PATH})
 
 message(STATUS "CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}")
 
-add_executable(
-  ${PROJECT_NAME}
-  ${CMAKE_CURRENT_LIST_DIR}/main.cpp ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/mainwindow.h
-  ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
 add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME
                                                                     coronanApp)
+target_include_directories(
+  ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
+set(HEADER_LIST
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h")
+
+target_sources(
+  ${PROJECT_NAME}
+  PRIVATE ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui
+          ${CMAKE_CURRENT_LIST_DIR}/country_overview_table.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/country_chart_view.cpp
+          ${HEADER_LIST})
 
 find_package(
   Qt5

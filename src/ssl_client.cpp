@@ -1,5 +1,5 @@
 
-#include "coronan/ssl_initializer.hpp"
+#include "coronan/ssl_client.hpp"
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/SSLManager.h>
@@ -43,13 +43,15 @@ SSLClient::SSLClient(
   Poco::Net::initializeSSL();
 }
 
+SSLClient::~SSLClient() { Poco::Net::uninitializeSSL(); }
+
 void SSLClient::initialize()
 {
   Poco::Net::SSLManager::instance().initializeClient(
       nullptr, certificate_handler, context);
 }
 
-SSLClient::SSLClientPtr
+SSLClient
 // cppcheck-suppress unusedFunction
 SSLClient::create_with_accept_certificate_handler()
 {
@@ -59,11 +61,9 @@ SSLClient::create_with_accept_certificate_handler()
       new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};
 
   // Using `new` to access a non-public constructor.
-  auto ssl_client = SSLClientPtr{
-      new SSLClient{std::move(cert_handler), create_NetSSL_context()},
-      [](SSLClient* /*unused*/) { Poco::Net::uninitializeSSL(); }};
+  auto ssl_client = SSLClient{std::move(cert_handler), create_NetSSL_context()};
 
-  ssl_client->initialize();
+  ssl_client.initialize();
   return ssl_client;
 }
 

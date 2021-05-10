@@ -9,7 +9,7 @@ set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_client.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_initializer.hpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_client.hpp")
 
 add_library(${PROJECT_NAME} STATIC ${HEADER_LIST})
 
@@ -23,8 +23,8 @@ target_include_directories(
 target_sources(
   ${PROJECT_NAME}
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
-          ${CMAKE_CURRENT_SOURCE_DIR}/ssl_initializer.cpp
-          ${CMAKE_CURRENT_SOURCE_DIR}/http_client.cpp ${HEADER_LIST})
+          ${CMAKE_CURRENT_SOURCE_DIR}/ssl_client.cpp
+          ${CMAKE_CURRENT_SOURCE_DIR}/http_client.cpp)
 
 target_link_libraries(
   ${PROJECT_NAME}
