@@ -34,7 +34,7 @@ constexpr auto append_value_to_series =
     };
 } // namespace
 
-namespace coronan_gui {
+namespace coronan_ui {
 
 CountryChartView::CountryChartView(coronan::CountryData const& country_data,
                                    QWidget* parent)
@@ -91,4 +91,4 @@ CountryChartView::CountryChartView(coronan::CountryData const& country_data,
   this->setRenderHint(QPainter::Antialiasing, true);
 }
 
-} // namespace coronan_gui
+} // namespace coronan_ui

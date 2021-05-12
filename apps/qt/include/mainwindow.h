@@ -10,7 +10,7 @@ QT_BEGIN_NAMESPACE
 class Ui_CoronanWidgetForm;
 QT_END_NAMESPACE
 
-namespace coronan_gui {
+namespace coronan_ui {
 class CountryChartView;
 
 QT_CHARTS_USE_NAMESPACE
@@ -35,4 +35,4 @@ private:
   CountryOverviewTable overview_table{};
 };
 
-} // namespace coronan_gui
+} // namespace coronan_ui

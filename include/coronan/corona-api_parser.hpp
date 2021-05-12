@@ -6,10 +6,6 @@
 
 namespace coronan {
 
-/**
- * Country Information
- *
- */
 struct CountryInfo
 {
   std::string name{};     /**< Country name */
@@ -23,8 +19,7 @@ struct CountryInfo
 struct CountryData
 {
 
-  CountryInfo info{};
-
+  CountryInfo info{}; /**< country information (name, code, population) */
   struct TodayData
   {
     std::string date{};                  /**< iso date string */
@@ -72,23 +67,22 @@ struct CountryData
   std::vector<TimelineData> timeline{}; /**< array of (daily) data */
 };
 
-struct CountryListObject
-{
-  std::vector<CountryInfo> countries{}; /**< array of available countries */
-};
+using CountryListObject = std::vector<CountryInfo>;
 
 namespace api_parser {
 /**
- * Parse a json.
- * @note Must have the format as described at
+ * Parse a json string for country data.
+ * @param json json string. Must have the format as described at
  * https://about-corona.net/documentation
+ * @return Parsed Covid-19 case data
  */
 CountryData parse_country(std::string const& json);
 
 /**
- * Parse countries information
- * @note Must have the format as described at
+ * Parse a json string for a list of country information
+ * @param json json string. Must have the format as described at
  * https://about-corona.net/documentation
+ * @return Country list parsed
  */
 CountryListObject parse_countries(std::string const& json);
 } // namespace api_parser

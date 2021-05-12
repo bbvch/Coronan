@@ -161,7 +161,7 @@ jobs:
               - CONAN_USER_HOME="${HOME}/.conan"
           script:
               - nix-shell --command "cmake -S ${TRAVIS_BUILD_DIR} --preset=linux-ninja"
-              - nix-shell --command "cmake --build --preset=gcc-ninja"
+              - nix-shell --command "cmake --build --preset=ninja-debug"
         - language: nix
           name: nix build ninja clang11
           env:

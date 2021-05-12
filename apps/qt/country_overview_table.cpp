@@ -17,7 +17,7 @@ overloaded(Ts...) -> overloaded<Ts...>; // not needed as of C++20
 
 } // namespace
 
-namespace coronan_gui {
+namespace coronan_ui {
 
 void CountryOverviewTable::update(QTableWidget* const table_widget,
                                   coronan::CountryData const& country_data)
@@ -65,4 +65,4 @@ void CountryOverviewTable::update(QTableWidget* const table_widget,
   }
 }
 
-} // namespace coronan_gui
+} // namespace coronan_ui

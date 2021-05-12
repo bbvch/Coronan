@@ -5,6 +5,7 @@
 [![Build Status Travis](https://travis-ci.org/bbvch/Coronan.svg?branch=master)](https://travis-ci.org/bbvch/Coronan)
 [![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
 [![CI](https://github.com/bbvch/Coronan/actions/workflows/ci.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci.yml)
+[![API documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://bbvch.github.io/Coronan)
 
 [![Codacy Security Scan](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml)
 [![CodeQL](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml)
@@ -23,6 +24,79 @@ It reads the current data of Corona (Covid-19) cases for a country from the [The
 _The About Corona Covid-19_ provides statistics via REST API from The [World Health Organization Situation Reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), [Johns Hopkins CSSE](https://coronavirus.jhu.edu/map.html), [The U.S. Department of Health & Human Services](https://www.hhs.gov/), [The National Health Commission of the People’s Republic of China](http://en.nhc.gov.cn/), [The European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en), and [China CDC Weekly](http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm).
 
 ![Screenshot of the qt application](docs/images/Screenshot-qt.png)
+
+## Features
+
+This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
+* C++ 17 Standard
+  * [GCC](https://gcc.gnu.org/)
+  * [Clang](https://clang.llvm.org/)
+  * Visual Studio 2019
+
+* [conan](https://conan.io/) package Manager
+
+* Librarys used:
+  * [Qt](https://www.qt.io/)
+  * [Poco](https://pocoproject.org/) Networking library
+  * [RapidJSON](https://rapidjson.org/)
+  * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
+  * [{fmt}](https://github.com/fmtlib/fmt) formatting library
+
+* Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
+
+* CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.20)_
+
+* CPack packaging:
+  * Debian package
+  * [Qt Installer Framework](https://doc.qt.io/qtinstallerframework/)
+
+* Build Caching support:
+  * [ccache](https://ccache.dev/)
+  * [sccache](https://github.com/mozilla/sccache)
+
+* Static Analyzer support:
+  * [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
+  * [cppcheck](http://cppcheck.sourceforge.net/)
+  * [include-what-you-use](https://include-what-you-use.org/)
+
+* Sanitizers support:
+  * [Address Sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
+  * [Leak Sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html)
+  * [Undefined Behavior Sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+  * [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
+  * [Memory Sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
+
+* Documentation Generation using [Sphinx](https://www.sphinx-doc.org/), [Breath](https://breathe.readthedocs.io/) & [Doxygen](https://www.doxygen.nl/index.html)
+
+* Code formatting:
+  * [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files
+  * [cmake-format](https://pypi.org/project/cmake-format/) for CMake files
+
+* [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks) support
+
+* [Nix](https://nixos.org) environment support
+
+* [gitpod](https://www.gitpod.io/) support
+
+* Continuous integration (CI):
+  * GitHub Action
+    * linux gcc & clang build
+    * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
+    * [CodeQL](https://github.com/github/codeql-action)
+
+  * [Travic.ci](https://travis-ci.com/)
+    * Mac OS X
+    * Ubuntu Focal _(GCC)_
+    * GCC 7 & 9 _(Docker build, Ubuntu Bionic)_
+    * Clang 7, 8 & 9 _(Docker build, Ubuntu Bionic)_
+    * GCC 10 _(nix-shell build)_
+    * Clang 11 _(nix-shell build)_
+    * [Coverity Scan Static Analysis](https://scan.coverity.com/)
+    * [Codecov](https://codecov.io) Coverage Reporter
+    * [Codacy](https://www.codacy.com) Coverage Reporter
+
+  * [AppVeyor](https://www.appveyor.com/)
+    * Windows Visual Studio 2019
 
 ## Development
 
@@ -64,7 +138,7 @@ You can also build it yourself using CMake:
 
   ```bash
   #> cmake -S . --preset=linux-ninja
-  #> cmake --build -S . --preset=linux-build
+  #> cmake --build -S . --preset=ninja-debug
   ```
 
   or any other [CMakePresets](CMakePresets.json).
@@ -79,10 +153,11 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 
 * `ENABLE_TESTING`: Build (and run) unittests. _Default_: `ON`
 * `ENABLE_BUILD_WITH_TIME_TRACE`: Enable [Clang Time Trace Feature](https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature). _Default: `OFF`_
-* `ENABLE_PCH`: Enable [Precompiled Headers](hhttps://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
+* `ENABLE_PCH`: Enable [Precompiled Headers](https://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
 * `ENABLE_CACHE`: Enable caching if available, e.g. [ccache](https://ccache.dev/) or [sccache](https://github.com/mozilla/sccache). _Default: `ON`_
 * `ENABLE_COVERAGE`: Enable coverage reporting for gcc/clang. _Default: `OFF`_
-* `ENABLE_DOXYGEN`: Enable doxygen documentation build ([doxygen](https://www.doxygen.nl/index.html) with [graphviz dot](https://graphviz.org/) must be installed). _Default: `ON`_
+* `ENABLE_DOXYGEN`: Enable doxygen documentation build ([Doxygen](https://www.doxygen.nl/index.html) must be installed). _Default: `ON`_ if Doxygen is installed `OFF` otherwise._
+* `ENABLE_SPHINX`: Enable sphinx documentation build ([Sphinx](https://www.sphinx-doc.org/) with [Breath](https://breathe.readthedocs.io/) must be installed). _Default: `ON`_ if Sphinx is installed `OFF` otherwise._
 * `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_LEAK`: Enable [leak sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `OFF`_

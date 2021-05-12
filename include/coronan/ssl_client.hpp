@@ -18,6 +18,10 @@ using SSLException = Poco::Net::SSLException;
 class SSLClient final
 {
 public:
+  /**
+   * Return a SSLClient with an accept all certifcates handler
+   * @return SSLClient which must be hold by the caler until no longer needed.
+   */
   [[nodiscard]] static SSLClient create_with_accept_certificate_handler();
 
   ~SSLClient();

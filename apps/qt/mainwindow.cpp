@@ -10,7 +10,7 @@
 #include <QtWidgets/QMessageBox>
 #include <algorithm>
 
-namespace coronan_gui {
+namespace coronan_ui {
 
 CoronanWidget::CoronanWidget(QWidget* parent)
     : QWidget{parent}, ui{new Ui_CoronanWidgetForm}
@@ -75,7 +75,7 @@ void CoronanWidget::update_ui()
       ui->countryComboBox->itemData(ui->countryComboBox->currentIndex())
           .toString();
   auto const country_data = get_country_data(country_code.toStdString());
-  auto* const new_chartView = new coronan_gui::CountryChartView{country_data};
+  auto* const new_chartView = new coronan_ui::CountryChartView{country_data};
   if (chartView == nullptr)
   {
     ui->gridLayout->addWidget(new_chartView, 2, 1);
@@ -92,4 +92,4 @@ void CoronanWidget::update_ui()
   overview_table.update(ui->overviewTable, country_data);
 }
 
-} // namespace coronan_gui
+} // namespace coronan_ui
