@@ -233,19 +233,33 @@
             "displayName": "Documentation",
             "configurePreset": "linux",
             "jobs": 16,
-            "inherits": "gcc-build",
             "targets": [
                 "docs"
             ]
         },
         {
-            "name": "package",
-            "configurePreset": "linux",
+            "name": "package-gcc",
             "displayName": "Package",
-            "jobs": 16,
-            "inherits": "gcc-build",
+            "inherits": "gcc-release",
             "targets": [
-                "coronan_qt",
+                "docs",
+                "package"
+            ]
+        },
+        {
+            "name": "package-ninja",
+            "displayName": "Package",
+            "inherits": "ninja-release",
+            "targets": [
+                "docs",
+                "package"
+            ]
+        },
+        {
+            "name": "package-clang",
+            "displayName": "Package",
+            "inherits": "clang-release",
+            "targets": [
                 "docs",
                 "package"
             ]
@@ -255,8 +269,7 @@
         {
             "name": "Unittest Coverage (gcc)",
             "description": "",
-            "displayName": "Unittest Coverage",
-            "configurePreset": "linux-coverage"
+            "displayName": "Unittest Coverage"
         },
         {
             "name": "Unittest",

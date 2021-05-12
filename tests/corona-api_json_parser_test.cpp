@@ -256,16 +256,15 @@ TEST_CASE("The corona-api country parser parsing a country list",
     ] \
 }";
 
-  auto json_overview_object =
-      coronan::api_parser::parse_countries(test_country_json);
+  auto countries = coronan::api_parser::parse_countries(test_country_json);
   SECTION("returns the country data")
   {
-    REQUIRE(json_overview_object.countries[0].name == "Austria");
-    REQUIRE(json_overview_object.countries[0].iso_code == "AT");
-    REQUIRE(json_overview_object.countries[1].name == "Italy");
-    REQUIRE(json_overview_object.countries[1].iso_code == "IT");
-    REQUIRE(json_overview_object.countries[2].name == "Switzerland");
-    REQUIRE(json_overview_object.countries[2].iso_code == "CH");
+    REQUIRE(countries[0].name == "Austria");
+    REQUIRE(countries[0].iso_code == "AT");
+    REQUIRE(countries[1].name == "Italy");
+    REQUIRE(countries[1].iso_code == "IT");
+    REQUIRE(countries[2].name == "Switzerland");
+    REQUIRE(countries[2].iso_code == "CH");
   }
 }
 

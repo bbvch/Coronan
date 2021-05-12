@@ -25,11 +25,13 @@ template <typename ClientT> class CoronaAPIClientT
 public:
   /**
    *  Get the list of available countries
+   *  @return List of available countries with Covid-19 case data
    */
   std::vector<CountryInfo> get_countries() const;
   /**
    *  Get the covid-19 case data for a country
    * @param country_code ISO 3166-1 alpha-2 Country Code
+   * @return Covid-19 case data for country <country_code>
    */
   CountryData get_country_data(std::string_view country_code) const;
 
@@ -48,8 +50,7 @@ std::vector<CountryInfo> CoronaAPIClientT<ClientT>::get_countries() const
       http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
   {
     return coronan::api_parser::parse_countries(
-               http_response.get_response_body())
-        .countries;
+        http_response.get_response_body());
   }
   else
   {

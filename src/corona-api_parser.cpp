@@ -165,7 +165,7 @@ CountryListObject parse_countries(std::string const& json)
     CountryInfo country;
     country.name = get_value<std::string>(country_data, "name");
     country.iso_code = get_value<std::string>(country_data, "code");
-    country_list.countries.emplace_back(country);
+    country_list.emplace_back(country);
   }
   return country_list;
 }
