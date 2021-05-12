@@ -4,5 +4,3 @@ Corona API client
 =================
 
 .. doxygenclass:: coronan::CoronaAPIClientT
-   :members:
-   :undoc-members:

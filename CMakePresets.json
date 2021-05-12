@@ -234,6 +234,7 @@
             "configurePreset": "linux",
             "jobs": 16,
             "targets": [
+                "doxygen",
                 "docs"
             ]
         },

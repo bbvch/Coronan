@@ -54,4 +54,6 @@ html_theme = 'sphinx_rtd_theme'
 # Breathe Configuration
 breathe_default_project = "Coronan"
 
+breathe_default_members = ('members', 'undoc-members')
+
 highlight_language = 'c++'
