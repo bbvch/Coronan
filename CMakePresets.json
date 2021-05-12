@@ -294,7 +294,8 @@
         {
             "name": "Unittest Coverage (gcc)",
             "description": "",
-            "displayName": "Unittest Coverage"
+            "displayName": "Unittest Coverage",
+            "configurePreset": "linux-ninja"
         },
         {
             "name": "Unittest",

@@ -36,8 +36,11 @@ jobs:
               if: runner.os == 'Linux'
               run: |
                   sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev
-                  sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen graphviz
+                  sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
                   sudo pip3 install conan
+                  sudo pip3 install sphinx
+                  sudo pip3 install sphinx_rtd_theme
+                  sudo pip3 install breathe
 
             - name: set-compiler-env
               if: ${{ matrix.compiler }} == 'g++-9'

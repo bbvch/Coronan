@@ -98,7 +98,6 @@ else
 fi
 
 num_threads=$(grep -c '^processor' /proc/cpuinfo)
-"${CMAKE}" --build "${BUILD_DIR}" --target docs -- -j"${num_threads}"
 "${CMAKE}" --build "${BUILD_DIR}" ${BUILD_TARGET} -- -j"${num_threads}"
 
 if [ "${COVERAGE}" = true ] ; then
