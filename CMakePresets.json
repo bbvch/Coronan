@@ -149,6 +149,22 @@
                     "value": "ON"
                 }
             }
+        },
+        {
+            "name": "linux-ninja-clang-memory-sanitizers",
+            "description": "Configure clang build with memory sanitizers",
+            "displayName": "Memory sanitizers",
+            "inherits": [
+                "ninja",
+                "clang",
+                "linux"
+            ],
+            "cacheVariables": {
+                "ENABLE_SANITIZER_MEMORY": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
         }
     ],
     "buildPresets": [
@@ -174,6 +190,14 @@
             "description": "Ninja clang address sanitizers build.",
             "displayName": "Address Sanitizers",
             "configurePreset": "linux-ninja-clang-address-sanitizers",
+            "configuration": "Debug",
+            "jobs": 16
+        },
+        {
+            "name": "clang-memory-sanitizers",
+            "description": "Ninja clang memory sanitizers build.",
+            "displayName": "Memory Sanitizers",
+            "configurePreset": "linux-ninja-clang-memory-sanitizers",
             "configuration": "Debug",
             "jobs": 16
         },
