@@ -1,0 +1,35 @@
+---
+name: API documentation
+on:
+    push:
+
+jobs:
+    generate-documentation:
+        name: generate-docu
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: install dependencies
+              run: |
+                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev
+                  sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
+                  sudo pip3 install conan
+                  sudo pip3 install sphinx
+                  sudo pip3 install sphinx_rtd_theme
+                  sudo pip3 install breathe
+            - name: prepare-build
+              run: mkdir build
+            - name: cmake-configuration
+              run: cmake -DCMAKE_BUILD_TYPE=Debug ..
+              working-directory: ./build
+            - name: build-documentation
+              run: cmake --build . --target docs
+              working-directory: ./build
+            - name: Deploy to GitHub Pages
+              if: github.ref == 'refs/heads/sphinx'
+              uses: JamesIves/github-pages-deploy-action@3.4.9
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  BRANCH: gh-pages # The branch the action should deploy to.
+                  FOLDER: build/docs/html # The folder the action should deploy.
+                  TARGET_FOLDER: doc/
