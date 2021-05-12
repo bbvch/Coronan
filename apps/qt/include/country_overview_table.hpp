@@ -10,7 +10,7 @@ QT_BEGIN_NAMESPACE
 class QTableWidget;
 QT_END_NAMESPACE
 
-namespace coronan_gui {
+namespace coronan_ui {
 
 struct CountryOverviewTable
 {
@@ -18,4 +18,4 @@ struct CountryOverviewTable
               coronan::CountryData const& country_data);
 };
 
-} // namespace coronan_gui
+} // namespace coronan_ui

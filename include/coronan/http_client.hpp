@@ -13,6 +13,9 @@
 
 namespace coronan {
 
+/**
+ * A HTTPClientException including Http get and Net exceptions.
+ */
 class HTTPClientException : public std::exception
 {
 public:
@@ -30,8 +33,8 @@ class HTTPResponse
 {
 public:
   /**
-   *  Consructor
-   * @param response http response status
+   *  Constructor
+   * @param response http response
    * @param response_body http response body
    */
   explicit HTTPResponse(Poco::Net::HTTPResponse const& response,

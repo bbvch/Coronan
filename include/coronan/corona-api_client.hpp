@@ -17,10 +17,20 @@ constexpr auto corona_api_url = "https://corona-api.com";
 using HTTPClient = HTTPClientT<Poco::Net::HTTPSClientSession,
                                Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
 
+/**
+ * A Client for retrieving data from https://corona-api.com.
+ */
 template <typename ClientT> class CoronaAPIClientT
 {
 public:
+  /**
+   *  Get the list of available countries
+   */
   std::vector<CountryInfo> get_countries() const;
+  /**
+   *  Get the covid-19 case data for a country
+   * @param country_code ISO 3166-1 alpha-2 Country Code
+   */
   CountryData get_country_data(std::string_view country_code) const;
 
 private:

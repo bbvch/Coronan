@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     auto const window_width = 1600;
     auto const window_height = 1200;
     window.resize(window_width, window_height);
-    auto* const widget = new coronan_gui::CoronanWidget();
+    auto* const widget = new coronan_ui::CoronanWidget();
     window.setCentralWidget(widget);
     return app.exec(); // NOLINT(readability-static-accessed-through-instance)
   }

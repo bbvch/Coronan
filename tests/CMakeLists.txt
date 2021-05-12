@@ -13,7 +13,7 @@ endif()
 
 add_executable(unittests ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
-add_executable(coronan::UnitTest ALIAS unittests)
+add_executable(coronan::unittests ALIAS unittests)
 
 target_sources(
   unittests
@@ -23,8 +23,8 @@ target_sources(
 
 target_link_libraries(
   unittests
-  PRIVATE coronan::coronan_lib
   PRIVATE CONAN_PKG::catch2
+  PRIVATE coronan::library
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options)
 
@@ -41,4 +41,4 @@ catch_discover_tests(
   OUTPUT_SUFFIX
   .xml)
 
-add_custom_target(run_unittests ALL COMMAND $<TARGET_FILE:coronan::UnitTest>)
+add_custom_target(run_unittests ALL COMMAND $<TARGET_FILE:coronan::unittests>)

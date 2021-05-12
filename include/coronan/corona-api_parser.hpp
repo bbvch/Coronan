@@ -6,10 +6,6 @@
 
 namespace coronan {
 
-/**
- * Country Information
- *
- */
 struct CountryInfo
 {
   std::string name{};     /**< Country name */
@@ -23,8 +19,7 @@ struct CountryInfo
 struct CountryData
 {
 
-  CountryInfo info{};
-
+  CountryInfo info{}; /**< country information (name, code, population) */
   struct TodayData
   {
     std::string date{};                  /**< iso date string */
@@ -79,14 +74,14 @@ struct CountryListObject
 
 namespace api_parser {
 /**
- * Parse a json.
+ * Parse a json string for country data.
  * @note Must have the format as described at
  * https://about-corona.net/documentation
  */
 CountryData parse_country(std::string const& json);
 
 /**
- * Parse countries information
+ * Parse a json string for a list of country information
  * @note Must have the format as described at
  * https://about-corona.net/documentation
  */

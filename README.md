@@ -64,7 +64,7 @@ You can also build it yourself using CMake:
 
   ```bash
   #> cmake -S . --preset=linux-ninja
-  #> cmake --build -S . --preset=linux-build
+  #> cmake --build -S . --preset=ninja-debug
   ```
 
   or any other [CMakePresets](CMakePresets.json).
@@ -79,7 +79,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 
 * `ENABLE_TESTING`: Build (and run) unittests. _Default_: `ON`
 * `ENABLE_BUILD_WITH_TIME_TRACE`: Enable [Clang Time Trace Feature](https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature). _Default: `OFF`_
-* `ENABLE_PCH`: Enable [Precompiled Headers](hhttps://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
+* `ENABLE_PCH`: Enable [Precompiled Headers](https://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
 * `ENABLE_CACHE`: Enable caching if available, e.g. [ccache](https://ccache.dev/) or [sccache](https://github.com/mozilla/sccache). _Default: `ON`_
 * `ENABLE_COVERAGE`: Enable coverage reporting for gcc/clang. _Default: `OFF`_
 * `ENABLE_DOXYGEN`: Enable doxygen documentation build ([doxygen](https://www.doxygen.nl/index.html) with [graphviz dot](https://graphviz.org/) must be installed). _Default: `ON`_

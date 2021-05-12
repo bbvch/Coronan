@@ -6,7 +6,7 @@ namespace coronan {
 struct CountryData;
 }
 
-namespace coronan_gui {
+namespace coronan_ui {
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -20,4 +20,4 @@ public:
   virtual ~CountryChartView() = default;
 };
 
-} // namespace coronan_gui
+} // namespace coronan_ui
