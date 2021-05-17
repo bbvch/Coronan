@@ -10,11 +10,17 @@ environment:
     PYTHON: c:\Python39-x64\python.exe
     Qt5_DIR: c:\Qt\5.15.2\msvc2019_64
 
+install:
+  - choco install doxygen.install
+
 init:
     - cmd: |-
           set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Python39\Scripts
           "%PYTHON%" -m pip install --upgrade pip
           "%PYTHON%" -m pip install --user conan
+          "%PYTHON%" -m pip install --user sphinx
+          "%PYTHON%" -m pip install --user sphinx_rtd_theme
+          "%PYTHON%" -m pip install --user breathe
 
 before_build:
     - cmd: |-
@@ -24,7 +30,12 @@ before_build:
 
 build_script:
     - cmd: |-
-          cmake --build . --config "Release"
+          cmake --build . --parallel 16 --config Release --clean-first --target docs package
 
 test_script:
     - cmd: ctest -C Debug
+
+artifacts:
+  - path: '\build\Coronan-*.msi'
+    name: Coronan
+    type: File
