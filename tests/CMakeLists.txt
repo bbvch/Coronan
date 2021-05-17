@@ -5,12 +5,6 @@ project(
   VERSION 0.1
   LANGUAGES CXX)
 
-if(CONAN_CATCH2_ROOT_DEBUG)
-  include(${CONAN_CATCH2_ROOT_DEBUG}/lib/cmake/Catch2/Catch.cmake)
-else()
-  include(${CONAN_CATCH2_ROOT}/lib/cmake/Catch2/Catch.cmake)
-endif()
-
 add_executable(unittests ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
 add_executable(coronan::unittests ALIAS unittests)
@@ -21,12 +15,17 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/corona-api_json_parser_test.cpp
           ${CMAKE_CURRENT_LIST_DIR}/corona-api_client_test.cpp)
 
+find_package(Catch2 REQUIRED CONFIG)
+
 target_link_libraries(
   unittests
-  PRIVATE CONAN_PKG::catch2
+  PRIVATE Catch2::Catch2
   PRIVATE coronan::library
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options)
+
+include(CTest)
+include(Catch)
 
 catch_discover_tests(
   unittests

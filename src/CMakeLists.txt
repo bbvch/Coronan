@@ -25,10 +25,13 @@ target_sources(
           ${CMAKE_CURRENT_SOURCE_DIR}/ssl_client.cpp
           ${CMAKE_CURRENT_SOURCE_DIR}/http_client.cpp)
 
+find_package(Poco REQUIRED CONFIG)
+find_package(RapidJSON REQUIRED CONFIG)
+
 target_link_libraries(
   coronan
-  PUBLIC CONAN_PKG::poco
-  PRIVATE CONAN_PKG::rapidjson
+  PUBLIC Poco::Poco
+  PRIVATE RapidJSON::RapidJSON
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options)
 
