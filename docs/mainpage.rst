@@ -73,7 +73,7 @@ CMake options
 * ``ENABLE_TESTING``: Build (and run) unittests. _Default_: ```ON```
 * ``ENABLE_BUILD_WITH_TIME_TRACE``: Enable `Clang Time Trace Feature <https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature>`_. *Default: ```OFF```*
 * ``ENABLE_PCH``: Enable `Precompiled Headers <https://en.wikipedia.org/wiki/Precompiled_header>`_. *Default: ``OFF``*
-* ``ENABLE_CACHE``: Enable caching if available, e.g. `ccache >https://ccache.dev/>`_ or `sccache <https://github.com/mozilla/sccache>`_. *Default: ``ON``*
+* ``ENABLE_CACHE``: Enable caching if available, e.g. `ccache> https://ccache.dev/>`_ or `sccache <https://github.com/mozilla/sccache>`_. *Default: ``ON``*
 * ``ENABLE_COVERAGE``: Enable coverage reporting for gcc/clang. *Default: ```OFF```*
 * ``ENABLE_DOXYGEN``: Enable doxygen documentation build (`doxygen <https://www.doxygen.nl/index.html>`_ with `graphviz dot <https://graphviz.org/>`_ must be installed). *Default: ```ON```*
 * ``ENABLE_SANITIZER_ADDRESS``: Enable `address sanitizer <https://clang.llvm.org/docs/AddressSanitizer.html>`_. *Default: ```OFF```*
@@ -85,6 +85,7 @@ CMake options
 * ``ENABLE_CPPCHECK``: Enable static analysis with `cppcheck <http://cppcheck.sourceforge.net/>`_. *Default: ``ON`` if cppcheck is installed ``OFF`` otherwise.*
 * ``ENABLE_CLANG_TIDY``: Enable static analysis with `clang-tidy <https://clang.llvm.org/extra/clang-tidy/>`_. *Default: ``ON`` if clang-tidy is installed ``OFF`` otherwise.*
 * ``ENABLE_INCLUDE_WHAT_YOU_USE``: Enable static analysis with `include-what-you-use <https://include-what-you-use.org/>`_. *Default: ``ON`` if include-what-you-use is installed ``OFF`` otherwise.*
+* ``ENABLE_CONAN_BUILD_ALL``: Enable building all conan requires from source. May help if you get linking errors. *Default: ``OFF``
 
 Pre-Commit Hooks
 ----------------
