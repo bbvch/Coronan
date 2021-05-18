@@ -7,6 +7,17 @@
     },
     "configurePresets": [
         {
+            "name": "base",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "ENABLE_TESTING": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            },
+            "hidden": true
+        },
+        {
             "name": "debug",
             "description": "Configure debug build",
             "cacheVariables": {
@@ -17,6 +28,9 @@
         {
             "name": "coverage",
             "description": "Configure coverage",
+            "inherits": [
+                "debug"
+            ],
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "g++",
                 "CMAKE_C_COMPILER": "gcc",
@@ -25,9 +39,6 @@
                     "value": "ON"
                 }
             },
-            "inherits": [
-                "debug"
-            ],
             "hidden": true
         },
         {
@@ -39,10 +50,80 @@
             "hidden": true
         },
         {
+            "name": "linux-gcc",
+            "description": "Configure gcc (Unix Makefile)",
+            "generator": "Unix Makefiles",
+            "inherits": [
+                "base"
+            ],
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc"
+            },
+            "hidden": true
+        },
+        {
+            "name": "linux-coverage",
+            "displayName": "Coverage (Unix Makefile)",
+            "description": "Configure Coverage",
+            "inherits": [
+                "linux-gcc",
+                "coverage"
+            ]
+        },
+        {
+            "name": "linux-debug",
+            "displayName": "Debug (Unix Makefile)",
+            "description": "Configure Debug",
+            "inherits": [
+                "linux-gcc",
+                "debug"
+            ]
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Release (Unix Makefile)",
+            "description": "Configure Release",
+            "inherits": [
+                "linux-gcc",
+                "release"
+            ]
+        },
+        {
             "name": "ninja",
             "description": "Configure ninja build",
             "generator": "Ninja",
+            "inherits": [
+                "base"
+            ],
             "hidden": true
+        },
+        {
+            "name": "linux-debug-ninja",
+            "description": "Configure (Ninja, gcc)",
+            "displayName": "Ninja Debug",
+            "inherits": [
+                "ninja",
+                "debug"
+            ]
+        },
+        {
+            "name": "linux-release-ninja",
+            "displayName": "Ninja Release",
+            "description": "Configure Release (Ninja)",
+            "inherits": [
+                "ninja",
+                "release"
+            ]
+        },
+        {
+            "name": "linux-coverage-ninja",
+            "displayName": "Coverage (Ninja)",
+            "description": "Configure Coverage (Ninja)",
+            "inherits": [
+                "ninja",
+                "coverage"
+            ]
         },
         {
             "name": "clang",
@@ -54,103 +135,13 @@
             "hidden": true
         },
         {
-            "name": "visual-studio-2019",
-            "displayName": "Visual Studio 2019",
-            "description": "Configure Visual Studio 2019 build",
-            "generator": "Visual Studio 16 2019",
-            "binaryDir": "${sourceDir}/build",
-            "hidden": true
-        },
-        {
-            "name": "linux",
-            "displayName": "Debug (Unix Makefile)",
-            "description": "Configure gcc (Unix Makefile)",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/build",
-            "cacheVariables": {
-                "ENABLE_TESTING": {
-                    "type": "BOOL",
-                    "value": "ON"
-                },
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_C_COMPILER": "gcc",
-                "ENABLE_COVERAGE": {
-                    "type": "BOOL",
-                    "value": "OFF"
-                }
-            }
-        },
-        {
-            "name": "visual-studio-2019-debug",
-            "displayName": "Visual Studio 2019 (Debug)",
-            "description": "Configure Visual Studio 2019 Debug build",
-            "inherits": [
-                "visual-studio-2019",
-                "debug"
-            ]
-        },
-        {
-            "name": "visual-studio-2019-release",
-            "displayName": "Visual Studio 2019 (Release)",
-            "description": "Configure Visual Studio 2019 Release build",
-            "inherits": [
-                "visual-studio-2019",
-                "release"
-            ]
-        },
-        {
-            "name": "linux-coverage",
-            "displayName": "Coverage (Unix Makefile)",
-            "description": "Configure Coverage",
-            "inherits": [
-                "coverage",
-                "linux"
-            ]
-        },
-        {
-            "name": "linux-release",
-            "displayName": "Release (Unix Makefile)",
-            "description": "Configure Release",
-            "inherits": [
-                "release",
-                "linux"
-            ]
-        },
-        {
-            "name": "linux-ninja",
-            "description": "Configure (Ninja, gcc)",
-            "displayName": "Ninja Debug",
-            "inherits": [
-                "ninja",
-                "linux"
-            ]
-        },
-        {
-            "name": "linux-release-ninja",
-            "displayName": "Ninja Release",
-            "description": "Configure Release (Ninja)",
-            "inherits": [
-                "release",
-                "linux-ninja"
-            ]
-        },
-        {
-            "name": "linux-coverage-ninja",
-            "displayName": "Coverage (Ninja)",
-            "description": "Configure Coverage (Ninja)",
-            "inherits": [
-                "coverage",
-                "linux-ninja"
-            ]
-        },
-        {
-            "name": "linux-ninja-clang",
+            "name": "linux-debug-ninja-clang",
             "description": "Configure clang (Ninja)",
             "displayName": "Clang Debug (Ninja)",
             "inherits": [
                 "ninja",
-                "clang",
-                "linux"
+                "debug",
+                "clang"
             ]
         },
         {
@@ -158,8 +149,9 @@
             "description": "Configure release (Ninja, clang)",
             "displayName": "Clang Release (Ninja)",
             "inherits": [
+                "ninja",
                 "release",
-                "linux-ninja-clang"
+                "clang"
             ]
         },
         {
@@ -167,9 +159,7 @@
             "description": "Configure clang build with address sanitizers",
             "displayName": "Address sanitizers",
             "inherits": [
-                "ninja",
-                "clang",
-                "linux"
+                "linux-debug-ninja-clang"
             ],
             "cacheVariables": {
                 "ENABLE_SANITIZER_ADDRESS": {
@@ -191,9 +181,7 @@
             "description": "Configure clang build with memory sanitizers",
             "displayName": "Memory sanitizers",
             "inherits": [
-                "ninja",
-                "clang",
-                "linux"
+                "linux-debug-ninja-clang"
             ],
             "cacheVariables": {
                 "ENABLE_SANITIZER_MEMORY": {
@@ -201,14 +189,91 @@
                     "value": "ON"
                 }
             }
+        },
+        {
+            "name": "visual-studio-2019",
+            "description": "Configure Visual Studio 2019 build",
+            "generator": "Visual Studio 16 2019",
+            "inherits": [
+                "base"
+            ],
+            "hidden": true
+        },
+        {
+            "name": "visual-studio-2019-debug",
+            "displayName": "Visual Studio 2019 (Debug)",
+            "description": "Configure Visual Studio 2019 Debug build",
+            "inherits": [
+                "visual-studio-2019",
+                "debug"
+            ]
+        },
+        {
+            "name": "visual-studio-2019-release",
+            "displayName": "Visual Studio 2019 (Release)",
+            "description": "Configure Visual Studio 2019 Release build",
+            "inherits": [
+                "visual-studio-2019",
+                "release"
+            ]
         }
     ],
     "buildPresets": [
         {
+            "name": "gcc-debug",
+            "description": "gcc debug build.",
+            "displayName": "Debug",
+            "configurePreset": "linux-debug",
+            "configuration": "Debug",
+            "jobs": 16
+        },
+        {
+            "name": "gcc-coverage",
+            "description": "gcc debug with coverage.",
+            "displayName": "Coverage",
+            "configurePreset": "linux-coverage",
+            "configuration": "Debug",
+            "jobs": 16
+        },
+        {
+            "name": "gcc-release",
+            "description": "gcc clean release build.",
+            "displayName": "Release",
+            "configurePreset": "linux-release",
+            "configuration": "Release",
+            "jobs": 16,
+            "cleanFirst": true
+        },
+        {
+            "name": "ninja-debug",
+            "description": "Ninja gcc debug build.",
+            "displayName": "Debug",
+            "configurePreset": "linux-debug-ninja",
+            "configuration": "Debug",
+            "jobs": 16
+        },
+        {
+            "name": "ninja-coverage",
+            "description": "Ninja gcc debug with coverage.",
+            "displayName": "Coverage",
+            "configurePreset": "linux-coverage-ninja",
+            "configuration": "Debug",
+            "jobs": 16
+        },
+        {
+            "name": "ninja-release",
+            "description": "Ninja gcc clean release build.",
+            "displayName": "Release",
+            "configurePreset": "linux-release-ninja",
+            "configuration": "Release",
+            "jobs": 16,
+            "cleanFirst": true
+        },
+        {
             "name": "clang-debug",
             "description": "Ninja clang debug build.",
             "displayName": "Debug",
-            "configurePreset": "linux-ninja-clang",
+            "configurePreset": "linux-debug-ninja-clang",
             "configuration": "Debug",
             "jobs": 16
         },
@@ -238,56 +303,6 @@
             "jobs": 16
         },
         {
-            "name": "ninja-debug",
-            "description": "Ninja gcc debug build.",
-            "displayName": "Debug",
-            "configurePreset": "linux-ninja",
-            "configuration": "Debug",
-            "jobs": 16
-        },
-        {
-            "name": "ninja-coverage",
-            "description": "Ninja gcc debug with coverage.",
-            "displayName": "Coverage",
-            "configurePreset": "linux-coverage-ninja",
-            "configuration": "Debug",
-            "jobs": 16
-        },
-        {
-            "name": "ninja-release",
-            "description": "Ninja gcc clean release build.",
-            "displayName": "Release",
-            "configurePreset": "linux-release-ninja",
-            "configuration": "Release",
-            "jobs": 16,
-            "cleanFirst": true
-        },
-        {
-            "name": "gcc-debug",
-            "description": "gcc debug build.",
-            "displayName": "Debug",
-            "configurePreset": "linux",
-            "configuration": "Debug",
-            "jobs": 16
-        },
-        {
-            "name": "gcc-coverage",
-            "description": "gcc debug with coverage.",
-            "displayName": "Coverage",
-            "configurePreset": "linux-coverage",
-            "configuration": "Debug",
-            "jobs": 16
-        },
-        {
-            "name": "gcc-release",
-            "description": "gcc clean release build.",
-            "displayName": "Release",
-            "configurePreset": "linux-release",
-            "configuration": "Release",
-            "jobs": 16,
-            "cleanFirst": true
-        },
-        {
             "name": "visual-studio-debug",
             "description": "Visual Studio 2019 Debug build.",
             "displayName": "Debug",
@@ -306,9 +321,10 @@
         },
         {
             "name": "doc",
-            "description": "gcc debug build.",
+            "description": "gcc docu build.",
             "displayName": "Documentation",
-            "configurePreset": "linux",
+            "configurePreset": "linux-release",
+            "configuration": "Release",
             "jobs": 16,
             "targets": [
                 "doxygen",
@@ -317,9 +333,10 @@
         },
         {
             "name": "doc-windows",
-            "description": "gcc debug build.",
+            "description": "windows docu build.",
             "displayName": "Documentation",
             "configurePreset": "visual-studio-2019-release",
+            "configuration": "Release",
             "jobs": 16,
             "targets": [
                 "doxygen",
@@ -332,6 +349,7 @@
             "displayName": "Package",
             "inherits": "gcc-release",
             "configurePreset": "linux-release",
+            "configuration": "Release",
             "targets": [
                 "docs",
                 "package"
@@ -343,6 +361,7 @@
             "displayName": "Package",
             "configurePreset": "linux-release-ninja",
             "inherits": "ninja-release",
+            "configuration": "Release",
             "targets": [
                 "docs",
                 "package"
@@ -354,6 +373,7 @@
             "displayName": "Package",
             "inherits": "clang-release",
             "configurePreset": "linux-release-ninja-clang",
+            "configuration": "Release",
             "targets": [
                 "docs",
                 "package"
@@ -365,6 +385,7 @@
             "displayName": "Package",
             "inherits": "visual-studio-release",
             "configurePreset": "visual-studio-2019-release",
+            "configuration": "Release",
             "targets": [
                 "docs",
                 "package"
@@ -373,16 +394,40 @@
     ],
     "testPresets": [
         {
-            "name": "Unittest Coverage (gcc)",
-            "description": "",
+            "name": "unittest-coverage-gcc",
+            "description": "Unittest with coverage (gcc)",
             "displayName": "Unittest Coverage",
-            "configurePreset": "linux-ninja"
+            "configurePreset": "linux-coverage"
         },
         {
-            "name": "Unittest",
-            "description": "",
+            "name": "unittest-gcc",
+            "description": "Unittest (gcc)",
             "displayName": "Unittest",
-            "configurePreset": "linux-ninja-clang"
+            "configurePreset": "linux-debug"
+        },
+        {
+            "name": "unittest-coverage-ninja",
+            "description": "Unittest with coverage (ninja)",
+            "displayName": "Unittest Coverage",
+            "configurePreset": "linux-coverage-ninja"
+        },
+        {
+            "name": "unittest-ninja",
+            "description": "Unittest (ninja)",
+            "displayName": "Unittest",
+            "configurePreset": "linux-debug-ninja"
+        },
+        {
+            "name": "unittest-ninja-clang",
+            "description": "Unittest (clang)",
+            "displayName": "Unittest",
+            "configurePreset": "linux-debug-ninja-clang"
+        },
+        {
+            "name": "unittest-vs-2019",
+            "description": "Unittest (Visual Studio",
+            "displayName": "Unittest",
+            "configurePreset": "visual-studio-2019-debug"
         }
     ]
 }

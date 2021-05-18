@@ -11,7 +11,7 @@ environment:
     Qt5_DIR: c:\Qt\5.15.2\msvc2019_64
 
 install:
-  - choco install doxygen.install
+    - choco install doxygen.install
 
 init:
     - cmd: |-
@@ -36,6 +36,6 @@ test_script:
     - cmd: ctest -C Debug
 
 artifacts:
-  - path: '\build\Coronan-*.msi'
-    name: Coronan
-    type: File
+    - path: \build\Coronan-*.msi
+      name: Coronan
+      type: File

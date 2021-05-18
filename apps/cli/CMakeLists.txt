@@ -10,11 +10,13 @@ add_executable(coronan_cli ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 add_executable(coronan::coronan_cli ALIAS coronan_cli)
 set_target_properties(coronan_cli PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME
                                                                 coronan)
+find_package(lyra REQUIRED CONFIG)
+find_package(fmt REQUIRED CONFIG)
 
 target_link_libraries(
   coronan_cli
-  PRIVATE CONAN_PKG::lyra
-  PRIVATE CONAN_PKG::fmt
+  PRIVATE bfg::lyra
+  PRIVATE fmt::fmt
   PRIVATE coronan::library
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options)
