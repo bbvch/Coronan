@@ -73,7 +73,7 @@ CMake options
 * ``ENABLE_TESTING``: Build (and run) unittests. _Default_: ```ON```
 * ``ENABLE_BUILD_WITH_TIME_TRACE``: Enable `Clang Time Trace Feature <https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature>`_. *Default: ```OFF```*
 * ``ENABLE_PCH``: Enable `Precompiled Headers <https://en.wikipedia.org/wiki/Precompiled_header>`_. *Default: ``OFF``*
-* ``ENABLE_CACHE``: Enable caching if available, e.g. `ccache> https://ccache.dev/>`_ or `sccache <https://github.com/mozilla/sccache>`_. *Default: ``ON``*
+* ``ENABLE_CACHE``: Enable caching if available, e.g. `ccache <https://ccache.dev/>`_ or `sccache <https://github.com/mozilla/sccache>`_. *Default: ``ON``*
 * ``ENABLE_COVERAGE``: Enable coverage reporting for gcc/clang. *Default: ```OFF```*
 * ``ENABLE_DOXYGEN``: Enable doxygen documentation build (`doxygen <https://www.doxygen.nl/index.html>`_ with `graphviz dot <https://graphviz.org/>`_ must be installed). *Default: ```ON```*
 * ``ENABLE_SANITIZER_ADDRESS``: Enable `address sanitizer <https://clang.llvm.org/docs/AddressSanitizer.html>`_. *Default: ```OFF```*
