@@ -41,7 +41,7 @@ macro(run_conan)
     set(CONAN_BUILD missing)
   endif()
 
-  if( CMAKE_CONFIGURATION_TYPES )
+  if(CMAKE_CONFIGURATION_TYPES)
     foreach(TYPE ${CMAKE_CONFIGURATION_TYPES})
       conan_cmake_autodetect(settings BUILD_TYPE ${TYPE})
 

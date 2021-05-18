@@ -8,7 +8,8 @@ set(CPACK_VERBATIM_VARIABLES YES)
 set(CPACK_RESOURCE_FILE_README ${PROJECT_SOURCE_DIR}/README.md)
 
 # WIX installer needs a licence file with .txt ending
-configure_file(${PROJECT_SOURCE_DIR}/LICENSE  ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/LICENSE
+               ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt COPYONLY)
 set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt)
 
 # versions
@@ -29,7 +30,7 @@ endif()
 find_program(DPKG_PROGRAM dpkg)
 if(DPKG_PROGRAM)
   list(APPEND CPACK_GENERATOR DEB)
-  set(CPACK_DEBIAN_Coronan_Development_PACKAGE_SHLIBDEPS ON)
+  set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
   # DEB package config
   set(CPACK_DEBIAN_PACKAGE_NAME "coronan")
 
@@ -37,7 +38,7 @@ if(DPKG_PROGRAM)
   set(CPACK_DEBIAN_PACKAGE_MAINTAINER
       "Michel Estermann <michel.estermann@bbv.ch>")
   set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/bbvch/Coronan")
-  set(CPACK_DEBIAN_Coronan_Development_PACKAGE_DEPENDS
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS
       "libqt5widgets5 (>=5.9.2),libQt5Charts5 (>=5.9.2)")
 endif(DPKG_PROGRAM)
 
