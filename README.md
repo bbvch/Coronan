@@ -35,7 +35,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 * [conan](https://conan.io/) package Manager
 
-* Librarys used:
+* Libraries used:
   * [Qt](https://www.qt.io/)
   * [Poco](https://pocoproject.org/) Networking library
   * [RapidJSON](https://rapidjson.org/)
@@ -49,6 +49,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 * CPack packaging:
   * Debian package
   * [Qt Installer Framework](https://doc.qt.io/qtinstallerframework/)
+  * [WIX](https://wixtoolset.org/)
 
 * Build Caching support:
   * [ccache](https://ccache.dev/)

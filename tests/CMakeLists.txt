@@ -40,4 +40,18 @@ catch_discover_tests(
   OUTPUT_SUFFIX
   .xml)
 
-add_custom_target(run_unittests ALL COMMAND $<TARGET_FILE:coronan::unittests>)
+find_package(Gcovr)
+if(ENABLE_COVERAGE AND Gcovr_FOUND)
+  add_custom_target(
+    run_unittests_coverage ALL
+    COMMAND $<TARGET_FILE:coronan::unittests>
+    COMMAND
+      ${GCOVR_EXECUTABLE} -r ${CMAKE_SOURCE_DIR} -e ".*apps.*" -e ".*tests.*"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Run unittests with coverage output")
+else()
+  add_custom_target(
+    run_unittests ALL
+    COMMAND $<TARGET_FILE:coronan::unittests>
+    COMMENT "Run unittests")
+endif()

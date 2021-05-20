@@ -40,6 +40,10 @@ struct TestHTTPSession
 
   std::istream& receiveResponse(HTTPResponse& response)
   {
+    if (throw_exception)
+    {
+      throw exception;
+    }
     response.setStatusAndReason(TestHTTPSession::response_status_,
                                 TestHTTPSession::response_reason_);
     return TestHTTPSession::response_;
@@ -60,12 +64,16 @@ struct TestHTTPSession
     TestHTTPSession::response_ = std::istringstream{response};
   }
 
+  static void set_throw_exception() { throw_exception = true; }
+
   inline static std::uint16_t port_{};
   inline static std::string host_{};
   inline static HTTPResponse::HTTPStatus response_status_{
       HTTPResponse::HTTP_OK};
   inline static std::string response_reason_{};
   inline static std::istringstream response_{""};
+  inline static bool throw_exception{false};
+  inline static std::exception exception{};
 };
 
 using TesteeT = coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest,
@@ -107,6 +115,14 @@ TEST_CASE("HTTPClient get", "[HTTPClient]")
     REQUIRE(resonse.get_status() == expected_status);
     REQUIRE(resonse.get_reason() == expected_reason);
     REQUIRE(resonse.get_response_body() == expected_response);
+  }
+
+  SECTION("Throws an HTTPClientException when Session throws exception")
+  {
+    TestHTTPSession::set_throw_exception();
+
+    auto const* uri = "http://server.com:80/test";
+    REQUIRE_THROWS_AS(TesteeT::get(uri), coronan::HTTPClientException);
   }
 }
 

@@ -5,6 +5,10 @@ let
   clang = clang_11;
   cmake_320 = (import ./cmake.nix).cmake;
 
+  gcovr = python3.withPackages(ps: [
+    ps.gcovr
+  ]);
+
   sphinx-env = python3.withPackages(ps: [
     ps.sphinx
     ps.sphinx_rtd_theme
@@ -39,6 +43,7 @@ in stdenvNoCC.mkDerivation {
     libGL
     qt514.full
     lcov
+    gcovr
     perl
     doxygen
     graphviz
