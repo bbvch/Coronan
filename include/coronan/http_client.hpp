@@ -1,11 +1,6 @@
 #pragma once
 
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Path.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <stdexcept>
@@ -42,17 +37,17 @@ public:
   /**
    * Return the HTTP status code
    */
-  Poco::Net::HTTPResponse::HTTPStatus get_status() const;
+  Poco::Net::HTTPResponse::HTTPStatus status() const;
 
   /**
    * Return the HTTP reason phrase
    */
-  std::string get_reason() const;
+  std::string reason() const;
 
   /**
    * Return the HTTP response body
    */
-  std::string get_response_body() const;
+  std::string response_body() const;
 
 private:
   Poco::Net::HTTPResponse response_{};
@@ -62,8 +57,8 @@ private:
 /**
  * Simple Stateless HTTP Client
  */
-template <typename SessionT, typename HTTPRequestT, typename HTTPResponseT>
-struct HTTPClientT
+template <typename SessionType, typename HTTPRequestType, typename HTTPResponseType>
+struct HTTPClientType
 {
   /**
    * Execute a HTTP GET
@@ -72,22 +67,22 @@ struct HTTPClientT
   static HTTPResponse get(std::string const& url);
 };
 
-template <typename SessionT, typename HTTPRequestT, typename HTTPResponseT>
-HTTPResponse HTTPClientT<SessionT, HTTPRequestT, HTTPResponseT>::get(std::string const& url)
+template <typename SessionType, typename HTTPRequestType, typename HTTPResponseType>
+HTTPResponse HTTPClientType<SessionType, HTTPRequestType, HTTPResponseType>::get(std::string const& url)
 {
   try
   {
     Poco::URI uri{url};
-    SessionT session(uri.getHost(), uri.getPort());
+    SessionType session(uri.getHost(), uri.getPort());
 
-    auto const path = [uri]() {
+    auto const path = std::invoke([uri]() {
       auto const path_ = uri.getPathAndQuery();
       return path_.empty() ? "/" : path_;
-    }();
+    });
 
-    HTTPRequestT request{"GET", path, "HTTP/1.1"};
+    HTTPRequestType request{"GET", path, "HTTP/1.1"};
 
-    HTTPResponseT response;
+    HTTPResponseType response;
     session.sendRequest(request);
     auto& response_stream = session.receiveResponse(response);
 
@@ -102,7 +97,7 @@ HTTPResponse HTTPClientT<SessionT, HTTPRequestT, HTTPResponseT>::get(std::string
   catch (std::exception const& ex)
   {
     auto const exception_msg =
-        std::string{"Error fetching url \""} + url + std::string{"\".\n\n Exception occured: "} + ex.what();
+        std::string{"Error fetching url \""} + url + std::string{"\".\n\n Exception occurred: "} + ex.what();
     throw HTTPClientException{exception_msg};
   }
 }

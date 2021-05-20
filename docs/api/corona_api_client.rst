@@ -3,4 +3,4 @@
 Corona API client
 =================
 
-.. doxygenclass:: coronan::CoronaAPIClientT
+.. doxygenclass:: coronan::CoronaAPIClientType

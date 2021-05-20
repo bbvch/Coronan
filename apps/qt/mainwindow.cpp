@@ -30,7 +30,7 @@ CoronanWidget::~CoronanWidget()
 void CoronanWidget::populate_country_box()
 {
   auto* country_combo = ui->countryComboBox;
-  auto countries = coronan::CoronaAPIClient{}.get_countries();
+  auto countries = coronan::CoronaAPIClient{}.request_countries();
 
   std::sort(begin(countries), end(countries), [](auto const& a, auto const& b) { return a.name < b.name; });
 
@@ -48,7 +48,7 @@ coronan::CountryData CoronanWidget::get_country_data(std::string_view country_co
 {
   try
   {
-    return coronan::CoronaAPIClient{}.get_country_data(country_code);
+    return coronan::CoronaAPIClient{}.request_country_data(country_code);
   }
   catch (coronan::SSLException const& ex)
   {
