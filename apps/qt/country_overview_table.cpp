@@ -8,7 +8,8 @@
 
 namespace {
 
-template <class... Ts> struct overloaded : Ts...
+template <class... Ts>
+struct overloaded : Ts...
 {
   using Ts::operator()...;
 };
@@ -19,20 +20,17 @@ overloaded(Ts...) -> overloaded<Ts...>; // not needed as of C++20
 
 namespace coronan_ui {
 
-void CountryOverviewTable::update(QTableWidget* const table_widget,
-                                  coronan::CountryData const& country_data)
+void CountryOverviewTable::update(QTableWidget* const table_widget, coronan::CountryData const& country_data)
 {
   if (table_widget != nullptr)
   {
     auto const label_col_index = 0;
     auto const value_col_index = 1;
 
-    using VariantT =
-        std::variant<std::optional<uint32_t>, std::optional<double>>;
+    using VariantT = std::variant<std::optional<uint32_t>, std::optional<double>>;
     using CaptionValuePair = std::pair<QString, VariantT>;
     constexpr auto no_table_entries = 7;
-    std::array<CaptionValuePair,
-               no_table_entries> const overview_table_entries = {
+    std::array<CaptionValuePair, no_table_entries> const overview_table_entries = {
         {std::make_pair("Population:", country_data.info.population),
          std::make_pair("Confirmed:", country_data.latest.confirmed),
          std::make_pair("Death:", country_data.latest.deaths),
@@ -50,12 +48,9 @@ void CountryOverviewTable::update(QTableWidget* const table_widget,
       table_widget->setItem(row_index, label_col_index, label_widget);
       // Clean Code Note: variant with visit functions allows to handle the
       // empty (optional) type without if statements
-      auto const value_str =
-          std::visit(overloaded{[](auto const& arg) {
-                       return arg.has_value() ? QString::number(arg.value())
-                                              : QString{"--"};
-                     }},
-                     pair.second);
+      auto const value_str = std::visit(
+          overloaded{[](auto const& arg) { return arg.has_value() ? QString::number(arg.value()) : QString{"--"}; }},
+          pair.second);
 
       auto* const value_widget = new QTableWidgetItem{value_str};
       table_widget->setItem(row_index, value_col_index, value_widget);

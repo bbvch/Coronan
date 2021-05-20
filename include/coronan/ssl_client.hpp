@@ -27,9 +27,8 @@ public:
   ~SSLClient();
 
 private:
-  explicit SSLClient(
-      Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler,
-      Poco::Net::Context::Ptr net_context);
+  explicit SSLClient(Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler,
+                     Poco::Net::Context::Ptr net_context);
 
   void initialize();
   Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> certificate_handler{};

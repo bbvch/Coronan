@@ -17,8 +17,7 @@ public:
   {
     get_called = true;
     get_url = url;
-    return coronan::HTTPResponse{Poco::Net::HTTPResponse{response_status},
-                                 response_payload};
+    return coronan::HTTPResponse{Poco::Net::HTTPResponse{response_status}, response_payload};
   }
 
   static bool get_was_called_with(std::string_view url)
@@ -34,8 +33,7 @@ public:
 
 bool TestHTTPClient::get_called = false;
 std::string TestHTTPClient::get_url = "";
-Poco::Net::HTTPResponse::HTTPStatus TestHTTPClient::response_status =
-    Poco::Net::HTTPResponse::HTTP_CONTINUE;
+Poco::Net::HTTPResponse::HTTPStatus TestHTTPClient::response_status = Poco::Net::HTTPResponse::HTTP_CONTINUE;
 std::string TestHTTPClient::response_payload = "";
 
 SCENARIO("CoronaAPIClient retrieves country list", "[CoronaAPIClient]")
@@ -50,7 +48,10 @@ SCENARIO("CoronaAPIClient retrieves country list", "[CoronaAPIClient]")
     {
 
       TestHTTPClient::response_status = Poco::Net::HTTPResponse::HTTP_NOT_FOUND;
-      THEN("an exception is thrown") { CHECK_THROWS(testee.get_countries()); }
+      THEN("an exception is thrown")
+      {
+        CHECK_THROWS(testee.get_countries());
+      }
     }
 
     WHEN("the http client returns an OK response status and a country list "
@@ -79,8 +80,7 @@ SCENARIO("CoronaAPIClient retrieves country list", "[CoronaAPIClient]")
 
       auto const countries = testee.get_countries();
 
-      REQUIRE(TestHTTPClient::get_was_called_with(
-          "https://corona-api.com/countries"));
+      REQUIRE(TestHTTPClient::get_was_called_with("https://corona-api.com/countries"));
 
       THEN("a list of country names and iso country codes is returned.")
       {
@@ -96,8 +96,7 @@ SCENARIO("CoronaAPIClient retrieves country list", "[CoronaAPIClient]")
   }
 }
 
-SCENARIO("CoronaAPIClient retrieves country data for Switzerland",
-         "[CoronaAPIClient]")
+SCENARIO("CoronaAPIClient retrieves country data for Switzerland", "[CoronaAPIClient]")
 {
   GIVEN("A corona-api client")
   {
@@ -174,8 +173,7 @@ SCENARIO("CoronaAPIClient retrieves country data for Switzerland",
       }";
 
       auto const country_data = testee.get_country_data("CH");
-      REQUIRE(TestHTTPClient::get_was_called_with(
-          "https://corona-api.com/countries/CH"));
+      REQUIRE(TestHTTPClient::get_was_called_with("https://corona-api.com/countries/CH"));
 
       THEN("the country data is returned.")
       {

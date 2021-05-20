@@ -14,13 +14,13 @@ namespace {
 constexpr auto corona_api_url = "https://corona-api.com";
 }
 
-using HTTPClient = HTTPClientT<Poco::Net::HTTPSClientSession,
-                               Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
+using HTTPClient = HTTPClientT<Poco::Net::HTTPSClientSession, Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
 
 /**
  * A Client for retrieving data from https://corona-api.com.
  */
-template <typename ClientT> class CoronaAPIClientT
+template <typename ClientT>
+class CoronaAPIClientT
 {
 public:
   /**
@@ -49,40 +49,32 @@ std::vector<CountryInfo> CoronaAPIClientT<ClientT>::get_countries() const
   if (auto const http_response = ClientT::get(countries_url);
       http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
   {
-    return coronan::api_parser::parse_countries(
-        http_response.get_response_body());
+    return coronan::api_parser::parse_countries(http_response.get_response_body());
   }
   else
   {
-    auto const exception_msg =
-        std::string{"Error fetching data from url \""} + countries_url +
-        std::string{"\".\n\n Response status: "} + http_response.get_reason() +
-        std::string{" ("} + std::to_string(http_response.get_status()) +
-        std::string{")."};
+    auto const exception_msg = std::string{"Error fetching data from url \""} + countries_url +
+                               std::string{"\".\n\n Response status: "} + http_response.get_reason() +
+                               std::string{" ("} + std::to_string(http_response.get_status()) + std::string{")."};
     throw HTTPClientException{exception_msg};
   }
 }
 
 template <typename ClientT>
-CountryData
-CoronaAPIClientT<ClientT>::get_country_data(std::string_view country_code) const
+CountryData CoronaAPIClientT<ClientT>::get_country_data(std::string_view country_code) const
 {
-  auto const countries_url =
-      api_url + std::string{"/countries/"} + std::string{country_code};
+  auto const countries_url = api_url + std::string{"/countries/"} + std::string{country_code};
   if (auto const http_response = ClientT::get(countries_url);
       http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
 
   {
-    return coronan::api_parser::parse_country(
-        http_response.get_response_body());
+    return coronan::api_parser::parse_country(http_response.get_response_body());
   }
   else
   {
-    auto const exception_msg =
-        std::string{"Error fetching data from url \""} + countries_url +
-        std::string{"\".\n\n Response status: "} + http_response.get_reason() +
-        std::string{" ("} + std::to_string(http_response.get_status()) +
-        std::string{")."};
+    auto const exception_msg = std::string{"Error fetching data from url \""} + countries_url +
+                               std::string{"\".\n\n Response status: "} + http_response.get_reason() +
+                               std::string{" ("} + std::to_string(http_response.get_status()) + std::string{")."};
     throw HTTPClientException{exception_msg};
   }
 }

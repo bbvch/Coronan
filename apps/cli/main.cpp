@@ -29,8 +29,7 @@ int main(int argc, char* argv[])
       exit(EXIT_SUCCESS);
     }
 
-    auto const& country_data =
-        coronan::CoronaAPIClient{}.get_country_data(country);
+    auto const& country_data = coronan::CoronaAPIClient{}.get_country_data(country);
     fmt::print("\"datetime\", \"confirmed\", \"death\", \"recovered\", "
                "\"active\"\n");
 
@@ -40,10 +39,8 @@ int main(int argc, char* argv[])
 
     for (auto const& data_point : country_data.timeline)
     {
-      fmt::print("{}, {}, {}, {}, {}\n", data_point.date,
-                 optional_to_string(data_point.confirmed),
-                 optional_to_string(data_point.deaths),
-                 optional_to_string(data_point.recovered),
+      fmt::print("{}, {}, {}, {}, {}\n", data_point.date, optional_to_string(data_point.confirmed),
+                 optional_to_string(data_point.deaths), optional_to_string(data_point.recovered),
                  optional_to_string(data_point.active));
     }
   }

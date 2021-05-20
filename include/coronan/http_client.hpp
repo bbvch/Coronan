@@ -37,8 +37,7 @@ public:
    * @param response http response
    * @param response_body http response body
    */
-  explicit HTTPResponse(Poco::Net::HTTPResponse const& response,
-                        std::string response_body);
+  explicit HTTPResponse(Poco::Net::HTTPResponse const& response, std::string response_body);
 
   /**
    * Return the HTTP status code
@@ -74,8 +73,7 @@ struct HTTPClientT
 };
 
 template <typename SessionT, typename HTTPRequestT, typename HTTPResponseT>
-HTTPResponse
-HTTPClientT<SessionT, HTTPRequestT, HTTPResponseT>::get(std::string const& url)
+HTTPResponse HTTPClientT<SessionT, HTTPRequestT, HTTPResponseT>::get(std::string const& url)
 {
   try
   {
@@ -103,9 +101,8 @@ HTTPClientT<SessionT, HTTPRequestT, HTTPResponseT>::get(std::string const& url)
   }
   catch (std::exception const& ex)
   {
-    auto const exception_msg = std::string{"Error fetching url \""} + url +
-                               std::string{"\".\n\n Exception occured: "} +
-                               ex.what();
+    auto const exception_msg =
+        std::string{"Error fetching url \""} + url + std::string{"\".\n\n Exception occured: "} + ex.what();
     throw HTTPClientException{exception_msg};
   }
 }

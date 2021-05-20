@@ -14,8 +14,7 @@ class CountryChartView : public QChartView
 {
   Q_OBJECT
 public:
-  explicit CountryChartView(coronan::CountryData const& country_data,
-                            QWidget* parent = nullptr);
+  explicit CountryChartView(coronan::CountryData const& country_data, QWidget* parent = nullptr);
 
   virtual ~CountryChartView() = default;
 };

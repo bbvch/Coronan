@@ -183,8 +183,7 @@ TEST_CASE("The corona-api parser parsing a partial json", "[corona-api parser")
     REQUIRE_FALSE(json_object.latest.cases_per_million_population.has_value());
   }
 
-  SECTION(
-      "with missing updated_at and latest_data return empty latest_data date")
+  SECTION("with missing updated_at and latest_data return empty latest_data date")
   {
     constexpr auto test_json = "{ \
             \"data\": { \
@@ -233,8 +232,7 @@ TEST_CASE("The corona-api parser parsing a partial json", "[corona-api parser")
   }
 }
 
-TEST_CASE("The corona-api country parser parsing a country list",
-          "[corona-api parser")
+TEST_CASE("The corona-api country parser parsing a country list", "[corona-api parser")
 {
   constexpr auto test_country_json = "{ \
     \"data\": [ \

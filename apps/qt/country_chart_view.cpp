@@ -25,25 +25,21 @@ constexpr auto create_value_axis = [](auto range_max) {
   return y_axis;
 };
 
-constexpr auto append_value_to_series =
-    [](auto msecs_since_epoche, auto const& value, auto* const serie) {
-      if (value.has_value())
-      {
-        serie->append(QPointF(msecs_since_epoche, value.value()));
-      }
-    };
+constexpr auto append_value_to_series = [](auto msecs_since_epoche, auto const& value, auto* const serie) {
+  if (value.has_value())
+  {
+    serie->append(QPointF(msecs_since_epoche, value.value()));
+  }
+};
 } // namespace
 
 namespace coronan_ui {
 
-CountryChartView::CountryChartView(coronan::CountryData const& country_data,
-                                   QWidget* parent)
-    : QChartView{parent}
+CountryChartView::CountryChartView(coronan::CountryData const& country_data, QWidget* parent) : QChartView{parent}
 {
   auto* const chart = new QChart{};
 
-  chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(
-      country_data.info.name.c_str()));
+  chart->setTitle(QString{"Corona (Covid-19) Cases in "}.append(country_data.info.name.c_str()));
 
   auto* const death_series = new QLineSeries{};
   death_series->setName("Death");
@@ -57,26 +53,20 @@ CountryChartView::CountryChartView(coronan::CountryData const& country_data,
   for (auto const& data_point : country_data.timeline)
   {
     auto const msecs_since_epoche = static_cast<double>(
-        QDateTime::fromString(data_point.date.c_str(), "yyyy-MM-ddThh:mm:ss.zZ")
-            .toMSecsSinceEpoch());
+        QDateTime::fromString(data_point.date.c_str(), "yyyy-MM-ddThh:mm:ss.zZ").toMSecsSinceEpoch());
 
     append_value_to_series(msecs_since_epoche, data_point.deaths, death_series);
-    append_value_to_series(msecs_since_epoche, data_point.confirmed,
-                           confirmed_series);
-    append_value_to_series(msecs_since_epoche, data_point.active,
-                           active_series);
-    append_value_to_series(msecs_since_epoche, data_point.recovered,
-                           recovered_series);
+    append_value_to_series(msecs_since_epoche, data_point.confirmed, confirmed_series);
+    append_value_to_series(msecs_since_epoche, data_point.active, active_series);
+    append_value_to_series(msecs_since_epoche, data_point.recovered, recovered_series);
   }
 
   auto* const x_axis = create_datetime_axis();
-  auto* const y_axis =
-      create_value_axis(country_data.latest.confirmed.value_or(0));
+  auto* const y_axis = create_value_axis(country_data.latest.confirmed.value_or(0));
   chart->addAxis(x_axis, Qt::AlignBottom);
   chart->addAxis(y_axis, Qt::AlignLeft);
 
-  for (auto* const series : std::vector<QLineSeries*>{
-           death_series, confirmed_series, active_series, recovered_series})
+  for (auto* const series : std::vector<QLineSeries*>{death_series, confirmed_series, active_series, recovered_series})
   {
     chart->addSeries(series);
     series->attachAxis(x_axis);

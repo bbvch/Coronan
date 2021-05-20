@@ -12,27 +12,27 @@
 
 namespace coronan_ui {
 
-CoronanWidget::CoronanWidget(QWidget* parent)
-    : QWidget{parent}, ui{new Ui_CoronanWidgetForm}
+CoronanWidget::CoronanWidget(QWidget* parent) : QWidget{parent}, ui{new Ui_CoronanWidgetForm}
 {
   ui->setupUi(this);
 
   populate_country_box();
   update_ui();
 
-  QObject::connect(ui->countryComboBox, SIGNAL(currentIndexChanged(int)), this,
-                   SLOT(update_ui()));
+  QObject::connect(ui->countryComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(update_ui()));
 }
 
-CoronanWidget::~CoronanWidget() { delete ui; }
+CoronanWidget::~CoronanWidget()
+{
+  delete ui;
+}
 
 void CoronanWidget::populate_country_box()
 {
   auto* country_combo = ui->countryComboBox;
   auto countries = coronan::CoronaAPIClient{}.get_countries();
 
-  std::sort(begin(countries), end(countries),
-            [](auto const& a, auto const& b) { return a.name < b.name; });
+  std::sort(begin(countries), end(countries), [](auto const& a, auto const& b) { return a.name < b.name; });
 
   for (auto const& country : countries)
   {
@@ -44,8 +44,7 @@ void CoronanWidget::populate_country_box()
   }
 }
 
-coronan::CountryData
-CoronanWidget::get_country_data(std::string_view country_code)
+coronan::CountryData CoronanWidget::get_country_data(std::string_view country_code)
 {
   try
   {
@@ -71,17 +70,14 @@ CoronanWidget::get_country_data(std::string_view country_code)
 
 void CoronanWidget::update_ui()
 {
-  auto country_code =
-      ui->countryComboBox->itemData(ui->countryComboBox->currentIndex())
-          .toString();
+  auto country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
   auto const country_data = get_country_data(country_code.toStdString());
   auto* const new_chartView = new coronan_ui::CountryChartView{country_data};
   if (chartView == nullptr)
   {
     ui->gridLayout->addWidget(new_chartView, 2, 1);
 
-    ui->overviewTable->horizontalHeader()->setSectionResizeMode(
-        0, QHeaderView::ResizeToContents);
+    ui->overviewTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
   }
   else
   {
