@@ -14,7 +14,7 @@ Response
 
 Client
 ---------
-.. doxygenstruct:: coronan::HTTPClientT
+.. doxygenstruct:: coronan::HTTPClientType
 
 
 SSL Client
