@@ -5,6 +5,7 @@
 #include <Poco/URI.h>
 #include <stdexcept>
 #include <string>
+#include <functional>
 
 namespace coronan {
 
