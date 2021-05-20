@@ -15,17 +15,17 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                name: [ubuntu-gcc-9, ubuntu-clang-9]
+                name: [ubuntu-gcc, ubuntu-clang]
                 include:
-                    - name: ubuntu-gcc-9
+                    - name: ubuntu-gcc
                       os: ubuntu-latest
-                      compiler: g++-9
-                      ccompiler: gcc-9
+                      compiler: g++
+                      ccompiler: gcc
 
-                    - name: ubuntu-clang-9
+                    - name: ubuntu-clang
                       os: ubuntu-latest
-                      compiler: clang++-9
-                      ccompiler: clang-9
+                      compiler: clang++
+                      ccompiler: clang
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
