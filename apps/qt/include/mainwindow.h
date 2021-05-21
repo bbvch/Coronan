@@ -1,9 +1,10 @@
 #pragma once
-#include "coronan/corona-api_parser.hpp"
-#include "country_overview_table.hpp"
+#include "coronan/corona-api_datatypes.hpp"
+#include "country_overview_table_model.hpp"
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QWidget>
+#include <QTableView>
 #include <string>
 
 QT_BEGIN_NAMESPACE
@@ -12,6 +13,7 @@ QT_END_NAMESPACE
 
 namespace coronan_ui {
 class CountryChartView;
+class CountryOverviewTablewModel;
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -32,7 +34,7 @@ private:
   CountryChartView* chartView = nullptr;
   Ui_CoronanWidgetForm* ui = nullptr;
 
-  CountryOverviewTable overview_table{};
+  CountryOverviewTablewModel overview_model{};
 };
 
 } // namespace coronan_ui

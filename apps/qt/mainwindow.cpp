@@ -16,6 +16,9 @@ CoronanWidget::CoronanWidget(QWidget* parent) : QWidget{parent}, ui{new Ui_Coron
 {
   ui->setupUi(this);
 
+  ui->overviewTable->horizontalHeader()->setVisible(false);
+  ui->overviewTable->setModel(&overview_model);
+  
   populate_country_box();
   update_ui();
 
@@ -72,12 +75,13 @@ void CoronanWidget::update_ui()
 {
   auto country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
   auto const country_data = get_country_data(country_code.toStdString());
+  overview_model.populateData(country_data);
+  ui->overviewTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+
   auto* const new_chartView = new coronan_ui::CountryChartView{country_data};
   if (chartView == nullptr)
   {
-    ui->gridLayout->addWidget(new_chartView, 2, 1);
-
-    ui->overviewTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->gridLayout->addWidget(new_chartView, 2, 1);   
   }
   else
   {
@@ -85,7 +89,6 @@ void CoronanWidget::update_ui()
     delete old_layout;
   }
   chartView = new_chartView;
-  overview_table.update(ui->overviewTable, country_data);
 }
 
 } // namespace coronan_ui
