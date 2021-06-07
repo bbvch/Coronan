@@ -36,6 +36,7 @@ target_include_directories(
 
 set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table_model.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h")
 
@@ -43,6 +44,7 @@ target_sources(
   coronan_gui
   PRIVATE ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
           ${CMAKE_CURRENT_LIST_DIR}/country_overview_table_model.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/country_data_model.cpp
           ${CMAKE_CURRENT_LIST_DIR}/country_chart_view.cpp
           ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui
           ${HEADER_LIST})

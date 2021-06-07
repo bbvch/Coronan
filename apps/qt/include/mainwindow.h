@@ -1,6 +1,7 @@
 #pragma once
 #include "coronan/corona-api_datatypes.hpp"
 #include "country_overview_table_model.hpp"
+#include "country_data_model.hpp"
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QWidget>
@@ -35,6 +36,7 @@ private:
   Ui_CoronanWidgetForm* ui = nullptr;
 
   CountryOverviewTablewModel overview_model{};
+  CountryDataModel country_data_model{};
 };
 
 } // namespace coronan_ui
