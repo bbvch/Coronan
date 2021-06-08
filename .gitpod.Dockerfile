@@ -1,14 +1,62 @@
-FROM gitpod/workspace-full-vnc:commit-0d86f18fcb06832838d2cb77636d2c1a6a7dbe6c
+FROM ubuntu:bionic as cmake_builder
+
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends wget
+RUN mkdir /opt/cmake
+RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.20.3/cmake-3.20.3-linux-x86_64.sh \
+ && sh ./cmake-3.20.3-linux-x86_64.sh --skip-license --prefix=/opt/cmake
+
+FROM gitpod/workspace-full-vnc
+
+# More information: https://www.gitpod.io/docs/config-docker/
 
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 
-ENV USER gitpod
-RUN /bin/bash -c "$(curl -fsSL https://nixos.org/nix/install)"
+USER root
+FROM bbvch/qt:5.14.2 as qt_builder
 
-RUN echo 'if [ -e /home/gitpod/.nix-profile/etc/profile.d/nix.sh ]; then . /home/gitpod/.nix-profile/etc/profile.d/nix.sh; fi' >> /home/gitpod/.bashrc
+#install qt
+COPY --from=qt_builder /usr/local/Qt /usr/local/Qt
+ENV Qt5_DIR=/usr/local/Qt
+RUN wget https://altushost-swe.dl.sourceforge.net/project/dejavu/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2 \
+&& tar -xf dejavu-fonts-ttf-2.37.tar.bz2 && rm dejavu-fonts-ttf-2.37.tar.bz2 \
+ && mv dejavu-fonts-ttf-2.37/ttf /usr/local/Qt/lib/fonts
 
-SHELL ["/bin/bash", "-c"]
+ #install qt depndencies
+RUN cp /etc/apt/sources.list /etc/apt/sources.list~ \
+ && sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
+ && apt-get update
+RUN apt-get -qq build-dep -y qt5-default
+RUN apt-get -qq install -y --no-install-recommends libxcb-xinerama0-dev \
+ && apt-get -qq install -y --no-install-recommends '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
+ && apt-get -qq install -y --no-install-recommends perl
 
-RUN . /home/gitpod/.nix-profile/etc/profile.d/nix.sh && nix-env -i direnv
-RUN . /home/gitpod/.nix-profile/etc/profile.d/nix.sh && direnv hook bash >> ~/.bashrc
-RUN mkdir -p /home/gitpod/.config/nix && echo "sandbox = false" > /home/gitpod/.config/nix/nix.conf
+#install cmake
+COPY --from=cmake_builder /opt/cmake /opt/cmake
+RUN ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+
+# lcov and doxygen
+RUN apt-get -qq install -y --no-install-recommends lcov doxygen graphviz
+
+# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
+RUN apt-get -qq install -y --no-install-recommends clang-11 clang-10
+RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 100
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 100
+
+RUN apt-get -qq install -y --no-install-recommends ninja-build
+
+RUN apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+USER gitpod
+
+# conan
+RUN pip3 install conan==1.37.1
+RUN conan profile new default --detect
+
+# cmake-format
+RUN pip3 install cmake-format=0.6.13
+
+# pre-commit
+RUN pip3 install pre-commit==2.13.0
+RUN echo 'export PIP_USER=false' >> ~/.bashrc
