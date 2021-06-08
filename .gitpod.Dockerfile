@@ -13,20 +13,12 @@ FROM gitpod/workspace-full-vnc
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 
 USER root
-FROM bbvch/qt:5.14.2 as qt_builder
 
 #install qt
-COPY --from=qt_builder /usr/local/Qt /usr/local/Qt
-ENV Qt5_DIR=/usr/local/Qt
-RUN wget https://altushost-swe.dl.sourceforge.net/project/dejavu/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2 \
-&& tar -xf dejavu-fonts-ttf-2.37.tar.bz2 && rm dejavu-fonts-ttf-2.37.tar.bz2 \
- && mv dejavu-fonts-ttf-2.37/ttf /usr/local/Qt/lib/fonts
-
- #install qt depndencies
-RUN cp /etc/apt/sources.list /etc/apt/sources.list~ \
- && sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
- && apt-get update
-RUN apt-get -qq build-dep -y qt5-default
+RUN apt-get -qq install -y --no-install-recommends software-properties-common
+RUN add-apt-repository ppa:beineri/opt-qt-5.15.2-focal
+RUN apt-get update
+RUN apt-get -qq install -y --no-install-recommends qt515base qt515charts-no-lgpl qt515tools
 RUN apt-get -qq install -y --no-install-recommends libxcb-xinerama0-dev \
  && apt-get -qq install -y --no-install-recommends '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
  && apt-get -qq install -y --no-install-recommends perl
@@ -55,7 +47,7 @@ RUN pip3 install conan==1.37.1
 RUN conan profile new default --detect
 
 # cmake-format
-RUN pip3 install cmake-format=0.6.13
+RUN pip3 install cmake-format==0.6.13
 
 # pre-commit
 RUN pip3 install pre-commit==2.13.0
