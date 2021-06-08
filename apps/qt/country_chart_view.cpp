@@ -18,70 +18,53 @@ constexpr auto create_datetime_axis = []() {
   return x_axis;
 };
 
-constexpr auto create_value_axis = []() {
+constexpr auto create_value_axis = [](qreal max) {
   auto* const y_axis = new QtCharts::QValueAxis{};
   y_axis->setTitleText(QStringLiteral("Cases"));
   y_axis->setLabelFormat(QStringLiteral("%i  "));
+  y_axis->setRange(0, max);
   return y_axis;
+};
+
+constexpr auto create_chart_title = [](auto const& country_name) {
+  return QStringLiteral("Corona (Covid-19) Cases in ").append(country_name);
 };
 
 } // namespace
 
 namespace coronan_ui {
 
-CountryChartView::CountryChartView(CountryDataModel* const data_model, QWidget* parent) : QChartView{parent}
+CountryChartView::CountryChartView(CountryDataModel* const data_model, QWidget* parent) : QChartView(parent)
 {
   auto* const chart = new QChart{};
-  chart->setTitle(QStringLiteral("Corona (Covid-19) Cases in ").append(data_model->countryName()));
+  chart->setTitle(create_chart_title(data_model->country()));
   auto* const x_axis = create_datetime_axis();
-  auto* const y_axis = create_value_axis();
-  y_axis->setRange(0, data_model->casesConfirmed());
+  auto* const y_axis = create_value_axis(data_model->cases_confirmed());
+
   chart->addAxis(x_axis, Qt::AlignBottom);
   chart->addAxis(y_axis, Qt::AlignLeft);
-
-  auto* const death_series = new QLineSeries{};
-  death_series->setName(data_model->headerData(1).toString());
-  death_series_model_mapper.setXColumn(0);
-  death_series_model_mapper.setYColumn(1);
-  death_series_model_mapper.setSeries(death_series);
-  death_series_model_mapper.setModel(data_model);
-  chart->addSeries(death_series);
-  death_series->attachAxis(x_axis);
-  death_series->attachAxis(y_axis);
-
-  auto* const confirmed_series = new QLineSeries{};
-  confirmed_series->setName(data_model->headerData(2).toString());
-  confirmed_series_model_mapper.setXColumn(0);
-  confirmed_series_model_mapper.setYColumn(2);
-  confirmed_series_model_mapper.setSeries(confirmed_series);
-  confirmed_series_model_mapper.setModel(data_model);
-  chart->addSeries(confirmed_series);
-  confirmed_series->attachAxis(x_axis);
-  confirmed_series->attachAxis(y_axis);
-
-  auto* const active_series = new QLineSeries{};
-  active_series->setName(data_model->headerData(3).toString());
-  active_series_model_mapper.setXColumn(0);
-  active_series_model_mapper.setYColumn(3);
-  active_series_model_mapper.setSeries(active_series);
-  active_series_model_mapper.setModel(data_model);
-  chart->addSeries(active_series);
-  active_series->attachAxis(x_axis);
-  active_series->attachAxis(y_axis);
-
-  auto* const recovered_series = new QLineSeries{};
-  recovered_series->setName(data_model->headerData(4).toString());
-  recovered_series_model_mapper.setXColumn(0);
-  recovered_series_model_mapper.setYColumn(4);
-  recovered_series_model_mapper.setSeries(recovered_series);
-  recovered_series_model_mapper.setModel(data_model);
-  chart->addSeries(recovered_series);
-  recovered_series->attachAxis(x_axis);
-  recovered_series->attachAxis(y_axis);
-
   chart->setTheme(QChart::ChartThemeDark);
   chart->legend()->setAlignment(Qt::AlignTop);
   chart->legend()->show();
+
+  const auto create_series = [&](int column_index) {
+    auto* const series = new QLineSeries{};
+    series->setName(data_model->headerData(column_index).toString());
+
+    auto& model_mapper = model_mappers.at(static_cast<size_t>(column_index - 1));
+    model_mapper.setXColumn(CountryDataModel::date_column_index);
+    model_mapper.setYColumn(column_index);
+    model_mapper.setSeries(series);
+    model_mapper.setModel(data_model);
+    chart->addSeries(series);
+    series->attachAxis(x_axis);
+    series->attachAxis(y_axis);
+  };
+
+  create_series(CountryDataModel::deaths_column_index);
+  create_series(CountryDataModel::confirmed_column_index);
+  create_series(CountryDataModel::active_column_index);
+  create_series(CountryDataModel::recovered_column_index);
 
   this->setChart(chart);
   this->setRenderHint(QPainter::Antialiasing, true);
@@ -89,8 +72,8 @@ CountryChartView::CountryChartView(CountryDataModel* const data_model, QWidget* 
 
 void CountryChartView::update_ui(CountryDataModel const& data_model)
 {
-  this->chart()->setTitle(QStringLiteral("Corona (Covid-19) Cases in ").append(data_model.countryName()));
-  this->chart()->axes(Qt::Vertical).at(0)->setMax(data_model.casesConfirmed());
+  this->chart()->setTitle(create_chart_title(data_model.country()));
+  this->chart()->axes(Qt::Vertical).at(0)->setMax(data_model.cases_confirmed());
 }
 
 } // namespace coronan_ui

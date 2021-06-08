@@ -6,11 +6,11 @@ constexpr auto columns = 5;
 
 namespace coronan_ui {
 
-CountryDataModel::CountryDataModel(QObject*)
+CountryDataModel::CountryDataModel(QObject* parent) : QAbstractTableModel(parent)
 {
 }
 
-void CountryDataModel::populateData(coronan::CountryData const& country_data)
+void CountryDataModel::populate_data(coronan::CountryData const& country_data)
 {
   beginResetModel();
   country_name = QString::fromStdString(country_data.info.name);
@@ -48,23 +48,23 @@ QVariant CountryDataModel::data(const QModelIndex& index, int role) const
   {
     return QVariant();
   }
-  if (index.column() == 0)
+  if (index.column() == date_column_index)
   {
     return country_timeline_data.at(index.row()).date;
   }
-  else if (index.column() == 1)
+  else if (index.column() == deaths_column_index)
   {
     return country_timeline_data.at(index.row()).deaths;
   }
-  else if (index.column() == 2)
+  else if (index.column() == confirmed_column_index)
   {
     return country_timeline_data.at(index.row()).confirmed_cases;
   }
-  else if (index.column() == 3)
+  else if (index.column() == active_column_index)
   {
     return country_timeline_data.at(index.row()).active_cases;
   }
-  else if (index.column() == 4)
+  else if (index.column() == recovered_column_index)
   {
     return country_timeline_data.at(index.row()).recovered_cases;
   }
@@ -75,23 +75,23 @@ QVariant CountryDataModel::headerData(int section, Qt::Orientation orientation, 
 {
   if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
   {
-    if (section == 0)
+    if (section == date_column_index)
     {
       return QStringLiteral("Date");
     }
-    else if (section == 1)
+    else if (section == deaths_column_index)
     {
       return QStringLiteral("Death");
     }
-    else if (section == 2)
+    else if (section == confirmed_column_index)
     {
       return QStringLiteral("Confirmed");
     }
-    else if (section == 3)
+    else if (section == active_column_index)
     {
       return QStringLiteral("Active");
     }
-    else if (section == 4)
+    else if (section == recovered_column_index)
     {
       return QStringLiteral("Recovered");
     }
@@ -99,12 +99,12 @@ QVariant CountryDataModel::headerData(int section, Qt::Orientation orientation, 
   return QVariant();
 }
 
-QString CountryDataModel::countryName() const
+QString CountryDataModel::country() const
 {
   return country_name;
 }
 
-qreal CountryDataModel::casesConfirmed() const
+qreal CountryDataModel::cases_confirmed() const
 {
   return confirmed_cases;
 }

@@ -4,26 +4,25 @@
 
 #include <QAbstractTableModel>
 #include <QList>
-#include <QString>
 #include <QPair>
+#include <QString>
 
 namespace coronan_ui {
 
 class CountryOverviewTablewModel : public QAbstractTableModel
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    CountryOverviewTablewModel(QObject *parent = 0);
+  explicit CountryOverviewTablewModel(QObject* parent = nullptr);
+  void populate_data(coronan::CountryData const& country_data);
 
-    void populateData(coronan::CountryData const& country_data);
+  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+  int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
 private:
-    QList<QPair<QString, QString>> country_overview_data;
+  QList<QPair<QString, QString>> country_overview_data;
 };
 
 } // namespace coronan_ui

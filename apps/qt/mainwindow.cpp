@@ -12,7 +12,7 @@
 
 namespace coronan_ui {
 
-CoronanWidget::CoronanWidget(QWidget* parent) : QWidget{parent}, ui{new Ui_CoronanWidgetForm}
+CoronanWidget::CoronanWidget(QWidget* parent) : QWidget(parent), ui{new Ui_CoronanWidgetForm}
 {
   ui->setupUi(this);
 
@@ -38,10 +38,9 @@ void CoronanWidget::populate_country_box()
 
   std::sort(begin(countries), end(countries), [](auto const& a, auto const& b) { return a.name < b.name; });
 
-  for (auto const& country : countries)
-  {
-    country_combo->addItem(country.name.c_str(), country.iso_code.c_str());
-  }
+  std::for_each(cbegin(countries), cend(countries),
+                [=](auto const& country) { country_combo->addItem(country.name.c_str(), country.iso_code.c_str()); });
+
   if (int const index = country_combo->findData("CH"); index != -1)
   { // -1 for not found
     country_combo->setCurrentIndex(index);
@@ -76,8 +75,8 @@ void CoronanWidget::update_ui()
 {
   auto country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
   auto const country_data = get_country_data(country_code.toStdString());
-  overview_model.populateData(country_data);
-  country_data_model.populateData(country_data);
+  overview_model.populate_data(country_data);
+  country_data_model.populate_data(country_data);
   ui->overviewTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 
   if (chartView == nullptr)
