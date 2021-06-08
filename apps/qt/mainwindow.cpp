@@ -18,11 +18,12 @@ CoronanWidget::CoronanWidget(QWidget* parent) : QWidget{parent}, ui{new Ui_Coron
 
   ui->overviewTable->horizontalHeader()->setVisible(false);
   ui->overviewTable->setModel(&overview_model);
-  
+
   populate_country_box();
   update_ui();
 
-  QObject::connect(ui->countryComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(update_ui()));
+  QObject::connect(ui->countryComboBox, qOverload<int>(&QComboBox::currentIndexChanged),
+                   [this](int) { this->update_ui(); });
 }
 
 CoronanWidget::~CoronanWidget()
@@ -56,17 +57,17 @@ coronan::CountryData CoronanWidget::get_country_data(std::string_view country_co
   catch (coronan::SSLException const& ex)
   {
     qWarning() << ex.what();
-    QMessageBox::warning(this, "SSL Exception", QString{ex.what()});
+    QMessageBox::warning(this, QStringLiteral("SSL Exception"), QString{ex.what()});
   }
   catch (coronan::HTTPClientException const& ex)
   {
     qWarning() << ex.what();
-    QMessageBox::warning(this, "HTTP Client Exception", QString{ex.what()});
+    QMessageBox::warning(this, QStringLiteral("HTTP Client Exception"), QString{ex.what()});
   }
   catch (std::exception const& ex)
   {
     qWarning() << ex.what();
-    QMessageBox::warning(this, "Exception", QString{ex.what()});
+    QMessageBox::warning(this, QStringLiteral("Exception"), QString{ex.what()});
   }
   return {};
 }
@@ -82,7 +83,7 @@ void CoronanWidget::update_ui()
   if (chartView == nullptr)
   {
     chartView = new coronan_ui::CountryChartView{&country_data_model};
-    ui->gridLayout->addWidget(chartView, 2, 1);   
+    ui->gridLayout->addWidget(chartView, 2, 1);
   }
   else
   {

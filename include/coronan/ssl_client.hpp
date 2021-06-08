@@ -25,6 +25,11 @@ public:
 
   ~SSLClient();
 
+  SSLClient(SSLClient&&) = delete;
+  SSLClient(SSLClient const&) = delete;
+  SSLClient& operator=(SSLClient&&) = delete;
+  SSLClient& operator=(SSLClient const&) = delete;
+
 private:
   explicit SSLClient(Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler,
                      Poco::Net::Context::Ptr net_context);

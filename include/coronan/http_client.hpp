@@ -3,9 +3,9 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <functional>
 #include <stdexcept>
 #include <string>
-#include <functional>
 
 namespace coronan {
 
@@ -16,6 +16,7 @@ class HTTPClientException : public std::exception
 {
 public:
   explicit HTTPClientException(std::string exception_msg);
+  HTTPClientException(HTTPClientException const&) = delete;
   char const* what() const noexcept override;
 
 private:

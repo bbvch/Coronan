@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
   try
   {
     window.show();
-    window.setWindowTitle("Co[ro]nan");
+    window.setWindowTitle(QStringLiteral("Co[ro]nan"));
     auto const window_width = 1600;
     auto const window_height = 1200;
     window.resize(window_width, window_height);
@@ -26,19 +26,19 @@ int main(int argc, char* argv[])
   catch (coronan::HTTPClientException const& ex)
   {
     qCritical() << ex.what();
-    QMessageBox::critical(&window, "Http Exception", QString{ex.what()});
+    QMessageBox::critical(&window, QStringLiteral("Http Exception"), QString{ex.what()});
     app.exit(EXIT_FAILURE);
   }
   catch (coronan::SSLException const& ex)
   {
     qCritical() << ex.what();
-    QMessageBox::critical(&window, "SSL Exception", QString{ex.what()});
+    QMessageBox::critical(&window, QStringLiteral("SSL Exception"), QString{ex.what()});
     app.exit(EXIT_FAILURE);
   }
   catch (std::exception const& ex)
   {
     qCritical() << ex.what();
-    QMessageBox::critical(&window, "Exception", QString{ex.what()});
+    QMessageBox::critical(&window, QStringLiteral("Exception"), QString{ex.what()});
     app.exit(EXIT_FAILURE);
   }
 }

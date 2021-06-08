@@ -50,7 +50,7 @@ struct TestHTTPSession
     return TestHTTPSession::response_;
   }
 
-  static void set_response_status(HTTPResponse::HTTPStatus const& status)
+  static void set_response_status(HTTPResponse::HTTPStatus status)
   {
     TestHTTPSession::response_status_ = status;
   }
