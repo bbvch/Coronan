@@ -3,6 +3,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <functional>
 #include <stdexcept>
 #include <string>
 #include <functional>
@@ -16,6 +17,7 @@ class HTTPClientException : public std::exception
 {
 public:
   explicit HTTPClientException(std::string exception_msg);
+  HTTPClientException(HTTPClientException const&) = delete;
   char const* what() const noexcept override;
 
 private:
@@ -73,7 +75,7 @@ HTTPResponse HTTPClientType<SessionType, HTTPRequestType, HTTPResponseType>::get
 {
   try
   {
-    Poco::URI uri{url};
+    Poco::URI const uri{url};
     SessionType session(uri.getHost(), uri.getPort());
 
     auto const path = std::invoke([uri]() {
@@ -87,11 +89,11 @@ HTTPResponse HTTPClientType<SessionType, HTTPRequestType, HTTPResponseType>::get
     session.sendRequest(request);
     auto& response_stream = session.receiveResponse(response);
 
-    std::string const response_content = [&response_stream]() {
+    std::string const response_content = std::invoke([&response_stream]() {
       std::string content;
       Poco::StreamCopier::copyToString(response_stream, content);
       return content;
-    }();
+    });
 
     return HTTPResponse{response, response_content};
   }
