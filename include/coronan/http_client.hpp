@@ -6,7 +6,6 @@
 #include <functional>
 #include <stdexcept>
 #include <string>
-#include <functional>
 
 namespace coronan {
 

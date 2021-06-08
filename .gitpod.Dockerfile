@@ -49,6 +49,9 @@ RUN conan profile new default --detect
 # cmake-format
 RUN pip3 install cmake-format==0.6.13
 
+# gcovr
+RUN pip3 install gcovr==4.2
+
 # pre-commit
 RUN pip3 install pre-commit==2.13.0
 RUN echo 'export PIP_USER=false' >> ~/.bashrc

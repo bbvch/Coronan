@@ -10,3 +10,9 @@ vscode:
     extensions:
         - ms-vscode.cmake-tools
         - twxs.cmake
+        - github.vscode-pull-request-github
+        - shd101wyy.markdown-preview-enhanced
+        - jnoortheen.nix-ide
+        - lextudio.restructuredtext
+        - vscode.docker
+        - webfreak.debug

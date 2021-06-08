@@ -320,6 +320,15 @@
             "cleanFirst": true
         },
         {
+            "name": "run-unittests",
+            "description": "Run Unitttests",
+            "displayName": "Run Unitttests",
+            "inherits": "gcc-coverage",
+            "targets": [
+                "run_unittests"
+            ]
+        },
+        {
             "name": "doc",
             "description": "gcc docu build.",
             "displayName": "Documentation",
