@@ -13,37 +13,70 @@ jobs:
         runs-on: ${{ matrix.os }}
 
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
-                name: [ubuntu-gcc, ubuntu-clang]
+                name: [ubuntu-gcc, ubuntu-clang, windows-latest-msvc, windows-latest-mingw]
                 include:
                     - name: ubuntu-gcc
                       os: ubuntu-latest
+                      build_type: Release
                       compiler: g++
                       ccompiler: gcc
+                      generators: "Ninja"
 
                     - name: ubuntu-clang
                       os: ubuntu-latest
+                      build_type: Release
                       compiler: clang++
                       ccompiler: clang
+                      generators: "Ninja"
+
+                    - name: windows-latest-msvc
+                      os: windows-latest
+                      build_type: Release
+                      compiler: cl
+                      ccompiler: cl
+                      generators: "Visual Studio 16 2019"
+                    
+                    - name: windows-latest-mingw
+                      os: ubuntu-latest
+                      build_type: Release
+                      compiler: clang++
+                      ccompiler: clang
+                      generators: "Ninja"
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
             - uses: actions/checkout@v1
-            - name: dependencies (Linux)
+            - name: Dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
-                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev
+                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
-                  sudo pip3 install conan
-                  sudo pip3 install sphinx
-                  sudo pip3 install sphinx_rtd_theme
-                  sudo pip3 install breathe
+                  python3 -m pip install conan
+                  python3 -m pip install sphinx
+                  python3 -m pip install sphinx_rtd_theme
+                  python3 -m pip install breathe
+                  ninja --version
+                  cmake --version
+                  gcc --version
+                  conan --version
+            - name: Dependencies (Windows)
+              if: runner.os == 'Windows'
+              run: |
+                choco install ninja cmake
+                python3 -m pip install conan
+                python3 -m pip install sphinx 
+                python3 -m pip install sphinx_rtd_theme 
+                python3 -m pip install breathe
+                ninja --version
+                cmake --version
+                conan --version
 
             - name: set-compiler-env
-              if: ${{ matrix.compiler }} == 'g++-9'
+              if: ${{ matrix.compiler }} == 'g++'
               run: |
                   conan profile new default --detect
                   conan profile update settings.compiler.libcxx=libstdc++11 default
@@ -52,10 +85,10 @@ jobs:
             - name: make-build-dir
               run: mkdir build
             - name: cmake-configure-debug
-              run: cmake -DCMAKE_BUILD_TYPE=Debug ..
+              run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
               working-directory: ./build
             - name: build-debug
-              run: cmake --build ./build --config Debug
+              run: cmake --build ./build --config ${{ matrix.build_type }}
             - name: ctest
               run: ctest -C Debug
               working-directory: ./build
