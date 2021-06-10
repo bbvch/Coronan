@@ -48,31 +48,35 @@ jobs:
               run: |
                   sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
-                  python3 -m pip install conan
-                  python3 -m pip install sphinx
-                  python3 -m pip install sphinx_rtd_theme
-                  python3 -m pip install breathe
                   ninja --version
                   cmake --version
                   gcc --version
-                  conan --version
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
                 choco install ninja cmake qt5-default
+                ninja --version
+                cmake --version
+            - name: Install python dependencies
+              run: |
                 python3 -m pip install conan
                 python3 -m pip install sphinx 
                 python3 -m pip install sphinx_rtd_theme 
                 python3 -m pip install breathe
-                ninja --version
-                cmake --version
                 conan --version
 
-            - name: make build dir
+            - name: Create build dir
               run: mkdir build
-            - name: CMake configure
+            - name: CMake configure (Linux)
+              if: runner.os == 'Linux'
               run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
               working-directory: ./build
+            - name: CMake configure (Windows)
+              if: runner.os == 'Windows'
+              run: cmake -G "${{ matrix.generators }}" -DCMAKE_PREFIX_PATH="C:\Qt\5.15.2\msvc2019_64\lib\cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+              working-directory: ./build
+              env: 
+                Qt5_DIR: C:\Qt\5.15.2\msvc2019_64
             - name: CMake build
               run: cmake --build ./build --config ${{ matrix.build_type }}
             - name: CTest
