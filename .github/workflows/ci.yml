@@ -15,16 +15,15 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                name: [ubuntu-gcc, ubuntu-clang, windows-latest-msvc, windows-latest-mingw]
                 include:
-                    - name: ubuntu-gcc
+                    - name: ubuntu-latest-gcc
                       os: ubuntu-latest
                       build_type: Release
                       compiler: g++
                       ccompiler: gcc
                       generators: "Ninja"
 
-                    - name: ubuntu-clang
+                    - name: ubuntu-latest-clang
                       os: ubuntu-latest
                       build_type: Release
                       compiler: clang++
@@ -38,19 +37,13 @@ jobs:
                       ccompiler: cl
                       generators: "Visual Studio 16 2019"
                     
-                    - name: windows-latest-mingw
-                      os: windows-latest
-                      build_type: Release
-                      compiler: g++
-                      ccompiler: gcc
-                      generators: "Ninja"
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
             - uses: actions/checkout@v1
-            - name: Dependencies (Linux)
+            - name: Install dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
                   sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
@@ -63,10 +56,10 @@ jobs:
                   cmake --version
                   gcc --version
                   conan --version
-            - name: Dependencies (Windows)
+            - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
-                choco install ninja cmake
+                choco install ninja cmake qt5-default
                 python3 -m pip install conan
                 python3 -m pip install sphinx 
                 python3 -m pip install sphinx_rtd_theme 
@@ -75,17 +68,17 @@ jobs:
                 cmake --version
                 conan --version
 
-            - name: make-build-dir
+            - name: make build dir
               run: mkdir build
-            - name: cmake-configure-debug
+            - name: CMake configure
               run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
               working-directory: ./build
-            - name: build-debug
+            - name: CMake build
               run: cmake --build ./build --config ${{ matrix.build_type }}
-            - name: ctest
+            - name: CTest
               run: ctest -C Debug
               working-directory: ./build
-            - name: build-docs
+            - name: CMake build docs
               run: cmake --build ./build --target docs
-            - name: build-debpackage
+            - name: CMake build package
               run: cmake --build ./build --target package
