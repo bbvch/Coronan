@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Unittests (GDB)",
+            "type": "gdb",
+            "request": "launch",
+            "target": "./build/tests/unittests",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "parseText"
+        },
+        {
+            "name": "Debug coronan cli (GDB)",
+            "type": "gdb",
+            "request": "launch",
+            "target": "./build/apps/cli/coronan",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "parseText"
+        },
+        {
+            "name": "Debug coronan Qt App (GDB)",
+            "type": "gdb",
+            "request": "launch",
+            "target": "./build/apps/qt/coronanApp",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "parseText"
+        }
+    ]
+}
