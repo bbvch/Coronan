@@ -39,10 +39,10 @@ jobs:
                       generators: "Visual Studio 16 2019"
                     
                     - name: windows-latest-mingw
-                      os: ubuntu-latest
+                      os: windows-latest
                       build_type: Release
-                      compiler: clang++
-                      ccompiler: clang
+                      compiler: g++
+                      ccompiler: gcc
                       generators: "Ninja"
         env:
             CXX: ${{ matrix.compiler }}
@@ -74,13 +74,6 @@ jobs:
                 ninja --version
                 cmake --version
                 conan --version
-
-            - name: set-compiler-env
-              if: ${{ matrix.compiler }} == 'g++'
-              run: |
-                  conan profile new default --detect
-                  conan profile update settings.compiler.libcxx=libstdc++11 default
-              shell: bash
 
             - name: make-build-dir
               run: mkdir build
