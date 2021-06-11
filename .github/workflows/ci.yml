@@ -41,8 +41,8 @@ jobs:
                     - name: windows-latest-mingw
                       os: windows-latest
                       build_type: Release
-                      compiler: "C:\\msys64\\mingw64\\bin\\gcc.exe"
-                      ccompiler: "C:\\msys64\\mingw64\\bin\\g++.exe"
+                      compiler: C:\\msys64\\mingw64\\bin\\g++.exe
+                      ccompiler: C:\\msys64\\mingw64\\bin\\gcc.exe
                       generators: "Ninja"
                       arch: 'win64_mingw81'
                     
@@ -60,6 +60,12 @@ jobs:
                   ninja --version
                   cmake --version
                   gcc --version
+            - name: Cache Chocolatey Dependencies
+              if: runner.os == 'Windows'
+              uses: actions/cache@v1
+              with:
+                path: C:\\ProgramData\\chocolatey\\lib
+                key: choco-cache-${{ hashFiles('**/dependencies.config') }}
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
