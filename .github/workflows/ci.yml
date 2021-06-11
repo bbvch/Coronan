@@ -36,6 +36,15 @@ jobs:
                       compiler: cl
                       ccompiler: cl
                       generators: "Visual Studio 16 2019"
+                      arch: 'win64_msvc2019_64'
+
+                    - name: windows-latest-mingw
+                      os: windows-latest
+                      build_type: Release
+                      compiler: g++
+                      ccompiler: gcc
+                      generators: "Ninja"
+                      arch: 'win64_mingw81'
                     
         env:
             CXX: ${{ matrix.compiler }}
@@ -64,7 +73,7 @@ jobs:
                 version: '5.15.2'
                 host: 'windows'
                 target: 'desktop'
-                arch: 'win64_msvc2019_64'
+                arch: ${{ matrix.arch }}
                 modules: 'qtcharts'
                 tools: 'tools_ifw,4.0,qt.tools.ifw.40'
             - name: Install python dependencies
@@ -85,6 +94,6 @@ jobs:
               run: ctest -C Debug
               working-directory: ./build
             - name: CMake build docs
-              run: cmake --build ./build --target docs
+              run: cmake --build ./build --target docs --config ${{ matrix.build_type }}
             - name: CMake build package
-              run: cmake --build ./build --target package
+              run: cmake --build ./build --target package --config ${{ matrix.build_type }}
