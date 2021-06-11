@@ -41,13 +41,10 @@ jobs:
                     - name: windows-latest-mingw
                       os: windows-latest
                       build_type: Release
-                      compiler: g++
-                      ccompiler: gcc
+                      compiler: "C:\\msys64\\mingw64\\bin\\gcc.exe"
+                      ccompiler: "C:\\msys64\\mingw64\\bin\\g++.exe"
                       generators: "Ninja"
                       arch: 'win64_mingw81'
-                      defaults:
-                        run:
-                          shell: msys2 {0}
                     
         env:
             CXX: ${{ matrix.compiler }}
@@ -86,8 +83,6 @@ jobs:
                 python3 -m pip install sphinx_rtd_theme 
                 python3 -m pip install breathe
                 conan --version
-            - uses: msys2/setup-msys2@v2
-              if: runner.os == 'Windows'
             - name: Set conan compiler env (gcc)
               if: matrix.ccompiler == 'gcc'
               run: |
