@@ -21,6 +21,7 @@ jobs:
                       build_type: Release
                       compiler: g++
                       ccompiler: gcc
+                      rcompiler: windres
                       generators: "Ninja"
 
                     - name: ubuntu-latest-clang
@@ -28,6 +29,7 @@ jobs:
                       build_type: Release
                       compiler: clang++
                       ccompiler: clang
+                      rcompiler: windres
                       generators: "Ninja"
 
                     - name: windows-latest-msvc
@@ -35,20 +37,23 @@ jobs:
                       build_type: Release
                       compiler: cl
                       ccompiler: cl
+                      rcompiler: windres
                       generators: "Visual Studio 16 2019"
                       arch: 'win64_msvc2019_64'
 
                     - name: windows-latest-mingw
                       os: windows-latest
                       build_type: Release
-                      compiler: C:\\msys64\\mingw64\\bin\\g++.exe
-                      ccompiler: C:\\msys64\\mingw64\\bin\\gcc.exe
+                      compiler: C:/msys64/mingw64/bin/x86_64-w64-mingw32-g++.exe
+                      ccompiler: C:/msys64/mingw64/bin/x86_64-w64-mingw32-gcc.exe
+                      rcompiler: C:/msys64/mingw64/bin/windres.exe
                       generators: "Ninja"
                       arch: 'win64_mingw81'
                     
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
+            RC: ${{ matrix.rcompiler }}
 
         steps:
             - uses: actions/checkout@v1
@@ -60,12 +65,21 @@ jobs:
                   ninja --version
                   cmake --version
                   gcc --version
-            - name: Cache Chocolatey Dependencies
+            - name: Cache (Windows)
               if: runner.os == 'Windows'
-              uses: actions/cache@v1
+              uses: actions/cache@v2
               with:
-                path: C:\\ProgramData\\chocolatey\\lib
-                key: choco-cache-${{ hashFiles('**/dependencies.config') }}
+                path: |
+                  C:/ProgramData/chocolatey/lib
+                  C:/Users/runneradmin/.conan/data
+                key: cache-${{ matrix.name }}
+            - name: Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                path: |
+                  /home/runner/.conan/data
+                key: cache-${{ matrix.name }}
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
@@ -97,7 +111,7 @@ jobs:
             - name: Create build dir
               run: mkdir build
             - name: CMake configure
-              run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+              run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_RC_COMPILER=${{ matrix.rc_compiler }} ..
               working-directory: ./build
             - name: CMake build
               run: cmake --build ./build --config ${{ matrix.build_type }}
