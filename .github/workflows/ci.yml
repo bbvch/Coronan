@@ -13,53 +13,106 @@ jobs:
         runs-on: ${{ matrix.os }}
 
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
-                name: [ubuntu-gcc, ubuntu-clang]
                 include:
-                    - name: ubuntu-gcc
+                    - name: ubuntu-latest-gcc
                       os: ubuntu-latest
+                      build_type: Release
                       compiler: g++
                       ccompiler: gcc
+                      generators: "Ninja"
 
-                    - name: ubuntu-clang
+                    - name: ubuntu-latest-clang
                       os: ubuntu-latest
+                      build_type: Release
                       compiler: clang++
                       ccompiler: clang
+                      generators: "Ninja"
+
+                    - name: windows-latest-msvc
+                      os: windows-latest
+                      build_type: Release
+                      compiler: cl
+                      ccompiler: cl
+                      generators: "Visual Studio 16 2019"
+                      arch: 'win64_msvc2019_64'
+                    
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
             - uses: actions/checkout@v1
-            - name: dependencies (Linux)
+            - name: Install dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
-                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-8-dev
+                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
-                  sudo pip3 install conan
-                  sudo pip3 install sphinx
-                  sudo pip3 install sphinx_rtd_theme
-                  sudo pip3 install breathe
-
-            - name: set-compiler-env
-              if: ${{ matrix.compiler }} == 'g++-9'
+                  ninja --version
+                  cmake --version
+                  gcc --version
+            - name: Cache (Windows)
+              if: runner.os == 'Windows'
+              uses: actions/cache@v2
+              with:
+                path: |
+                  C:/ProgramData/chocolatey/lib
+                  C:/Users/runneradmin/.conan/data
+                key: cache-${{ matrix.name }}
+            - name: Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                path: |
+                  /home/runner/.conan/data
+                key: cache-${{ matrix.name }}
+            - name: Install dependencies (Windows)
+              if: runner.os == 'Windows'
               run: |
-                  conan profile new default --detect
-                  conan profile update settings.compiler.libcxx=libstdc++11 default
-              shell: bash
-
-            - name: make-build-dir
+                choco install ninja cmake doxygen.install
+                ninja --version
+                cmake --version
+            - name: Install Qt (Windows)
+              if: runner.os == 'Windows'
+              uses: jurplel/install-qt-action@v2
+              with:
+                version: '5.15.2'
+                host: 'windows'
+                target: 'desktop'
+                arch: ${{ matrix.arch }}
+                modules: 'qtcharts'
+                tools: 'tools_ifw,4.0,qt.tools.ifw.40'
+            - name: Install python dependencies
+              run: |
+                python3 -m pip install conan
+                python3 -m pip install sphinx 
+                python3 -m pip install sphinx_rtd_theme 
+                python3 -m pip install breathe
+                conan --version
+            - name: Set conan compiler env (gcc)
+              if: matrix.ccompiler == 'gcc'
+              run: |
+                conan profile new default --detect
+                conan profile update settings.compiler.libcxx=libstdc++11 default
+            - name: Create build dir
               run: mkdir build
-            - name: cmake-configure-debug
-              run: cmake -DCMAKE_BUILD_TYPE=Debug ..
+            - name: CMake configure
+              run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
               working-directory: ./build
-            - name: build-debug
-              run: cmake --build ./build --config Debug
-            - name: ctest
+            - name: CMake build
+              run: cmake --build ./build --config ${{ matrix.build_type }}
+            - name: CTest
               run: ctest -C Debug
               working-directory: ./build
-            - name: build-docs
-              run: cmake --build ./build --target docs
-            - name: build-debpackage
-              run: cmake --build ./build --target package
+            - name: CMake build docs
+              run: cmake --build ./build --target docs --config ${{ matrix.build_type }}
+            - name: CMake build package
+              run: cmake --build ./build --target package --config ${{ matrix.build_type }}
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ${{ matrix.name }}-artifacts
+                path: |
+                  ./build/Coronan-*.zip
+                  ./build/Coronan-*.msi
+                  ./build/Coronan-*.tar.gz
