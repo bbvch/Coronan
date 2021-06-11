@@ -83,6 +83,11 @@ jobs:
                 python3 -m pip install sphinx_rtd_theme 
                 python3 -m pip install breathe
                 conan --version
+            - name: Set conan compiler env (gcc)
+              if: matrix.ccompiler == 'gcc'
+              run: |
+                conan profile new default --detect
+                conan profile update settings.compiler.libcxx=libstdc++11 default
             - name: Create build dir
               run: mkdir build
             - name: CMake configure
