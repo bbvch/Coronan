@@ -54,9 +54,19 @@ jobs:
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
-                choco install ninja cmake qt5-default
+                choco install ninja cmake 
                 ninja --version
                 cmake --version
+            - name: Install Qt
+              if: runner.os == 'Windows'
+              uses: jurplel/install-qt-action@v2
+              with:
+                version: '5.15.2'
+                host: 'windows'
+                target: 'desktop'
+                arch: 'win64_msvc2019_64'
+                modules: 'qtcharts'
+                tools: 'tools_ifw,4.0,qt.tools.ifw.40'
             - name: Install python dependencies
               run: |
                 python3 -m pip install conan
@@ -64,19 +74,11 @@ jobs:
                 python3 -m pip install sphinx_rtd_theme 
                 python3 -m pip install breathe
                 conan --version
-
             - name: Create build dir
               run: mkdir build
             - name: CMake configure (Linux)
-              if: runner.os == 'Linux'
               run: cmake -G "${{ matrix.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
               working-directory: ./build
-            - name: CMake configure (Windows)
-              if: runner.os == 'Windows'
-              run: cmake -G "${{ matrix.generators }}" -DCMAKE_PREFIX_PATH="C:\Qt\5.15.2\msvc2019_64\lib\cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
-              working-directory: ./build
-              env: 
-                Qt5_DIR: C:\Qt\5.15.2\msvc2019_64
             - name: CMake build
               run: cmake --build ./build --config ${{ matrix.build_type }}
             - name: CTest
