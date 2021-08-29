@@ -47,6 +47,7 @@ jobs:
             - name: Install dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
+                  sudo apt-get update
                   sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
                   ninja --version
