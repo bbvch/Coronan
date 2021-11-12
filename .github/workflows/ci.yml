@@ -37,6 +37,12 @@ jobs:
                       ccompiler: cl
                       generators: Visual Studio 16 2019
                       arch: win64_msvc2019_64
+                    - name: macos-latest-msvc
+                      os: macos-latest
+                      build_type: Release
+                      compiler: clang++
+                      ccompiler: clang
+                      generators: Unix Makefiles
 
         env:
             CXX: ${{ matrix.compiler }}
@@ -50,30 +56,15 @@ jobs:
                   sudo apt-get update
                   sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
-                  ninja --version
-                  cmake --version
-                  gcc --version
-            - name: Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      C:/ProgramData/chocolatey/lib
-                      C:/Users/runneradmin/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Cache (Linux)
-              if: runner.os == 'Linux'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      /home/runner/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Install dependencies (macOS)
+              if: runner.os == 'macOS'
+              run: |
+                  brew update
+                  brew install ninja doxygen qt
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
                   choco install ninja cmake doxygen.install
-                  ninja --version
-                  cmake --version
             - name: Install Qt (Windows)
               if: runner.os == 'Windows'
               uses: jurplel/install-qt-action@v2
@@ -84,6 +75,21 @@ jobs:
                   arch: ${{ matrix.arch }}
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
+            - name: Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      /home/runner/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Cache (Windows)
+              if: runner.os == 'Windows'
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      C:/ProgramData/chocolatey/lib
+                      C:/Users/runneradmin/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Install python dependencies
               run: |
                   python3 -m pip install conan
