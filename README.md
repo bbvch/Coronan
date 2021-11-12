@@ -6,9 +6,9 @@
 [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
 [![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
 
-[![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
 [![CI](https://github.com/bbvch/Coronan/actions/workflows/ci.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci.yml)
 [![API documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://bbvch.github.io/Coronan)
+[![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
 
 [![Codacy Security Scan](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml)
 [![CodeQL](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml)
