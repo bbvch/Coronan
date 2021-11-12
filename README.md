@@ -2,7 +2,10 @@
 ![version](https://img.shields.io/badge/version-v0.2.0-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
 
-[![Build Status Travis](https://travis-ci.org/bbvch/Coronan.svg?branch=master)](https://travis-ci.org/bbvch/Coronan)
+[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
+[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
+[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
+
 [![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
 [![CI](https://github.com/bbvch/Coronan/actions/workflows/ci.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci.yml)
 [![API documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://bbvch.github.io/Coronan)
