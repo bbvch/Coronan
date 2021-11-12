@@ -5,7 +5,6 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
     "Present the current data of Corona (Covid-19) cases for a country.")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 set(CPACK_VERBATIM_VARIABLES YES)
-set(CPACK_RESOURCE_FILE_README ${PROJECT_SOURCE_DIR}/README.md)
 
 # WIX installer needs a licence file with .txt ending
 configure_file(${PROJECT_SOURCE_DIR}/LICENSE

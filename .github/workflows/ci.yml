@@ -16,64 +16,111 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: ubuntu-latest-gcc
-                      os: ubuntu-latest
+                    - name: ubuntu-18.04-gcc-7
+                      os: ubuntu-18.04
                       build_type: Release
-                      compiler: g++
-                      ccompiler: gcc
+                      compiler: g++-7
+                      ccompiler: gcc-7
+                      clang-tidy: ''
                       generators: Ninja
-
-                    - name: ubuntu-latest-clang
-                      os: ubuntu-latest
+                    - name: ubuntu-18.04-gcc-9
+                      os: ubuntu-18.04
                       build_type: Release
-                      compiler: clang++
-                      ccompiler: clang
+                      compiler: g++-9
+                      ccompiler: gcc-9
+                      clang-tidy: ''
                       generators: Ninja
-
-                    - name: windows-latest-msvc
-                      os: windows-latest
+                    - name: ubuntu-18.04-clang-9
+                      os: ubuntu-18.04
+                      build_type: Release
+                      compiler: clang++-9
+                      ccompiler: clang-9
+                      clang-tidy: clang-tidy-9
+                      generators: Ninja
+                    - name: ubuntu-20.04-gcc-9
+                      os: ubuntu-20.04
+                      build_type: Release
+                      compiler: g++-9
+                      ccompiler: gcc-9
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                    - name: ubuntu-20.04-gcc-10
+                      os: ubuntu-20.04
+                      build_type: Release
+                      compiler: g++-10
+                      ccompiler: gcc-10
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                    - name: ubuntu-20.04-clang-10
+                      os: ubuntu-20.04
+                      build_type: Release
+                      compiler: clang++-10
+                      ccompiler: clang-10
+                      clang-tidy: clang-tidy-10
+                      generators: Ninja
+                    - name: ubuntu-20.04-clang-11
+                      os: ubuntu-20.04
+                      build_type: Release
+                      compiler: clang++-11
+                      ccompiler: clang-11
+                      clang-tidy: clang-tidy-11
+                      generators: Ninja
+                    - name: ubuntu-20.04-clang-12
+                      os: ubuntu-20.04
+                      build_type: Release
+                      compiler: clang++-12
+                      ccompiler: clang-12
+                      clang-tidy: clang-tidy-12
+                      generators: Ninja
+                    - name: windows-VS-2019
+                      os: windows-2019
                       build_type: Release
                       compiler: cl
                       ccompiler: cl
                       generators: Visual Studio 16 2019
                       arch: win64_msvc2019_64
+                    - name: macos-10.15-clang
+                      os: macos-10.15
+                      build_type: Release
+                      compiler: clang++
+                      ccompiler: clang
+                      generators: Unix Makefiles
+                    - name: macos-11-clang
+                      os: macos-11
+                      build_type: Release
+                      compiler: clang++
+                      ccompiler: clang
+                      generators: Unix Makefiles
 
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
             - name: Install dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
+                  sudo apt-get install -y --no-install-recommends ninja-build ${{ matrix.clang-tidy }} python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
-                  ninja --version
-                  cmake --version
-                  gcc --version
-            - name: Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
+            - name: Install dependencies (macOS)
+              if: runner.os == 'macOS'
+              run: |
+                  brew install ninja doxygen
+            - name: Install Qt (MacOS)
+              if: runner.os == 'macOS'
+              uses: jurplel/install-qt-action@v2
               with:
-                  path: |
-                      C:/ProgramData/chocolatey/lib
-                      C:/Users/runneradmin/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Cache (Linux)
-              if: runner.os == 'Linux'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      /home/runner/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+                  version: 5.15.2
+                  host: mac
+                  target: desktop
+                  modules: qtcharts
+                  tools: tools_ifw,4.0,qt.tools.ifw.40
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
                   choco install ninja cmake doxygen.install
-                  ninja --version
-                  cmake --version
             - name: Install Qt (Windows)
               if: runner.os == 'Windows'
               uses: jurplel/install-qt-action@v2
@@ -84,6 +131,26 @@ jobs:
                   arch: ${{ matrix.arch }}
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
+            - name: Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Cache (macOS)
+              if: runner.os == 'macOS'
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Cache (Windows)
+              if: runner.os == 'Windows'
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      C:/ProgramData/chocolatey/lib
+                      C:/Users/runneradmin/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Install python dependencies
               run: |
                   python3 -m pip install conan
@@ -117,3 +184,4 @@ jobs:
                       ./build/Coronan-*.zip
                       ./build/Coronan-*.msi
                       ./build/Coronan-*.tar.gz
+                      ./build/Coronan-*.pkg
