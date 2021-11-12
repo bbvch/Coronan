@@ -21,15 +21,16 @@ macro(run_conan)
 
   conan_cmake_configure(
     REQUIRES
-    poco/1.10.1
+    poco/1.11.0
     rapidjson/1.1.0
     lyra/1.5.1
-    fmt/7.1.3
-    catch2/2.13.4
+    fmt/8.0.1
+    catch2/2.13.7
     GENERATORS
     cmake_find_package_multi
     OPTIONS
     poco:enable_mongodb=False
+    poco:enable_active_record=False
     poco:enable_data=False
     poco:enable_data_sqlite=False
     poco:enable_data_mysql=False
@@ -45,28 +46,14 @@ macro(run_conan)
     foreach(TYPE ${CMAKE_CONFIGURATION_TYPES})
       conan_cmake_autodetect(settings BUILD_TYPE ${TYPE})
 
-      conan_cmake_install(
-        PATH_OR_REFERENCE
-        .
-        BUILD
-        ${CONAN_BUILD}
-        REMOTE
-        conancenter
-        SETTINGS
-        ${settings})
+      conan_cmake_install(PATH_OR_REFERENCE . BUILD ${CONAN_BUILD} SETTINGS
+                          ${settings})
     endforeach()
   else()
     conan_cmake_autodetect(settings)
 
-    conan_cmake_install(
-      PATH_OR_REFERENCE
-      .
-      BUILD
-      ${CONAN_BUILD}
-      REMOTE
-      conancenter
-      SETTINGS
-      ${settings})
+    conan_cmake_install(PATH_OR_REFERENCE . BUILD ${CONAN_BUILD} SETTINGS
+                        ${settings})
   endif()
 
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
