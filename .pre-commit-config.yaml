@@ -16,7 +16,7 @@ repos:
           - id: mixed-line-ending
           - id: trailing-whitespace
     - repo: https://github.com/pocc/pre-commit-hooks
-      rev: v1.1.1
+      rev: v1.3.4
       hooks:
           - id: clang-format
             args: [--style=file, -i]
@@ -25,7 +25,7 @@ repos:
       hooks:
           - id: cmake-format
     - repo: https://github.com/adrienverge/yamllint.git
-      rev: v1.26.1
+      rev: v1.26.3
       hooks:
           - id: yamllint
             args: [--format, parsable, -d, relaxed]
