@@ -108,6 +108,7 @@ jobs:
               if: runner.os == 'macOS'
               run: |
                   brew install ninja doxygen qt5
+                  export Qt5_DIR=/usr/local/opt/qt@5/lib/cmake
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
