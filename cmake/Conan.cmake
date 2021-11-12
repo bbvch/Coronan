@@ -51,7 +51,7 @@ macro(run_conan)
         BUILD
         ${CONAN_BUILD}
         REMOTE
-        conan-center
+        conancenter
         SETTINGS
         ${settings})
     endforeach()
@@ -64,7 +64,7 @@ macro(run_conan)
       BUILD
       ${CONAN_BUILD}
       REMOTE
-      conan-center
+      conancenter
       SETTINGS
       ${settings})
   endif()
