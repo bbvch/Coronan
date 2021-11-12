@@ -21,23 +21,23 @@ jobs:
                       build_type: Release
                       compiler: g++
                       ccompiler: gcc
-                      generators: "Ninja"
+                      generators: Ninja
 
                     - name: ubuntu-latest-clang
                       os: ubuntu-latest
                       build_type: Release
                       compiler: clang++
                       ccompiler: clang
-                      generators: "Ninja"
+                      generators: Ninja
 
                     - name: windows-latest-msvc
                       os: windows-latest
                       build_type: Release
                       compiler: cl
                       ccompiler: cl
-                      generators: "Visual Studio 16 2019"
-                      arch: 'win64_msvc2019_64'
-                    
+                      generators: Visual Studio 16 2019
+                      arch: win64_msvc2019_64
+
         env:
             CXX: ${{ matrix.compiler }}
             CC: ${{ matrix.ccompiler }}
@@ -57,45 +57,45 @@ jobs:
               if: runner.os == 'Windows'
               uses: actions/cache@v2
               with:
-                path: |
-                  C:/ProgramData/chocolatey/lib
-                  C:/Users/runneradmin/.conan/data
-                key: cache-${{ matrix.name }}
+                  path: |
+                      C:/ProgramData/chocolatey/lib
+                      C:/Users/runneradmin/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Cache (Linux)
               if: runner.os == 'Linux'
               uses: actions/cache@v2
               with:
-                path: |
-                  /home/runner/.conan/data
-                key: cache-${{ matrix.name }}
+                  path: |
+                      /home/runner/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
-                choco install ninja cmake doxygen.install
-                ninja --version
-                cmake --version
+                  choco install ninja cmake doxygen.install
+                  ninja --version
+                  cmake --version
             - name: Install Qt (Windows)
               if: runner.os == 'Windows'
               uses: jurplel/install-qt-action@v2
               with:
-                version: '5.15.2'
-                host: 'windows'
-                target: 'desktop'
-                arch: ${{ matrix.arch }}
-                modules: 'qtcharts'
-                tools: 'tools_ifw,4.0,qt.tools.ifw.40'
+                  version: 5.15.2
+                  host: windows
+                  target: desktop
+                  arch: ${{ matrix.arch }}
+                  modules: qtcharts
+                  tools: tools_ifw,4.0,qt.tools.ifw.40
             - name: Install python dependencies
               run: |
-                python3 -m pip install conan
-                python3 -m pip install sphinx 
-                python3 -m pip install sphinx_rtd_theme 
-                python3 -m pip install breathe
-                conan --version
+                  python3 -m pip install conan
+                  python3 -m pip install sphinx
+                  python3 -m pip install sphinx_rtd_theme
+                  python3 -m pip install breathe
+                  conan --version
             - name: Set conan compiler env (gcc)
               if: matrix.ccompiler == 'gcc'
               run: |
-                conan profile new default --detect
-                conan profile update settings.compiler.libcxx=libstdc++11 default
+                  conan profile new default --detect
+                  conan profile update settings.compiler.libcxx=libstdc++11 default
             - name: Create build dir
               run: mkdir build
             - name: CMake configure
@@ -112,8 +112,8 @@ jobs:
               run: cmake --build ./build --target package --config ${{ matrix.build_type }}
             - uses: actions/upload-artifact@v2
               with:
-                name: ${{ matrix.name }}-artifacts
-                path: |
-                  ./build/Coronan-*.zip
-                  ./build/Coronan-*.msi
-                  ./build/Coronan-*.tar.gz
+                  name: ${{ matrix.name }}-artifacts
+                  path: |
+                      ./build/Coronan-*.zip
+                      ./build/Coronan-*.msi
+                      ./build/Coronan-*.tar.gz
