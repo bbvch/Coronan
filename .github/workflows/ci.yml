@@ -21,7 +21,7 @@ jobs:
                       build_type: Release
                       compiler: g++-7
                       ccompiler: gcc-7
-                      clang-tidy: clang-tidy
+                      clang-tidy: ''
                       generators: Ninja
                     - name: ubuntu-18.04-gcc-9
                       os: ubuntu-18.04
@@ -107,9 +107,7 @@ jobs:
             - name: Install dependencies (macOS)
               if: runner.os == 'macOS'
               run: |
-                  brew update
-                  brew install ninja doxygen qt
-                  export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+                  brew install ninja doxygen qt5
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
