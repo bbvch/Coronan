@@ -1,0 +1,34 @@
+---
+name: Nix Build
+
+on:
+    push:
+    pull_request:
+    release:
+        types: [published]
+jobs:
+    ci:
+        name: ${{ matrix.name }}
+        runs-on: ubuntu-20.04
+
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - name: nix-gcc
+                      configure_preset: linux-debug-ninja
+                      build_preset: ninja-debug
+                      CONAN_USER_HOME: ~/.conan
+                    - name: nix-clang
+                      configure_preset: linux-debug-ninja-clang
+                      build_preset: clang-debug
+                      CONAN_USER_HOME: ~/.conan-clang
+        steps:
+            - uses: actions/checkout@v1
+            - uses: cachix/install-nix-action@v14.1
+              with:
+                  nix_path: nixpkgs=channel:nixos-21.05
+            - uses: cachix/cachix-action@v10
+            - run: |
+                  nix-shell --command "cmake -S ${GITHUB_WORKSPACE} --preset=${{ matrix.configure_preset }}"
+                  nix-shell --command "cmake --build --preset=${{ matrix.build_preset }}"
