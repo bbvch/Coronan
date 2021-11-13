@@ -3,7 +3,7 @@ name: Coverity Scan
 
 on:
     push:
-        branches: [CoverageAndScan]
+        branches: [master]
 
 
 jobs:
