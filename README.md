@@ -32,70 +32,52 @@ _The About Corona Covid-19_ provides statistics via REST API from The [World Hea
 
 This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
 * C++ 17 Standard
-    * [GCC](https://gcc.gnu.org/)
-
-    * [Clang](https://clang.llvm.org/)
-
-    * Visual Studio 2019
+  * [GCC](https://gcc.gnu.org/)
+  * [Clang](https://clang.llvm.org/)
+  * Visual Studio 2019
 
 * [conan](https://conan.io/) package Manager
 
 * Libraries used:
-    * [Qt](https://www.qt.io/)
-
-    * [Poco](https://pocoproject.org/) Networking library
-
-    * [RapidJSON](https://rapidjson.org/)
-
-    * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
-
-    * [{fmt}](https://github.com/fmtlib/fmt) formatting library
+  * [Qt](https://www.qt.io/)
+  * [Poco](https://pocoproject.org/) Networking library
+  * [RapidJSON](https://rapidjson.org/)
+  * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
+  * [{fmt}](https://github.com/fmtlib/fmt) formatting library
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 
 * CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.20)_
 
 * CPack packaging:
-    * Debian package
-
-    * [Qt Installer Framework](https://doc.qt.io/qtinstallerframework/)
-
-    * [WIX](https://wixtoolset.org/)
+  * Debian package
+  * [Qt Installer Framework](https://doc.qt.io/qtinstallerframework/)
+  * [WIX](https://wixtoolset.org/)
 
 * Build Caching support:
-    * [ccache](https://ccache.dev/)
-
-    * [sccache](https://github.com/mozilla/sccache)
+  * [ccache](https://ccache.dev/)
+  * [sccache](https://github.com/mozilla/sccache)
 
 * Static Analyzer support:
-    * [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
-
-    * [cppcheck](http://cppcheck.sourceforge.net/)
-
-    * [include-what-you-use](https://include-what-you-use.org/)
+  * [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
+  * [cppcheck](http://cppcheck.sourceforge.net/)
+  * [include-what-you-use](https://include-what-you-use.org/)
 
 * Sanitizers support:
-    * [Address Sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
-
-    * [Leak Sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html)
-
-    * [Undefined Behavior Sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
-
-    * [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
-
-    * [Memory Sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
+  * [Address Sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
+  * [Leak Sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html)
+  * [Undefined Behavior Sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+  * [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
+  * [Memory Sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
 
 * Documentation Generation using
-    * [Sphinx](https://www.sphinx-doc.org/)
-
-    * [Breath](https://breathe.readthedocs.io/)
-
-    * [Doxygen](https://www.doxygen.nl/index.html)
+  * [Sphinx](https://www.sphinx-doc.org/)
+  * [Breath](https://breathe.readthedocs.io/)
+  * [Doxygen](https://www.doxygen.nl/index.html)
 
 * Code formatting:
-    * [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files
-
-    * [cmake-format](https://pypi.org/project/cmake-format/) for CMake files
+  * [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files
+  * [cmake-format](https://pypi.org/project/cmake-format/) for CMake files
 
 * [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks) support
 
@@ -104,41 +86,34 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 * [gitpod](https://www.gitpod.io/) support
 
 * Continuous integration (CI):
-    * GitHub Action
-        * linux gcc & clang build
+  * GitHub Action
+    * linux gcc & clang build
+    * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
+    * [CodeQL](https://github.com/github/codeql-action)
+    * Mac OS X
+      * 10.15 _(AppleClang 12)_
+      * 11 _(AppleClang 13)_
 
-        * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
+    * Ubuntu 18.04
+      * GCC 7 & 9
+      * Clang 9
 
-        * [CodeQL](https://github.com/github/codeql-action)
+    * Ubuntu 20.04
+      * GCC 9 & 10
+      * Clang 10, 11 & 12
 
-        * Mac OS X
-            * 10.15 _(AppleClang 12)_
+    * Nix
+      * GCC 10
+      * Clang 11
 
-            * 11 _(AppleClang 13)_
+    * [Coverity Scan Static Analysis](https://scan.coverity.com/)
 
-        * Ubuntu 18.04
-            * GCC 7 & 9
+    * [Codecov](https://codecov.io) Coverage Reporter
 
-            * Clang 9
-
-        *  Ubuntu 20.04
-            * GCC 9 & 10
-
-            * Clang 10, 11 & 12
-
-        * nix
-            * GCC 10
-
-            * Clang 11
-
-        * [Coverity Scan Static Analysis](https://scan.coverity.com/)
-
-        * [Codecov](https://codecov.io) Coverage Reporter
-
-        * [Codacy](https://www.codacy.com) Coverage Reporter
+    * [Codacy](https://www.codacy.com) Coverage Reporter
 
     * [AppVeyor](https://www.appveyor.com/)
-        * Windows Visual Studio 2019
+      * Windows Visual Studio 2019
 
 ## Development
 
