@@ -1,5 +1,6 @@
 #include "coronan/corona-api_client.hpp"
 
+#include <cstdlib>
 #include <fmt/core.h>
 #include <lyra/lyra.hpp>
 #include <sstream>
@@ -21,19 +22,19 @@ int main(int argc, char* argv[])
   catch (coronan::SSLException const& ex)
   {
     fmt::print(stderr, "SSL Exception: {}\n", ex.what());
-    exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
   catch (coronan::HTTPClientException const& ex)
   {
     fmt::print(stderr, "HTTP Client Exception: {}\n", ex.what());
-    exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
   catch (std::exception const& ex)
   {
     fmt::print(stderr, "{}\n", ex.what());
-    exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
-  exit(EXIT_SUCCESS);
+  std::exit(EXIT_SUCCESS);
 }
 
 namespace {
@@ -51,13 +52,13 @@ std::string parse_commandline_arguments(lyra::args const& args)
   {
     fmt::print(stderr, "Error in comman line: {}\n", result.errorMessage());
     fmt::print("{}\n", usage.str());
-    exit(EXIT_FAILURE);
+    std::exit(EXIT_FAILURE);
   }
 
   if (help_request)
   {
     fmt::print("{}\n", usage.str());
-    exit(EXIT_SUCCESS);
+    std::exit(EXIT_SUCCESS);
   }
   return country;
 }

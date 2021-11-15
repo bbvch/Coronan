@@ -88,8 +88,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 * Continuous integration (CI):
   * GitHub Action
     * linux gcc & clang build
-    * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
-    * [CodeQL](https://github.com/github/codeql-action)
+
     * Mac OS X
       * 10.15 _(AppleClang 12)_
       * 11 _(AppleClang 13)_
@@ -106,14 +105,20 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
       * GCC 10
       * Clang 11
 
+    * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
+
+    * [Codacy](https://www.codacy.com) Coverage Reporter
+
+    * [CodeQL Static Analysis](https://github.com/github/codeql-action)
+
     * [Coverity Scan Static Analysis](https://scan.coverity.com/)
 
     * [Codecov](https://codecov.io) Coverage Reporter
 
-    * [Codacy](https://www.codacy.com) Coverage Reporter
 
-    * [AppVeyor](https://www.appveyor.com/)
-      * Windows Visual Studio 2019
+
+  * [AppVeyor](https://www.appveyor.com/)
+    * Windows Visual Studio 2019
 
 ## Development
 
