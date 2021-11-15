@@ -37,6 +37,11 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
+            - name: Conan Cache
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
 
     # Initializes the CodeQL tools for scanning.
             - name: Initialize CodeQL

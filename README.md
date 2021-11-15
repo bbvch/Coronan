@@ -70,7 +70,10 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
   * [Memory Sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
 
-* Documentation Generation using [Sphinx](https://www.sphinx-doc.org/), [Breath](https://breathe.readthedocs.io/) & [Doxygen](https://www.doxygen.nl/index.html)
+* Documentation Generation using
+  * [Sphinx](https://www.sphinx-doc.org/)
+  * [Breath](https://breathe.readthedocs.io/)
+  * [Doxygen](https://www.doxygen.nl/index.html)
 
 * Code formatting:
   * [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files
@@ -87,20 +90,30 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
     * linux gcc & clang build
     * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
     * [CodeQL](https://github.com/github/codeql-action)
-
-  * [Travic.ci](https://travis-ci.com/)
     * Mac OS X
-    * Ubuntu Focal _(GCC)_
-    * GCC 7 & 9 _(Docker build, Ubuntu Bionic)_
-    * Clang 7, 8 & 9 _(Docker build, Ubuntu Bionic)_
-    * GCC 10 _(nix-shell build)_
-    * Clang 11 _(nix-shell build)_
+      * 10.15 _(AppleClang 12)_
+      * 11 _(AppleClang 13)_
+
+    * Ubuntu 18.04
+      * GCC 7 & 9
+      * Clang 9
+
+    * Ubuntu 20.04
+      * GCC 9 & 10
+      * Clang 10, 11 & 12
+
+    * Nix
+      * GCC 10
+      * Clang 11
+
     * [Coverity Scan Static Analysis](https://scan.coverity.com/)
+
     * [Codecov](https://codecov.io) Coverage Reporter
+
     * [Codacy](https://www.codacy.com) Coverage Reporter
 
-  * [AppVeyor](https://www.appveyor.com/)
-    * Windows Visual Studio 2019
+    * [AppVeyor](https://www.appveyor.com/)
+      * Windows Visual Studio 2019
 
 ## Development
 
