@@ -194,6 +194,7 @@ jobs:
                   lcov --capture --directory . --output-file coverage.info
                   lcov --remove coverage.info '/usr/*' --output-file coverage.info
                   bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov did not collect coverage reports'
+                  export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }}
                   bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.info || echo 'codacy did not collect coverage reports'
             - uses: actions/upload-artifact@v2
               with:
