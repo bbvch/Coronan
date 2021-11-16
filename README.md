@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/03851e6e31c544248a4f5f799a7eac4c)](https://app.codacy.com/gh/bbvch/Coronan?utm_source=github.com&utm_medium=referral&utm_content=bbvch/Coronan&utm_campaign=Badge_Grade_Settings)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![version](https://img.shields.io/badge/version-v0.2.0-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
