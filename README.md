@@ -115,8 +115,6 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
     * [Codecov](https://codecov.io) Coverage Reporter
 
-
-
   * [AppVeyor](https://www.appveyor.com/)
     * Windows Visual Studio 2019
 
