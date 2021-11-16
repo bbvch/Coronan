@@ -18,18 +18,18 @@ HTTPResponse::HTTPResponse(Poco::Net::HTTPResponse const& response, std::string 
 
 Poco::Net::HTTPResponse::HTTPStatus
 // cppcheck-suppress unusedFunction
-HTTPResponse::status() const
+HTTPResponse::status() const noexcept
 {
   return response_.getStatus();
 }
 
 // cppcheck-suppress unusedFunction
-std::string HTTPResponse::reason() const
+std::string HTTPResponse::reason() const noexcept
 {
   return response_.getReason();
 }
 
-std::string HTTPResponse::response_body() const
+std::string HTTPResponse::response_body() const noexcept
 {
   return response_body_;
 }

@@ -39,17 +39,17 @@ public:
   /**
    * Return the HTTP status code
    */
-  Poco::Net::HTTPResponse::HTTPStatus status() const;
+  Poco::Net::HTTPResponse::HTTPStatus status() const noexcept;
 
   /**
    * Return the HTTP reason phrase
    */
-  std::string reason() const;
+  std::string reason() const noexcept;
 
   /**
    * Return the HTTP response body
    */
-  std::string response_body() const;
+  std::string response_body() const noexcept;
 
 private:
   Poco::Net::HTTPResponse response_{};
