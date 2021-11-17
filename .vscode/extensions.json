@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "matepek.vscode-catch2-test-adapter",
+        "twxs.cmake",
+        "mhutchie.git-graph",
+        "shd101wyy.markdown-preview-enhanced",
+        "jnoortheen.nix-ide",
+        "eamodio.gitlens",
+        "lextudio.restructuredtext",
+        "jacqueslucke.gcov-viewer",
+        "coenraads.bracket-pair-colorizer",
+        "gruntfuggly.todo-tree",
+        "vscode-icons-team.vscode-icons"
+    ]
+}

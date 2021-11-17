@@ -2,5 +2,6 @@
     "restructuredtext.confPath": "${workspaceFolder}/docs",
     "gcovViewer.buildDirectories": [
         "/workspace/Coronan/build"
-    ]
+    ],
+    "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/tests/unittests"
 }

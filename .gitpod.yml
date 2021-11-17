@@ -14,5 +14,10 @@ vscode:
         - shd101wyy.markdown-preview-enhanced
         - jnoortheen.nix-ide
         - lextudio.restructuredtext
-        - vscode.docker
         - webfreak.debug
+        - matepek.vscode-catch2-test-adapter
+        - hbenl.vscode-test-explorer
+        - mhutchie.git-graph
+        - coenraads.bracket-pair-colorizer
+        - gruntfuggly.todo-tree
+        - vscode-icons-team.vscode-icons

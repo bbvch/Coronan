@@ -52,15 +52,20 @@ RUN apt-get update \
 USER gitpod
 
 # conan
-RUN pip3 install conan==1.42.1 \
+RUN pip3 install conan>=1.42.1 \
  && conan profile new default --detect
 
 # cmake-format
-RUN pip3 install cmake-format==0.6.13
+RUN pip3 install cmake-format>=0.6.13
 
 # gcovr
-RUN pip3 install gcovr==5.0
+RUN pip3 install gcovr>=5.0
+
+# docu stuff
+RUN pip3 install sphinx>=4.3.0
+RUN pip3 install sphinx_rtd_theme>=1.0.0
+RUN pip3 install breathe>=4.31.0
 
 # pre-commit
-RUN pip3 install pre-commit==2.15.0
+RUN pip3 install pre-commit>=2.15.0
 RUN echo 'export PIP_USER=false' >> ~/.bashrc
