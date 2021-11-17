@@ -7,24 +7,18 @@ extraction:
     cpp:
         prepare:
             packages:
-                - g++-10
-                - ccache
+                - qt5-default
                 - libqt5charts5-dev
-                - libglib2.0-dev
-                - ca-certificates
             script:
-                - mkdir custom_cmake
-                - wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.21.4/cmake-3.21.4-linux-x86_64.sh
-                - sh ./cmake-3.21.4-linux-x86_64.sh --skip-license --prefix=custom_cmake
-                - export PATH=$(pwd)/custom_cmake/bin:${PATH}
                 - mkdir ~/.conan
                 - cat /usr/local/share/ca-certificates/semmle-cache-ca/semmle-cache-ca.crt >> ~/.conan/cacert.pem
                 - python3 -m pip install --upgrade pip setuptools
                 - python3 -m pip install conan
+                - python3 -m pip install cmake
                 - source ~/.profile
         configure:
             command:
                 - mkdir build
-                - cmake -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
+                - cmake -DQt5Charts_DIR=/usr/lib/x86_64-linux-gnu/cmake/Qt5Charts/Qt5ChartsConfig.cmake -DENABLE_COVERAGE:BOOL=TRUE -S . -B build
         index:
             build_command: cmake --build ./build -- -j2
