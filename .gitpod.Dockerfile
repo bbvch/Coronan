@@ -1,14 +1,4 @@
-FROM ubuntu:bionic as cmake_builder
-
-RUN apt-get update \
- && apt-get install -y --no-install-recommends wget \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-RUN mkdir /opt/cmake
-RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.21.4/cmake-3.21.4-linux-x86_64.sh \
- && sh ./cmake-3.21.4-linux-x86_64.sh --skip-license --prefix=/opt/cmake
-
-FROM gitpod/workspace-full-vnc:commit-2f5689a36391544b3c592f987c5a6abe230f22fe
+FROM gitpod/workspace-full-vnc:commit-8fc141dbdd92030a435ead06617c6d37651d8312
 
 # More information: https://www.gitpod.io/docs/config-docker/
 
@@ -27,8 +17,7 @@ RUN apt-get -qq install -y --no-install-recommends software-properties-common  \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #install cmake
-COPY --from=cmake_builder /opt/cmake /opt/cmake
-RUN ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+RUN pip3 install cmake>=3.21.0
 
 # lcov and doxygen
 RUN apt-get update \
