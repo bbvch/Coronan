@@ -17,3 +17,5 @@ vscode:
         - coenraads.bracket-pair-colorizer
         - gruntfuggly.todo-tree
         - vscode-icons-team.vscode-icons
+        - matepek.vscode-catch2-test-adapter
+        - xaver.clang-format
