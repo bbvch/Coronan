@@ -1,4 +1,4 @@
-FROM gitpod/workspace-full-vnc:commit-8fc141dbdd92030a435ead06617c6d37651d8312
+FROM gitpod/workspace-full-vnc:commit-f2d623ca9d270c2ce8560d2ca0f9ce71b105aff2
 
 # More information: https://www.gitpod.io/docs/config-docker/
 
@@ -56,5 +56,5 @@ RUN pip3 install sphinx_rtd_theme==1.0.0
 RUN pip3 install breathe==4.31.0
 
 # pre-commit
-RUN pip3 install pre-commit=2.16.0
+RUN pip3 install pre-commit==2.16.0
 RUN echo 'export PIP_USER=false' >> ~/.bashrc
