@@ -32,7 +32,7 @@ function(enable_static_analysis project_name)
 
   if(ENABLE_CLANG_TIDY)
     set(CLANG_TIDY_PROPERTIES "${CLANGTIDY}" "-p=${PROJECT_BINARY_DIR}"
-                              "-extra-arg=-Wno-unknown-warning-option")
+                              "-extra-arg-before=-std=c++17" "-extra-arg=-Wno-unknown-warning-option")
     set_target_properties(${project_name} PROPERTIES CXX_CLANG_TIDY
                                                      "${CLANG_TIDY_PROPERTIES}")
     message(
