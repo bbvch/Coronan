@@ -13,7 +13,6 @@ let
     ps.sphinx
     ps.sphinx_rtd_theme
     ps.breathe
-    ps.m2r2
   ]);
 
   full-sphinx-env = buildEnv {
@@ -64,5 +63,6 @@ in stdenvNoCC.mkDerivation {
     source venv/bin/activate
     python3 -m pip install conan>=1.43
     python3 -m pip install yamlfmt>=1.1.0
+    python3 -m pip install m2r2>=0.3.2
   '';
 }
