@@ -115,6 +115,26 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
+            - name: Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Cache (macOS)
+              if: runner.os == 'macOS'
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Cache (Windows)
+              if: runner.os == 'Windows'
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      C:/ProgramData/chocolatey/lib
+                      C:/Users/runneradmin/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Install dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
@@ -147,26 +167,6 @@ jobs:
                   target: desktop
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
-            - name: Cache (Linux)
-              if: runner.os == 'Linux'
-              uses: actions/cache@v2
-              with:
-                  path: ~/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Cache (macOS)
-              if: runner.os == 'macOS'
-              uses: actions/cache@v2
-              with:
-                  path: ~/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      C:/ProgramData/chocolatey/lib
-                      C:/Users/runneradmin/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Install python dependencies
               run: |
                   python3 -m pip install -r py-requirements.txt
