@@ -16,11 +16,7 @@ install:
 init:
     - cmd: |-
           set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Python39\Scripts
-          "%PYTHON%" -m pip install --upgrade pip
-          "%PYTHON%" -m pip install --user conan
-          "%PYTHON%" -m pip install --user sphinx
-          "%PYTHON%" -m pip install --user sphinx_rtd_theme
-          "%PYTHON%" -m pip install --user breathe
+          "%PYTHON%" -m pip install -r py-requirements.txt
 
 before_build:
     - cmd: |-
