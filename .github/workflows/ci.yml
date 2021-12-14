@@ -86,7 +86,13 @@ jobs:
                       compiler: cl
                       ccompiler: cl
                       generators: Visual Studio 16 2019
-                      arch: win64_msvc2019_64
+                      coverage: OFF
+                    - name: windows-VS-2022
+                      os: windows-2022
+                      build_type: Release
+                      compiler: cl
+                      ccompiler: cl
+                      generators: Visual Studio 17 2022
                       coverage: OFF
                     - name: macos-10.15-clang
                       os: macos-10.15
@@ -139,7 +145,6 @@ jobs:
                   version: 5.15.2
                   host: windows
                   target: desktop
-                  arch: ${{ matrix.arch }}
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
             - name: Cache (Linux)
