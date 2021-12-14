@@ -109,7 +109,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
     * Windows
       * Visual Studio 2019
-      * Visual Studio 2020
+      * Visual Studio 2022
 
     * Nix
       * GCC 10
