@@ -216,6 +216,33 @@
                 "visual-studio-2019",
                 "release"
             ]
+        },
+        {
+            "name": "visual-studio-2022",
+            "description": "Configure Visual Studio 2022 build",
+            "generator": "Visual Studio 17 2022",
+            "inherits": [
+                "base"
+            ],
+            "hidden": true
+        },
+        {
+            "name": "visual-studio-2022-debug",
+            "displayName": "Visual Studio 2022 (Debug)",
+            "description": "Configure Visual Studio 2022 Debug build",
+            "inherits": [
+                "visual-studio-2022",
+                "debug"
+            ]
+        },
+        {
+            "name": "visual-studio-2022-release",
+            "displayName": "Visual Studio 2022 (Release)",
+            "description": "Configure Visual Studio 2022 Release build",
+            "inherits": [
+                "visual-studio-2022",
+                "release"
+            ]
         }
     ],
     "buildPresets": [

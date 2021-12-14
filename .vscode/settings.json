@@ -3,6 +3,5 @@
     "gcovViewer.buildDirectories": [
         "/workspace/Coronan/build"
     ],
-    "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/tests/unittests",
-    "editor.formatOnSave": true
+    "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/tests/unittests"
 }
