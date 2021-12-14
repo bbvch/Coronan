@@ -24,6 +24,14 @@
             "target": "./build/apps/qt/coronanApp",
             "cwd": "${workspaceRoot}",
             "valuesFormatting": "parseText"
+        },
+        {
+            "name": "CMake Tools target (GDB)",
+            "type": "gdb",
+            "request": "launch",
+            "target": "${command:cmake.launchTargetPath}",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "parseText"
         }
     ]
 }
