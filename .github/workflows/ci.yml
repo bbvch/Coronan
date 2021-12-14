@@ -168,6 +168,7 @@ jobs:
                   python3 -m pip install sphinx
                   python3 -m pip install sphinx_rtd_theme
                   python3 -m pip install breathe
+                  python3 -m pip install m2r2
                   conan --version
             - name: Set conan compiler env (gcc)
               if: matrix.ccompiler == 'gcc'
