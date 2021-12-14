@@ -54,6 +54,7 @@ RUN pip3 install gcovr==5.0
 RUN pip3 install sphinx==4.3.1
 RUN pip3 install sphinx_rtd_theme==1.0.0
 RUN pip3 install breathe==4.31.0
+RUN pip3 install m2r2==0.3.2
 
 # pre-commit
 RUN pip3 install pre-commit==2.16.0

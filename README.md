@@ -34,13 +34,13 @@ _The About Corona Covid-19_ provides statistics via REST API from The [World Hea
 
 ![Screenshot of the qt application](docs/images/Screenshot-qt.png)
 
-## Features
+## Project Features
 
 This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
 * C++ 17 Standard
   * [GCC](https://gcc.gnu.org/)
   * [Clang](https://clang.llvm.org/)
-  * Visual Studio 2019
+  * Visual Studio 2019 (2022)
 
 * [conan](https://conan.io/) package Manager
 
@@ -93,7 +93,6 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 * Continuous integration (CI):
   * GitHub Action
-    * linux gcc & clang build
 
     * Mac OS X
       * 10.15 _(AppleClang 12)_
@@ -106,6 +105,11 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
     * Ubuntu 20.04
       * GCC 9 & 10
       * Clang 10, 11 & 12
+      * API Documentation Generation
+
+    * Windows
+      * Visual Studio 2019
+      * Visual Studio 2020
 
     * Nix
       * GCC 10
@@ -128,13 +132,13 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 ## Development
 
-To build the project you need python and a recent [conan version](https://conan.io/):
+To build the project you need python and a recent [conan version](https://conan.io/), a recent version of [CMake](https://cmake.org/) (> 3.15), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html).
+
+To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:
 
 ```bash
-#> pip3 install conan
+#> pip3 install -r py-requirements.txt
 ```
-
-Further a recent version of [CMake](https://cmake.org/) (> 3.15), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html) must be installed.
 
 ### How to build
 
@@ -222,7 +226,7 @@ Please install pre-commit hooks before commiting any code.
 
 ## Gitpod
 
-To start right away without installing anything on you local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> Button at the top of this README.
+To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> button at the top of this README.
 
 ## direnv & Nix
 
