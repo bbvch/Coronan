@@ -19,6 +19,12 @@ jobs:
                   sudo pip3 install sphinx_rtd_theme
                   sudo pip3 install breathe
                   sudo pip3 install m2r2
+            - name: Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-conan-${{ hashFiles('**/Conan.cmake') }}
             - name: prepare-build
               run: mkdir build
             - name: cmake-configuration
