@@ -13,6 +13,7 @@ let
     ps.sphinx
     ps.sphinx_rtd_theme
     ps.breathe
+    ps.m2r2
   ]);
 
   full-sphinx-env = buildEnv {
@@ -61,7 +62,7 @@ in stdenvNoCC.mkDerivation {
     pre-commit install -f --hook-type pre-commit
     virtualenv venv
     source venv/bin/activate
-    python3 -m pip install conan>=1.42.1
+    python3 -m pip install conan>=1.43
     python3 -m pip install yamlfmt>=1.1.0
   '';
 }
