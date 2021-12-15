@@ -3,5 +3,7 @@
     "gcovViewer.buildDirectories": [
         "/workspace/Coronan/build"
     ],
-    "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/tests/unittests"
+    "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/tests/unittests",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active"
 }

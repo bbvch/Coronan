@@ -14,7 +14,6 @@ vscode:
         - lextudio.restructuredtext
         - webfreak.debug
         - mhutchie.git-graph
-        - coenraads.bracket-pair-colorizer
         - gruntfuggly.todo-tree
         - vscode-icons-team.vscode-icons
         - matepek.vscode-catch2-test-adapter
