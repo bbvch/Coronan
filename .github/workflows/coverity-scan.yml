@@ -1,0 +1,73 @@
+---
+name: Coverity Scan
+
+on:
+    push:
+        branches: [coverity_scan]
+
+jobs:
+    coverity-scan:
+        runs-on: ubuntu-20.04
+        env:
+            CXX: g++
+            CC: gcc
+            TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+            PROJECT: bbvch%2FCoronan
+            EMAIL: estermann.michel@gmail.com
+            CERT: ~/ca-coverity.pem
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y --no-install-recommends ninja-build python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
+                  sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
+            - name: Install python dependencies
+              run: |
+                  python3 -m pip install conan
+                  conan --version
+            - uses: actions/checkout@v2
+            - name: Conan Cache
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Set conan compiler env (gcc)
+              run: |
+                  conan profile new default --detect
+                  conan profile update settings.compiler.libcxx=libstdc++11 default
+            - name: Create build dir
+              run: mkdir build
+            - name: CMake configure
+              run: cmake -S . -B ./build -G "Ninja" -DCMAKE_BUILD_TYPE=Debug
+            - name: Install Coverity scan certificate
+              run: |
+                  echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee ${CERT}
+              shell: bash
+            - name: Download Coverity Build Tool
+              run: |
+                  wget --ca-certificate=${CERT} -nv \
+                    --post-data "token=${TOKEN}&project=${PROJECT}" \
+                    -O cov-analysis.tar.gz \
+                    https://scan.coverity.com/download/cxx/linux64
+                  mkdir cov-analysis
+                  tar -xzf cov-analysis.tar.gz --strip 1 -C cov-analysis
+              shell: bash
+            - name: Build with cov-build
+              run: |
+                  export PATH="${PWD}/cov-analysis/bin:${PATH}"
+                  cov-build --dir cov-int cmake --build ./build
+              shell: bash
+            - name: Submit results to Coverity Scan
+              run: |
+                  tar -czvf cov-int.tgz cov-int
+                  curl \
+                    --cert ${CERT} \
+                    --form project="${PROJECT}" \
+                    --form token="${TOKEN}" \
+                    --form email="${EMAIL}" \
+                    --form file=@cov-int.tgz \
+                    --form version="${{ github.sha }}" \
+                    --form description="coverity-scan ${{ github.repository }} / ${{ github.ref }}" \
+                    "https://scan.coverity.com/builds?project=${PROJECT}"
+              shell: bash
