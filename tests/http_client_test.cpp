@@ -86,7 +86,7 @@ TEST_CASE("HTTPClient get", "[HTTPClient]")
   SECTION("Initializes a session")
   {
     auto const* uri = "http://server.com:80/";
-    auto resonse = TesteeT::get(uri);
+    auto response = TesteeT::get(uri);
 
     REQUIRE(TestHTTPSession::host_ == "server.com");
     REQUIRE(TestHTTPSession::port_ == 80);
@@ -95,7 +95,7 @@ TEST_CASE("HTTPClient get", "[HTTPClient]")
   SECTION("Creates a request")
   {
     auto const* uri = "http://server.com:80/test";
-    auto resonse = TesteeT::get(uri);
+    auto const response = TesteeT::get(uri);
     REQUIRE(TestHTTPRequest::request_ == HTTPRequest::HTTP_GET);
     REQUIRE(TestHTTPRequest::type_ == HTTPMessage::HTTP_1_1);
     REQUIRE(TestHTTPRequest::path_ == "/test");
@@ -112,11 +112,11 @@ TEST_CASE("HTTPClient get", "[HTTPClient]")
     TestHTTPSession::set_response(expected_response);
 
     auto const* uri = "http://server.com:80/test";
-    auto resonse = TesteeT::get(uri);
+    auto const response = TesteeT::get(uri);
 
-    REQUIRE(resonse.status() == expected_status);
-    REQUIRE(resonse.reason() == expected_reason);
-    REQUIRE(resonse.response_body() == expected_response);
+    REQUIRE(response.status() == expected_status);
+    REQUIRE(response.reason() == expected_reason);
+    REQUIRE(response.response_body() == expected_response);
   }
 
   SECTION("Throws an HTTPClientException when Session throws exception")

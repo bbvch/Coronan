@@ -195,7 +195,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_THREAD`: Enable [thread sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_MEMORY`: Enable [memory sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html). _Default: `OFF`_
-* `ENABLE_IPO`: Enable Interprocedural Optimization, aka [Link Time Optimization (LTO)](https://llvm.org/docs/LinkTimeOptimization.html). _Default: `OFF`_
+* `ENABLE_IPO`: Enable intermodular optimization, aka [Link Time Optimization (LTO)](https://llvm.org/docs/LinkTimeOptimization.html). _Default: `OFF`_
 * `ENABLE_CPPCHECK`: Enable static analysis with [cppcheck](http://cppcheck.sourceforge.net/). _Default: `ON` if cppcheck is installed `OFF` otherwise._
 * `ENABLE_CLANG_TIDY`: Enable static analysis with [clang-tidy](https://clang.llvm.org/extra/clang-tidy/). _Default: `ON` if clang-tidy is installed `OFF` otherwise._
 * `ENABLE_INCLUDE_WHAT_YOU_USE`: Enable static analysis with [include-what-you-use](https://include-what-you-use.org/). _Default: `ON` if include-what-you-use is installed `OFF` otherwise_.
@@ -203,7 +203,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 
 ## Pre-Commit Hooks
 
-The following [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks) are used to check and format files before commiting:
+The following [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks) are used to check and format files before committing:
 
 * `check-added-large-files`: Prevent giant files (> 500kB) from being committed.
 * `fix-byte-order-marker`: Forbid files which have a UTF-8 byte-order marker
@@ -222,7 +222,7 @@ The following [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks)
 * `yamllint`: Linter for yaml files
 * `yamlfmt`: Format yaml files
 
-Please install pre-commit hooks before commiting any code.
+Please install pre-commit hooks before committing any code.
 
 ## Gitpod
 
@@ -230,6 +230,6 @@ To start right away without installing anything on your local machine, you can s
 
 ## direnv & Nix
 
-If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefare clang (clang_11) change it in [.envrc](.envrc)
+If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefer clang (clang_11) change it in [.envrc](.envrc)
 
 When using nix. The most resent cmake is available and therefore configure and build [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used.

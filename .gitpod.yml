@@ -11,10 +11,10 @@ vscode:
         - ms-vscode.cmake-tools
         - github.vscode-pull-request-github
         - jnoortheen.nix-ide
-        - lextudio.restructuredtext
         - webfreak.debug
         - mhutchie.git-graph
         - gruntfuggly.todo-tree
         - vscode-icons-team.vscode-icons
         - matepek.vscode-catch2-test-adapter
         - xaver.clang-format
+        - streetsidesoftware.code-spell-checker

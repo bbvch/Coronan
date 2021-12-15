@@ -27,7 +27,7 @@ struct CountryData
     std::optional<uint32_t> confirmed{}; /**< todays confirmed cases */
   };
 
-  TodayData today{}; /**< TodayDatas data when retrieved. New cases of lates date  */
+  TodayData today{}; /**< Today data when retrieved. New cases of lates date  */
 
   struct LatestData
   {
