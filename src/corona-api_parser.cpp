@@ -7,13 +7,10 @@ namespace coronan::api_parser {
 
 namespace {
 
-template <typename Ret_T, typename DOM_T,
-          std::enable_if_t<std::is_arithmetic<Ret_T>::value, bool> = true>
-std::optional<Ret_T> get_value(DOM_T const& json_dom_object,
-                               std::string const& name)
+template <typename Ret_T, typename DOM_T, std::enable_if_t<std::is_arithmetic<Ret_T>::value, bool> = true>
+std::optional<Ret_T> get_value(DOM_T const& json_dom_object, std::string const& name)
 {
-  if (auto member_it = json_dom_object.FindMember(name.c_str());
-      member_it != json_dom_object.MemberEnd())
+  if (auto member_it = json_dom_object.FindMember(name.c_str()); member_it != json_dom_object.MemberEnd())
   {
     if (auto const& value = member_it->value; value.IsNumber())
     {
@@ -47,13 +44,10 @@ std::optional<Ret_T> get_value(DOM_T const& json_dom_object,
   return std::nullopt;
 }
 
-template <
-    typename Ret_T, typename DOM_T,
-    std::enable_if_t<std::is_same<Ret_T, std::string>::value, bool> = true>
+template <typename Ret_T, typename DOM_T, std::enable_if_t<std::is_same<Ret_T, std::string>::value, bool> = true>
 Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
 {
-  if (auto member_it = json_dom_object.FindMember(name.c_str());
-      member_it != json_dom_object.MemberEnd())
+  if (auto member_it = json_dom_object.FindMember(name.c_str()); member_it != json_dom_object.MemberEnd())
   {
     auto const& value = member_it->value;
     if (value.IsString())
@@ -62,8 +56,7 @@ Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
     }
     if (value.IsNumber())
     {
-      return value.IsDouble() ? std::to_string(value.GetDouble())
-                              : std::to_string(value.GetInt64());
+      return value.IsDouble() ? std::to_string(value.GetDouble()) : std::to_string(value.GetInt64());
     }
   }
   return "";
@@ -94,10 +87,8 @@ constexpr auto parse_latest_data = [](auto const& json_dom_object) {
       auto const calculated = latest_data["calculated"].GetObject();
       latest.death_rate = get_value<double>(calculated, "death_rate");
       latest.recovery_rate = get_value<double>(calculated, "recovery_rate");
-      latest.recovered_vs_death_ratio =
-          get_value<double>(calculated, "recovered_vs_death_ratio");
-      latest.cases_per_million_population =
-          get_value<uint32_t>(calculated, "cases_per_million_population");
+      latest.recovered_vs_death_ratio = get_value<double>(calculated, "recovered_vs_death_ratio");
+      latest.cases_per_million_population = get_value<uint32_t>(calculated, "cases_per_million_population");
     }
   }
   return latest;
@@ -115,10 +106,8 @@ constexpr auto parse_timeline = [](auto const& json_dom_object) {
       timepoint.confirmed = get_value<uint32_t>(data_point, "confirmed");
       timepoint.recovered = get_value<uint32_t>(data_point, "recovered");
       timepoint.active = get_value<uint32_t>(data_point, "active");
-      timepoint.new_confirmed =
-          get_value<uint32_t>(data_point, "new_confirmed");
-      timepoint.new_recovered =
-          get_value<uint32_t>(data_point, "new_recovered");
+      timepoint.new_confirmed = get_value<uint32_t>(data_point, "new_confirmed");
+      timepoint.new_recovered = get_value<uint32_t>(data_point, "new_recovered");
       timepoint.new_deaths = get_value<uint32_t>(data_point, "new_deaths");
       timeline.emplace_back(timepoint);
     }
@@ -137,16 +126,12 @@ CountryData parse_country(std::string const& json)
   if (document.HasMember("data"))
   {
     auto const country_data_object = document["data"].GetObject();
-    country_data.info.name =
-        get_value<std::string>(country_data_object, "name");
-    country_data.info.iso_code =
-        get_value<std::string>(country_data_object, "code");
-    country_data.info.population =
-        get_value<uint32_t>(country_data_object, "population");
+    country_data.info.name = get_value<std::string>(country_data_object, "name");
+    country_data.info.iso_code = get_value<std::string>(country_data_object, "code");
+    country_data.info.population = get_value<uint32_t>(country_data_object, "population");
     country_data.today = parse_today_data(country_data_object);
 
-    auto const current_date =
-        get_value<std::string>(country_data_object, "updated_at");
+    auto const current_date = get_value<std::string>(country_data_object, "updated_at");
     country_data.today.date = current_date;
     country_data.latest = parse_latest_data(country_data_object);
     country_data.latest.date = current_date;
@@ -165,7 +150,7 @@ CountryListObject parse_countries(std::string const& json)
     CountryInfo country;
     country.name = get_value<std::string>(country_data, "name");
     country.iso_code = get_value<std::string>(country_data, "code");
-    country_list.countries.emplace_back(country);
+    country_list.emplace_back(country);
   }
   return country_list;
 }

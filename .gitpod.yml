@@ -3,13 +3,19 @@ image:
     file: .gitpod.Dockerfile
 
 tasks:
-    - init: direnv allow
-      command: direnv allow && rm -rf ./build && cmake -S . --preset=linux-ninja-clang
-
+    - init: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
+      command: rm -rf ./build && cmake -S . --preset=linux-debug-ninja-clang
 
 vscode:
     extensions:
-        - ms-vscode.cmake-tools@1.6.0:lvoCR5usjseB5thI3sZhWA==
-        - twxs.cmake@0.0.17:aQNzlYa74rJFJ5/BnUF1yA==
-        - webfreak.debug@0.25.0:F9uLpAOde6r0l7rgMC8LTQ==
-        - jnoortheen.nix-ide@0.1.7:TbRBWc8tIdCUqWugibxjVA==
+        - ms-vscode.cmake-tools
+        - github.vscode-pull-request-github
+        - jnoortheen.nix-ide
+        - lextudio.restructuredtext
+        - webfreak.debug
+        - mhutchie.git-graph
+        - coenraads.bracket-pair-colorizer
+        - gruntfuggly.todo-tree
+        - vscode-icons-team.vscode-icons
+        - matepek.vscode-catch2-test-adapter
+        - xaver.clang-format

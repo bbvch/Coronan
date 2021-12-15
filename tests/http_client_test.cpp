@@ -14,8 +14,7 @@ namespace {
 
 struct TestHTTPRequest
 {
-  TestHTTPRequest(std::string const& request, std::string const& path,
-                  std::string const& type)
+  TestHTTPRequest(std::string const& request, std::string const& path, std::string const& type)
   {
     TestHTTPRequest::request_ = request;
     TestHTTPRequest::type_ = type;
@@ -36,16 +35,22 @@ struct TestHTTPSession
     TestHTTPSession::host_ = host;
   }
 
-  std::ostream& sendRequest(TestHTTPRequest& /*unused*/) { return std::cout; }
+  std::ostream& sendRequest(TestHTTPRequest& /*unused*/)
+  {
+    return std::cout;
+  }
 
   std::istream& receiveResponse(HTTPResponse& response)
   {
-    response.setStatusAndReason(TestHTTPSession::response_status_,
-                                TestHTTPSession::response_reason_);
+    if (throw_exception)
+    {
+      throw exception;
+    }
+    response.setStatusAndReason(TestHTTPSession::response_status_, TestHTTPSession::response_reason_);
     return TestHTTPSession::response_;
   }
 
-  static void set_response_status(HTTPResponse::HTTPStatus const& status)
+  static void set_response_status(HTTPResponse::HTTPStatus status)
   {
     TestHTTPSession::response_status_ = status;
   }
@@ -60,16 +65,21 @@ struct TestHTTPSession
     TestHTTPSession::response_ = std::istringstream{response};
   }
 
+  static void set_throw_exception()
+  {
+    throw_exception = true;
+  }
+
   inline static std::uint16_t port_{};
   inline static std::string host_{};
-  inline static HTTPResponse::HTTPStatus response_status_{
-      HTTPResponse::HTTP_OK};
+  inline static HTTPResponse::HTTPStatus response_status_{HTTPResponse::HTTP_OK};
   inline static std::string response_reason_{};
   inline static std::istringstream response_{""};
+  inline static bool throw_exception{false};
+  inline static std::exception exception{};
 };
 
-using TesteeT = coronan::HTTPClientT<TestHTTPSession, TestHTTPRequest,
-                                     Poco::Net::HTTPResponse>;
+using TesteeT = coronan::HTTPClientType<TestHTTPSession, TestHTTPRequest, Poco::Net::HTTPResponse>;
 
 TEST_CASE("HTTPClient get", "[HTTPClient]")
 {
@@ -104,9 +114,17 @@ TEST_CASE("HTTPClient get", "[HTTPClient]")
     auto const* uri = "http://server.com:80/test";
     auto resonse = TesteeT::get(uri);
 
-    REQUIRE(resonse.get_status() == expected_status);
-    REQUIRE(resonse.get_reason() == expected_reason);
-    REQUIRE(resonse.get_response_body() == expected_response);
+    REQUIRE(resonse.status() == expected_status);
+    REQUIRE(resonse.reason() == expected_reason);
+    REQUIRE(resonse.response_body() == expected_response);
+  }
+
+  SECTION("Throws an HTTPClientException when Session throws exception")
+  {
+    TestHTTPSession::set_throw_exception();
+
+    auto const* uri = "http://server.com:80/test";
+    REQUIRE_THROWS_AS(TesteeT::get(uri), coronan::HTTPClientException);
   }
 }
 

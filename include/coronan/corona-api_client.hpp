@@ -2,9 +2,10 @@
 
 #include "coronan/corona-api_parser.hpp"
 #include "coronan/http_client.hpp"
-#include "coronan/ssl_initializer.hpp"
+#include "coronan/ssl_client.hpp"
 
-#include <algorithm>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <string>
 #include <vector>
 
@@ -14,65 +15,70 @@ namespace {
 constexpr auto corona_api_url = "https://corona-api.com";
 }
 
-using HTTPClient = HTTPClientT<Poco::Net::HTTPSClientSession,
-                               Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
+using HTTPClient = HTTPClientType<Poco::Net::HTTPSClientSession, Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
 
-template <typename ClientT> class CoronaAPIClientT
+/**
+ * A Client for retrieving data from https://corona-api.com.
+ */
+template <typename ClientType>
+class CoronaAPIClientType
 {
 public:
-  std::vector<CountryInfo> get_countries() const;
-  CountryData get_country_data(std::string_view country_code) const;
+  /**
+   *  Get the list of available countries
+   *  @return List of available countries with Covid-19 case data
+   */
+  std::vector<CountryInfo> request_countries() const;
+  /**
+   *  Get the covid-19 case data for a country
+   * @param country_code ISO 3166-1 alpha-2 Country Code
+   * @return Covid-19 case data for country <country_code>
+   */
+  CountryData request_country_data(std::string_view country_code) const;
 
 private:
   std::string const api_url = corona_api_url;
-  SSLClient::SSLClientPtr ssl =
-      SSLClient::create_with_accept_certificate_handler();
+  std::unique_ptr<SSLClient> ssl_client = SSLClient::create_with_accept_certificate_handler();
 };
 
-using CoronaAPIClient = CoronaAPIClientT<HTTPClient>;
+using CoronaAPIClient = CoronaAPIClientType<HTTPClient>;
 
-template <typename ClientT>
-std::vector<CountryInfo> CoronaAPIClientT<ClientT>::get_countries() const
+namespace {
+constexpr auto create_exception_msg = [](auto const& url, auto const& response) {
+  return std::string{"Error fetching data from url \""} + url + std::string{"\".\n\n Response status: "} +
+         response.reason() + std::string{" ("} + std::to_string(response.status()) + std::string{")."};
+};
+}
+
+template <typename ClientType>
+std::vector<CountryInfo> CoronaAPIClientType<ClientType>::request_countries() const
 {
   auto const countries_url = api_url + std::string{"/countries"};
-  if (auto const http_response = ClientT::get(countries_url);
-      http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
+  auto const http_response = ClientType::get(countries_url);
+  if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
   {
-    return coronan::api_parser::parse_countries(
-               http_response.get_response_body())
-        .countries;
+    return coronan::api_parser::parse_countries(http_response.response_body());
   }
   else
   {
-    auto const exception_msg =
-        std::string{"Error fetching data from url \""} + countries_url +
-        std::string{"\".\n\n Response status: "} + http_response.get_reason() +
-        std::string{" ("} + std::to_string(http_response.get_status()) +
-        std::string{")."};
+    auto const exception_msg = create_exception_msg(countries_url, http_response);
     throw HTTPClientException{exception_msg};
   }
 }
 
-template <typename ClientT>
-CountryData
-CoronaAPIClientT<ClientT>::get_country_data(std::string_view country_code) const
+template <typename ClientType>
+CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_code) const
 {
-  auto const countries_url =
-      api_url + std::string{"/countries/"} + std::string{country_code};
-  if (auto const http_response = ClientT::get(countries_url);
-      http_response.get_status() == Poco::Net::HTTPResponse::HTTP_OK)
+  auto const country_url = api_url + std::string{"/countries/"} + std::string{country_code};
+  auto const http_response = ClientType::get(country_url);
+  if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
 
   {
-    return coronan::api_parser::parse_country(
-        http_response.get_response_body());
+    return coronan::api_parser::parse_country(http_response.response_body());
   }
   else
   {
-    auto const exception_msg =
-        std::string{"Error fetching data from url \""} + countries_url +
-        std::string{"\".\n\n Response status: "} + http_response.get_reason() +
-        std::string{" ("} + std::to_string(http_response.get_status()) +
-        std::string{")."};
+    auto const exception_msg = create_exception_msg(country_url, http_response);
     throw HTTPClientException{exception_msg};
   }
 }

@@ -93,7 +93,10 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QTableWidget" name="overviewTable">
+           <widget class="QTableView" name="overviewTable">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
               <horstretch>0</horstretch>
@@ -138,7 +141,7 @@
             </property>
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
+            </property>            
             <property name="tabKeyNavigation">
              <bool>false</bool>
             </property>
@@ -169,32 +172,12 @@
             <property name="cornerButtonEnabled">
              <bool>false</bool>
             </property>
-            <property name="rowCount">
-             <number>6</number>
-            </property>
-            <property name="columnCount">
-             <number>2</number>
-            </property>
             <attribute name="horizontalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="horizontalHeaderHighlightSections">
              <bool>false</bool>
             </attribute>
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
             </attribute>
-            <attribute name="verticalHeaderHighlightSections">
-             <bool>false</bool>
-            </attribute>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <column/>
-            <column/>
            </widget>
           </item>
          </layout>
@@ -207,8 +190,7 @@
   </layout>
  </widget>
  <resources/>
- <connections>
- </connections>
+ <connections/>
  <slots>
   <slot>update_ui()</slot>
  </slots>

@@ -5,15 +5,9 @@ project(
   VERSION 0.1
   LANGUAGES CXX)
 
-if(CONAN_CATCH2_ROOT_DEBUG)
-  include(${CONAN_CATCH2_ROOT_DEBUG}/lib/cmake/Catch2/Catch.cmake)
-else()
-  include(${CONAN_CATCH2_ROOT}/lib/cmake/Catch2/Catch.cmake)
-endif()
-
 add_executable(unittests ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
-add_executable(coronan::UnitTest ALIAS unittests)
+add_executable(coronan::unittests ALIAS unittests)
 
 target_sources(
   unittests
@@ -21,12 +15,17 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/corona-api_json_parser_test.cpp
           ${CMAKE_CURRENT_LIST_DIR}/corona-api_client_test.cpp)
 
+find_package(Catch2 REQUIRED CONFIG)
+
 target_link_libraries(
   unittests
-  PRIVATE coronan::coronan_lib
-  PRIVATE CONAN_PKG::catch2
+  PRIVATE Catch2::Catch2
+  PRIVATE coronan::library
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options)
+
+include(CTest)
+include(Catch)
 
 catch_discover_tests(
   unittests
@@ -41,4 +40,18 @@ catch_discover_tests(
   OUTPUT_SUFFIX
   .xml)
 
-add_custom_target(run_unittests ALL COMMAND $<TARGET_FILE:coronan::UnitTest>)
+add_custom_target(
+  run_unittests ALL
+  COMMAND $<TARGET_FILE:coronan::unittests>
+  COMMENT "Run unittests")
+
+find_package(Gcovr)
+if(ENABLE_COVERAGE AND Gcovr_FOUND)
+  add_custom_target(
+    report_coverage ALL
+    DEPENDS run_unittests
+    COMMAND
+      ${GCOVR_EXECUTABLE} -r ${CMAKE_SOURCE_DIR} -e ".*apps.*" -e ".*tests.*"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Report coverage")
+endif()

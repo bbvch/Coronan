@@ -25,7 +25,7 @@ format:
     line_width: 80
     _help_tab_size:
         - How many spaces to tab for indent
-    tab_size: 2
+    tab_size: 4
     _help_max_subgroups_hwrap:
         - If an argument group contains more than this many sub-groups
         - (parg or kwarg groups) then force it to a vertical layout.

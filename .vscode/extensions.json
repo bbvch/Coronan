@@ -1,0 +1,12 @@
+{
+	"recommendations": [
+		"ms-vscode.cpptools",
+		"ms-vscode.cmake-tools",
+		"webfreak.debug",
+		"matepek.vscode-catch2-test-adapter",
+		"jnoortheen.nix-ide",
+		"notskm.clang-tidy",
+		"xaver.clang-format"
+	],
+	"unwantedRecommendations": []
+}

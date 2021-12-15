@@ -5,25 +5,24 @@ project(
   VERSION 0.2.0
   LANGUAGES CXX)
 
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
+add_executable(coronan_cli ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
-add_executable(coronan::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME
-                                                                    coronan)
+add_executable(coronan::coronan_cli ALIAS coronan_cli)
+set_target_properties(coronan_cli PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME
+                                                                coronan)
+find_package(lyra REQUIRED CONFIG)
+find_package(fmt REQUIRED CONFIG)
 
 target_link_libraries(
-  ${PROJECT_NAME}
-  PRIVATE coronan::coronan_lib
-  PRIVATE CONAN_PKG::lyra
-  PRIVATE CONAN_PKG::fmt
+  coronan_cli
+  PRIVATE bfg::lyra
+  PRIVATE fmt::fmt
+  PRIVATE coronan::library
   PRIVATE coronan::compile_warnings
   PRIVATE coronan::compile_options)
 
 include(StaticAnalyzers)
-enable_static_analysis(${PROJECT_NAME})
+enable_static_analysis(coronan_cli)
 
-install(
-  TARGETS coronan_cli
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS coronan_cli RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                                    COMPONENT Coronan_Runtime_CLI)

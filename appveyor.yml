@@ -3,28 +3,35 @@ image:
     - Visual Studio 2019
 clone_folder: c:\projects\coronan
 cache:
-    - c:\Users\appveyor\.conan
-    - c:\.conan
+    - c:\Users\appveyor\.conan -> cmake/Conan.cmake
+    - c:\.conan -> cmake/Conan.cmake
+    - c:\ProgramData\chocolatey\lib -> appveyor.yml
+    - c:\Users\appveyor\appdata\local\pip\cache -> py-requirements.txt
 
 environment:
     PYTHON: c:\Python39-x64\python.exe
     Qt5_DIR: c:\Qt\5.15.2\msvc2019_64
 
-init:
+install:
     - cmd: |-
+          choco install doxygen.install
           set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Python39\Scripts
-          "%PYTHON%" -m pip install --upgrade pip
-          "%PYTHON%" -m pip install --user conan
+          "%PYTHON%" -m pip install --user -r %APPVEYOR_BUILD_FOLDER%\py-requirements.txt
 
 before_build:
     - cmd: |-
           mkdir build
           cd build
-          cmake -S c:\projects\coronan -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release
+          cmake -S %APPVEYOR_BUILD_FOLDER% -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release
 
 build_script:
     - cmd: |-
-          cmake --build . --config "Release"
+          cmake --build . --parallel 16 --config Release --clean-first --target docs package
 
 test_script:
     - cmd: ctest -C Debug
+
+artifacts:
+    - path: \build\Coronan-*.msi
+      name: Coronan_installer
+      type: File

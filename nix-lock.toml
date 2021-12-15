@@ -4,6 +4,6 @@ rev = "cd63096d6d887d689543a0b97743d28995bc9bc3"
 sha256 = "1wg61h4gndm3vcprdcg7rc4s1v3jkm5xd7lw8r2f67w502y94gcy"
 
 [cmake]
-ref = "3.20.1"
-rev = "3.20.1"
-sha256 = "1c1mw3gph5j0bacaf380050p4bzmswhs1mqxr43dz082n2whh61z"
+ref = "3.21.4"
+rev = "3.21.4"
+sha256 = "d9570a95c215f4c9886dd0f0564ca4ef8d18c30750f157238ea12669c2985978"
