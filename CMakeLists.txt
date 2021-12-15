@@ -55,11 +55,17 @@ endif()
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" OFF)
 if(ENABLE_PCH)
+
+  if(ENABLE_CLANG_TIDY)
+    message(
+      WARNING
+        "Using ENABLE_CLANG_TIDY together with ENABLE_PCH will give compiler errors."
+    )
+  endif(ENABLE_CLANG_TIDY)
   # This sets a global PCH parameter, each project will build its own PCH, which
   # is a good idea if any #define's change
   #
-  target_precompile_headers(project_options INTERFACE <vector> <string> <map>
-                            <utility>)
+  target_precompile_headers(project_options INTERFACE <vector> <string>)
 endif()
 
 include(cmake/Conan.cmake)
