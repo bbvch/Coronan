@@ -136,7 +136,7 @@ It reads the current data of Corona (Covid-19) cases for a country from the <a c
 <li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_UNDEFINED_BEHAVIOR</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">undefined behavior sanitizer</a>. <em>Default: ```OFF```</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_THREAD</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/ThreadSanitizer.html">thread sanitizer</a>. <em>Default: ```OFF```</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_MEMORY</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/MemorySanitizer.html">memory sanitizer</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_IPO</span></code>: Enable Interprocedural Optimization, aka <a class="reference external" href="https://llvm.org/docs/LinkTimeOptimization.html">Link Time Optimization (LTO)</a>. <em>Default: ```OFF```</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_IPO</span></code>: Enable intermodular optimization, aka <a class="reference external" href="https://llvm.org/docs/LinkTimeOptimization.html">Link Time Optimization (LTO)</a>. <em>Default: ```OFF```</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_CPPCHECK</span></code>: Enable static analysis with <a class="reference external" href="http://cppcheck.sourceforge.net/">cppcheck</a>. <em>Default: ``ON`` if cppcheck is installed ``OFF`` otherwise.</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_CLANG_TIDY</span></code>: Enable static analysis with <a class="reference external" href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a>. <em>Default: ``ON`` if clang-tidy is installed ``OFF`` otherwise.</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_INCLUDE_WHAT_YOU_USE</span></code>: Enable static analysis with <a class="reference external" href="https://include-what-you-use.org/">include-what-you-use</a>. <em>Default: ``ON`` if include-what-you-use is installed ``OFF`` otherwise.</em></p></li>
@@ -146,7 +146,7 @@ It reads the current data of Corona (Covid-19) cases for a country from the <a c
 </section>
 <section id="pre-commit-hooks">
 <h2>Pre-Commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Permalink to this headline"></a></h2>
-<p>The following <a class="reference external" href="https://github.com/pre-commit/pre-commit-hooks">Pre-commit-hooks</a> are used to check and format files before commiting:</p>
+<p>The following <a class="reference external" href="https://github.com/pre-commit/pre-commit-hooks">Pre-commit-hooks</a> are used to check and format files before committing:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">check-added-large-files</span></code>: Prevent giant files (&gt; 500kB) from being committed.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">fix-byte-order-marker</span></code>: Forbid files which have a UTF-8 byte-order marker</p></li>
@@ -165,11 +165,11 @@ It reads the current data of Corona (Covid-19) cases for a country from the <a c
 <li><p><code class="docutils literal notranslate"><span class="pre">yamllint</span></code>: Linter for yaml files</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">yamlfmt</span></code>: Format yaml files</p></li>
 </ul>
-<p>Please install pre-commit hooks before commiting any code.</p>
+<p>Please install pre-commit hooks before committing any code.</p>
 </section>
 <section id="direnv-nix">
 <h2>direnv &amp; Nix<a class="headerlink" href="#direnv-nix" title="Permalink to this headline"></a></h2>
-<p>If you have <a class="reference external" href="https://direnv.net/">direnv</a> and <a class="reference external" href="https://nixos.org/">nix</a> installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefare clang (clang_11) change it in <code class="docutils literal notranslate"><span class="pre">.envrc</span></code></p>
+<p>If you have <a class="reference external" href="https://direnv.net/">direnv</a> and <a class="reference external" href="https://nixos.org/">nix</a> installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefer clang (clang_11) change it in <code class="docutils literal notranslate"><span class="pre">.envrc</span></code></p>
 <p>When using nix. The most resent cmake is available and therefore configure and build <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">CMakePresets</a> can be used.</p>
 </section>
 </section>
