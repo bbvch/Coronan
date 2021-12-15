@@ -115,19 +115,6 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
-            - name: Conan Cache
-              if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
-              uses: actions/cache@v2
-              with:
-                  path: ~/.conan/data
-                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Conan Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      C:/Users/runneradmin/.conan/data
-                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Install dependencies (Linux)
               if: runner.os == 'Linux'
               run: |
@@ -144,7 +131,7 @@ jobs:
               with:
                   path: |
                       c:/ProgramData/chocolatey/lib
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/ci.yml') }}
+                  key: chocolatey-${{ matrix.name }}-${{ hashFiles('**/ci.yml') }}
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
@@ -189,6 +176,19 @@ jobs:
                   target: desktop
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
+            - name: Conan Cache
+              if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
+              uses: actions/cache@v2
+              with:
+                  path: ~/.conan/data
+                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Conan Cache (Windows)
+              if: runner.os == 'Windows'
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      C:/Users/runneradmin/.conan/data
+                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Set conan compiler env (gcc)
               if: matrix.ccompiler == 'gcc'
               run: |
