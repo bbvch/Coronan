@@ -14,7 +14,7 @@ jobs:
             TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
             PROJECT: bbvch%2FCoronan
             EMAIL: estermann.michel@gmail.com
-            CERT: ca-coverity.pem
+            CA_CERT: ca-coverity.pem
         steps:
             - uses: actions/checkout@v2
             - name: Install dependencies
@@ -42,11 +42,11 @@ jobs:
               run: cmake -S . -B ./build -G "Ninja" -DCMAKE_BUILD_TYPE=Debug
             - name: Install Coverity scan certificate
               run: |
-                  echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | tee ${CERT}
+                  echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | tee ${CA_CERT}
               shell: bash
             - name: Download Coverity Build Tool
               run: |
-                  wget --ca-certificate=${CERT} -nv \
+                  wget --ca-certificate=${CA_CERT} -nv \
                     --post-data "token=${TOKEN}&project=${PROJECT}" \
                     -O cov-analysis.tar.gz \
                     https://scan.coverity.com/download/cxx/linux64
@@ -62,7 +62,7 @@ jobs:
               run: |
                   tar -czvf cov-int.tgz cov-int
                   curl \
-                    --cert ${CERT} \
+                    --cacert ${CA_CERT} \
                     --form project="${PROJECT}" \
                     --form token="${TOKEN}" \
                     --form email="${EMAIL}" \
