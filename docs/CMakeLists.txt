@@ -1,14 +1,3 @@
-doxygen_add_docs(
-  doxygen
-  coronan/http_client.hpp
-  coronan/corona-api_parser.hpp
-  coronan/corona-api_client.hpp
-  coronan/ssl_client.hpp
-  WORKING_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/include"
-  COMMENT
-  "Generating API documentation with Doxygen")
-
 find_package(Sphinx)
 if(Sphinx_FOUND)
   option(ENABLE_SPHINX "Enable Sphinx doc builds of source" ON)
@@ -38,6 +27,18 @@ if(Sphinx_FOUND)
     message(STATUS "Sphinx not found.")
   endif()
 endif()
+
+# Must be defined after setting the DOXYGEN_GENERATE_* flags
+doxygen_add_docs(
+  doxygen
+  coronan/http_client.hpp
+  coronan/corona-api_parser.hpp
+  coronan/corona-api_client.hpp
+  coronan/ssl_client.hpp
+  WORKING_DIRECTORY
+  "${PROJECT_SOURCE_DIR}/include"
+  COMMENT
+  "Generating API documentation with Doxygen")
 
 include(GNUInstallDirs)
 
