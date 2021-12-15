@@ -125,6 +125,32 @@ jobs:
               if: runner.os == 'macOS'
               run: |
                   brew install ninja doxygen
+            - name: Install dependencies (Windows)
+              if: runner.os == 'Windows'
+              run: |
+                  choco install ninja cmake doxygen.install
+            - name: Python pip Cache (Linux)
+              if: runner.os == 'Linux'
+              uses: actions/cache@v2
+              with:
+                  path: ~/.cache/pip
+                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
+            - name: Python pip Cache (MacOS)
+              if: runner.os == 'macOS'
+              uses: actions/cache@v2
+              with:
+                  path: ~/Library/Caches/pip
+                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
+            - name: Python pip Cache (Windows)
+              if: runner.os == 'Windows'
+              uses: actions/cache@v2
+              with:
+                  path: C:/Users/runneradmin/appdata/local/pip/cache
+                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
+            - name: Install python dependencies
+              run: |
+                  python3 -m pip install --upgrade pip
+                  python3 -m pip install -r py-requirements.txt
             - name: Install Qt (MacOS)
               if: runner.os == 'macOS'
               uses: jurplel/install-qt-action@v2
@@ -134,10 +160,6 @@ jobs:
                   target: desktop
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
-            - name: Install dependencies (Windows)
-              if: runner.os == 'Windows'
-              run: |
-                  choco install ninja cmake doxygen.install
             - name: Install Qt (Windows)
               if: runner.os == 'Windows'
               uses: jurplel/install-qt-action@v2
@@ -147,30 +169,19 @@ jobs:
                   target: desktop
                   modules: qtcharts
                   tools: tools_ifw,4.0,qt.tools.ifw.40
-            - name: Cache (Linux)
-              if: runner.os == 'Linux'
+            - name: Conan Cache
+              if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
               uses: actions/cache@v2
               with:
                   path: ~/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Cache (macOS)
-              if: runner.os == 'macOS'
-              uses: actions/cache@v2
-              with:
-                  path: ~/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Cache (Windows)
+                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
+            - name: Conan Cache (Windows)
               if: runner.os == 'Windows'
               uses: actions/cache@v2
               with:
                   path: |
-                      C:/ProgramData/chocolatey/lib
                       C:/Users/runneradmin/.conan/data
-                  key: cache-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Install python dependencies
-              run: |
-                  python3 -m pip install -r py-requirements.txt
-                  conan --version
+                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Set conan compiler env (gcc)
               if: matrix.ccompiler == 'gcc'
               run: |
