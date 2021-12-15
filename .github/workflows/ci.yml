@@ -125,13 +125,6 @@ jobs:
               if: runner.os == 'macOS'
               run: |
                   brew install ninja doxygen
-            - name: Chocolatey Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      c:/ProgramData/chocolatey/lib
-                  key: chocolatey-${{ matrix.name }}-${{ hashFiles('**/ci.yml') }}
             - name: Install dependencies (Windows)
               if: runner.os == 'Windows'
               run: |
