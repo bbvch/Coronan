@@ -83,19 +83,51 @@
 <h2>Data Structs<a class="headerlink" href="#data-structs" title="Permalink to this headline"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>doxygenstruct: Cannot find file: /home/runner/work/Coronan/Coronan/build/docs/xml/index.xml</p>
+<p>doxygenstruct: Cannot find class “coronan::CountryInfo” in doxygen xml output for project “Coronan” from directory: /home/runner/work/Coronan/Coronan/build/docs/xml</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>doxygenstruct: Cannot find file: /home/runner/work/Coronan/Coronan/build/docs/xml/index.xml</p>
+<p>doxygenstruct: Cannot find class “coronan::CountryData” in doxygen xml output for project “Coronan” from directory: /home/runner/work/Coronan/Coronan/build/docs/xml</p>
 </div>
 </section>
 <section id="parser">
 <h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline"></a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>doxygennamespace: Cannot find file: /home/runner/work/Coronan/Coronan/build/docs/xml/index.xml</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parserE">
+<span id="_CPPv3N7coronan10api_parserE"></span><span id="_CPPv2N7coronan10api_parserE"></span><span id="coronan::api_parser"></span><span class="target" id="namespacecoronan_1_1api__parser"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">api_parser</span></span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parserE" title="Permalink to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser13parse_countryERKNSt6stringE">
+<span id="_CPPv3N7coronan10api_parser13parse_countryERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser13parse_countryERKNSt6stringE"></span><span id="coronan::api_parser::parse_country__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1aa67cfb1a38338a211ad29e73dd433be7"></span><span class="n"><span class="pre">CountryData</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_country</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser13parse_countryERKNSt6stringE" title="Permalink to this definition"></a><br /></dt>
+<dd><p>Parse a json string for country data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://about-corona.net/documentation">https://about-corona.net/documentation</a> </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parsed Covid-19 case data </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser15parse_countriesERKNSt6stringE">
+<span id="_CPPv3N7coronan10api_parser15parse_countriesERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser15parse_countriesERKNSt6stringE"></span><span id="coronan::api_parser::parse_countries__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1aa5b270b17fb8970703aa53e4af9ea679"></span><span class="n"><span class="pre">CountryListObject</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_countries</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser15parse_countriesERKNSt6stringE" title="Permalink to this definition"></a><br /></dt>
+<dd><p>Parse a json string for a list of country information </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://about-corona.net/documentation">https://about-corona.net/documentation</a> </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Country list parsed </p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
+</dd></dl>
+
 </section>
 </section>
 
