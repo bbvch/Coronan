@@ -3,7 +3,7 @@ name: Coverity Scan
 
 on:
     push:
-        branches: [coverity_scan]
+        branches: [master]
 
 jobs:
     coverity-scan:
