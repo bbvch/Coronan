@@ -15,8 +15,15 @@ namespace coronan {
 class HTTPClientException : public std::exception
 {
 public:
+  /**
+   *  Constructor
+   * @param exception_msg exception message
+   */
   explicit HTTPClientException(std::string exception_msg);
   HTTPClientException(HTTPClientException const&) = delete;
+  /**
+   *  Return the exception message
+   */
   char const* what() const noexcept override;
 
 private:

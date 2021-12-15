@@ -33,6 +33,7 @@ doxygen_add_docs(
   doxygen
   coronan/http_client.hpp
   coronan/corona-api_parser.hpp
+  coronan/corona-api_datatypes.hpp
   coronan/corona-api_client.hpp
   coronan/ssl_client.hpp
   WORKING_DIRECTORY

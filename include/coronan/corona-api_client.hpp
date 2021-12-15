@@ -32,7 +32,7 @@ public:
   /**
    *  Get the covid-19 case data for a country
    * @param country_code ISO 3166-1 alpha-2 Country Code
-   * @return Covid-19 case data for country <country_code>
+   * @return Covid-19 case data for country @p country_code
    */
   CountryData request_country_data(std::string_view country_code) const;
 
