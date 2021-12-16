@@ -17,6 +17,7 @@
 [![Codacy Security Scan](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml)
 [![CodeQL Analysis](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml)
 [![Coverity Scan](https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml)
+[![Coverity Scan](https://img.shields.io/coverity/scan/22882.svg)](https://scan.coverity.com/projects/bbvch-coronan)
 
 [![codecov](https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg)](https://codecov.io/gh/bbvch/Coronan)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/96483b3b9dff405195f7ef0c9c823484)](https://www.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=github.com&utm_medium=referral&utm_content=bbvch/Coronan&utm_campaign=Badge_Coverage)
