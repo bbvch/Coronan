@@ -1,5 +1,5 @@
 ---
-name: CI
+name: Linux Builds
 
 on:
     push:
@@ -72,42 +72,6 @@ jobs:
                       clang-tidy: clang-tidy-11
                       generators: Ninja
                       coverage: OFF
-                    - name: ubuntu-20.04-clang-12
-                      os: ubuntu-20.04
-                      build_type: Release
-                      compiler: clang++-12
-                      ccompiler: clang-12
-                      clang-tidy: clang-tidy-12
-                      generators: Ninja
-                      coverage: OFF
-                    - name: windows-VS-2019
-                      os: windows-2019
-                      build_type: Release
-                      compiler: cl
-                      ccompiler: cl
-                      generators: Visual Studio 16 2019
-                      coverage: OFF
-                    - name: windows-VS-2022
-                      os: windows-2022
-                      build_type: Release
-                      compiler: cl
-                      ccompiler: cl
-                      generators: Visual Studio 17 2022
-                      coverage: OFF
-                    - name: macos-10.15-clang
-                      os: macos-10.15
-                      build_type: Release
-                      compiler: clang++
-                      ccompiler: clang
-                      generators: Unix Makefiles
-                      coverage: OFF
-                    - name: macos-11-clang
-                      os: macos-11
-                      build_type: Release
-                      compiler: clang++
-                      ccompiler: clang
-                      generators: Unix Makefiles
-                      coverage: OFF
 
         env:
             CXX: ${{ matrix.compiler }}
@@ -115,72 +79,24 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
-            - name: Install dependencies (Linux)
-              if: runner.os == 'Linux'
+            - name: Install dependencies
               run: |
                   sudo apt-get update
                   sudo apt-get install -y --no-install-recommends ninja-build ${{ matrix.clang-tidy }} python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen lcov
-            - name: Install dependencies (macOS)
-              if: runner.os == 'macOS'
-              run: |
-                  brew install ninja doxygen
-            - name: Install dependencies (Windows)
-              if: runner.os == 'Windows'
-              run: |
-                  choco install ninja cmake doxygen.install
-            - name: Python pip Cache (Linux)
-              if: runner.os == 'Linux'
+            - name: Python pip Cache
               uses: actions/cache@v2
               with:
                   path: ~/.cache/pip
-                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
-            - name: Python pip Cache (MacOS)
-              if: runner.os == 'macOS'
-              uses: actions/cache@v2
-              with:
-                  path: ~/Library/Caches/pip
-                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
-            - name: Python pip Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
-              with:
-                  path: C:/Users/runneradmin/appdata/local/pip/cache
                   key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
             - name: Install python dependencies
               run: |
                   python3 -m pip install --upgrade pip
                   python3 -m pip install -r py-requirements.txt
-            - name: Install Qt (MacOS)
-              if: runner.os == 'macOS'
-              uses: jurplel/install-qt-action@v2
-              with:
-                  version: 5.15.2
-                  host: mac
-                  target: desktop
-                  modules: qtcharts
-                  tools: tools_ifw,4.0,qt.tools.ifw.40
-            - name: Install Qt (Windows)
-              if: runner.os == 'Windows'
-              uses: jurplel/install-qt-action@v2
-              with:
-                  version: 5.15.2
-                  host: windows
-                  target: desktop
-                  modules: qtcharts
-                  tools: tools_ifw,4.0,qt.tools.ifw.40
             - name: Conan Cache
-              if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
               uses: actions/cache@v2
               with:
                   path: ~/.conan/data
-                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Conan Cache (Windows)
-              if: runner.os == 'Windows'
-              uses: actions/cache@v2
-              with:
-                  path: |
-                      C:/Users/runneradmin/.conan/data
                   key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
             - name: Set conan compiler env (gcc)
               if: matrix.ccompiler == 'gcc'
@@ -213,7 +129,5 @@ jobs:
               with:
                   name: ${{ matrix.name }}-artifacts
                   path: |
-                      ./build/Coronan-*.zip
-                      ./build/Coronan-*.msi
+                      ./build/Coronan-*.deb
                       ./build/Coronan-*.tar.gz
-                      ./build/Coronan-*.pkg
