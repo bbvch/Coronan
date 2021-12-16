@@ -3,16 +3,20 @@
 
 
 [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
-[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
-[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
+[![Linux Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml)
+[![Nix Builds](https://github.com/bbvch/Coronan/actions/workflows/nix.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/nix.yml)
 
-[![CI](https://github.com/bbvch/Coronan/actions/workflows/ci.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci.yml)
-[![API documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://bbvch.github.io/Coronan)
-[![Nix Build](https://github.com/bbvch/Coronan/actions/workflows/nix.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/nix.yml)
-[![Codacy Security Scan](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml)
-[![CodeQL](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml)
-[![Coverity Scan](https://img.shields.io/coverity/scan/22882.svg)](https://scan.coverity.com/projects/bbvch-coronan)
+[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
+[![MacOS Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml)
+
+[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
+[![Windows Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml)
 [![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
+
+[![API Documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml)
+[![Codacy Security Scan](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml)
+[![CodeQL Analysis](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml)
+[![Coverity Scan](https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml)
 
 [![codecov](https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg)](https://codecov.io/gh/bbvch/Coronan)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/96483b3b9dff405195f7ef0c9c823484)](https://www.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=github.com&utm_medium=referral&utm_content=bbvch/Coronan&utm_campaign=Badge_Coverage)
