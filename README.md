@@ -32,6 +32,10 @@
 
 # Documentation for Co\[ro\]nan
 
+__IMPORTANT NOTE__
+
+___[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer. Therefore this application does not work properly anymore. An Alternative API must be looked for.___
+
 Co\[ro\]nan is an example C++17 Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
 It reads the current data of Corona (Covid-19) cases for a country from the [The About Corona Covid-19 API](https://about-corona.net/documentation).
 
