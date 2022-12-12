@@ -141,7 +141,7 @@
             </property>
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
-            </property>            
+            </property>
             <property name="tabKeyNavigation">
              <bool>false</bool>
             </property>
