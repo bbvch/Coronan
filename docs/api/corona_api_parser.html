@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,9 +67,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Coronan API</a> &raquo;</li>
-      <li>Corona API JSON Parser</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Coronan API</a></li>
+      <li class="breadcrumb-item active">Corona API JSON Parser</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/corona_api_parser.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -78,12 +80,12 @@
            <div itemprop="articleBody">
              
   <section id="corona-api-json-parser">
-<span id="api-coronan-api-parser"></span><h1>Corona API JSON Parser<a class="headerlink" href="#corona-api-json-parser" title="Permalink to this headline"></a></h1>
+<span id="api-coronan-api-parser"></span><h1>Corona API JSON Parser<a class="headerlink" href="#corona-api-json-parser" title="Permalink to this heading"></a></h1>
 <section id="data-structs">
-<h2>Data Structs<a class="headerlink" href="#data-structs" title="Permalink to this headline"></a></h2>
+<h2>Data Structs<a class="headerlink" href="#data-structs" title="Permalink to this heading"></a></h2>
 <dl class="cpp struct">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryInfoE">
-<span id="_CPPv3N7coronan11CountryInfoE"></span><span id="_CPPv2N7coronan11CountryInfoE"></span><span id="coronan::CountryInfo"></span><span class="target" id="structcoronan_1_1CountryInfo"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">CountryInfo</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryInfoE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan11CountryInfoE"></span><span id="_CPPv2N7coronan11CountryInfoE"></span><span id="coronan::CountryInfo"></span><span class="target" id="structcoronan_1_1CountryInfo"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CountryInfo</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryInfoE" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Holds general country information </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
@@ -110,7 +112,7 @@
 
 <dl class="cpp struct">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryDataE">
-<span id="_CPPv3N7coronan11CountryDataE"></span><span id="_CPPv2N7coronan11CountryDataE"></span><span id="coronan::CountryData"></span><span class="target" id="structcoronan_1_1CountryData"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">CountryData</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryDataE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan11CountryDataE"></span><span id="_CPPv2N7coronan11CountryDataE"></span><span id="coronan::CountryData"></span><span class="target" id="structcoronan_1_1CountryData"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CountryData</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryDataE" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Holds the covid-19 case data of a single country </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
@@ -290,10 +292,10 @@
 
 </section>
 <section id="parser">
-<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline"></a></h2>
+<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this heading"></a></h2>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parserE">
-<span id="_CPPv3N7coronan10api_parserE"></span><span id="_CPPv2N7coronan10api_parserE"></span><span id="coronan::api_parser"></span><span class="target" id="namespacecoronan_1_1api__parser"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">api_parser</span></span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parserE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan10api_parserE"></span><span id="_CPPv2N7coronan10api_parserE"></span><span id="coronan::api_parser"></span><span class="target" id="namespacecoronan_1_1api__parser"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">api_parser</span></span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parserE" title="Permalink to this definition"></a><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
 <dl class="cpp function">

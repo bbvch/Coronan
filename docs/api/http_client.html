@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -66,9 +68,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Coronan API</a> &raquo;</li>
-      <li>HTTP Client</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Coronan API</a></li>
+      <li class="breadcrumb-item active">HTTP Client</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/http_client.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -79,12 +81,12 @@
            <div itemprop="articleBody">
              
   <section id="http-client">
-<span id="api-http-client"></span><h1>HTTP Client<a class="headerlink" href="#http-client" title="Permalink to this headline"></a></h1>
+<span id="api-http-client"></span><h1>HTTP Client<a class="headerlink" href="#http-client" title="Permalink to this heading"></a></h1>
 <section id="exception">
-<h2>Exception<a class="headerlink" href="#exception" title="Permalink to this headline"></a></h2>
+<h2>Exception<a class="headerlink" href="#exception" title="Permalink to this heading"></a></h2>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan19HTTPClientExceptionE">
-<span id="_CPPv3N7coronan19HTTPClientExceptionE"></span><span id="_CPPv2N7coronan19HTTPClientExceptionE"></span><span id="coronan::HTTPClientException"></span><span class="target" id="classcoronan_1_1HTTPClientException"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">HTTPClientException</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">exception</span></span><a class="headerlink" href="#_CPPv4N7coronan19HTTPClientExceptionE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan19HTTPClientExceptionE"></span><span id="_CPPv2N7coronan19HTTPClientExceptionE"></span><span id="coronan::HTTPClientException"></span><span class="target" id="classcoronan_1_1HTTPClientException"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPClientException</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">exception</span></span><a class="headerlink" href="#_CPPv4N7coronan19HTTPClientExceptionE" title="Permalink to this definition"></a><br /></dt>
 <dd><p>A <a class="reference internal" href="#classcoronan_1_1HTTPClientException"><span class="std std-ref">HTTPClientException</span></a> including Http get and Net exceptions. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
@@ -115,10 +117,10 @@
 
 </section>
 <section id="response">
-<h2>Response<a class="headerlink" href="#response" title="Permalink to this headline"></a></h2>
+<h2>Response<a class="headerlink" href="#response" title="Permalink to this heading"></a></h2>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan12HTTPResponseE">
-<span id="_CPPv3N7coronan12HTTPResponseE"></span><span id="_CPPv2N7coronan12HTTPResponseE"></span><span id="coronan::HTTPResponse"></span><span class="target" id="classcoronan_1_1HTTPResponse"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">HTTPResponse</span></span></span><a class="headerlink" href="#_CPPv4N7coronan12HTTPResponseE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan12HTTPResponseE"></span><span id="_CPPv2N7coronan12HTTPResponseE"></span><span id="coronan::HTTPResponse"></span><span class="target" id="classcoronan_1_1HTTPResponse"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPResponse</span></span></span><a class="headerlink" href="#_CPPv4N7coronan12HTTPResponseE" title="Permalink to this definition"></a><br /></dt>
 <dd><p>A <a class="reference internal" href="#classcoronan_1_1HTTPResponse"><span class="std std-ref">HTTPResponse</span></a> containing response status and payload </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
@@ -159,10 +161,10 @@
 
 </section>
 <section id="client">
-<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline"></a></h2>
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this heading"></a></h2>
 <dl class="cpp struct">
 <dt class="sig sig-object cpp" id="_CPPv4I000EN7coronan14HTTPClientTypeE">
-<span id="_CPPv3I000EN7coronan14HTTPClientTypeE"></span><span id="_CPPv2I000EN7coronan14HTTPClientTypeE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SessionType</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPRequestType</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPResponseType</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structcoronan_1_1HTTPClientType"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">HTTPClientType</span></span></span><a class="headerlink" href="#_CPPv4I000EN7coronan14HTTPClientTypeE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3I000EN7coronan14HTTPClientTypeE"></span><span id="_CPPv2I000EN7coronan14HTTPClientTypeE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SessionType</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPRequestType</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPResponseType</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structcoronan_1_1HTTPClientType"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HTTPClientType</span></span></span><a class="headerlink" href="#_CPPv4I000EN7coronan14HTTPClientTypeE" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Simple Stateless HTTP Client </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
@@ -183,10 +185,10 @@
 </section>
 </section>
 <section id="ssl-client">
-<h1>SSL Client<a class="headerlink" href="#ssl-client" title="Permalink to this headline"></a></h1>
+<h1>SSL Client<a class="headerlink" href="#ssl-client" title="Permalink to this heading"></a></h1>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan9SSLClientE">
-<span id="_CPPv3N7coronan9SSLClientE"></span><span id="_CPPv2N7coronan9SSLClientE"></span><span id="coronan::SSLClient"></span><span class="target" id="classcoronan_1_1SSLClient"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">coronan</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">SSLClient</span></span></span><a class="headerlink" href="#_CPPv4N7coronan9SSLClientE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan9SSLClientE"></span><span id="_CPPv2N7coronan9SSLClientE"></span><span id="coronan::SSLClient"></span><span class="target" id="classcoronan_1_1SSLClient"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SSLClient</span></span></span><a class="headerlink" href="#_CPPv4N7coronan9SSLClientE" title="Permalink to this definition"></a><br /></dt>
 <dd><p>An RAII wrapper to initialize &amp; uninitialize the POCO::Net SSL stuff (Poco::Net::initializeSSL()) </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
