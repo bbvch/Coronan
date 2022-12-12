@@ -72,6 +72,54 @@ jobs:
                       clang-tidy: clang-tidy-11
                       generators: Ninja
                       coverage: OFF
+                    - name: ubuntu-20.04-clang-12
+                      os: ubuntu-20.04
+                      build_type: Release
+                      compiler: clang++-12
+                      ccompiler: clang-12
+                      clang-tidy: clang-tidy-12
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-22.04-clang-12
+                      os: ubuntu-22.04
+                      build_type: Release
+                      compiler: clang++-12
+                      ccompiler: clang-12
+                      clang-tidy: clang-tidy-12
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-22.04-clang-13
+                      os: ubuntu-22.04
+                      build_type: Release
+                      compiler: clang++-13
+                      ccompiler: clang-13
+                      clang-tidy: clang-tidy-13
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-22.04-clang-14
+                      os: ubuntu-22.04
+                      build_type: Release
+                      compiler: clang++-14
+                      ccompiler: clang-14
+                      clang-tidy: clang-tidy-14
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-22.04-gcc-11
+                      os: ubuntu-22.04
+                      build_type: Debug
+                      compiler: g++-11
+                      ccompiler: gcc-11
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-22.04-gcc-12
+                      os: ubuntu-22.04
+                      build_type: Debug
+                      compiler: g++-12
+                      ccompiler: gcc-12
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                      coverage: OFF
 
         env:
             CXX: ${{ matrix.compiler }}

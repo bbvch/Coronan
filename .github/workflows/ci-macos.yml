@@ -28,6 +28,12 @@ jobs:
                       compiler: clang++
                       ccompiler: clang
                       generators: Unix Makefiles
+                    - name: macos-12-clang
+                      os: macos-12
+                      build_type: Release
+                      compiler: clang++
+                      ccompiler: clang
+                      generators: Unix Makefiles
 
         env:
             CXX: ${{ matrix.compiler }}
