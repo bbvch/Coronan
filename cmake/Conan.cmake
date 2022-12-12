@@ -10,10 +10,10 @@ macro(run_conan)
         "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
     file(
       DOWNLOAD
-      "https://github.com/conan-io/cmake-conan/raw/release/0.17/conan.cmake"
+      "https://github.com/conan-io/cmake-conan/raw/release/0.18/conan.cmake"
       "${CMAKE_BINARY_DIR}/conan.cmake"
       EXPECTED_HASH
-        SHA256=3bef79da16c2e031dc429e1dac87a08b9226418b300ce004cc125a82687baeef
+        SHA256=5cdb3042632da3efff558924eecefd580a0e786863a857ca097c3d1d43df5dcd
       TLS_VERIFY ON)
   endif()
 
@@ -21,16 +21,16 @@ macro(run_conan)
 
   conan_cmake_configure(
     REQUIRES
-    poco/1.11.0
-    rapidjson/1.1.0
-    lyra/1.5.1
-    fmt/8.0.1
-    catch2/2.13.7
+    poco/1.12.4
+    rapidjson/cci.20220822
+    lyra/1.6.1
+    fmt/9.1.0
+    catch2/3.2.1
     GENERATORS
     cmake_find_package_multi
     OPTIONS
     poco:enable_mongodb=False
-    poco:enable_active_record=False
+    poco:enable_activerecord=False
     poco:enable_data=False
     poco:enable_data_sqlite=False
     poco:enable_data_mysql=False
