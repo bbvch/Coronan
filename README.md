@@ -106,6 +106,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
     * Mac OS X
       * 10.15 _(AppleClang 12)_
       * 11 _(AppleClang 13)_
+      * 12 _(AppleClang 14)_
 
     * Ubuntu 18.04
       * GCC 7 & 9
@@ -115,6 +116,10 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
       * GCC 9 & 10
       * Clang 10, 11 & 12
       * API Documentation Generation
+
+    * Ubuntu 22.04
+      * GCC 12
+      * Clang 12, 13 & 14
 
     * Windows
       * Visual Studio 2019
