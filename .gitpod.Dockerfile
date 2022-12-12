@@ -17,7 +17,7 @@ RUN apt-get -qq install -y --no-install-recommends software-properties-common  \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #install cmake
-RUN pip3 install cmake==3.25.1
+RUN pip3 install cmake==3.25.0
 
 # lcov and doxygen
 RUN apt-get update \
