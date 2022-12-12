@@ -1,4 +1,4 @@
-FROM gitpod/workspace-full-vnc:commit-f2d623ca9d270c2ce8560d2ca0f9ce71b105aff2
+FROM gitpod/workspace-full-vnc:2022-12-09-04-00-52
 
 # More information: https://www.gitpod.io/docs/config-docker/
 
@@ -17,21 +17,13 @@ RUN apt-get -qq install -y --no-install-recommends software-properties-common  \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #install cmake
-RUN pip3 install cmake==3.22.1
+RUN pip3 install cmake==3.25.1
 
 # lcov and doxygen
 RUN apt-get update \
  && apt-get -qq install -y --no-install-recommends lcov doxygen graphviz \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
-# install clang-11. gitpod/workspace-full-vnc has clang-13 installes which is not supported by conan yet.
-RUN apt-get update \
- && apt-get -qq install -y --no-install-recommends clang-11 clang-10 \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
- && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 100 \
- && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 100
 
 RUN apt-get update \
  && apt-get -qq install -y --no-install-recommends ninja-build \
@@ -41,21 +33,21 @@ RUN apt-get update \
 USER gitpod
 
 # conan
-RUN pip3 install conan==1.43 \
+RUN pip3 install conan==1.55.0 \
  && conan profile new default --detect
 
 # cmake-format
 RUN pip3 install cmake-format==0.6.13
 
 # gcovr
-RUN pip3 install gcovr==5.0
+RUN pip3 install gcovr==5.2
 
 # docu stuff
-RUN pip3 install sphinx==4.3.1
-RUN pip3 install sphinx_rtd_theme==1.0.0
-RUN pip3 install breathe==4.31.0
-RUN pip3 install m2r2==0.3.2
+RUN pip3 install sphinx==5.3.0
+RUN pip3 install sphinx_rtd_theme==1.1.1
+RUN pip3 install breathe==4.34.0
+RUN pip3 install m2r2==0.3.3
 
 # pre-commit
-RUN pip3 install pre-commit==2.16.0
+RUN pip3 install pre-commit==2.20.0
 RUN echo 'export PIP_USER=false' >> ~/.bashrc
