@@ -7,3 +7,4 @@ m2r2>=0.3.2
 gcovr>=5.0
 pre-commit>=2.16.0
 cmake-format>=0.6.13
+requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
