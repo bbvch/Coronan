@@ -4,11 +4,11 @@
 #include "coronan/ssl_context.hpp"
 
 #include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/NetSSL.h>
 #include <Poco/Net/SSLManager.h>
+#include <utility>
 
 namespace coronan {
-
-using Poco::Net::Context;
 
 SSLClient::SSLClient(Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler,
                      Poco::Net::Context::Ptr net_context)
@@ -33,7 +33,7 @@ SSLClient::create_with_accept_certificate_handler()
 {
   constexpr auto handle_errors_on_server_side = false;
 
-  Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler =
+  Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> const cert_handler =
       new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};
 
   // Using `new` to access a non-public constructor.

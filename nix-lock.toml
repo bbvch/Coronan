@@ -1,9 +1,9 @@
 [nixpkgs]
-ref = "20.09"
-rev = "cd63096d6d887d689543a0b97743d28995bc9bc3"
-sha256 = "1wg61h4gndm3vcprdcg7rc4s1v3jkm5xd7lw8r2f67w502y94gcy"
+ref = "24.11"
+rev = "63dacb46bf939521bdc93981b4cbb7ecb58427a0"
+sha256 = "1lr1h35prqkd1mkmzriwlpvxcb34kmhc9dnr48gkm8hh089hifmx"
 
 [cmake]
-ref = "3.21.4"
-rev = "3.21.4"
-sha256 = "d9570a95c215f4c9886dd0f0564ca4ef8d18c30750f157238ea12669c2985978"
+ref = "3.31.4"
+rev = "3.31.4"
+sha256 = "09bz1y5jr4n2ln9q6zlm44ar78f0yxcl7qvjwrrmrfpmfpz0n4x6"

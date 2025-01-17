@@ -1,4 +1,6 @@
 build/
-CMakeSettings.json
 .vs/
 docs/conf.py
+CMakeFiles/*
+.cache/*
+CMakeUserPresets.json

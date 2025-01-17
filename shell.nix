@@ -1,9 +1,9 @@
 with (import ./sources.nix);
 with nixpkgs;
 let
-  gcc = gcc10;
-  clang = clang_11;
-  cmake_321 = (import ./cmake.nix).cmake;
+  gcc = gcc14;
+  clang = clang_18;
+  cmake_331 = (import ./cmake.nix).cmake;
 
   gcovr = python3.withPackages(ps: [
     ps.gcovr
@@ -28,7 +28,7 @@ in stdenvNoCC.mkDerivation {
   LOCALE_ARCHIVE_2_27 = "${glibcLocales}/lib/locale/locale-archive";
   buildInputs = [
     gcc
-    cmake_321
+    cmake_331
     cmake
     glibcLocales
     ninja
@@ -41,7 +41,8 @@ in stdenvNoCC.mkDerivation {
     ccache
     libGLU
     libGL
-    qt514.full
+    qt6.qtbase
+    qt6.qtcharts
     lcov
     gcovr
     perl
@@ -61,8 +62,8 @@ in stdenvNoCC.mkDerivation {
     pre-commit install -f --hook-type pre-commit
     virtualenv venv
     source venv/bin/activate
-    python3 -m pip install conan>=1.43
-    python3 -m pip install yamlfmt>=1.1.0
-    python3 -m pip install m2r2>=0.3.2
+    python3 -m pip install conan
+    python3 -m pip install yamlfmt
+    python3 -m pip install m2r2
   '';
 }

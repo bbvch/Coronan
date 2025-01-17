@@ -1,5 +1,6 @@
 #include "coronan/http_client.hpp"
 
+#include <utility>
 namespace coronan {
 
 HTTPClientException::HTTPClientException(std::string exception_msg) : msg{std::move(exception_msg)}
@@ -24,12 +25,12 @@ HTTPResponse::status() const noexcept
 }
 
 // cppcheck-suppress unusedFunction
-std::string HTTPResponse::reason() const noexcept
+std::string const& HTTPResponse::reason() const noexcept
 {
   return response_.getReason();
 }
 
-std::string HTTPResponse::response_body() const noexcept
+std::string const& HTTPResponse::response_body() const noexcept
 {
   return response_body_;
 }

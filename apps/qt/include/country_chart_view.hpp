@@ -11,8 +11,6 @@ struct CountryData;
 namespace coronan_ui {
 class CountryDataModel;
 
-QT_CHARTS_USE_NAMESPACE
-
 class CountryChartView : public QChartView
 {
   Q_OBJECT

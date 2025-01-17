@@ -26,17 +26,19 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Cache (Conan)
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                   path: ~/.conan/data
                   key: cache-${{ matrix.name }}-conan-${{ hashFiles('**/Conan.cmake') }}
-            - uses: cachix/install-nix-action@v15
+            - uses: cachix/install-nix-action@v27
               with:
-                  nix_path: nixpkgs=channel:nixos-21.05
-            - uses: cachix/cachix-action@v10
+                  nix_path: nixpkgs=channel:nixos-24.11
+            - uses: cachix/cachix-action@v15
               with:
                   name: bbvch
                   authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
             - run: |
+                  nix-shell --command "conan profile detect"
+                  nix-shell --command "conan install . --build=missing --settings=build_type=Debug"
                   nix-shell --command "cmake -S ${GITHUB_WORKSPACE} --preset=${{ matrix.configure_preset }}"
                   nix-shell --command "cmake --build --preset=${{ matrix.build_preset }}"

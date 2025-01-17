@@ -1,41 +1,48 @@
 #include "coronan/corona-api_parser.hpp"
 
-#include <algorithm>
+#include <cstdint>
+#include <optional>
+#include <rapidjson/allocators.h>
 #include <rapidjson/document.h>
+#include <rapidjson/encodings.h>
+#include <rapidjson/rapidjson.h>
+#include <rapidjson/reader.h>
+#include <vector>
 
 namespace coronan::api_parser {
 
 namespace {
 
-template <typename Ret_T, typename DOM_T, std::enable_if_t<std::is_arithmetic<Ret_T>::value, bool> = true>
+template <typename Ret_T, typename DOM_T>
 std::optional<Ret_T> get_value(DOM_T const& json_dom_object, std::string const& name)
+  requires std::is_arithmetic_v<Ret_T>
 {
   if (auto member_it = json_dom_object.FindMember(name.c_str()); member_it != json_dom_object.MemberEnd())
   {
     if (auto const& value = member_it->value; value.IsNumber())
     {
-      if constexpr (std::is_floating_point<Ret_T>::value)
+      if constexpr (std::is_floating_point_v<Ret_T>)
       {
         if (value.IsDouble())
         {
           return value.GetDouble();
         }
       }
-      else if constexpr (std::is_same<Ret_T, unsigned>::value)
+      else if constexpr (std::is_same_v<Ret_T, unsigned>)
       {
         return value.GetUint();
       }
       // cppcheck-suppress identicalConditionAfterEarlyExit
       // cppcheck-suppress multiCondition
-      else if constexpr (std::is_same<Ret_T, int>::value)
+      else if constexpr (std::is_same_v<Ret_T, int>)
       {
         return value.GetInt();
       }
-      else if constexpr (std::is_same<Ret_T, uint64_t>::value)
+      else if constexpr (std::is_same_v<Ret_T, uint64_t>)
       {
         return value.GetUint64();
       }
-      else if constexpr (std::is_same<Ret_T, int64_t>::value)
+      else if constexpr (std::is_same_v<Ret_T, int64_t>)
       {
         return value.GetInt64();
       }
@@ -44,8 +51,9 @@ std::optional<Ret_T> get_value(DOM_T const& json_dom_object, std::string const& 
   return std::nullopt;
 }
 
-template <typename Ret_T, typename DOM_T, std::enable_if_t<std::is_same<Ret_T, std::string>::value, bool> = true>
+template <typename Ret_T, typename DOM_T>
 Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
+  requires(std::is_same_v<Ret_T, std::string>)
 {
   if (auto member_it = json_dom_object.FindMember(name.c_str()); member_it != json_dom_object.MemberEnd())
   {

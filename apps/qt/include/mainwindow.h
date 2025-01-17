@@ -16,8 +16,6 @@ namespace coronan_ui {
 class CountryChartView;
 class CountryOverviewTablewModel;
 
-QT_CHARTS_USE_NAMESPACE
-
 class CoronanWidget : public QWidget
 {
   Q_OBJECT

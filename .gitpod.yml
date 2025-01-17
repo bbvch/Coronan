@@ -3,8 +3,9 @@ image:
     file: .gitpod.Dockerfile
 
 tasks:
-    - init: pip3 install --upgrade conan && pre-commit install -f --hook-type pre-commit
-      command: rm -rf ./build && cmake -S . --preset=linux-debug-ninja-clang
+    - init: pre-commit install -f --hook-type pre-commit && rm -rf build && conan profile detect && conan install . -pr:a conan_profiles/clang_debug_linux
+          --build=missing
+      command: cmake -S . -B build --preset=conan-debug
 
 vscode:
     extensions:

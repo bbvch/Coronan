@@ -4,22 +4,22 @@
 #include "country_data_model.hpp"
 
 #include <QDateTime>
+#include <QDateTimeAxis>
 #include <QLatin1String>
+#include <QLineSeries>
 #include <QString>
-#include <QtCharts/QDateTimeAxis>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QValueAxis>
+#include <QValueAxis>
 
 namespace {
 constexpr auto create_datetime_axis = []() {
-  auto* const x_axis = new QtCharts::QDateTimeAxis{};
+  auto* const x_axis = new QDateTimeAxis{};
   x_axis->setFormat(QStringLiteral("dd/MM  "));
   x_axis->setTitleText(QStringLiteral("Date"));
   return x_axis;
 };
 
 constexpr auto create_value_axis = [](qreal max) {
-  auto* const y_axis = new QtCharts::QValueAxis{};
+  auto* const y_axis = new QValueAxis{};
   y_axis->setTitleText(QStringLiteral("Cases"));
   y_axis->setLabelFormat(QStringLiteral("%i  "));
   y_axis->setRange(0, max);
