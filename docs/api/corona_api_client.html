@@ -1,22 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Corona API client &mdash; Co[ro]nan  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -28,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Co[ro]nan
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Co[ro]nan
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -44,7 +47,14 @@
 <li class="toctree-l2"><a class="reference internal" href="http_client.html">HTTP Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="http_client.html#ssl-client">SSL Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="corona_api_parser.html">Corona API JSON Parser</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Corona API client</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Corona API client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7coronan19CoronaAPIClientTypeE"><code class="docutils literal notranslate"><span class="pre">CoronaAPIClientType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv"><code class="docutils literal notranslate"><span class="pre">CoronaAPIClientType::request_countries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"><code class="docutils literal notranslate"><span class="pre">CoronaAPIClientType::request_country_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -62,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Coronan API</a></li>
       <li class="breadcrumb-item active">Corona API client</li>
       <li class="wy-breadcrumbs-aside">
@@ -75,19 +85,19 @@
            <div itemprop="articleBody">
              
   <section id="corona-api-client">
-<span id="api-coronan-api-client"></span><h1>Corona API client<a class="headerlink" href="#corona-api-client" title="Permalink to this heading"></a></h1>
+<span id="api-coronan-api-client"></span><h1>Corona API client<a class="headerlink" href="#corona-api-client" title="Link to this heading"></a></h1>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4I0EN7coronan19CoronaAPIClientTypeE">
-<span id="_CPPv3I0EN7coronan19CoronaAPIClientTypeE"></span><span id="_CPPv2I0EN7coronan19CoronaAPIClientTypeE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClientType</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classcoronan_1_1CoronaAPIClientType"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CoronaAPIClientType</span></span></span><a class="headerlink" href="#_CPPv4I0EN7coronan19CoronaAPIClientTypeE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3I0EN7coronan19CoronaAPIClientTypeE"></span><span id="_CPPv2I0EN7coronan19CoronaAPIClientTypeE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClientType</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classcoronan_1_1CoronaAPIClientType"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CoronaAPIClientType</span></span></span><a class="headerlink" href="#_CPPv4I0EN7coronan19CoronaAPIClientTypeE" title="Link to this definition"></a><br /></dt>
 <dd><p>A Client for retrieving data from <a class="reference external" href="https://corona-api.com">https://corona-api.com</a>. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv">
-<span id="_CPPv3NK7coronan19CoronaAPIClientType17request_countriesEv"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType17request_countriesEv"></span><span id="coronan::CoronaAPIClientType::request_countriesC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1ad0b2d5b06f838c9c40f94da798f951ef"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryInfoE" title="coronan::CountryInfo"><span class="n"><span class="pre">CountryInfo</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_countries</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3NK7coronan19CoronaAPIClientType17request_countriesEv"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType17request_countriesEv"></span><span id="coronan::CoronaAPIClientType::request_countriesC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1ad0b2d5b06f838c9c40f94da798f951ef"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryInfoE" title="coronan::CountryInfo"><span class="n"><span class="pre">CountryInfo</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_countries</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Get the list of available countries </p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List of available countries with Covid-19 case data </p>
 </dd>
 </dl>
@@ -95,14 +105,14 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE">
-<span id="_CPPv3NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"></span><span id="coronan::CoronaAPIClientType::request_country_data__std::string_viewC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1a44f4813cdc0216f69c5031f32a29655b"></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryDataE" title="coronan::CountryData"><span class="n"><span class="pre">CountryData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_country_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">country_code</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE" title="Permalink to this definition"></a><br /></dt>
+<span id="_CPPv3NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"></span><span id="coronan::CoronaAPIClientType::request_country_data__std::string_viewC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1a44f4813cdc0216f69c5031f32a29655b"></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryDataE" title="coronan::CountryData"><span class="n"><span class="pre">CountryData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_country_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">country_code</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE" title="Link to this definition"></a><br /></dt>
 <dd><p>Get the covid-19 case data for a country </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>country_code</strong> – ISO 3166-1 alpha-2 Country Code </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Covid-19 case data for country <code class="docutils literal notranslate"><span class="pre">country_code</span></code> </p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Covid-19 case data for country <code class="docutils literal notranslate"><span class="pre">country_code</span></code></p>
 </dd>
 </dl>
 </dd></dl>
