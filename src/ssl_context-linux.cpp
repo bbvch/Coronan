@@ -1,5 +1,7 @@
 #include "coronan/ssl_context.hpp"
 
+#include <Poco/Net/Context.h>
+
 namespace coronan::ssl_context {
 
 Poco::Net::Context::Ptr create_ssl_context()

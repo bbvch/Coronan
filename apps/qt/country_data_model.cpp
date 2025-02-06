@@ -34,7 +34,7 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
 
 int CountryDataModel::rowCount(const QModelIndex&) const
 {
-  return country_timeline_data.length();
+  return static_cast<int>(country_timeline_data.length());
 }
 
 int CountryDataModel::columnCount(const QModelIndex&) const

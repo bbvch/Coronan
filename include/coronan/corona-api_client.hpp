@@ -48,7 +48,7 @@ constexpr auto create_exception_msg = [](auto const& url, auto const& response) 
   return std::string{"Error fetching data from url \""} + url + std::string{"\".\n\n Response status: "} +
          response.reason() + std::string{" ("} + std::to_string(response.status()) + std::string{")."};
 };
-}
+} // namespace
 
 template <typename ClientType>
 std::vector<CountryInfo> CoronaAPIClientType<ClientType>::request_countries() const

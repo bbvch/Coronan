@@ -4,7 +4,7 @@
 
 namespace {
 
-TEST_CASE("The corona-api parser parsing a full json", "[corona-api parser")
+TEST_CASE("The corona-api parser parsing a full json", "[corona-api parser]")
 {
   constexpr auto test_json = "{ \
         \"data\": { \
@@ -109,7 +109,7 @@ TEST_CASE("The corona-api parser parsing a full json", "[corona-api parser")
   }
 }
 
-TEST_CASE("The corona-api parser parsing a partial json", "[corona-api parser")
+TEST_CASE("The corona-api parser parsing a partial json", "[corona-api parser]")
 {
   SECTION("with missing population returns no value for population")
   {
@@ -232,7 +232,7 @@ TEST_CASE("The corona-api parser parsing a partial json", "[corona-api parser")
   }
 }
 
-TEST_CASE("The corona-api country parser parsing a country list", "[corona-api parser")
+TEST_CASE("The corona-api country parser parsing a country list", "[corona-api parser]")
 {
   constexpr auto test_country_json = "{ \
     \"data\": [ \

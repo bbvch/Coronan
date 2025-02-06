@@ -16,78 +16,6 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: ubuntu-18.04-gcc-7
-                      os: ubuntu-18.04
-                      build_type: Release
-                      compiler: g++-7
-                      ccompiler: gcc-7
-                      clang-tidy: ''
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-18.04-gcc-9
-                      os: ubuntu-18.04
-                      build_type: Release
-                      compiler: g++-9
-                      ccompiler: gcc-9
-                      clang-tidy: ''
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-18.04-clang-9
-                      os: ubuntu-18.04
-                      build_type: Release
-                      compiler: clang++-9
-                      ccompiler: clang-9
-                      clang-tidy: clang-tidy-9
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-20.04-gcc-9
-                      os: ubuntu-20.04
-                      build_type: Release
-                      compiler: g++-9
-                      ccompiler: gcc-9
-                      clang-tidy: clang-tidy
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-20.04-gcc-10
-                      os: ubuntu-20.04
-                      build_type: Debug
-                      compiler: g++-10
-                      ccompiler: gcc-10
-                      clang-tidy: clang-tidy
-                      generators: Ninja
-                      coverage: ON
-                    - name: ubuntu-20.04-clang-10
-                      os: ubuntu-20.04
-                      build_type: Release
-                      compiler: clang++-10
-                      ccompiler: clang-10
-                      clang-tidy: clang-tidy-10
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-20.04-clang-11
-                      os: ubuntu-20.04
-                      build_type: Release
-                      compiler: clang++-11
-                      ccompiler: clang-11
-                      clang-tidy: clang-tidy-11
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-20.04-clang-12
-                      os: ubuntu-20.04
-                      build_type: Release
-                      compiler: clang++-12
-                      ccompiler: clang-12
-                      clang-tidy: clang-tidy-12
-                      generators: Ninja
-                      coverage: OFF
-                    - name: ubuntu-22.04-clang-12
-                      os: ubuntu-22.04
-                      build_type: Release
-                      compiler: clang++-12
-                      ccompiler: clang-12
-                      clang-tidy: clang-tidy-12
-                      generators: Ninja
-                      coverage: OFF
                     - name: ubuntu-22.04-clang-13
                       os: ubuntu-22.04
                       build_type: Release
@@ -104,11 +32,59 @@ jobs:
                       clang-tidy: clang-tidy-14
                       generators: Ninja
                       coverage: OFF
+                    - name: ubuntu-22.04-clang-15
+                      os: ubuntu-22.04
+                      build_type: Release
+                      compiler: clang++-15
+                      ccompiler: clang-15
+                      clang-tidy: clang-tidy-15
+                      generators: Ninja
+                      coverage: OFF
                     - name: ubuntu-22.04-gcc-12
                       os: ubuntu-22.04
                       build_type: Debug
                       compiler: g++-12
                       ccompiler: gcc-12
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-24.04-clang-16
+                      os: ubuntu-24.04
+                      build_type: Release
+                      compiler: clang++-16
+                      ccompiler: clang-16
+                      clang-tidy: clang-tidy-16
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-24.04-clang-17
+                      os: ubuntu-24.04
+                      build_type: Release
+                      compiler: clang++-17
+                      ccompiler: clang-17
+                      clang-tidy: clang-tidy-17
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-24.04-clang-18
+                      os: ubuntu-24.04
+                      build_type: Release
+                      compiler: clang++-18
+                      ccompiler: clang-18
+                      clang-tidy: clang-tidy-18
+                      generators: Ninja
+                      coverage: OFF
+                    - name: ubuntu-24.04-gcc-13
+                      os: ubuntu-24.04
+                      build_type: Debug
+                      compiler: g++-13
+                      ccompiler: gcc-13
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                      coverage: ON
+                    - name: ubuntu-24.04-gcc-14
+                      os: ubuntu-24.04
+                      build_type: Debug
+                      compiler: g++-14
+                      ccompiler: gcc-14
                       clang-tidy: clang-tidy
                       generators: Ninja
                       coverage: OFF
@@ -118,36 +94,29 @@ jobs:
             CC: ${{ matrix.ccompiler }}
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y --no-install-recommends ninja-build ${{ matrix.clang-tidy }} python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev
-                  sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen lcov
-            - name: Python pip Cache
-              uses: actions/cache@v2
+                  sudo apt-get install -y --no-install-recommends ninja-build ${{ matrix.clang-tidy }} dpkg pkg-config doxygen lcov
+                  sudo apt-get install -y --no-install-recommends qt6-base-dev qt6-tools-dev qt6-tools-dev-tools libqt6charts6 libqt6charts6-dev libqt6opengl6 libqt6opengl6-dev '^libxcb.*-dev' libgles2-mesa-dev libx11-xcb-dev libgl1-mesa-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+            - name: Set up Python
+              uses: actions/setup-python@v5
               with:
-                  path: ~/.cache/pip
-                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
+                  python-version: 3.x
             - name: Install python dependencies
               run: |
-                  python3 -m pip install --upgrade pip
-                  python3 -m pip install -r py-requirements.txt
-            - name: Conan Cache
-              uses: actions/cache@v2
-              with:
-                  path: ~/.conan/data
-                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Set conan compiler env (gcc)
-              if: matrix.ccompiler == 'gcc'
-              run: |
-                  conan profile new default --detect
-                  conan profile update settings.compiler.libcxx=libstdc++11 default
-            - name: Create build dir
-              run: mkdir build
+                  python -m pip install --upgrade pip
+                  pip install -r py-requirements.txt
+            - name: Set conan compiler env
+              run: conan profile detect
+            - name: conan install
+              run: conan install . --build=missing --settings=build_type=${{ matrix.build_type }} --settings=compiler.cppstd=17
             - name: CMake configure
-              run: cmake -S . -B ./build -G "${{ matrix.generators }}" -DENABLE_COVERAGE=${{ matrix.coverage }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type
-                  }}
+              run: |
+                  cmake -S . -B ./build -G "${{ matrix.generators }}" \
+                  -DENABLE_COVERAGE=${{ matrix.coverage }} \
+                  -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
             - name: CMake build
               run: cmake --build ./build --config ${{ matrix.build_type }}
             - name: CTest
@@ -165,7 +134,7 @@ jobs:
                   bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov did not collect coverage reports'
                   export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }}
                   bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.info || echo 'codacy did not collect coverage reports'
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v4
               with:
                   name: ${{ matrix.name }}-artifacts
                   path: |

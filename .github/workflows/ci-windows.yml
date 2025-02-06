@@ -16,14 +16,14 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: windows-VS-2019
-                      os: windows-2019
+                    - name: windows-VS-2022
+                      os: windows-2022
                       build_type: Release
                       compiler: cl
                       ccompiler: cl
-                      generators: Visual Studio 16 2019
-                    - name: windows-VS-2022
-                      os: windows-2022
+                      generators: Visual Studio 17 2022
+                    - name: windows-VS-2025
+                      os: windows-2025
                       build_type: Release
                       compiler: cl
                       ccompiler: cl
@@ -34,38 +34,39 @@ jobs:
             CC: ${{ matrix.ccompiler }}
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Install dependencies
               run: |
-                  choco install ninja cmake doxygen.install
-            - name: Python pip Cache
-              uses: actions/cache@v2
+                  choco install doxygen.install
+            - name: Set up Python
+              uses: actions/setup-python@v5
               with:
-                  path: C:/Users/runneradmin/appdata/local/pip/cache
-                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
+                  python-version: 3.x
             - name: Install python dependencies
               run: |
-                  python3 -m pip install --upgrade pip
-                  python3 -m pip install -r py-requirements.txt
+                  python -m pip install --upgrade pip
+                  pip install -r py-requirements.txt
             - name: Install Qt
-              uses: jurplel/install-qt-action@v2
+              uses: jurplel/install-qt-action@v3
               with:
-                  version: 5.15.2
+                  aqtversion: ==3.1.*
+                  version: 6.8.2
                   host: windows
                   target: desktop
+                  arch: win64_msvc2022_64
                   modules: qtcharts
-                  tools: tools_ifw,4.0,qt.tools.ifw.40
-            - name: Conan Cache
-              uses: actions/cache@v2
+                  tools: tools_ifw
+            - name: setup-msvc-dev
+              uses: TheMrMilchmann/setup-msvc-dev@v3
               with:
-                  path: |
-                      C:/Users/runneradmin/.conan/data
-                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: Create build dir
-              run: mkdir build
+                  arch: x64
+            - name: Set conan compiler env
+              run: conan profile detect
+            - name: conan install
+              run: conan install . --build=missing --settings=build_type=${{ matrix.build_type }} --settings=compiler.cppstd=17
             - name: CMake configure
-              run: cmake -S . -B ./build -G "${{ matrix.generators }}" -DENABLE_COVERAGE=${{ matrix.coverage }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type
-                  }}
+              run: |
+                  cmake -S . -B ./build -G "${{ matrix.generators }}"
             - name: CMake build
               run: cmake --build ./build --config ${{ matrix.build_type }}
             - name: CTest
@@ -75,7 +76,7 @@ jobs:
               run: cmake --build ./build --target docs --config ${{ matrix.build_type }}
             - name: CMake build package
               run: cmake --build ./build --target package --config ${{ matrix.build_type }}
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v4
               with:
                   name: ${{ matrix.name }}-artifacts
                   path: |

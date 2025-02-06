@@ -3,8 +3,8 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <exception>
 #include <functional>
-#include <stdexcept>
 #include <string>
 
 namespace coronan {
@@ -20,7 +20,11 @@ public:
    * @param exception_msg exception message
    */
   explicit HTTPClientException(std::string exception_msg);
-  HTTPClientException(HTTPClientException const&) = delete;
+  ~HTTPClientException() override = default;
+  HTTPClientException(HTTPClientException const&) = default;
+  HTTPClientException(HTTPClientException&&) = default;
+  HTTPClientException& operator=(HTTPClientException const&) = delete;
+  HTTPClientException& operator=(HTTPClientException&&) = delete;
   /**
    *  Return the exception message
    */
@@ -51,12 +55,12 @@ public:
   /**
    * Return the HTTP reason phrase
    */
-  std::string reason() const noexcept;
+  std::string const& reason() const noexcept;
 
   /**
    * Return the HTTP response body
    */
-  std::string response_body() const noexcept;
+  std::string const& response_body() const noexcept;
 
 private:
   Poco::Net::HTTPResponse response_{};

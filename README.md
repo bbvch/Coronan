@@ -1,52 +1,79 @@
+<details>
+<summary>Project State</summary>
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![version](https://img.shields.io/badge/version-v0.2.0-blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
 
 
-[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
 [![Linux Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml)
 [![Nix Builds](https://github.com/bbvch/Coronan/actions/workflows/nix.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/nix.yml)
 
-[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
 [![MacOS Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml)
 
-[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
 [![Windows Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml)
 [![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
 
 [![API Documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml)
+
 [![Codacy Security Scan](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/96483b3b9dff405195f7ef0c9c823484)](https://app.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 [![CodeQL Analysis](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml)
+
 [![Coverity Scan](https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml)
 [![Coverity Scan](https://img.shields.io/coverity/scan/22882.svg)](https://scan.coverity.com/projects/bbvch-coronan)
 
 [![codecov](https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg)](https://codecov.io/gh/bbvch/Coronan)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/96483b3b9dff405195f7ef0c9c823484)](https://www.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=github.com&utm_medium=referral&utm_content=bbvch/Coronan&utm_campaign=Badge_Coverage)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/96483b3b9dff405195f7ef0c9c823484)](https://www.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bbvch/Coronan&amp;utm_campaign=Badge_Grade)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/bbvch/Coronan.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bbvch/Coronan/context:cpp)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/bbvch/Coronan.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bbvch/Coronan/alerts/)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+
+
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/bbvch/Coronan)
 
-# Documentation for Co\[ro\]nan
 
-__IMPORTANT NOTE__
+### IMPORTANT NOTE
 
 ___[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer. Therefore this application does not work properly anymore. An Alternative API must be looked for.___
 
-Co\[ro\]nan is an example C++17 Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
+</details>
+
+# Documentation for Co\[ro\]nan
+
+Co\[ro\]nan is an example C++20 Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
 It reads the current data of Corona (Covid-19) cases for a country from the [The About Corona Covid-19 API](https://about-corona.net/documentation).
 
 _The About Corona Covid-19_ provides statistics via REST API from The [World Health Organization Situation Reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), [Johns Hopkins CSSE](https://coronavirus.jhu.edu/map.html), [The U.S. Department of Health & Human Services](https://www.hhs.gov/), [The National Health Commission of the People’s Republic of China](http://en.nhc.gov.cn/), [The European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en), and [China CDC Weekly](http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm).
 
+
 ![Screenshot of the qt application](docs/images/Screenshot-qt.png)
+
+
+## Table of content
+
+<details>
+<summary>Expand contents</summary>
+
+- [Project Features](#project-features)
+- [Development](#development)
+  - [How to build](#how-to-build)
+  - [CMake options](#cmake-options)
+- [Pre-Commit Hooks](#pre-commit-hooks)
+- [Gitpod](#gitpod)
+- [direnv & nix](#direnv--nix)
+
+</details>
 
 ## Project Features
 
 This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
-* C++ 17 Standard
+* C++ 20 Standard
   * [GCC](https://gcc.gnu.org/)
   * [Clang](https://clang.llvm.org/)
   * Visual Studio 2019 (2022)
@@ -54,7 +81,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 * [conan](https://conan.io/) package Manager
 
 * Libraries used:
-  * [Qt](https://www.qt.io/)
+  * [Qt6](https://www.qt.io/)
   * [Poco](https://pocoproject.org/) Networking library
   * [RapidJSON](https://rapidjson.org/)
   * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
@@ -104,36 +131,29 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * GitHub Action
 
     * Mac OS X
-      * 10.15 _(AppleClang 12)_
-      * 11 _(AppleClang 13)_
-      * 12 _(AppleClang 14)_
+      * 13 _(AppleClang 14)_
+      * 14 _(AppleClang 15)_
+      * 15 _(AppleClang 15)_
 
-    * Ubuntu 18.04
-      * GCC 7 & 9
-      * Clang 9
-
-    * Ubuntu 20.04
-      * GCC 9 & 10
-      * Clang 10, 11 & 12
-      * API Documentation Generation
 
     * Ubuntu 22.04
       * GCC 12
-      * Clang 12, 13 & 14
+      * Clang 13, 14 & 15
+
+    * Ubuntu 24.04
+      * GCC 13 & 14
+      * Clang 16, 17 & 18
 
     * Windows
-      * Visual Studio 2019
       * Visual Studio 2022
 
     * Nix
-      * GCC 10
-      * Clang 11
+      * GCC 14
+      * Clang 18
 
     * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
 
     * [Codacy](https://www.codacy.com) Coverage Reporter
-
-    * [LGTM Security Analysis](https://lgtm.com/)
 
     * [CodeQL Static Analysis](https://github.com/github/codeql-action)
 
@@ -170,21 +190,24 @@ See `./build.sh -h` for more options
 
 __CMake__:
 
-You can also build it yourself using CMake:
-
-* cmake < 3.20
+You can also build it yourself using CMake and conan
 
   ```bash
-  #> mkdir build
-  #> (cd build && cmake ..)
-  #> cmake --build build
+  #> conan install . --build=missing --settings=build_type=Debug
   ```
-
-* cmake >= 3.20
+  Because the conan [cmake_layout](https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#) and the  [`CMakeDeps`](https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html) generator is used, the necessary cmake files used with `find_packages()` are generated into `build\<build_type>\generators`.
+* __CMake without CMake Presets__
 
   ```bash
-  #> cmake -S . --preset=linux-ninja
-  #> cmake --build -S . --preset=ninja-debug
+  cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Debug
+  cmake --build ./build
+  ```
+* __With CMake Presets__
+
+  ```bash
+  conan install . --build=missing --settings=build_type=Debug
+  cmake -S . --preset=linux-debug-ninja
+  cmake --build -S . --preset=ninja-debug
   ```
 
   or any other [CMakePresets](CMakePresets.json).
@@ -197,6 +220,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 
 ### CMake options
 
+* `DOWNLOAD_QT6`: Download and build Qt6 otherwise use installed. _Default_: `ON`
 * `ENABLE_TESTING`: Build (and run) unittests. _Default_: `ON`
 * `ENABLE_BUILD_WITH_TIME_TRACE`: Enable [Clang Time Trace Feature](https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature). _Default: `OFF`_
 * `ENABLE_PCH`: Enable [Precompiled Headers](https://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
@@ -213,7 +237,9 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_CPPCHECK`: Enable static analysis with [cppcheck](http://cppcheck.sourceforge.net/). _Default: `ON` if cppcheck is installed `OFF` otherwise._
 * `ENABLE_CLANG_TIDY`: Enable static analysis with [clang-tidy](https://clang.llvm.org/extra/clang-tidy/). _Default: `ON` if clang-tidy is installed `OFF` otherwise._
 * `ENABLE_INCLUDE_WHAT_YOU_USE`: Enable static analysis with [include-what-you-use](https://include-what-you-use.org/). _Default: `ON` if include-what-you-use is installed `OFF` otherwise_.
+* `ENABLE_LINK_WHAT_YOU_USE` : Enable _link what you use_ cmake buiilt-in static analysis. _Default: `OFF`
 * `ENABLE_CONAN_BUILD_ALL`: Enable building all conan requires from source. May help if you get linking errors. _Default: `OFF`
+* `WARNINGS_AS_ERRORS`: Treat compiler warnings as errors. _Default: `ON`
 
 ## Pre-Commit Hooks
 
@@ -242,8 +268,17 @@ Please install pre-commit hooks before committing any code.
 
 To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> button at the top of this README.
 
-## direnv & Nix
+## direnv & nix
 
-If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefer clang (clang_11) change it in [.envrc](.envrc)
+If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder, if `use nix` is not commented out in [.envrc](.envrc). gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang_18) change it in [.envrc](.envrc)
+
+You can also use `nix-shell`to build. e.g.:
+
+  ```bash
+  nix-shell --command "conan profile detect"
+  nix-shell --command "conan install . --build=missing --settings=build_type=Debug"
+  nix-shell --command "cmake -S . --preset=linux-debug-ninja
+  nix-shell --command "cmake --build --preset=ninja-debug
+  ```
 
 When using nix. The most resent cmake is available and therefore configure and build [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used.

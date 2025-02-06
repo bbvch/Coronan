@@ -1,8 +1,8 @@
 {
-    "version": 2,
+    "version": 3,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 20,
+        "minor": 22,
         "patch": 0
     },
     "configurePresets": [
@@ -12,7 +12,7 @@
             "cacheVariables": {
                 "ENABLE_TESTING": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 }
             },
             "hidden": true
@@ -21,7 +21,11 @@
             "name": "debug",
             "description": "Configure debug build",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": {
+                    "type": "FILEPATH",
+                    "value": "${sourceDir}/build/Debug/generators"
+                }
             },
             "hidden": true
         },
@@ -31,11 +35,11 @@
             "cacheVariables": {
                 "ENABLE_PCH": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 },
                 "ENABLE_CLANG_TIDY": {
                     "type": "BOOL",
-                    "value": "OFF"
+                    "value": false
                 }
             },
             "hidden": true
@@ -51,7 +55,7 @@
                 "CMAKE_C_COMPILER": "gcc",
                 "ENABLE_COVERAGE": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 }
             },
             "hidden": true
@@ -60,7 +64,11 @@
             "name": "release",
             "description": "Configure release build",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_PREFIX_PATH": {
+                    "type": "FILEPATH",
+                    "value": "${sourceDir}/build/Release/generators"
+                }
             },
             "hidden": true
         },
@@ -181,15 +189,15 @@
             "cacheVariables": {
                 "ENABLE_SANITIZER_ADDRESS": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 },
                 "ENABLE_SANITIZER_LEAK": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 },
                 "ENABLE_SANITIZER_UNDEFINED_BEHAVIOR": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 }
             }
         },
@@ -203,7 +211,7 @@
             "cacheVariables": {
                 "ENABLE_SANITIZER_MEMORY": {
                     "type": "BOOL",
-                    "value": "ON"
+                    "value": true
                 }
             }
         },

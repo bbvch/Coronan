@@ -2,9 +2,7 @@
 
 #include "coronan/corona-api_datatypes.hpp"
 
-#include <optional>
 #include <string>
-#include <vector>
 
 namespace coronan {
 

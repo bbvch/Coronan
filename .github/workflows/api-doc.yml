@@ -8,34 +8,23 @@ jobs:
         name: generate-docu
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - name: Python pip Cache (Linux)
-              if: runner.os == 'Linux'
-              uses: actions/cache@v2
-              with:
-                  path: ~/.cache/pip
-                  key: pip-${{ matrix.name }}-${{ hashFiles('py-requirements.txt') }}
+            - uses: actions/checkout@v4
             - name: install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools libqt5charts5-dev libglib2.0-dev build-essential libc6-dev glib-networking glibc-source libstdc++-11-dev
+                  sudo apt-get install -y --no-install-recommends ninja-build clang-tidy python3-pip python3-setuptools
+                  sudo apt-get install -y --no-install-recommends ninja-build qt6-base-dev qt6-tools-dev qt6-tools-dev-tools libqt6charts6 libqt6charts6-dev libqt6opengl6 libqt6opengl6-dev
                   sudo apt-get install -y --no-install-recommends dpkg pkg-config doxygen
                   python3 -m pip install --upgrade pip
                   python3 -m pip install -r py-requirements.txt
-            - name: Conan Cache
-              if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
-              uses: actions/cache@v2
-              with:
-                  path: ~/.conan/data
-                  key: conan-${{ matrix.name }}-${{ hashFiles('**/Conan.cmake') }}
-            - name: prepare-build
-              run: mkdir build
+            - name: Set conan compiler env
+              run: conan profile detect
+            - name: conan install
+              run: conan install . --build=missing --settings=build_type=Debug
             - name: cmake-configuration
-              run: cmake -DCMAKE_BUILD_TYPE=Debug ..
-              working-directory: ./build
+              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
             - name: build-documentation
-              run: cmake --build . --target docs
-              working-directory: ./build
+              run: cmake --build build --target docs
             - name: Deploy to GitHub Pages
               if: github.ref == 'refs/heads/master'
               uses: JamesIves/github-pages-deploy-action@3.4.9

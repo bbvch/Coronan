@@ -10,6 +10,7 @@ BUILD_TYPE=Debug
 BUILD_TARGET=""
 COMPILER="g++"
 CLEAR_BUILD=false
+CONAN=conan
 
 print_usage() {
 cat << EOM
@@ -21,6 +22,7 @@ Usage: build.sh [options] [build_dir]
     -r|--release       Build release version.
                        Note: is ignored when --cov is set
     --cmake=path       Path to cmake (default is the system cmake)
+    --conan=path       Path to conan (default is the system conan)
     -i                 Install
     -p                 Create package
     --clang=version    Build with clang (ver: version).
@@ -55,6 +57,10 @@ if [ $# -ge 1 ]; then
             CMAKE="${key#*=}"
             shift # past argument=value
             ;;
+        --conan=*)
+            CONAN="${key#*=}"
+            shift # past argument=value
+            ;;
         -h|--help)
             print_usage
             exit 1
@@ -84,12 +90,15 @@ fi
 
 if [[ $(command -v ninja) ]] ; then
     echo "Ninja found. Use it."
-    CMAKE_GENERATOR="-GNinja"
+    CMAKE_GENERATOR="-G Ninja"
 fi
 
 if [ "${CLEAR_BUILD}" = true ] ; then
     rm -rf "${BUILD_DIR}"
 fi
+
+echo "run conan install"
+${CONAN} install . --build=missing --settings=build_type=${BUILD_TYPE} --settings=compiler.cppstd=17
 
 if [ "${COVERAGE}" = true ] ; then
     "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
