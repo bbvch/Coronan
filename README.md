@@ -3,6 +3,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![version](https://img.shields.io/badge/version-v0.2.0-blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
 
 
 [![Linux Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml)
@@ -24,13 +25,15 @@
 [![Coverity Scan](https://img.shields.io/coverity/scan/22882.svg)](https://scan.coverity.com/projects/bbvch-coronan)
 
 [![codecov](https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg)](https://codecov.io/gh/bbvch/Coronan)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/96483b3b9dff405195f7ef0c9c823484)](https://www.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=github.com&utm_medium=referral&utm_content=bbvch/Coronan&utm_campaign=Badge_Coverage)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/96483b3b9dff405195f7ef0c9c823484)](https://www.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bbvch/Coronan&amp;utm_campaign=Badge_Grade)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/bbvch/Coronan.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bbvch/Coronan/context:cpp)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/bbvch/Coronan.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bbvch/Coronan/alerts/)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+
+
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/bbvch/Coronan)
 
@@ -151,8 +154,6 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
     * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
 
     * [Codacy](https://www.codacy.com) Coverage Reporter
-
-    * [LGTM Security Analysis](https://lgtm.com/)
 
     * [CodeQL Static Analysis](https://github.com/github/codeql-action)
 

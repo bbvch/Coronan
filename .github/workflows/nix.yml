@@ -24,7 +24,7 @@ jobs:
                       build_preset: clang-debug
                       CONAN_USER_HOME: ~/.conan-clang
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Cache (Conan)
               uses: actions/cache@v4
               with:

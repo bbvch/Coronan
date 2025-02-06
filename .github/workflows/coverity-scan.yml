@@ -16,7 +16,7 @@ jobs:
             EMAIL: estermann.michel@gmail.com
             CA_CERT: ca-coverity.pem
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Install dependencies
               run: |
                   sudo apt-get update
