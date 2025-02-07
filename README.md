@@ -63,9 +63,10 @@ _The About Corona Covid-19_ provides statistics via REST API from The [World Hea
 - [Project Features](#project-features)
 - [Development](#development)
   - [How to build](#how-to-build)
+  - [Source Code Formatting](#source-code-formatting)
   - [CMake options](#cmake-options)
 - [Pre-Commit Hooks](#pre-commit-hooks)
-- [Gitpod](#gitpod)
+- [gitpod](#gitpod)
 - [direnv & nix](#direnv--nix)
 
 </details>
@@ -135,7 +136,6 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
       * 14 _(AppleClang 15)_
       * 15 _(AppleClang 15)_
 
-
     * Ubuntu 22.04
       * GCC 12
       * Clang 13, 14 & 15
@@ -153,13 +153,13 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
     * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
 
-    * [Codacy](https://www.codacy.com) Coverage Reporter
-
     * [CodeQL Static Analysis](https://github.com/github/codeql-action)
 
     * [Coverity Scan Static Analysis](https://scan.coverity.com/)
 
     * [Codecov](https://codecov.io) Coverage Reporter
+
+    * [Sonar Cloud Static Analysis](https://www.sonarsource.com/products/sonarcloud/)
 
   * [AppVeyor](https://www.appveyor.com/)
     * Windows Visual Studio 2019
@@ -171,7 +171,7 @@ To build the project you need python and a recent [conan version](https://conan.
 To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:
 
 ```bash
-#> pip3 install -r py-requirements.txt
+pip3 install -r py-requirements.txt
 ```
 
 ### How to build
@@ -183,7 +183,7 @@ __Use build script__:
 In a linux shell you can build the project with the provided `build.sh` script. E.g. to build in folder `build` execute:
 
 ```bash
-#> ./build.sh build
+./build.sh build
 ```
 
 See `./build.sh -h` for more options
@@ -192,10 +192,13 @@ __CMake__:
 
 You can also build it yourself using CMake and conan
 
+* __Install dependencies with conan__
+
   ```bash
-  #> conan install . --build=missing --settings=build_type=Debug
+  conan install . --build=missing --settings=build_type=Debug
   ```
-  Because the conan [cmake_layout](https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#) and the  [`CMakeDeps`](https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html) generator is used, the necessary cmake files used with `find_packages()` are generated into `build\<build_type>\generators`.
+  Because the conan [cmake_layout](https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#) and the  [`CMakeDeps`](https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html) generator is used, the necessary cmake files used with `find_packages()` are generated into `build\<build_type>\generators`. `CMAKE_PREFIX_PATH`is adapted accordingly the root `CMakeLists.txt`
+
 * __CMake without CMake Presets__
 
   ```bash
@@ -212,7 +215,7 @@ You can also build it yourself using CMake and conan
 
   or any other [CMakePresets](CMakePresets.json).
 
-### Source Code formatting
+### Source Code Formatting
 
 For source code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files and [cmake-format](https://pypi.org/project/cmake-format/) for the CMake files are used. Run `format_source_files.sh` to format all C++ and CMake files.
 
@@ -264,15 +267,15 @@ The following [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks)
 
 Please install pre-commit hooks before committing any code.
 
-## Gitpod
+## gitpod
 
-To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> button at the top of this README.
+To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" height="15"> button in the Project State section at the top of this README.
 
 ## direnv & nix
 
 If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder, if `use nix` is not commented out in [.envrc](.envrc). gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang_18) change it in [.envrc](.envrc)
 
-You can also use `nix-shell`to build. e.g.:
+You can also use `nix-shell` directly to build when `use nix` is disabled, e.g.:
 
   ```bash
   nix-shell --command "conan profile detect"
@@ -281,4 +284,4 @@ You can also use `nix-shell`to build. e.g.:
   nix-shell --command "cmake --build --preset=ninja-debug
   ```
 
-When using nix. The most resent cmake is available and therefore configure and build [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used.
+When using nix, a new cmake is available and therefore configure and build [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) can be used.
