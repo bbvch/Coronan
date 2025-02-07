@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Documentation for Co[ro]nan" href="mainpage.html" /> 
+    <link rel="next" title="IMPORTANT NOTE" href="mainpage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,7 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="mainpage.html">Documentation for Co[ro]nan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html">IMPORTANT NOTE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html#how-to-build">How to build</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html#source-code-formatting">Source Code Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html#cmake-options">CMake options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">Coronan API</a></li>
 </ul>
 
@@ -74,12 +77,13 @@
 <h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="mainpage.html">Documentation for Co[ro]nan</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mainpage.html#development">Development</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mainpage.html#pre-commit-hooks">Pre-Commit Hooks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mainpage.html#direnv-nix">direnv &amp; Nix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html">IMPORTANT NOTE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mainpage.html#documentation-for-co-ro-nan">Documentation for Co[ro]nan</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html#how-to-build">How to build</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html#source-code-formatting">Source Code Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainpage.html#cmake-options">CMake options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">Coronan API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/http_client.html">HTTP Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/http_client.html#ssl-client">SSL Client</a></li>
@@ -89,77 +93,260 @@
 </li>
 </ul>
 </div>
+<details>
+<summary>Project State</summary><a class="reference external image-reference" href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+</a>
+<a class="reference external image-reference" href="https://img.shields.io/badge/version-v0.2.0-blue"><img alt="version" src="https://img.shields.io/badge/version-v0.2.0-blue" />
+</a>
+<a class="reference external image-reference" href="https://img.shields.io/github/last-commit/bbvch/Coronan"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/bbvch/Coronan" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml"><img alt="Linux Builds" src="https://github.com/bbvch/Coronan/actions/workflows/ci-linux.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/nix.yml"><img alt="Nix Builds" src="https://github.com/bbvch/Coronan/actions/workflows/nix.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml"><img alt="MacOS Builds" src="https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml"><img alt="Windows Builds" src="https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://ci.appveyor.com/project/meshell/coronan/branch/master"><img alt="Build status Appveyor" src="https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml"><img alt="API Documentation" src="https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml"><img alt="Codacy Security Scan" src="https://github.com/bbvch/Coronan/actions/workflows/codacy-analysis.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://app.codacy.com/gh/bbvch/Coronan/dashboard?utm_source=gh&amp;utm_medium=referral&amp;utm_content=&amp;utm_campaign=Badge_grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/96483b3b9dff405195f7ef0c9c823484" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml"><img alt="CodeQL Analysis" src="https://github.com/bbvch/Coronan/actions/workflows/codeql-analysis.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml"><img alt="Coverity Scan" src="https://github.com/bbvch/Coronan/actions/workflows/coverity-scan.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://scan.coverity.com/projects/bbvch-coronan"><img alt="Coverity Scan" src="https://img.shields.io/coverity/scan/22882.svg" />
+</a>
+<a class="reference external image-reference" href="https://codecov.io/gh/bbvch/Coronan"><img alt="codecov" src="https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://sonarcloud.io/summary/new_code?id=bbvch_Coronan"><img alt="SonarQube Cloud" src="https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg" />
+</a>
+<a class="reference external image-reference" href="https://sonarcloud.io/summary/new_code?id=bbvch_Coronan"><img alt="Bugs" src="https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&amp;metric=bugs" />
+</a>
+<a class="reference external image-reference" href="https://sonarcloud.io/summary/new_code?id=bbvch_Coronan"><img alt="Code Smells" src="https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&amp;metric=code_smells" />
+</a>
+<a class="reference external image-reference" href="https://sonarcloud.io/summary/new_code?id=bbvch_Coronan"><img alt="Coverage" src="https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&amp;metric=coverage" />
+</a>
+<a class="reference external image-reference" href="https://sonarcloud.io/summary/new_code?id=bbvch_Coronan"><img alt="Duplicated Lines (%)" src="https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&amp;metric=duplicated_lines_density" />
+</a>
+<a class="reference external image-reference" href="https://gitpod.io/#https://github.com/bbvch/Coronan"><img alt="Open in Gitpod" src="https://gitpod.io/button/open-in-gitpod.svg" />
+</a>
+<section id="important-note">
+<h2>IMPORTANT NOTE<a class="headerlink" href="#important-note" title="Link to this heading"></a></h2>
+<p><strong>*`The About Corona Covid-19 API &lt;https://about-corona.net/documentation&gt;`_ ist not available any longer. Therefore this application does not work properly anymore. An Alternative API must be looked for.*</strong></p>
+</details></section>
 </section>
 <section id="documentation-for-co-ro-nan">
 <h1>Documentation for Co[ro]nan<a class="headerlink" href="#documentation-for-co-ro-nan" title="Link to this heading"></a></h1>
-<p>Co[ro]nan is an example C++17 Qt project using <a class="reference external" href="https://conan.io/">conan</a> and <a class="reference external" href="https://cmake.org/">CMake</a>.
+<p>Co[ro]nan is an example C++20 Qt project using <a class="reference external" href="https://conan.io/">conan</a> and <a class="reference external" href="https://cmake.org/">CMake</a>.
 It reads the current data of Corona (Covid-19) cases for a country from the <a class="reference external" href="https://about-corona.net/documentation">The About Corona Covid-19 API</a>.</p>
-<p><em>The About Corona Covid-19</em> provides statistics via REST API from The <a class="reference external" href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports">World Health Organization Situation Reports</a>,  <a class="reference external" href="https://coronavirus.jhu.edu/map.html">Johns Hopkins CSSE</a>, <a class="reference external" href="https://www.hhs.gov/">The U.S. Department of Health &amp; Human Services</a>, <a class="reference external" href="http://en.nhc.gov.cn/">The National Health Commission of the People’s Republic of China</a>, <a class="reference external" href="https://www.ecdc.europa.eu/en">The European Centre for Disease Prevention and Control</a>, and <a class="reference external" href="http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm">China CDC Weekly</a>.</p>
-<img alt="Screenshot" src="_images/Screenshot-qt.png" />
-<section id="development">
-<h2>Development<a class="headerlink" href="#development" title="Link to this heading"></a></h2>
+<p><em>The About Corona Covid-19</em> provides statistics via REST API from The <a class="reference external" href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports">World Health Organization Situation Reports</a>, <a class="reference external" href="https://coronavirus.jhu.edu/map.html">Johns Hopkins CSSE</a>, <a class="reference external" href="https://www.hhs.gov/">The U.S. Department of Health &amp; Human Services</a>, <a class="reference external" href="http://en.nhc.gov.cn/">The National Health Commission of the People’s Republic of China</a>, <a class="reference external" href="https://www.ecdc.europa.eu/en">The European Centre for Disease Prevention and Control</a>, and <a class="reference external" href="http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm">China CDC Weekly</a>.</p>
+<a class="reference external image-reference" href="docs/images/Screenshot-qt.png"><img alt="Screenshot of the qt application" src="docs/images/Screenshot-qt.png" />
+</a>
+<details>
+<summary>Expand contents</summary><ul class="simple">
+<li><p><span class="xref std std-ref">Project Features</span></p></li>
+<li><p><span class="xref std std-ref">Development</span></p>
+<ul>
+<li><p><span class="xref std std-ref">How to build</span></p></li>
+<li><p><span class="xref std std-ref">Source Code Formatting</span></p></li>
+<li><p><span class="xref std std-ref">CMake options</span></p></li>
+</ul>
+</li>
+<li><p><span class="xref std std-ref">Pre-Commit Hooks</span></p></li>
+<li><p><span class="xref std std-ref">gitpod</span></p></li>
+<li><p><span class="xref std std-ref">direnv &amp; nix</span></p></li>
+</ul>
+</details><p>This projects is a C++ project template. It includes everything a “Modern” C++ project possibly needs:</p>
+<ul class="simple">
+<li><p>C++ 20 Standard</p>
+<ul>
+<li><p><a class="reference external" href="https://gcc.gnu.org/">GCC</a></p></li>
+<li><p><a class="reference external" href="https://clang.llvm.org/">Clang</a></p></li>
+<li><p>Visual Studio 2019 (2022)</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://conan.io/">conan</a> package Manager</p></li>
+<li><p>Libraries used:</p>
+<ul>
+<li><p><a class="reference external" href="https://www.qt.io/">Qt6</a></p></li>
+<li><p><a class="reference external" href="https://pocoproject.org/">Poco</a> Networking library</p></li>
+<li><p><a class="reference external" href="https://rapidjson.org/">RapidJSON</a></p></li>
+<li><p><a class="reference external" href="https://github.com/bfgroup/Lyra">Lyra</a> command line arguments parser</p></li>
+<li><p><a class="reference external" href="https://github.com/fmtlib/fmt">{fmt}</a> formatting library</p></li>
+</ul>
+</li>
+<li><p>Unittests with Coverage using <a class="reference external" href="https://github.com/catchorg/Catch2">Catch2</a></p></li>
+<li><p>CMake with <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">CMakePresets</a> <em>(CMake &gt;= 3.20)</em></p></li>
+<li><p>CPack packaging:</p>
+<ul>
+<li><p>Debian package</p></li>
+<li><p><a class="reference external" href="https://doc.qt.io/qtinstallerframework/">Qt Installer Framework</a></p></li>
+<li><p><a class="reference external" href="https://wixtoolset.org/">WIX</a></p></li>
+</ul>
+</li>
+<li><p>Build Caching support:</p>
+<ul>
+<li><p><a class="reference external" href="https://ccache.dev/">ccache</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mozilla/sccache">sccache</a></p></li>
+</ul>
+</li>
+<li><p>Static Analyzer support:</p>
+<ul>
+<li><p><a class="reference external" href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a></p></li>
+<li><p><a class="reference external" href="http://cppcheck.sourceforge.net/">cppcheck</a></p></li>
+<li><p><a class="reference external" href="https://include-what-you-use.org/">include-what-you-use</a></p></li>
+</ul>
+</li>
+<li><p>Sanitizers support:</p>
+<ul>
+<li><p><a class="reference external" href="https://clang.llvm.org/docs/AddressSanitizer.html">Address Sanitizer</a></p></li>
+<li><p><a class="reference external" href="https://clang.llvm.org/docs/LeakSanitizer.html">Leak Sanitizer</a></p></li>
+<li><p><a class="reference external" href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">Undefined Behavior Sanitizer</a></p></li>
+<li><p><a class="reference external" href="https://clang.llvm.org/docs/ThreadSanitizer.html">Thread Sanitizer</a></p></li>
+<li><p><a class="reference external" href="https://clang.llvm.org/docs/MemorySanitizer.html">Memory Sanitizer</a></p></li>
+</ul>
+</li>
+<li><p>Documentation Generation using</p>
+<ul>
+<li><p><a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a></p></li>
+<li><p><a class="reference external" href="https://breathe.readthedocs.io/">Breath</a></p></li>
+<li><p><a class="reference external" href="https://www.doxygen.nl/index.html">Doxygen</a></p></li>
+</ul>
+</li>
+<li><p>Code formatting:</p>
+<ul>
+<li><p><a class="reference external" href="https://clang.llvm.org/docs/ClangFormat.html">clang-format</a> for C++ files</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/cmake-format/">cmake-format</a> for CMake files</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/pre-commit/pre-commit-hooks">Pre-commit-hooks</a> support</p></li>
+<li><p><a class="reference external" href="https://nixos.org">Nix</a> environment support</p></li>
+<li><p><a class="reference external" href="https://www.gitpod.io/">gitpod</a> support</p></li>
+<li><p>Continuous integration (CI):</p>
+<ul>
+<li><p>GitHub Action</p>
+<ul>
+<li><p>Mac OS X</p>
+<ul>
+<li><p>13 <em>(AppleClang 14)</em></p></li>
+<li><p>14 <em>(AppleClang 15)</em></p></li>
+<li><p>15 <em>(AppleClang 15)</em></p></li>
+</ul>
+</li>
+<li><p>Ubuntu 22.04</p>
+<ul>
+<li><p>GCC 12</p></li>
+<li><p>Clang 13, 14 &amp; 15</p></li>
+</ul>
+</li>
+<li><p>Ubuntu 24.04</p>
+<ul>
+<li><p>GCC 13 &amp; 14</p></li>
+<li><p>Clang 16, 17 &amp; 18</p></li>
+</ul>
+</li>
+<li><p>Windows</p>
+<ul>
+<li><p>Visual Studio 2022</p></li>
+</ul>
+</li>
+<li><p>Nix</p>
+<ul>
+<li><p>GCC 14</p></li>
+<li><p>Clang 18</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/marketplace/actions/codacy-analysis-cli">Codacy Security Scan</a></p></li>
+<li><p><a class="reference external" href="https://github.com/github/codeql-action">CodeQL Static Analysis</a></p></li>
+<li><p><a class="reference external" href="https://scan.coverity.com/">Coverity Scan Static Analysis</a></p></li>
+<li><p><a class="reference external" href="https://codecov.io">Codecov</a> Coverage Reporter</p></li>
+<li><p><a class="reference external" href="https://www.sonarsource.com/products/sonarcloud/">Sonar Cloud Static Analysis</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.appveyor.com/">AppVeyor</a></p>
+<ul>
+<li><p>Windows Visual Studio 2019</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <p>To build the project you need python and a recent <a class="reference external" href="https://conan.io/">conan version</a>, a recent version of <a class="reference external" href="https://cmake.org/">CMake</a> (&gt; 3.15), a modern C++ compiler (C++17) and <a class="reference external" href="https://www.qt.io/">Qt</a> with <a class="reference external" href="https://doc.qt.io/qt-5/qtcharts-index.html">QtCharts</a>.</p>
 <p>To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#&gt; pip3 install -r py-requirements.txt</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>py-requirements.txt
 </pre></div>
 </div>
 <section id="how-to-build">
-<h3>How to build<a class="headerlink" href="#how-to-build" title="Link to this heading"></a></h3>
+<h2>How to build<a class="headerlink" href="#how-to-build" title="Link to this heading"></a></h2>
 <p>You have the following options to build the project</p>
 <p><strong>Use build script</strong>:</p>
 <p>In a linux shell you can build the project with the provided <code class="docutils literal notranslate"><span class="pre">build.sh</span></code> script. E.g. to build in folder <code class="docutils literal notranslate"><span class="pre">build</span></code> execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#&gt; ./build.sh build</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build.sh<span class="w"> </span>build
 </pre></div>
 </div>
 <p>See <code class="docutils literal notranslate"><span class="pre">./build.sh</span> <span class="pre">-h</span></code> for more options</p>
 <p><strong>CMake</strong>:</p>
-<p>You can also build it yourself using CMake:</p>
-<ul class="simple">
-<li><p>cmake &lt; 3.20</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#&gt; mkdir build</span>
-<span class="c1">#&gt; (cd build &amp;&amp; cmake ..)</span>
-<span class="c1">#&gt; cmake --build build</span>
+<p>You can also build it yourself using CMake and conan</p>
+<ul>
+<li><p><strong>Install dependencies with conan</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conan<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>--build<span class="o">=</span>missing<span class="w"> </span>--settings<span class="o">=</span><span class="nv">build_type</span><span class="o">=</span>Debug
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>cmake &gt;= 3.20</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#&gt; cmake -S . --preset=linux-ninja</span>
-<span class="c1">#&gt; cmake --build -S . --preset=ninja-debug</span>
+<p>Because the conan <a class="reference external" href="https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#">cmake_layout</a> and the  <span class="raw-html-md"><a href="https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html"><code class="docutils literal"><span class="pre">CMakeDeps</span></code></a></span> generator is used, the necessary cmake files used with <code class="docutils literal notranslate"><span class="pre">find_packages()</span></code> are generated into <code class="docutils literal notranslate"><span class="pre">build\&lt;build_type&gt;\generators</span></code>. <code class="docutils literal notranslate"><span class="pre">CMAKE_PREFIX_PATH``is</span> <span class="pre">adapted</span> <span class="pre">accordingly</span> <span class="pre">the</span> <span class="pre">root</span> <span class="pre">``CMakeLists.txt</span></code></p>
+</li>
+<li><p><strong>CMake without CMake Presets</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>./build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug
+cmake<span class="w"> </span>--build<span class="w"> </span>./build
 </pre></div>
 </div>
-<p>or any other <code class="docutils literal notranslate"><span class="pre">CMakePresets</span></code>.</p>
+</li>
+<li><p><strong>With CMake Presets</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conan<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>--build<span class="o">=</span>missing<span class="w"> </span>--settings<span class="o">=</span><span class="nv">build_type</span><span class="o">=</span>Debug
+cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>--preset<span class="o">=</span>linux-debug-ninja
+cmake<span class="w"> </span>--build<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>--preset<span class="o">=</span>ninja-debug
+</pre></div>
+</div>
+<p>or any other <a class="reference external" href="CMakePresets.json">CMakePresets</a>.</p>
+</li>
+</ul>
 </section>
 <section id="source-code-formatting">
-<h3>Source Code formatting<a class="headerlink" href="#source-code-formatting" title="Link to this heading"></a></h3>
+<h2>Source Code Formatting<a class="headerlink" href="#source-code-formatting" title="Link to this heading"></a></h2>
 <p>For source code formatting <a class="reference external" href="https://clang.llvm.org/docs/ClangFormat.html">clang-format</a> for C++ files and <a class="reference external" href="https://pypi.org/project/cmake-format/">cmake-format</a> for the CMake files are used. Run <code class="docutils literal notranslate"><span class="pre">format_source_files.sh</span></code> to format all C++ and CMake files.</p>
 <p><em>Note: Delete the build directory before formatting, otherwise all CMake files in the build folder will be formatted as well, what may take a while.</em></p>
 </section>
 <section id="cmake-options">
-<h3>CMake options<a class="headerlink" href="#cmake-options" title="Link to this heading"></a></h3>
+<h2>CMake options<a class="headerlink" href="#cmake-options" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_TESTING</span></code>: Build (and run) unittests. _Default_: <code class="docutils literal notranslate"><span class="pre">`ON`</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_BUILD_WITH_TIME_TRACE</span></code>: Enable <a class="reference external" href="https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature">Clang Time Trace Feature</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_PCH</span></code>: Enable <a class="reference external" href="https://en.wikipedia.org/wiki/Precompiled_header">Precompiled Headers</a>. <em>Default: ``OFF``</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_CACHE</span></code>: Enable caching if available, e.g. <a class="reference external" href="https://ccache.dev/">ccache</a> or <a class="reference external" href="https://github.com/mozilla/sccache">sccache</a>. <em>Default: ``ON``</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_COVERAGE</span></code>: Enable coverage reporting for gcc/clang. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_DOXYGEN</span></code>: Enable doxygen documentation build (<a class="reference external" href="https://www.doxygen.nl/index.html">doxygen</a> with <a class="reference external" href="https://graphviz.org/">graphviz dot</a> must be installed). <em>Default: ```ON```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_ADDRESS</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/AddressSanitizer.html">address sanitizer</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_LEAK</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/LeakSanitizer.html">leak sanitizer</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_UNDEFINED_BEHAVIOR</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">undefined behavior sanitizer</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_THREAD</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/ThreadSanitizer.html">thread sanitizer</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_SANITIZER_MEMORY</span></code>: Enable <a class="reference external" href="https://clang.llvm.org/docs/MemorySanitizer.html">memory sanitizer</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_IPO</span></code>: Enable intermodular optimization, aka <a class="reference external" href="https://llvm.org/docs/LinkTimeOptimization.html">Link Time Optimization (LTO)</a>. <em>Default: ```OFF```</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_CPPCHECK</span></code>: Enable static analysis with <a class="reference external" href="http://cppcheck.sourceforge.net/">cppcheck</a>. <em>Default: ``ON`` if cppcheck is installed ``OFF`` otherwise.</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_CLANG_TIDY</span></code>: Enable static analysis with <a class="reference external" href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a>. <em>Default: ``ON`` if clang-tidy is installed ``OFF`` otherwise.</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_INCLUDE_WHAT_YOU_USE</span></code>: Enable static analysis with <a class="reference external" href="https://include-what-you-use.org/">include-what-you-use</a>. <em>Default: ``ON`` if include-what-you-use is installed ``OFF`` otherwise.</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_CONAN_BUILD_ALL</span></code>: Enable building all conan requires from source. May help if you get linking errors. <a href="#id2"><span class="problematic" id="id3">*</span></a>Default: <code class="docutils literal notranslate"><span class="pre">OFF</span></code></p></li>
+<li><p><cite>DOWNLOAD_QT6</cite>: Download and build Qt6 otherwise use installed. _Default_: <code class="docutils literal notranslate"><span class="pre">ON</span></code></p></li>
+<li><p><cite>ENABLE_TESTING</cite>: Build (and run) unittests. _Default_: <code class="docutils literal notranslate"><span class="pre">ON</span></code></p></li>
+<li><p><cite>ENABLE_BUILD_WITH_TIME_TRACE</cite>: Enable [Clang Time Trace Feature](<a class="reference external" href="https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature">https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_PCH</cite>: Enable [Precompiled Headers](<a class="reference external" href="https://en.wikipedia.org/wiki/Precompiled_header">https://en.wikipedia.org/wiki/Precompiled_header</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_CACHE</cite>: Enable caching if available, e.g. [ccache](<a class="reference external" href="https://ccache.dev/">https://ccache.dev/</a>) or <a class="reference external" href="https://github.com/mozilla/sccache">sccache</a>. <em>Default: ``ON``</em></p></li>
+<li><p><cite>ENABLE_COVERAGE</cite>: Enable coverage reporting for gcc/clang. _Default: <a href="#id14"><span class="problematic" id="id15">`OFF`_</span></a></p></li>
+<li><p><cite>ENABLE_DOXYGEN</cite>: Enable doxygen documentation build ([Doxygen](<a class="reference external" href="https://www.doxygen.nl/index.html">https://www.doxygen.nl/index.html</a>) must be installed). <em>Default: ``ON``</em> if Doxygen is installed <code class="docutils literal notranslate"><span class="pre">OFF</span></code> otherwise._</p></li>
+<li><p><cite>ENABLE_SPHINX</cite>: Enable sphinx documentation build ([Sphinx](<a class="reference external" href="https://www.sphinx-doc.org/">https://www.sphinx-doc.org/</a>) with <a class="reference external" href="https://breathe.readthedocs.io/">Breath</a> must be installed). <em>Default: ``ON``</em> if Sphinx is installed <code class="docutils literal notranslate"><span class="pre">OFF</span></code> otherwise._</p></li>
+<li><p><cite>ENABLE_SANITIZER_ADDRESS</cite>: Enable [address sanitizer](<a class="reference external" href="https://clang.llvm.org/docs/AddressSanitizer.html">https://clang.llvm.org/docs/AddressSanitizer.html</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_SANITIZER_LEAK</cite>: Enable [leak sanitizer](<a class="reference external" href="https://clang.llvm.org/docs/LeakSanitizer.html">https://clang.llvm.org/docs/LeakSanitizer.html</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_SANITIZER_UNDEFINED_BEHAVIOR</cite>: Enable [undefined behavior sanitizer](<a class="reference external" href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_SANITIZER_THREAD</cite>: Enable [thread sanitizer](<a class="reference external" href="https://clang.llvm.org/docs/ThreadSanitizer.html">https://clang.llvm.org/docs/ThreadSanitizer.html</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_SANITIZER_MEMORY</cite>: Enable [memory sanitizer](<a class="reference external" href="https://clang.llvm.org/docs/MemorySanitizer.html">https://clang.llvm.org/docs/MemorySanitizer.html</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_IPO</cite>: Enable intermodular optimization, aka [Link Time Optimization (LTO)](<a class="reference external" href="https://llvm.org/docs/LinkTimeOptimization.html">https://llvm.org/docs/LinkTimeOptimization.html</a>). <em>Default: ``OFF``</em></p></li>
+<li><p><cite>ENABLE_CPPCHECK</cite>: Enable static analysis with [cppcheck](<a class="reference external" href="http://cppcheck.sourceforge.net/">http://cppcheck.sourceforge.net/</a>). <em>Default: ``ON`` if cppcheck is installed ``OFF`` otherwise.</em></p></li>
+<li><p><cite>ENABLE_CLANG_TIDY</cite>: Enable static analysis with [clang-tidy](<a class="reference external" href="https://clang.llvm.org/extra/clang-tidy/">https://clang.llvm.org/extra/clang-tidy/</a>). <em>Default: ``ON`` if clang-tidy is installed ``OFF`` otherwise.</em></p></li>
+<li><p><cite>ENABLE_INCLUDE_WHAT_YOU_USE</cite>: Enable static analysis with [include-what-you-use](<a class="reference external" href="https://include-what-you-use.org/">https://include-what-you-use.org/</a>). <em>Default: ``ON`` if include-what-you-use is installed ``OFF`` otherwise</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_LINK_WHAT_YOU_USE</span></code> : Enable <em>link what you use</em> cmake buiilt-in static analysis. _Default: <code class="docutils literal notranslate"><span class="pre">OFF</span></code></p></li>
+<li><p><cite>ENABLE_CONAN_BUILD_ALL</cite>: Enable building all conan requires from source. May help if you get linking errors. _Default: <code class="docutils literal notranslate"><span class="pre">OFF</span></code></p></li>
+<li><p><cite>WARNINGS_AS_ERRORS</cite>: Treat compiler warnings as errors. _Default: <code class="docutils literal notranslate"><span class="pre">ON</span></code></p></li>
 </ul>
-</section>
-</section>
-<section id="pre-commit-hooks">
-<h2>Pre-Commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Link to this heading"></a></h2>
+<section id="id8">
+<h3>Pre-Commit Hooks<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <p>The following <a class="reference external" href="https://github.com/pre-commit/pre-commit-hooks">Pre-commit-hooks</a> are used to check and format files before committing:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">check-added-large-files</span></code>: Prevent giant files (&gt; 500kB) from being committed.</p></li>
@@ -181,10 +368,22 @@ It reads the current data of Corona (Covid-19) cases for a country from the <a c
 </ul>
 <p>Please install pre-commit hooks before committing any code.</p>
 </section>
+<section id="id10">
+<h3>gitpod<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>To start right away without installing anything on your local machine, you can simply use the &lt;img src=”<a class="reference external" href="https://gitpod.io/button/open-in-gitpod.svg">https://gitpod.io/button/open-in-gitpod.svg</a>” height=”15”&gt; button in the Project State section at the top of this README.</p>
+</section>
 <section id="direnv-nix">
-<h2>direnv &amp; Nix<a class="headerlink" href="#direnv-nix" title="Link to this heading"></a></h2>
-<p>If you have <a class="reference external" href="https://direnv.net/">direnv</a> and <a class="reference external" href="https://nixos.org/">nix</a> installed everything should be setup to start upon entering the project folder. gcc (gcc10) is set as default C and C++ compiler. If you prefer clang (clang_11) change it in <code class="docutils literal notranslate"><span class="pre">.envrc</span></code></p>
-<p>When using nix. The most resent cmake is available and therefore configure and build <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">CMakePresets</a> can be used.</p>
+<h3>direnv &amp; nix<a class="headerlink" href="#direnv-nix" title="Link to this heading"></a></h3>
+<p>If you have <a class="reference external" href="https://direnv.net/">direnv</a> and <a class="reference external" href="https://nixos.org/">nix</a> installed everything should be setup to start upon entering the project folder, if <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">nix</span></code> is not commented out in <a class="reference external" href=".envrc">.envrc</a>. gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang_18) change it in <a class="reference external" href=".envrc">.envrc</a></p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> directly to build when <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">nix</span></code> is disabled, e.g.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix-shell<span class="w"> </span>--command<span class="w"> </span><span class="s2">&quot;conan profile detect&quot;</span>
+nix-shell<span class="w"> </span>--command<span class="w"> </span><span class="s2">&quot;conan install . --build=missing --settings=build_type=Debug&quot;</span>
+nix-shell<span class="w"> </span>--command<span class="w"> </span><span class="s2">&quot;cmake -S . --preset=linux-debug-ninja</span>
+<span class="s2">nix-shell --command &quot;</span>cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="o">=</span>ninja-debug
+</pre></div>
+</div>
+<p>When using nix, a new cmake is available and therefore configure and build <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">CMakePresets</a> can be used.</p>
+</section>
 </section>
 </section>
 <section id="indices-and-tables">
@@ -199,7 +398,7 @@ It reads the current data of Corona (Covid-19) cases for a country from the <a c
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="mainpage.html" class="btn btn-neutral float-right" title="Documentation for Co[ro]nan" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mainpage.html" class="btn btn-neutral float-right" title="IMPORTANT NOTE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
