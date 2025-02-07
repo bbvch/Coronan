@@ -77,7 +77,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 * C++ 20 Standard
   * [GCC](https://gcc.gnu.org/)
   * [Clang](https://clang.llvm.org/)
-  * Visual Studio 2019 (2022)
+  * Visual Studio 2022
 
 * [conan](https://conan.io/) package Manager
 
@@ -90,7 +90,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 
-* CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.20)_
+* CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.22)_
 
 * CPack packaging:
   * Debian package
@@ -166,7 +166,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 ## Development
 
-To build the project you need python and a recent [conan version](https://conan.io/), a recent version of [CMake](https://cmake.org/) (> 3.15), a modern C++ compiler (C++17) and [Qt](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-5/qtcharts-index.html).
+To build the project you need python and a recent [conan version](https://conan.io/), a recent version of [CMake](https://cmake.org/) (>= 3.22), a modern C++ compiler (C++20 support) and [Qt6](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html).
 
 To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:
 
@@ -183,7 +183,7 @@ __Use build script__:
 In a linux shell you can build the project with the provided `build.sh` script. E.g. to build in folder `build` execute:
 
 ```bash
-./build.sh build
+./build.sh ./build
 ```
 
 See `./build.sh -h` for more options
@@ -197,9 +197,9 @@ You can also build it yourself using CMake and conan
   ```bash
   conan install . --build=missing --settings=build_type=Debug
   ```
-  Because the conan [cmake_layout](https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#) and the  [`CMakeDeps`](https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html) generator is used, the necessary cmake files used with `find_packages()` are generated into `build\<build_type>\generators`. `CMAKE_PREFIX_PATH`is adapted accordingly the root `CMakeLists.txt`
+  Because the conan [cmake_layout](https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#) and the  [`CMakeDeps`](https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html) generator is used, the necessary cmake files used with `find_packages()` are generated into `build\<build_type>\generators`. `CMAKE_PREFIX_PATH` is adapted accordingly in the root `CMakeLists.txt`.
 
-* __CMake without CMake Presets__
+* __Without CMake Presets__
 
   ```bash
   cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Debug
@@ -208,9 +208,8 @@ You can also build it yourself using CMake and conan
 * __With CMake Presets__
 
   ```bash
-  conan install . --build=missing --settings=build_type=Debug
   cmake -S . --preset=linux-debug-ninja
-  cmake --build -S . --preset=ninja-debug
+  cmake --build --preset=ninja-debug
   ```
 
   or any other [CMakePresets](CMakePresets.json).
@@ -230,7 +229,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_CACHE`: Enable caching if available, e.g. [ccache](https://ccache.dev/) or [sccache](https://github.com/mozilla/sccache). _Default: `ON`_
 * `ENABLE_COVERAGE`: Enable coverage reporting for gcc/clang. _Default: `OFF`_
 * `ENABLE_DOXYGEN`: Enable doxygen documentation build ([Doxygen](https://www.doxygen.nl/index.html) must be installed). _Default: `ON`_ if Doxygen is installed `OFF` otherwise._
-* `ENABLE_SPHINX`: Enable sphinx documentation build ([Sphinx](https://www.sphinx-doc.org/) with [Breath](https://breathe.readthedocs.io/) must be installed). _Default: `ON`_ if Sphinx is installed `OFF` otherwise._
+* `ENABLE_SPHINX`: Enable sphinx documentation build ([Sphinx](https://www.sphinx-doc.org/) with [Breath](https://breathe.readthedocs.io/) and [sphinx-mdinclude](https://github.com/omnilib/sphinx-mdinclude) must be installed). _Default: `ON`_ if Sphinx is installed `OFF` otherwise._
 * `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_LEAK`: Enable [leak sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `OFF`_
@@ -240,8 +239,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_CPPCHECK`: Enable static analysis with [cppcheck](http://cppcheck.sourceforge.net/). _Default: `ON` if cppcheck is installed `OFF` otherwise._
 * `ENABLE_CLANG_TIDY`: Enable static analysis with [clang-tidy](https://clang.llvm.org/extra/clang-tidy/). _Default: `ON` if clang-tidy is installed `OFF` otherwise._
 * `ENABLE_INCLUDE_WHAT_YOU_USE`: Enable static analysis with [include-what-you-use](https://include-what-you-use.org/). _Default: `ON` if include-what-you-use is installed `OFF` otherwise_.
-* `ENABLE_LINK_WHAT_YOU_USE` : Enable _link what you use_ cmake buiilt-in static analysis. _Default: `OFF`
-* `ENABLE_CONAN_BUILD_ALL`: Enable building all conan requires from source. May help if you get linking errors. _Default: `OFF`
+* `ENABLE_LINK_WHAT_YOU_USE` : Enable _link what you use_ cmake built-in static analysis. _Default: `OFF`
 * `WARNINGS_AS_ERRORS`: Treat compiler warnings as errors. _Default: `ON`
 
 ## Pre-Commit Hooks
