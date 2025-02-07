@@ -52,6 +52,6 @@ RUN pip3 install gcovr==8.2
 RUN pip3 install Sphinx==8.1.3
 RUN pip3 install sphinx_rtd_theme==3.0.2
 RUN pip3 install breathe==4.35.0
-RUN pip3 install m2r2==0.3.3
+RUN pip3 install sphinx_mdinclude==0.6.2
 
 RUN echo 'export PIP_USER=false' >> ~/.bashrc

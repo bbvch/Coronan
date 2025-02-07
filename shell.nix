@@ -62,8 +62,6 @@ in stdenvNoCC.mkDerivation {
     pre-commit install -f --hook-type pre-commit
     virtualenv venv
     source venv/bin/activate
-    python3 -m pip install conan
-    python3 -m pip install yamlfmt
-    python3 -m pip install m2r2
+    python3 -m pip install -r py-requirements.txt
   '';
 }

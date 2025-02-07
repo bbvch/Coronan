@@ -135,7 +135,6 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
       * 14 _(AppleClang 15)_
       * 15 _(AppleClang 15)_
 
-
     * Ubuntu 22.04
       * GCC 12
       * Clang 13, 14 & 15
@@ -153,13 +152,13 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
     * [Codacy Security Scan](https://github.com/marketplace/actions/codacy-analysis-cli)
 
-    * [Codacy](https://www.codacy.com) Coverage Reporter
-
     * [CodeQL Static Analysis](https://github.com/github/codeql-action)
 
     * [Coverity Scan Static Analysis](https://scan.coverity.com/)
 
     * [Codecov](https://codecov.io) Coverage Reporter
+
+    * [Sonar Cloud Static Analysis](https://www.sonarsource.com/products/sonarcloud/)
 
   * [AppVeyor](https://www.appveyor.com/)
     * Windows Visual Studio 2019

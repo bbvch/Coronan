@@ -28,7 +28,7 @@ copyright = '2020'
 # ones.
 extensions = [
     'breathe',
-    "m2r2"
+    'sphinx_mdinclude'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
