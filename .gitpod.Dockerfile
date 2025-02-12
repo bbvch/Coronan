@@ -16,6 +16,12 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
+# install clang 19
+RUN apt-get update \
+    && apt-get -qq install -y --no-install-recommends clang-19 clang-tidy-19 clang-format-19 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # lcov and doxygen
 RUN apt-get update \
     && apt-get -qq install -y --no-install-recommends lcov doxygen graphviz \
@@ -33,7 +39,7 @@ RUN pyenv install 3.12.7 && pyenv global 3.12.7
 RUN pip3 install cmake==3.31.4
 #install conan
 RUN pip3 install conan==2.11
-RUN pip3  install python-dateutil
+RUN pip3  install python-dateutil==2.9.0
 
 # pre-commit
 RUN pip3 install pre-commit==4.0.1

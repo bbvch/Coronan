@@ -3,8 +3,13 @@ image:
     file: .gitpod.Dockerfile
 
 tasks:
-    - init: pre-commit install -f --hook-type pre-commit && rm -rf build && conan profile detect && conan install . -pr:a conan_profiles/clang_debug_linux
-          --build=missing
+    - before: |
+          pre-commit install -f --hook-type pre-commit
+          rm -rf build
+          export CXX=clang++-19
+          export CC=clang-19
+          conan profile detect
+      init: conan install . -pr:a conan_profiles/clang_debug_linux --build=missing
       command: cmake -S . -B build --preset=conan-debug
 
 vscode:
