@@ -5,7 +5,7 @@ set(FETCHCONTENT_QUIET FALSE)
 # Only build the following QT submodules:
 set(QT_BUILD_SUBMODULES
     "qtbase;qtcharts"
-    CACHE STRING "Submodules to build"
+    CACHE STRING "Qt6 Submodules to build"
 )
 set(QT_VERSION
     "v6.8.2"
@@ -24,7 +24,11 @@ set(QT_FEATURE_opengles3 OFF)
 set(QT_FEATURE_charts ON)
 set(QT_BUILD_STANDALONE_TESTS OFF)
 set(QT_BUILD_EXAMPLES OFF)
+set(QT_BUILD_EXAMPLES_BY_DEFAULT OFF)
 set(QT_BUILD_TESTS OFF)
+set(QT_BUILD_DOCS OFF)
+
+set(QT_MODULES Core Widgets Charts)
 
 fetchcontent_declare(
     qt6
@@ -36,3 +40,6 @@ fetchcontent_declare(
 )
 
 fetchcontent_makeavailable(qt6)
+
+# Qt needs to be compiled in a mode that enables `INT128`
+set_target_properties(Core PROPERTIES CXX_EXTENSIONS ON)

@@ -10,17 +10,18 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 option(DOWNLOAD_QT6 "Download Qt from https://github.com/qt/qt5.git" OFF)
 
-if(DEFINED ENV{Qt6_DIR} AND EXISTS "$ENV{Qt6_DIR}/lib")
-    set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "$ENV{Qt6_DIR}/lib")
-endif()
-
 if(DOWNLOAD_QT6)
     include(cmake/Qt.cmake)
+
 else()
+    if(DEFINED ENV{Qt6_DIR} AND EXISTS "$ENV{Qt6_DIR}")
+        set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "$ENV{Qt6_DIR}")
+        message(STATUS "Qt6_DIR: $ENV{Qt6_DIR}")
+    endif()
+
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)
     set(CMAKE_AUTOUIC ON)
-
     find_package(
         Qt6
         COMPONENTS Charts Core
@@ -40,12 +41,14 @@ set(CMAKE_INSTALL_RPATH $ORIGIN $ORIGIN/${relDir})
 
 message(STATUS "CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}")
 
-add_executable(coronan_gui ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
+qt6_add_executable(coronan_gui ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
 
 add_executable(coronan::coronan_gui ALIAS coronan_gui)
 set_target_properties(
-    coronan_gui PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronanApp
+    coronan_gui PROPERTIES CXX_EXTENSIONS ${DOWNLOAD_QT6} OUTPUT_NAME
+                                                          coronanApp
 )
+
 target_include_directories(
     coronan_gui PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -58,13 +61,15 @@ set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
 )
 
+qt6_wrap_ui(APP_UI_FILES ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui)
+
 target_sources(
     coronan_gui
     PRIVATE ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
             ${CMAKE_CURRENT_LIST_DIR}/country_overview_table_model.cpp
             ${CMAKE_CURRENT_LIST_DIR}/country_data_model.cpp
             ${CMAKE_CURRENT_LIST_DIR}/country_chart_view.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui
+            ${APP_UI_FILES}
             ${HEADER_LIST}
 )
 
@@ -72,13 +77,13 @@ target_link_libraries(
     coronan_gui
     PRIVATE Qt6::Core
     PRIVATE Qt6::Charts
+    PRIVATE Qt6::Widgets
     PRIVATE coronan::library
     PRIVATE coronan::compile_warnings
     PRIVATE coronan::compile_options
 )
 
-include(StaticAnalyzers)
-# enable_static_analysis(${PROJECT_NAME})
+# include(StaticAnalyzers) enable_static_analysis(${PROJECT_NAME})
 
 include(CMakePackageConfigHelpers)
 

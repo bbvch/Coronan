@@ -52,6 +52,11 @@ set(CPACK_IFW_PACKAGE_TITLE "Co[ro]nan")
 include(CPack)
 include(CPackIFW)
 
+# WIX config CPACK_WIX_UPGRADE_GUID should be explicitly set to a constant
+# generated globally unique identifier (GUID) to allow your installers to
+# replace existing installations that use the same GUID.
+set(CPACK_WIX_UPGRADE_GUID "e2b63053-6f9d-4bd1-97b6-97ec70b70a7d")
+
 cpack_add_component(
     Coronan_Development
     DISPLAY_NAME "coronan SDK"
