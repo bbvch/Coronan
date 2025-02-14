@@ -12,7 +12,7 @@
 [![MacOS Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-macos.yml)
 
 [![Windows Builds](https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/ci-windows.yml)
-[![Build status Appveyor](https://ci.appveyor.com/api/projects/status/hd77e7u1s4kboogy/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
+[![Build status Appveyor](https://ci.appveyor.com/api/projects/status/3eure0j9ae8dijhj/branch/master?svg=true)](https://ci.appveyor.com/project/meshell/coronan/branch/master)
 
 [![API Documentation](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml/badge.svg)](https://github.com/bbvch/Coronan/actions/workflows/api-doc.yml)
 
@@ -90,7 +90,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 
-* CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.22)_
+* CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.23)_
 
 * CPack packaging:
   * Debian package
@@ -166,7 +166,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 ## Development
 
-To build the project you need python and a recent [conan version](https://conan.io/), a recent version of [CMake](https://cmake.org/) (>= 3.22), a modern C++ compiler (C++20 support) and [Qt6](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html).
+To build the project you need python and a recent [conan version](https://conan.io/), a recent version of [CMake](https://cmake.org/) (>= 3.23), a modern C++ compiler (C++20 support) and [Qt6](https://www.qt.io/) with [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html).
 
 To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:
 
@@ -222,7 +222,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 
 ### CMake options
 
-* `DOWNLOAD_QT6`: Download and build Qt6 otherwise use installed. _Default_: `ON`
+* `DOWNLOAD_QT6`: Download and build Qt6 otherwise use installed. _Default_: `OFF`
 * `ENABLE_TESTING`: Build (and run) unittests. _Default_: `ON`
 * `ENABLE_BUILD_WITH_TIME_TRACE`: Enable [Clang Time Trace Feature](https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature). _Default: `OFF`_
 * `ENABLE_PCH`: Enable [Precompiled Headers](https://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
@@ -230,9 +230,10 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_COVERAGE`: Enable coverage reporting for gcc/clang. _Default: `OFF`_
 * `ENABLE_DOXYGEN`: Enable doxygen documentation build ([Doxygen](https://www.doxygen.nl/index.html) must be installed). _Default: `ON`_ if Doxygen is installed `OFF` otherwise._
 * `ENABLE_SPHINX`: Enable sphinx documentation build ([Sphinx](https://www.sphinx-doc.org/) with [Breath](https://breathe.readthedocs.io/) and [sphinx-mdinclude](https://github.com/omnilib/sphinx-mdinclude) must be installed). _Default: `ON`_ if Sphinx is installed `OFF` otherwise._
-* `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `OFF`_
+* `ENABLE_SANITIZERS`: Enable supported sanitizers". _Default: `OFF`_
+* `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `ON` if supported by the compiler and `ENABLE_SANITIZERS` == `ON` otherwise `OFF`._
 * `ENABLE_SANITIZER_LEAK`: Enable [leak sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html). _Default: `OFF`_
-* `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `OFF`_
+* `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `ON` if supported by the compiler and `ENABLE_SANITIZERS` == `ON` otherwise `OFF`._
 * `ENABLE_SANITIZER_THREAD`: Enable [thread sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html). _Default: `OFF`_
 * `ENABLE_SANITIZER_MEMORY`: Enable [memory sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html). _Default: `OFF`_
 * `ENABLE_IPO`: Enable intermodular optimization, aka [Link Time Optimization (LTO)](https://llvm.org/docs/LinkTimeOptimization.html). _Default: `OFF`_
@@ -240,7 +241,7 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 * `ENABLE_CLANG_TIDY`: Enable static analysis with [clang-tidy](https://clang.llvm.org/extra/clang-tidy/). _Default: `ON` if clang-tidy is installed `OFF` otherwise._
 * `ENABLE_INCLUDE_WHAT_YOU_USE`: Enable static analysis with [include-what-you-use](https://include-what-you-use.org/). _Default: `ON` if include-what-you-use is installed `OFF` otherwise_.
 * `ENABLE_LINK_WHAT_YOU_USE` : Enable _link what you use_ cmake built-in static analysis. _Default: `OFF`
-* `WARNINGS_AS_ERRORS`: Treat compiler warnings as errors. _Default: `ON`
+* `WARNINGS_AS_ERRORS`: Treat compiler warnings as errors. _Default: `OFF`
 
 ## Pre-Commit Hooks
 
@@ -264,6 +265,10 @@ The following [Pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks)
 * `yamlfmt`: Format yaml files
 
 Please install pre-commit hooks before committing any code.
+
+```bash
+pre-commit install -f --hook-type pre-commit
+```
 
 ## gitpod
 

@@ -24,6 +24,7 @@ jobs:
                       clang-tidy: clang-tidy-13
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
                     - name: ubuntu-22.04-clang-14
                       os: ubuntu-22.04
                       build_type: Release
@@ -32,6 +33,7 @@ jobs:
                       clang-tidy: clang-tidy-14
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
                     - name: ubuntu-22.04-clang-15
                       os: ubuntu-22.04
                       build_type: Release
@@ -40,6 +42,7 @@ jobs:
                       clang-tidy: clang-tidy-15
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
                     - name: ubuntu-22.04-gcc-12
                       os: ubuntu-22.04
                       build_type: Debug
@@ -48,6 +51,7 @@ jobs:
                       clang-tidy: clang-tidy
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
                     - name: ubuntu-24.04-clang-16
                       os: ubuntu-24.04
                       build_type: Release
@@ -56,6 +60,7 @@ jobs:
                       clang-tidy: clang-tidy-16
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
                     - name: ubuntu-24.04-clang-17
                       os: ubuntu-24.04
                       build_type: Release
@@ -64,6 +69,7 @@ jobs:
                       clang-tidy: clang-tidy-17
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
                     - name: ubuntu-24.04-clang-18
                       os: ubuntu-24.04
                       build_type: Release
@@ -72,6 +78,16 @@ jobs:
                       clang-tidy: clang-tidy-18
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
+                    - name: ubuntu-24.04-clang-18-download-qt
+                      os: ubuntu-24.04
+                      build_type: Release
+                      compiler: clang++-18
+                      ccompiler: clang-18
+                      clang-tidy: clang-tidy-18
+                      generators: Ninja
+                      coverage: OFF
+                      download_qt: ON
                     - name: ubuntu-24.04-gcc-13
                       os: ubuntu-24.04
                       build_type: Debug
@@ -80,6 +96,7 @@ jobs:
                       clang-tidy: clang-tidy
                       generators: Ninja
                       coverage: ON
+                      download_qt: OFF
                     - name: ubuntu-24.04-gcc-14
                       os: ubuntu-24.04
                       build_type: Debug
@@ -88,6 +105,16 @@ jobs:
                       clang-tidy: clang-tidy
                       generators: Ninja
                       coverage: OFF
+                      download_qt: OFF
+                    - name: ubuntu-24.04-gcc-14-download-qt
+                      os: ubuntu-24.04
+                      build_type: Debug
+                      compiler: g++-14
+                      ccompiler: gcc-14
+                      clang-tidy: clang-tidy
+                      generators: Ninja
+                      coverage: OFF
+                      download_qt: ON
 
         env:
             CXX: ${{ matrix.compiler }}
@@ -99,6 +126,11 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y --no-install-recommends ninja-build ${{ matrix.clang-tidy }} dpkg pkg-config doxygen lcov
+                  sudo apt-get install -y --no-install-recommends libgl1-mesa-dev freeglut3-dev
+            - name: Install Qt
+              if: matrix.download_qt == 'OFF'
+              run: |
+                  sudo apt-get update
                   sudo apt-get install -y --no-install-recommends qt6-base-dev qt6-tools-dev qt6-tools-dev-tools libqt6charts6 libqt6charts6-dev libqt6opengl6 libqt6opengl6-dev '^libxcb.*-dev' libgles2-mesa-dev libx11-xcb-dev libgl1-mesa-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
             - name: Set up Python
               uses: actions/setup-python@v5
@@ -115,6 +147,7 @@ jobs:
             - name: CMake configure
               run: |
                   cmake -S . -B ./build -G "${{ matrix.generators }}" \
+                  -DDOWNLOAD_QT6=${{ matrix.download_qt }} \
                   -DENABLE_COVERAGE=${{ matrix.coverage }} \
                   -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
             - name: CMake build

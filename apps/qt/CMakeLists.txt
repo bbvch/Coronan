@@ -22,6 +22,7 @@ else()
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)
     set(CMAKE_AUTOUIC ON)
+
     find_package(
         Qt6
         COMPONENTS Charts Core
@@ -41,7 +42,28 @@ set(CMAKE_INSTALL_RPATH $ORIGIN $ORIGIN/${relDir})
 
 message(STATUS "CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}")
 
-qt6_add_executable(coronan_gui ${CMAKE_CURRENT_LIST_DIR}/main.cpp)
+set(HEADER_LIST
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table_model.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
+)
+# AUTOMOC and AUTOUIC dows not work when Qt is built from source
+if(DOWNLOAD_QT6)
+    qt6_wrap_ui(APP_UI_FILES ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui)
+    qt6_wrap_cpp(MOC_FILES ${HEADER_LIST})
+endif()
+
+qt6_add_executable(
+    coronan_gui
+    ${CMAKE_CURRENT_LIST_DIR}/main.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/country_overview_table_model.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/country_data_model.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/country_chart_view.cpp
+    $<IF:$<BOOL:${DOWNLOAD_QT6}>,${APP_UI_FILES},${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui>
+    $<IF:$<BOOL:${DOWNLOAD_QT6}>,${MOC_FILES},${HEADER_LIST}>
+)
 
 add_executable(coronan::coronan_gui ALIAS coronan_gui)
 set_target_properties(
@@ -52,25 +74,6 @@ set_target_properties(
 target_include_directories(
     coronan_gui PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-)
-
-set(HEADER_LIST
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table_model.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
-)
-
-qt6_wrap_ui(APP_UI_FILES ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui)
-
-target_sources(
-    coronan_gui
-    PRIVATE ${CMAKE_CURRENT_LIST_DIR}/mainwindow.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/country_overview_table_model.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/country_data_model.cpp
-            ${CMAKE_CURRENT_LIST_DIR}/country_chart_view.cpp
-            ${APP_UI_FILES}
-            ${HEADER_LIST}
 )
 
 target_link_libraries(

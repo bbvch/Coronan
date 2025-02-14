@@ -25,7 +25,6 @@ target_link_libraries(
     PRIVATE coronan::compile_options
 )
 
-include(CTest)
 include(Catch)
 
 catch_discover_tests(

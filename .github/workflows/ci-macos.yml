@@ -21,19 +21,19 @@ jobs:
                       build_type: Release
                       compiler: clang++
                       ccompiler: clang
-                      generators: Unix Makefiles
+                      generators: Ninja
                     - name: macOS-14-clang
                       os: macOS-14
                       build_type: Release
                       compiler: clang++
                       ccompiler: clang
-                      generators: Unix Makefiles
+                      generators: Ninja
                     - name: macOS-15-clang
                       os: macOS-15
                       build_type: Release
                       compiler: clang++
                       ccompiler: clang
-                      generators: Unix Makefiles
+                      generators: Ninja
 
         env:
             CXX: ${{ matrix.compiler }}
@@ -42,8 +42,7 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Install dependencies
-              run: |
-                  brew install ninja doxygen sphinx-doc
+              run: brew install ninja doxygen sphinx-doc
             - name: Set up Python
               uses: actions/setup-python@v5
               with:

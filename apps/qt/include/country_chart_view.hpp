@@ -16,6 +16,7 @@ class CountryChartView : public QChartView
   Q_OBJECT
 public:
   explicit CountryChartView(CountryDataModel* const data_model, QWidget* parent = nullptr);
+  ~CountryChartView() override = default;
 
   void update_ui(CountryDataModel const& data_model);
 

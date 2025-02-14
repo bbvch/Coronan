@@ -1,15 +1,29 @@
 cmake_minimum_required(VERSION 3.22)
 
+# Only set the cxx_standard if it is not set by someone else
+if(NOT DEFINED CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 20)
+endif()
+
+# strongly encouraged to enable this globally to avoid conflicts between
+# -Wpedantic being enabled and -std=c++20 and -std=gnu++20 for example when
+# compiling with PCH enabled
+# https://github.com/cpp-best-practices/cmake_template/blob/main/CMakeLists.txt
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 project(
     Coronan
-    VERSION 0.2.0
+    VERSION 0.3.0
     DESCRIPTION "Conan example project showing Covid-19 cases."
     LANGUAGES CXX
 )
 
+include(cmake/PreventInSourceBuilds.cmake)
+include(cmake/StandardProjectSettings.cmake)
+
 option(ENABLE_TESTING "Enable Test Builds" ON)
 
-# conan cmake_layout puts files used for find_package into specific place. Added
+# conan cmake_layout puts files used for find_package into specific place. Add
 # it to CMAKE_PREFIX_PATH
 if(CMAKE_CONFIGURATION_TYPES)
     # Multi-configuration generator (e.g. Visual Studio)
@@ -23,13 +37,10 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include(cmake/StandardProjectSettings.cmake)
-include(cmake/PreventInSourceBuilds.cmake)
-
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
 add_library(coronan::compile_options ALIAS project_options)
-target_compile_features(project_options INTERFACE cxx_std_20)
+target_compile_features(project_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
 
 if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     option(ENABLE_BUILD_WITH_TIME_TRACE
@@ -52,9 +63,13 @@ include(cmake/Cache.cmake)
 include(cmake/CompilerWarnings.cmake)
 set_project_warnings(project_warnings)
 
-# sanitizer options if supported by compiler
-include(cmake/Sanitizers.cmake)
-enable_sanitizers(project_options)
+option(ENABLE_SANITIZERS "Enable sanitizer" OFF)
+
+if(ENABLE_SANITIZERS)
+    # sanitizer options if supported by compiler
+    include(cmake/Sanitizers.cmake)
+    enable_sanitizers(project_options)
+endif()
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(cmake/Doxygen.cmake)
@@ -88,6 +103,12 @@ enable_coverage(project_options)
 
 add_subdirectory(src)
 
+if(NOT PROJECT_IS_TOP_LEVEL)
+    return()
+endif()
+
+include(CTest)
+
 if(ENABLE_TESTING)
     enable_testing()
     add_subdirectory(tests)
@@ -95,6 +116,25 @@ endif()
 
 add_subdirectory(apps/cli)
 add_subdirectory(apps/qt)
+
+# If MSVC is being used, and ASAN is enabled, we need to set the debugger
+# environment so that it behaves well with MSVC's debugger, and we can run the
+# target from visual studio
+if(MSVC)
+    get_all_installable_targets(all_targets)
+    message("all_targets=${all_targets}")
+    set_target_properties(
+        ${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT
+                                  "PATH=$(VC_ExecutablePath_x64);%PATH%"
+    )
+endif()
+
+# set the startup project for the "play" button in MSVC
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT intro)
+
+if(CMAKE_SKIP_INSTALL_RULES)
+    return()
+endif()
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)

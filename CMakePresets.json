@@ -1,8 +1,8 @@
 {
-    "version": 3,
+    "version": 4,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 22,
+        "minor": 23,
         "patch": 0
     },
     "configurePresets": [
@@ -98,6 +98,7 @@
             "name": "linux-debug",
             "displayName": "Debug (Unix Makefile)",
             "description": "Configure Debug",
+            "hidden": false,
             "inherits": [
                 "linux-gcc",
                 "debug",
@@ -108,6 +109,7 @@
             "name": "linux-release",
             "displayName": "Release (Unix Makefile)",
             "description": "Configure Release",
+            "hidden": false,
             "inherits": [
                 "linux-gcc",
                 "release",
@@ -127,6 +129,7 @@
             "name": "linux-debug-ninja",
             "description": "Configure (Ninja, gcc)",
             "displayName": "Ninja Debug",
+            "hidden": false,
             "inherits": [
                 "ninja",
                 "debug"
@@ -136,6 +139,7 @@
             "name": "linux-release-ninja",
             "displayName": "Ninja Release",
             "description": "Configure Release (Ninja)",
+            "hidden": false,
             "inherits": [
                 "ninja",
                 "release"
@@ -145,6 +149,7 @@
             "name": "linux-coverage-ninja",
             "displayName": "Coverage (Ninja)",
             "description": "Configure Coverage (Ninja)",
+            "hidden": false,
             "inherits": [
                 "ninja",
                 "coverage"
@@ -163,6 +168,7 @@
             "name": "linux-debug-ninja-clang",
             "description": "Configure clang (Ninja)",
             "displayName": "Clang Debug (Ninja)",
+            "hidden": false,
             "inherits": [
                 "ninja",
                 "debug",
@@ -173,6 +179,7 @@
             "name": "linux-release-ninja-clang",
             "description": "Configure release (Ninja, clang)",
             "displayName": "Clang Release (Ninja)",
+            "hidden": false,
             "inherits": [
                 "ninja",
                 "release",
@@ -183,10 +190,15 @@
             "name": "linux-ninja-clang-address-sanitizers",
             "description": "Configure clang build with address sanitizers",
             "displayName": "Address sanitizers",
+            "hidden": false,
             "inherits": [
                 "linux-debug-ninja-clang"
             ],
             "cacheVariables": {
+                "ENABLE_SANITIZERS": {
+                    "type": "BOOL",
+                    "value": true
+                },
                 "ENABLE_SANITIZER_ADDRESS": {
                     "type": "BOOL",
                     "value": true
@@ -205,10 +217,15 @@
             "name": "linux-ninja-clang-memory-sanitizers",
             "description": "Configure clang build with memory sanitizers",
             "displayName": "Memory sanitizers",
+            "hidden": false,
             "inherits": [
                 "linux-debug-ninja-clang"
             ],
             "cacheVariables": {
+                "ENABLE_SANITIZERS": {
+                    "type": "BOOL",
+                    "value": true
+                },
                 "ENABLE_SANITIZER_MEMORY": {
                     "type": "BOOL",
                     "value": true
@@ -228,6 +245,7 @@
             "name": "visual-studio-2022-debug",
             "displayName": "Visual Studio 2022 (Debug)",
             "description": "Configure Visual Studio 2022 Debug build",
+            "hidden": false,
             "inherits": [
                 "visual-studio-2022",
                 "debug"
@@ -237,6 +255,7 @@
             "name": "visual-studio-2022-release",
             "displayName": "Visual Studio 2022 (Release)",
             "description": "Configure Visual Studio 2022 Release build",
+            "hidden": false,
             "inherits": [
                 "visual-studio-2022",
                 "release"
