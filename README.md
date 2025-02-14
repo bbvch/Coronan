@@ -2,7 +2,7 @@
 <summary>Project State</summary>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![version](https://img.shields.io/badge/version-v0.2.0-blue)
+![version](https://img.shields.io/badge/version-v0.3.0-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
 
 

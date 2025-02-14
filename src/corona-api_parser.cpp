@@ -23,10 +23,7 @@ std::optional<Ret_T> get_value(DOM_T const& json_dom_object, std::string const& 
     {
       if constexpr (std::is_floating_point_v<Ret_T>)
       {
-        if (value.IsDouble())
-        {
-          return value.GetDouble();
-        }
+        return value.GetDouble();
       }
       else if constexpr (std::is_same_v<Ret_T, unsigned>)
       {
