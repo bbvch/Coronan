@@ -14,6 +14,8 @@ class CountryOverviewTablewModel : public QAbstractTableModel
   Q_OBJECT
 public:
   explicit CountryOverviewTablewModel(QObject* parent = nullptr);
+  ~CountryOverviewTablewModel() override = default;
+
   void populate_data(coronan::CountryData const& country_data);
 
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;

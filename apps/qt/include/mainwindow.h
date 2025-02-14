@@ -21,7 +21,7 @@ class CoronanWidget : public QWidget
   Q_OBJECT
 public:
   explicit CoronanWidget(QWidget* parent = nullptr);
-  virtual ~CoronanWidget();
+  ~CoronanWidget() override;
   CoronanWidget(CoronanWidget const&) = delete;
   CoronanWidget& operator=(CoronanWidget const&) = delete;
   CoronanWidget(CoronanWidget&&) = delete;

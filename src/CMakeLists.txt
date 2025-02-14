@@ -26,12 +26,11 @@ target_include_directories(
 
 target_sources(
     coronan
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/ssl_client.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/http_client.cpp
-            $<IF:$<BOOL:${WIN32}>,
-            ${CMAKE_CURRENT_SOURCE_DIR}/ssl_context-win.cpp,
-            ${CMAKE_CURRENT_SOURCE_DIR}/ssl_context-linux.cpp>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/corona-api_parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ssl_client.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/http_client.cpp
+        $<IF:$<BOOL:${WIN32}>,${CMAKE_CURRENT_SOURCE_DIR}/ssl_context-win.cpp,${CMAKE_CURRENT_SOURCE_DIR}/ssl_context-linux.cpp>
 )
 
 find_package(Poco REQUIRED CONFIG)

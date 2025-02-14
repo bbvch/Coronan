@@ -14,6 +14,7 @@ class CountryDataModel : public QAbstractTableModel
   Q_OBJECT
 public:
   explicit CountryDataModel(QObject* parent = nullptr);
+  ~CountryDataModel() override = default;
 
   void populate_data(coronan::CountryData const& country_data);
 

@@ -1,5 +1,5 @@
 function(set_project_warnings project_name)
-    option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
+    option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
     set(MSVC_WARNINGS
         /W4 # Baseline reasonable warnings
@@ -35,13 +35,10 @@ function(set_project_warnings project_name)
         /w14928 # illegal copy-initialization; more than one user-defined
                 # conversion has been implicitly applied
         /permissive- # standards conformance mode for MSVC compiler.
-        /experimental:external
-        /external:anglebrackets # treat all headers included via #include <> (as
-                                # opposed to #include "") as external headers
-        /external:W0 # Disable warnings for external headers
     )
 
     set(CLANG_WARNINGS
+        -march=native
         -Wall
         -Wextra # reasonable and standard
         -Wshadow # warn the user if a variable declaration shadows one from a
@@ -61,12 +58,9 @@ function(set_project_warnings project_name)
         -Wdouble-promotion # warn if float is implicit promoted to double
         -Wformat=2 # warn on security issues around functions that format output
                    # (ie printf)
+        -Wimplicit-fallthrough # warn on statements that fallthrough without an
+                               # explicit annotation
     )
-
-    if(WARNINGS_AS_ERRORS)
-        set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)
-        set(MSVC_WARNINGS ${MSVC_WARNINGS} /WX)
-    endif()
 
     set(GCC_WARNINGS
         ${CLANG_WARNINGS}
@@ -77,7 +71,16 @@ function(set_project_warnings project_name)
         -Wlogical-op # warn about logical operations being used where bitwise
                      # were probably wanted
         -Wuseless-cast # warn if you perform a cast to the same type
+        -Wsuggest-override # warn if an overridden member function is not marked
+                           # 'override' or 'final'
     )
+
+    if(WARNINGS_AS_ERRORS)
+        message(TRACE "Warnings are treated as errors")
+        list(APPEND CLANG_WARNINGS -Werror)
+        list(APPEND GCC_WARNINGS -Werror)
+        list(APPEND MSVC_WARNINGS /WX)
+    endif()
 
     if(MSVC)
         set(PROJECT_WARNINGS ${MSVC_WARNINGS})

@@ -20,6 +20,10 @@ set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 if(WIN32)
+    # WIX config CPACK_WIX_UPGRADE_GUID should be explicitly set to a constant
+    # generated globally unique identifier (GUID) to allow your installers to
+    # replace existing installations that use the same GUID.
+    set(CPACK_WIX_UPGRADE_GUID "e2b63053-6f9d-4bd1-97b6-97ec70b70a7d")
     set(CPACK_GENERATOR ZIP WIX)
 elseif(APPLE)
     set(CPACK_GENERATOR TGZ productbuild)
@@ -42,7 +46,7 @@ if(DPKG_PROGRAM)
     )
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/bbvch/Coronan")
     set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libqt5widgets5 (>=5.9.2),libQt5Charts5 (>=5.9.2)"
+        "libqt6widgets6 (>=6.2.4),libqt6charts6 (>=6.2.4)"
     )
 endif(DPKG_PROGRAM)
 
@@ -51,11 +55,6 @@ set(CPACK_IFW_VERBOSE ON)
 set(CPACK_IFW_PACKAGE_TITLE "Co[ro]nan")
 include(CPack)
 include(CPackIFW)
-
-# WIX config CPACK_WIX_UPGRADE_GUID should be explicitly set to a constant
-# generated globally unique identifier (GUID) to allow your installers to
-# replace existing installations that use the same GUID.
-set(CPACK_WIX_UPGRADE_GUID "e2b63053-6f9d-4bd1-97b6-97ec70b70a7d")
 
 cpack_add_component(
     Coronan_Development

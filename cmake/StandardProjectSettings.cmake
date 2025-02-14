@@ -1,8 +1,10 @@
 # Set a default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    message(STATUS "Setting build type to 'Debug' as none was specified.")
+    message(
+        STATUS "Setting build type to 'RelWithDebInfo' as none was specified."
+    )
     set(CMAKE_BUILD_TYPE
-        Debug
+        RelWithDebInfo
         CACHE STRING "Choose the type of build." FORCE
     )
     # Set the possible values of build type for cmake-gui, ccmake
@@ -30,13 +32,20 @@ if(ENABLE_IPO)
         message(SEND_ERROR "IPO is not supported: ${output}")
     endif()
 endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     add_compile_options(-fcolor-diagnostics)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     add_compile_options(-fdiagnostics-color=always)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND MSVC_VERSION GREATER 1900)
+    add_compile_options(/diagnostics:column)
 else()
     message(
         STATUS
             "No colored compiler diagnostic set for '${CMAKE_CXX_COMPILER_ID}' compiler."
     )
 endif()
+
+# run vcvarsall when msvc is used
+include("${CMAKE_CURRENT_LIST_DIR}/MSVCEnvironment.cmake")
+run_vcvarsall()
