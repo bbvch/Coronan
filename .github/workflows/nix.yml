@@ -30,6 +30,15 @@ jobs:
               with:
                   path: ~/.conan2/p
                   key: cache-${{ matrix.name }}-conan-${{ hashFiles('conanfile.txt') }}
+                  restore-keys: cache-${{ matrix.name }}-conan
+            - name: Cache (ccache)
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.cache/ccache
+                  key: ccache-${{ matrix.name }}-${{ hashFiles('**/CMakeLists.txt') }}
+                  restore-keys: |
+                      ccache-${{ matrix.name }}
             - uses: cachix/install-nix-action@v27
               with:
                   nix_path: nixpkgs=channel:nixos-24.11

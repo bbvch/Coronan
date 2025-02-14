@@ -22,7 +22,7 @@ jobs:
                       compiler: clang++-13
                       ccompiler: clang-13
                       clang-tidy: clang-tidy-13
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-22.04-clang-14
@@ -31,7 +31,7 @@ jobs:
                       compiler: clang++-14
                       ccompiler: clang-14
                       clang-tidy: clang-tidy-14
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-22.04-clang-15
@@ -40,7 +40,7 @@ jobs:
                       compiler: clang++-15
                       ccompiler: clang-15
                       clang-tidy: clang-tidy-15
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-22.04-gcc-12
@@ -49,7 +49,7 @@ jobs:
                       compiler: g++-12
                       ccompiler: gcc-12
                       clang-tidy: clang-tidy
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-24.04-clang-16
@@ -58,7 +58,7 @@ jobs:
                       compiler: clang++-16
                       ccompiler: clang-16
                       clang-tidy: clang-tidy-16
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-24.04-clang-17
@@ -67,7 +67,7 @@ jobs:
                       compiler: clang++-17
                       ccompiler: clang-17
                       clang-tidy: clang-tidy-17
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-24.04-clang-18
@@ -76,7 +76,7 @@ jobs:
                       compiler: clang++-18
                       ccompiler: clang-18
                       clang-tidy: clang-tidy-18
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-24.04-clang-18-download-qt
@@ -85,7 +85,7 @@ jobs:
                       compiler: clang++-18
                       ccompiler: clang-18
                       clang-tidy: clang-tidy-18
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: ON
                     - name: ubuntu-24.04-gcc-13
@@ -94,7 +94,7 @@ jobs:
                       compiler: g++-13
                       ccompiler: gcc-13
                       clang-tidy: clang-tidy
-                      generators: Ninja
+                      generator: Ninja
                       coverage: ON
                       download_qt: OFF
                     - name: ubuntu-24.04-gcc-14
@@ -103,7 +103,7 @@ jobs:
                       compiler: g++-14
                       ccompiler: gcc-14
                       clang-tidy: clang-tidy
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: OFF
                     - name: ubuntu-24.04-gcc-14-download-qt
@@ -112,9 +112,18 @@ jobs:
                       compiler: g++-14
                       ccompiler: gcc-14
                       clang-tidy: clang-tidy
-                      generators: Ninja
+                      generator: Ninja
                       coverage: OFF
                       download_qt: ON
+                    - name: ubuntu-latest
+                      os: ubuntu-latest
+                      build_type: Debug
+                      compiler: g++
+                      ccompiler: gcc
+                      clang-tidy: clang-tidy
+                      generator: Ninja
+                      coverage: OFF
+                      download_qt: OFF
 
         env:
             CXX: ${{ matrix.compiler }}
@@ -126,11 +135,22 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: ~/.conan2/p
-                  key: cache-${{ matrix.name }}-conan-${{ hashFiles('conanfile.txt') }}
+                  key: cache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-conan-${{ hashFiles('conanfile.txt') }}
+                  restore-keys: |
+                      cache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-conan
+            - name: Cache (ccache)
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.cache/ccache
+                  key: ccache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-${{ matrix.generator }}-${{ hashFiles('**/CMakeLists.txt')
+                      }}
+                  restore-keys: |
+                      ccache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y --no-install-recommends ninja-build ${{ matrix.clang-tidy }} dpkg pkg-config doxygen lcov
+                  sudo apt-get install -y --no-install-recommends ccache ninja-build ${{ matrix.clang-tidy }} dpkg pkg-config doxygen lcov
                   sudo apt-get install -y --no-install-recommends libgl1-mesa-dev freeglut3-dev
             - name: Install Qt
               if: matrix.download_qt == 'OFF'
@@ -151,7 +171,7 @@ jobs:
               run: conan install . --build=missing --settings=build_type=${{ matrix.build_type }} --settings=compiler.cppstd=17
             - name: CMake configure
               run: |
-                  cmake -S . -B ./build -G "${{ matrix.generators }}" \
+                  cmake -S . -B ./build -G "${{ matrix.generator }}" \
                   -DDOWNLOAD_QT6=${{ matrix.download_qt }} \
                   -DENABLE_COVERAGE=${{ matrix.coverage }} \
                   -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
