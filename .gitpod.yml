@@ -6,11 +6,11 @@ tasks:
     - before: |
           pre-commit install -f --hook-type pre-commit
           rm -rf build
-          export CXX=clang++-19
-          export CC=clang-19
+          export CXX=clang++-18
+          export CC=clang-18
           conan profile detect
       init: conan install . -pr:a conan_profiles/clang_debug_linux --build=missing
-      command: cmake -S . -B build --preset=conan-debug
+      command: cmake -S . -B build --preset=linux-clang-debug
 
 vscode:
     extensions:

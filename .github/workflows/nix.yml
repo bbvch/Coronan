@@ -16,11 +16,11 @@ jobs:
             matrix:
                 include:
                     - name: nix-gcc
-                      configure_preset: linux-debug-ninja
-                      build_preset: ninja-debug
+                      configure_preset: linux-gcc-debug
+                      build_preset: gcc-debug
                       CONAN_USER_HOME: ~/.conan
                     - name: nix-clang
-                      configure_preset: linux-debug-ninja-clang
+                      configure_preset: linux-clang-debug
                       build_preset: clang-debug
                       CONAN_USER_HOME: ~/.conan-clang
         steps:

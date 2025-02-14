@@ -208,8 +208,8 @@ You can also build it yourself using CMake and conan
 * __With CMake Presets__
 
   ```bash
-  cmake -S . --preset=linux-debug-ninja
-  cmake --build --preset=ninja-debug
+  cmake -S . --preset=linux-gcc-debug
+  cmake --build --preset=gcc-debug
   ```
 
   or any other [CMakePresets](CMakePresets.json).
@@ -268,6 +268,11 @@ Please install pre-commit hooks before committing any code.
 
 ```bash
 pre-commit install -f --hook-type pre-commit
+```
+
+To manually check all files run:
+```bash
+pre-commit run --all-files
 ```
 
 ## gitpod

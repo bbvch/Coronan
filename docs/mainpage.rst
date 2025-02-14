@@ -62,8 +62,8 @@ Because the conan `cmake_layout <https://docs.conan.io/2/reference/tools/cmake/c
 
 .. code-block:: bash
 
-  cmake -S . --preset=linux-debug-ninja
-  cmake --build --preset=ninja-debug
+  cmake -S . --preset=linux-gcc-debug
+  cmake --build --preset=gcc-debug
 
 
 or any other ``CMakePresets``.
@@ -121,6 +121,12 @@ The following `Pre-commit-hooks <https://github.com/pre-commit/pre-commit-hooks>
 * ``yamlfmt``: Format yaml files
 
 Please install pre-commit hooks before committing any code.
+
+To manually check all files run:
+
+.. code-block:: bash
+  pre-commit run --all-files
+
 
 direnv & Nix
 ------------
