@@ -131,8 +131,8 @@ cmake<span class="w"> </span>--build<span class="w"> </span>./build
 <ul class="simple">
 <li><p>With CMake Presets</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>--preset<span class="o">=</span>linux-debug-ninja
-cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="o">=</span>ninja-debug
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>--preset<span class="o">=</span>linux-gcc-debug
+cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="o">=</span>gcc-debug
 </pre></div>
 </div>
 <p>or any other <code class="docutils literal notranslate"><span class="pre">CMakePresets</span></code>.</p>
@@ -189,6 +189,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class=
 <li><p><code class="docutils literal notranslate"><span class="pre">yamlfmt</span></code>: Format yaml files</p></li>
 </ul>
 <p>Please install pre-commit hooks before committing any code.</p>
+<p>To manually check all files run:</p>
 </section>
 <section id="direnv-nix">
 <h2>direnv &amp; Nix<a class="headerlink" href="#direnv-nix" title="Link to this heading"></a></h2>
