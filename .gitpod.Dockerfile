@@ -18,7 +18,7 @@ RUN apt-get update \
 
 # install clang 19
 RUN apt-get update \
-    && apt-get -qq install -y --no-install-recommends clang-19 clang-tidy-19 clang-format-19 \
+    && apt-get -qq install -y --no-install-recommends clang-18 clang-tidy-18 clang-format-18 clangd-18 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
