@@ -39,17 +39,17 @@
 
 
 ### IMPORTANT NOTE
-
-___[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer. Therefore this application does not work properly anymore. An Alternative API must be looked for.___
+Co\[ro\]nan was written during the pandemic of the Corona Virus. The API (__[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer) used for first version is no longer available. However an alternative was found. Unfortunately does not have the same data quality, but the application works again.
 
 </details>
 
 # Documentation for Co\[ro\]nan
 
 Co\[ro\]nan is an example C++20 Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
-It reads the current data of Corona (Covid-19) cases for a country from the [The About Corona Covid-19 API](https://about-corona.net/documentation).
+It reads the latest data of Corona (Covid-19) cases for a country from the [COVID-19 Statistics API](https://covid-api.com/).
 
-_The About Corona Covid-19_ provides statistics via REST API from The [World Health Organization Situation Reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), [Johns Hopkins CSSE](https://coronavirus.jhu.edu/map.html), [The U.S. Department of Health & Human Services](https://www.hhs.gov/), [The National Health Commission of the People’s Republic of China](http://en.nhc.gov.cn/), [The European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en), and [China CDC Weekly](http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm).
+
+_COVID-19 Statistics API_ provides statistics via REST API from The [Johns Hopkins CSSE](hhttps://github.com/CSSEGISandData/COVID-19),
 
 
 ![Screenshot of the qt application](docs/images/Screenshot-qt.png)

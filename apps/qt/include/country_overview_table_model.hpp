@@ -18,10 +18,10 @@ public:
 
   void populate_data(coronan::CountryData const& country_data);
 
-  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-  int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+  int rowCount(QModelIndex const& parent = QModelIndex()) const override;
+  int columnCount(QModelIndex const& parent = QModelIndex()) const override;
 
-  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+  QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
 
 private:
   QList<QPair<QString, QString>> country_overview_data;

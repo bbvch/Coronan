@@ -9,8 +9,12 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMessageBox>
 #include <algorithm>
+#include <chrono>
+#include <optional>
 
 namespace coronan_ui {
+
+inline constexpr auto default_country_code = "CHE";
 
 CoronanWidget::CoronanWidget(QWidget* parent) : QWidget(parent), ui{new Ui_CoronanWidgetForm}
 {
@@ -20,10 +24,11 @@ CoronanWidget::CoronanWidget(QWidget* parent) : QWidget(parent), ui{new Ui_Coron
   ui->overviewTable->setModel(&overview_model);
 
   populate_country_box();
+  populate_date_boxes();
+
   update_ui();
 
-  QObject::connect(ui->countryComboBox, qOverload<int>(&QComboBox::currentIndexChanged),
-                   [this](int) { this->update_ui(); });
+  QObject::connect(ui->updateButton, qOverload<>(&QPushButton::pressed), [this]() { this->update_ui(); });
 }
 
 CoronanWidget::~CoronanWidget()
@@ -34,24 +39,37 @@ CoronanWidget::~CoronanWidget()
 void CoronanWidget::populate_country_box()
 {
   auto* country_combo = ui->countryComboBox;
-  auto countries = coronan::CoronaAPIClient{}.request_countries();
+  auto countries = coronan::CoronaAPIClient{}.request_regions();
 
   std::sort(begin(countries), end(countries), [](auto const& a, auto const& b) { return a.name < b.name; });
 
   std::for_each(cbegin(countries), cend(countries),
                 [=](auto const& country) { country_combo->addItem(country.name.c_str(), country.iso_code.c_str()); });
 
-  if (int const index = country_combo->findData("CH"); index != -1)
+  if (int const index = country_combo->findData(default_country_code); index != -1)
   { // -1 for not found
     country_combo->setCurrentIndex(index);
   }
 }
 
-coronan::CountryData CoronanWidget::get_country_data(std::string_view country_code)
+void CoronanWidget::populate_date_boxes()
+{
+  auto const latest_country_data = coronan::CoronaAPIClient{}.request_country_data(default_country_code, std::nullopt);
+  auto const latest_date = latest_country_data.latest.date;
+  auto const start_date = latest_date - std::chrono::months{1};
+  ui->startDate->setDate(QDate{start_date});
+  ui->startDate->setMaximumDate(QDate{latest_date});
+  ui->endDate->setDate(QDate{latest_date});
+  ui->endDate->setMaximumDate(QDate{latest_date});
+}
+
+coronan::CountryData CoronanWidget::get_country_data(std::string_view country_code,
+                                                     std::chrono::year_month_day const& start_date,
+                                                     std::chrono::year_month_day const& end_date)
 {
   try
   {
-    return coronan::CoronaAPIClient{}.request_country_data(country_code);
+    return coronan::CoronaAPIClient{}.request_country_data(country_code, start_date, end_date);
   }
   catch (coronan::SSLException const& ex)
   {
@@ -73,9 +91,15 @@ coronan::CountryData CoronanWidget::get_country_data(std::string_view country_co
 
 void CoronanWidget::update_ui()
 {
-  auto country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
-  auto const country_data = get_country_data(country_code.toStdString());
-  overview_model.populate_data(country_data);
+  auto const country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
+  auto const country_name = ui->countryComboBox->itemText(ui->countryComboBox->currentIndex());
+  std::chrono::year_month_day const start_date{ui->startDate->date().toStdSysDays()};
+  std::chrono::year_month_day const end_date{ui->endDate->date().toStdSysDays()};
+  auto const latest_country_data = coronan::CoronaAPIClient{}.request_country_data(default_country_code, std::nullopt);
+  overview_model.populate_data(latest_country_data);
+  auto country_data = get_country_data(country_code.toStdString(), start_date, end_date);
+  country_data.latest = latest_country_data.latest;
+  country_data.info.name = country_name.toStdString();
   country_data_model.populate_data(country_data);
   ui->overviewTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 

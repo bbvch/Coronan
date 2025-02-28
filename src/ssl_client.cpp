@@ -31,7 +31,7 @@ std::unique_ptr<SSLClient>
 // cppcheck-suppress unusedFunction
 SSLClient::create_with_accept_certificate_handler()
 {
-  constexpr auto handle_errors_on_server_side = false;
+  static constexpr auto handle_errors_on_server_side = false;
 
   Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> const cert_handler =
       new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};

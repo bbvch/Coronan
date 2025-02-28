@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <cstdint>
 #include <optional>
 #include <string>
@@ -10,11 +11,41 @@ namespace coronan {
 /**
  * Holds general country information
  */
-struct CountryInfo
+struct RegionInfo
 {
-  std::string name{};                   /**< Country name */
-  std::string iso_code{};               /**< ISO 3166-1 alpha-2 Country Code , e.g. ch */
-  std::optional<uint32_t> population{}; /**< Country population */
+  std::string name{};                     /**< Region/Country name */
+  std::string iso_code{};                 /**< ISO Country Code , e.g. CHE */
+  std::optional<std::string> latitude{};  /**< latitude */
+  std::optional<std::string> longitude{}; /**< longitude */
+};
+
+/**
+ * Holds general province information
+ */
+struct ProvinceInfo
+{
+  std::string country_name{};             /**< Region/Country name */
+  std::string country_iso_code{};         /**< ISO Country Code , e.g. CHE */
+  std::string name{};                     /**< province name*/
+  std::optional<std::string> latitude{};  /**< latitude */
+  std::optional<std::string> longitude{}; /**< longitude */
+};
+
+/**
+ * Holds the the covid-19 case data of the country for a specific date/time
+ */
+struct CovidData
+{
+  std::chrono::year_month_day date{};      /**< iso date string (last updated) */
+  std::optional<uint32_t> deaths{};        /**< number of deaths */
+  std::optional<int32_t> deaths_diff{};    /**< number of death difference to previous data*/
+  std::optional<uint32_t> confirmed{};     /**< number of confirmed cases */
+  std::optional<int32_t> confirmed_diff{}; /**< confirmed cases difference to previous data*/
+  std::optional<uint32_t> recovered{};     /**< number of recovered cases */
+  std::optional<int32_t> recovered_diff{}; /**< recovered cases difference to previous data*/
+  std::optional<double> fatality_rate{};   /**< calculated fatality rate */
+  std::optional<uint32_t> active{};        /**< number total of covid-19 cases */
+  std::optional<int32_t> active_diff{};    /**< active cases difference to previous data*/
 };
 
 /**
@@ -23,55 +54,18 @@ struct CountryInfo
 struct CountryData
 {
 
-  CountryInfo info{}; /**< country information (name, code, population) */
-  /**
-   * Holds the available covid-19 case data of the country for today
-   */
-  struct TodayData
-  {
-    std::string date{};                  /**< iso date string */
-    std::optional<uint32_t> deaths{};    /**< todays death cased */
-    std::optional<uint32_t> confirmed{}; /**< todays confirmed cases */
-  };
-
-  TodayData today{}; /**< Today data when retrieved. New cases of latest date  */
+  RegionInfo info{}; /**< region information (name, code, location) */
 
   /**
    * Holds the latest available covid-19 case data of the country
    */
-  struct LatestData
-  {
-    std::string date{};                                     /**< iso date string (last updated) */
-    std::optional<uint32_t> deaths{};                       /**< latest number of deaths */
-    std::optional<uint32_t> confirmed{};                    /**< latest number of confirmed cases */
-    std::optional<uint32_t> recovered{};                    /**< latest number of recovered cases */
-    std::optional<uint32_t> critical{};                     /**< latest number of critical cases */
-    std::optional<double> death_rate{};                     /**< calculated death rate */
-    std::optional<double> recovery_rate{};                  /**< calculated recovery rate */
-    std::optional<double> recovered_vs_death_ratio{};       /**< calculated recovered vs death rate */
-    std::optional<uint32_t> cases_per_million_population{}; /**< calculated cases per millions of the population */
-  };
 
-  LatestData latest{}; /**< Lates actual cases  */
+  CovidData latest{}; /**< Lates actual cases  */
 
-  /**
-   * Holds the the covid-19 case data of the country for a specific date/time
-   */
-  struct TimelineData
-  {
-    std::string date{};                      /**< iso date string  */
-    std::optional<uint32_t> deaths{};        /**< number of deaths */
-    std::optional<uint32_t> confirmed{};     /**< number of confirmed cases */
-    std::optional<uint32_t> active{};        /**< number of current covid-19 cases */
-    std::optional<uint32_t> recovered{};     /**< number of recovered cases */
-    std::optional<uint32_t> new_deaths{};    /**< new death since last time data */
-    std::optional<uint32_t> new_confirmed{}; /**< new confirmed cases since last time data */
-    std::optional<uint32_t> new_recovered{}; /**< new recovered cases since last time data */
-  };
-
-  std::vector<TimelineData> timeline{}; /**< Timeline data (list of daily data) */
+  std::vector<CovidData> timeline{}; /**< Timeline data (list of daily data) */
 };
 
-using CountryListObject = std::vector<CountryInfo>;
+using RegionListObject = std::vector<RegionInfo>;
+using ProvinceListObject = std::vector<ProvinceInfo>;
 
 } // namespace coronan

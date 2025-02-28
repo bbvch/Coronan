@@ -35,11 +35,13 @@ target_sources(
 
 find_package(Poco REQUIRED CONFIG)
 find_package(RapidJSON REQUIRED CONFIG)
+find_package(fmt REQUIRED CONFIG)
 
 target_link_libraries(
     coronan
     PUBLIC Poco::Poco
     PRIVATE rapidjson
+    PUBLIC fmt::fmt
     PRIVATE coronan::compile_warnings
     PRIVATE coronan::compile_options
 )

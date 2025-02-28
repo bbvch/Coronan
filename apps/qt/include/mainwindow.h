@@ -31,8 +31,10 @@ private Q_SLOTS:
   void update_ui();
 
 private:
-  coronan::CountryData get_country_data(std::string_view country_code);
+  coronan::CountryData get_country_data(std::string_view country_code, std::chrono::year_month_day const& start_date,
+                                        std::chrono::year_month_day const& end_date);
   void populate_country_box();
+  void populate_date_boxes();
 
   CountryChartView* chartView = nullptr;
   Ui_CoronanWidgetForm* ui = nullptr;

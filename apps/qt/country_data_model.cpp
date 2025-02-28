@@ -1,7 +1,7 @@
 #include "country_data_model.hpp"
 
 namespace {
-constexpr auto columns = 5;
+inline constexpr auto columns = 5u;
 }
 
 namespace coronan_ui {
@@ -14,14 +14,24 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
 {
   beginResetModel();
   country_name = QString::fromStdString(country_data.info.name);
-  confirmed_cases = country_data.latest.confirmed.value_or(0);
+  max = country_data.latest.confirmed.value_or(0);
+  min = country_data.latest.deaths.value_or(0);
   country_timeline_data.clear();
+
+  if (not country_data.timeline.empty())
+  {
+    start_date = QDateTime{QDate{country_data.timeline.front().date}, QTime{1, 0}};
+    end_date = QDateTime{QDate{country_data.timeline.back().date}, QTime{1, 0}};
+  }
+
+  QTextStream qStdOut(stdout);
 
   for (auto const& data_point : country_data.timeline)
   {
     CountryTimelineData timeline_data;
-    timeline_data.date = QDateTime::fromString(data_point.date.c_str(), QStringLiteral("yyyy-MM-ddThh:mm:ss.zZ"));
+    timeline_data.date = QDateTime{QDate{data_point.date}, QTime{1, 0}};
     timeline_data.deaths = data_point.deaths.has_value() ? QVariant{data_point.deaths.value()} : QVariant{};
+    min = std::min(min, data_point.deaths.value_or(min));
     timeline_data.confirmed_cases =
         data_point.confirmed.has_value() ? QVariant{data_point.confirmed.value()} : QVariant{};
     timeline_data.active_cases = data_point.active.has_value() ? QVariant{data_point.active.value()} : QVariant{};
@@ -32,17 +42,17 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
   endResetModel();
 }
 
-int CountryDataModel::rowCount(const QModelIndex&) const
+int CountryDataModel::rowCount(QModelIndex const&) const
 {
   return static_cast<int>(country_timeline_data.length());
 }
 
-int CountryDataModel::columnCount(const QModelIndex&) const
+int CountryDataModel::columnCount(QModelIndex const&) const
 {
   return columns;
 }
 
-QVariant CountryDataModel::data(const QModelIndex& index, int role) const
+QVariant CountryDataModel::data(QModelIndex const& index, int role) const
 {
   if (!index.isValid() || role != Qt::DisplayRole)
   {
@@ -102,11 +112,6 @@ QVariant CountryDataModel::headerData(int section, Qt::Orientation orientation, 
 QString CountryDataModel::country() const
 {
   return country_name;
-}
-
-qreal CountryDataModel::cases_confirmed() const
-{
-  return confirmed_cases;
 }
 
 } // namespace coronan_ui
