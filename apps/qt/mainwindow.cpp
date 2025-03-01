@@ -91,17 +91,20 @@ coronan::CountryData CoronanWidget::get_country_data(std::string_view country_co
 
 void CoronanWidget::update_ui()
 {
+  this->setCursor(Qt::BusyCursor);
   auto const country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
   auto const country_name = ui->countryComboBox->itemText(ui->countryComboBox->currentIndex());
   std::chrono::year_month_day const start_date{ui->startDate->date().toStdSysDays()};
   std::chrono::year_month_day const end_date{ui->endDate->date().toStdSysDays()};
-  auto const latest_country_data = coronan::CoronaAPIClient{}.request_country_data(default_country_code, std::nullopt);
+  auto const latest_country_data =
+      coronan::CoronaAPIClient{}.request_country_data(country_code.toStdString(), std::nullopt);
   overview_model.populate_data(latest_country_data);
   auto country_data = get_country_data(country_code.toStdString(), start_date, end_date);
   country_data.latest = latest_country_data.latest;
   country_data.info.name = country_name.toStdString();
   country_data_model.populate_data(country_data);
   ui->overviewTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+  ui->overviewCountryLabel->setText(country_name);
 
   if (chartView == nullptr)
   {
@@ -112,6 +115,7 @@ void CoronanWidget::update_ui()
   {
     chartView->update_ui(country_data_model);
   }
+  this->unsetCursor();
 }
 
 } // namespace coronan_ui

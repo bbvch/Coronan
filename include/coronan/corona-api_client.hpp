@@ -166,10 +166,25 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
       auto const date_query_string = std::format("date={:%Y-%m-%d}&", date);
       auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                      std::string{"iso="} + std::string{country_code};
-      auto const http_response = ClientType::get(region_report_url);
-      if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
+
+      if (auto const http_response = ClientType::get(region_report_url);
+          http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
       {
         return coronan::api_parser::parse_region_total(http_response.response_body());
+      }
+      else if (http_response.status() >= Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR)
+      {
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(500ms);
+        auto const second_http_response = ClientType::get(region_report_url);
+        if (second_http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
+        {
+          return coronan::api_parser::parse_region_total(second_http_response.response_body());
+        }
+        else
+        {
+          return create_exception_msg(region_report_url, second_http_response);
+        }
       }
       else
       {

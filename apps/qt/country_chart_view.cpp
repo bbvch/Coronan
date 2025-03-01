@@ -14,7 +14,7 @@
 namespace {
 inline constexpr auto create_datetime_axis = []() {
   auto* const x_axis = new QDateTimeAxis{};
-  x_axis->setFormat(QStringLiteral("dd/MM  "));
+  x_axis->setFormat(QStringLiteral("yyyy-MM-dd  "));
   x_axis->setTitleText(QStringLiteral("Date"));
   return x_axis;
 };
