@@ -40,8 +40,8 @@ find_package(fmt REQUIRED CONFIG)
 target_link_libraries(
     coronan
     PUBLIC Poco::Poco
-    PRIVATE rapidjson
     PUBLIC fmt::fmt
+    PRIVATE rapidjson
     PRIVATE coronan::compile_warnings
     PRIVATE coronan::compile_options
 )

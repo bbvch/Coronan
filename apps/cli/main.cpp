@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <exception>
 #include <fmt/base.h>
+#include <fmt/chrono.h>
+#include <iomanip>
 #include <lyra/args.hpp>
 #include <lyra/cli.hpp>
 #include <lyra/cli_parser.hpp>
@@ -58,6 +60,23 @@ int main(int argc, char* argv[])
 }
 
 namespace {
+
+std::chrono::year_month_day parse_date(std::string const& date_string)
+{
+  std::tm date_time = {};
+  std::istringstream date_iss{date_string};
+  date_iss >> std::get_time(&date_time, "%Y-%m-%d");
+
+  if (date_iss.fail())
+  {
+    return {};
+  }
+
+  return std::chrono::year_month_day{std::chrono::year{date_time.tm_year + 1900},
+                                     std::chrono::month{static_cast<unsigned>(date_time.tm_mon + 1u)},
+                                     std::chrono::day{static_cast<unsigned>(date_time.tm_mday)}};
+}
+
 std::variant<std::tuple<std::string, std::optional<std::chrono::year_month_day>>, int>
 parse_commandline_arguments(lyra::args const& args)
 {
@@ -87,17 +106,16 @@ parse_commandline_arguments(lyra::args const& args)
   std::optional<std::chrono::year_month_day> date = std::nullopt;
   if (not date_string.empty())
   {
-    std::istringstream iss{date_string};
-    iss.imbue(std::locale("en_US.utf-8"));
-    std::chrono::year_month_day ymd;
-    std::chrono::from_stream(iss, "%Y-%m-%d", ymd);
-    if (iss.fail())
+    if (const auto ymd = parse_date(date_string); ymd.ok())
+    {
+      date = ymd;
+    }
+    else
     {
       fmt::print(stderr, "Date could not be parsed, please enter in format yyyy-mm-dd.\n");
       fmt::print("{}\n", usage.str());
       return EXIT_FAILURE;
     }
-    date = ymd;
   }
 
   return std::make_tuple(country, date);
@@ -112,7 +130,7 @@ void print_data(coronan::CountryData const& country_data)
   fmt::print("datetime, confirmed, death, recovered, active\n");
   for (auto const& data_point : country_data.timeline)
   {
-    fmt::print("{}, {}, {}, {}, {}\n", std::format("{:%Y-%m-%d}", data_point.date),
+    fmt::print("{}, {}, {}, {}, {}\n", fmt::format("{:%Y-%m-%d}", std::chrono::sys_days(data_point.date)),
                optional_to_string(data_point.confirmed), optional_to_string(data_point.deaths),
                optional_to_string(data_point.recovered), optional_to_string(data_point.active));
   }
