@@ -15,6 +15,7 @@
 namespace coronan_ui {
 
 inline constexpr auto default_country_code = "CHE";
+inline const QDate default_start_date = QDate{2020, 02, 15};
 
 CoronanWidget::CoronanWidget(QWidget* parent) : QWidget(parent), ui{new Ui_CoronanWidgetForm}
 {
@@ -56,10 +57,9 @@ void CoronanWidget::populate_date_boxes()
 {
   auto const latest_country_data = coronan::CoronaAPIClient{}.request_country_data(default_country_code, std::nullopt);
   auto const latest_date = latest_country_data.latest.date;
-  auto const start_date = latest_date - std::chrono::months{1};
-  ui->startDate->setDate(QDate{start_date});
+  ui->startDate->setDate(default_start_date);
   ui->startDate->setMaximumDate(QDate{latest_date});
-  ui->endDate->setDate(QDate{latest_date});
+  ui->endDate->setDate(default_start_date.addDays(60));
   ui->endDate->setMaximumDate(QDate{latest_date});
 }
 
