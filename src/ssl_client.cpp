@@ -33,11 +33,10 @@ SSLClient::create_with_accept_certificate_handler()
 {
   static constexpr auto handle_errors_on_server_side = false;
 
-  Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> const cert_handler =
-      new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side};
-
   // Using `new` to access a non-public constructor.
-  auto ssl_client = std::unique_ptr<SSLClient>{new SSLClient{cert_handler, coronan::ssl_context::create_ssl_context()}};
+  auto ssl_client =
+      std::unique_ptr<SSLClient>{new SSLClient{new Poco::Net::AcceptCertificateHandler{handle_errors_on_server_side},
+                                               coronan::ssl_context::create_ssl_context()}};
 
   ssl_client->initialize();
   return ssl_client;

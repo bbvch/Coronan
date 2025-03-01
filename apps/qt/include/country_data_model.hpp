@@ -14,37 +14,42 @@ namespace coronan_ui {
 class CountryDataModel : public QAbstractTableModel
 {
   Q_OBJECT
+
 public:
   explicit CountryDataModel(QObject* parent = nullptr);
   ~CountryDataModel() override = default;
+  CountryDataModel(const CountryDataModel&) = delete;
+  CountryDataModel& operator=(const CountryDataModel&) = delete;
+  CountryDataModel(CountryDataModel&&) = delete;
+  CountryDataModel& operator=(CountryDataModel&&) = delete;
 
   void populate_data(coronan::CountryData const& country_data);
 
-  int rowCount(QModelIndex const& parent = QModelIndex()) const override;
-  int columnCount(QModelIndex const& parent = QModelIndex()) const override;
+  [[nodiscard]] int rowCount(QModelIndex const& parent = QModelIndex()) const override;
+  [[nodiscard]] int columnCount(QModelIndex const& parent = QModelIndex()) const override;
 
-  QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
-  QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
-                      int role = Qt::DisplayRole) const override;
+  [[nodiscard]] QVariant data(QModelIndex const& index, int role = Qt::DisplayRole) const override;
+  [[nodiscard]] QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
+                                    int role = Qt::DisplayRole) const override;
 
-  QString country() const;
+  [[nodiscard]] QString country() const;
 
-  uint32_t max_value() const
+  [[nodiscard]] uint32_t max_value() const
   {
     return max;
   }
 
-  uint32_t min_value() const
+  [[nodiscard]] uint32_t min_value() const
   {
     return min;
   }
 
-  QDateTime max_date() const
+  [[nodiscard]] QDateTime max_date() const
   {
     return end_date;
   }
 
-  QDateTime min_date() const
+  [[nodiscard]] QDateTime min_date() const
   {
     return start_date;
   }
@@ -56,7 +61,7 @@ public:
   static auto constexpr recovered_column_index = 4;
 
 private:
-  QString country_name{};
+  QString country_name;
   uint32_t max{};
   uint32_t min{};
   QDateTime start_date{QDateTime::currentDateTime()};

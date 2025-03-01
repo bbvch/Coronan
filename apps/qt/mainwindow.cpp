@@ -42,10 +42,10 @@ void CoronanWidget::populate_country_box()
   auto* country_combo = ui->countryComboBox;
   auto countries = coronan::CoronaAPIClient{}.request_regions();
 
-  std::sort(begin(countries), end(countries), [](auto const& a, auto const& b) { return a.name < b.name; });
+  std::ranges::sort(countries, [](auto const& a, auto const& b) { return a.name < b.name; });
 
-  std::for_each(cbegin(countries), cend(countries),
-                [=](auto const& country) { country_combo->addItem(country.name.c_str(), country.iso_code.c_str()); });
+  std::ranges::for_each(
+      countries, [=](auto const& country) { country_combo->addItem(country.name.c_str(), country.iso_code.c_str()); });
 
   if (int const index = country_combo->findData(default_country_code); index != -1)
   { // -1 for not found
@@ -57,11 +57,15 @@ void CoronanWidget::populate_date_boxes()
 {
   auto const latest_country_data = coronan::CoronaAPIClient{}.request_country_data(default_country_code, std::nullopt);
   auto const latest_date = latest_country_data.latest.date;
-  // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++) does
-  // not fully support C++ 20 even for Qt >= 6.4
+// Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++) does
+// not fully support C++ 20 even for Qt >= 6.4
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
   auto const latest_qdate = QDate(static_cast<int>(latest_date.year()),       //
                                   static_cast<unsigned>(latest_date.month()), //
                                   static_cast<unsigned>(latest_date.day()));
+
+#pragma GCC diagnostic pop
   ui->startDate->setDate(default_start_date);
   ui->startDate->setMaximumDate(latest_qdate);
   ui->endDate->setDate(default_start_date.addDays(60));

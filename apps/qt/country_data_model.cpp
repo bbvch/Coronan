@@ -20,15 +20,18 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
 
   if (not country_data.timeline.empty())
   {
-    // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
-    // does
-    // not fully support C++ 20 even for Qt >= 6.4
+// Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
+// does not fully support C++ 20 even for Qt >= 6.4
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
     auto const start_qdate = QDate(static_cast<int>(country_data.timeline.front().date.year()),
                                    static_cast<unsigned>(country_data.timeline.front().date.month()),
                                    static_cast<unsigned>(country_data.timeline.front().date.day()));
     auto const end_qdate = QDate(static_cast<int>(country_data.timeline.back().date.year()),
                                  static_cast<int>(static_cast<unsigned>(country_data.timeline.back().date.month())),
                                  static_cast<int>(static_cast<unsigned>(country_data.timeline.back().date.day())));
+
+#pragma GCC diagnostic pop
 
     start_date = QDateTime{start_qdate, QTime(1, 0)};
     end_date = QDateTime{end_qdate, QTime(1, 0)};
@@ -40,8 +43,7 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
   {
     CountryTimelineData timeline_data;
     // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
-    // does
-    // not fully support C++ 20 even for Qt >= 6.4
+    // does not fully support C++ 20 even for Qt >= 6.4
     auto const qdate = QDate(static_cast<int>(data_point.date.year()),
                              static_cast<int>(static_cast<unsigned>(data_point.date.month())),
                              static_cast<int>(static_cast<unsigned>(data_point.date.day())));
@@ -72,7 +74,7 @@ QVariant CountryDataModel::data(QModelIndex const& index, int role) const
 {
   if (!index.isValid() || role != Qt::DisplayRole)
   {
-    return QVariant();
+    return {};
   }
   if (index.column() == date_column_index)
   {
@@ -94,7 +96,7 @@ QVariant CountryDataModel::data(QModelIndex const& index, int role) const
   {
     return country_timeline_data.at(index.row()).recovered_cases;
   }
-  return QVariant();
+  return {};
 }
 
 QVariant CountryDataModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -122,7 +124,7 @@ QVariant CountryDataModel::headerData(int section, Qt::Orientation orientation, 
       return QStringLiteral("Recovered");
     }
   }
-  return QVariant();
+  return {};
 }
 
 QString CountryDataModel::country() const

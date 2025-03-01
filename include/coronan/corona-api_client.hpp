@@ -16,9 +16,9 @@
 
 namespace coronan {
 
-namespace {
 inline constexpr auto corona_api_url = "https://covid-api.com/api/";
 
+namespace details {
 template <class... Ts>
 struct overloaded : Ts...
 {
@@ -28,8 +28,7 @@ struct overloaded : Ts...
 // The number of conrurrent (asynch) http get calls
 // with a too large number you might get HTTP 502 errors
 inline constexpr auto number_of_parallel_get = 40;
-
-} // namespace
+} // namespace details
 
 using HTTPClient = HTTPClientType<Poco::Net::HTTPSClientSession, Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
 
@@ -54,7 +53,7 @@ public:
   [[nodiscard]] std::vector<ProvinceInfo> request_provinces(std::string_view iso_code) const;
 
   /**
-   *  Get the covid-19 case data for a country latest or for a specific date
+   *  Get the covid-19 case data for a country. latest or for a specific date
    * @param country_code Country Code
    * @param date date, optional, if empty the latest data is returned
    * @return Covid-19 case data for country @p country_code on date @p date
@@ -63,7 +62,7 @@ public:
                                                  std::optional<std::chrono::year_month_day> const& date) const;
 
   /**
-   *  Get the covid-19 case data for a country latest or for a specific date
+   *  Get the covid-19 case data for a specific date range
    * @param country_code Country Code
    * @param start_date start_date
    * @param end_date end date
@@ -78,13 +77,15 @@ private:
 };
 
 using CoronaAPIClient = CoronaAPIClientType<HTTPClient>;
-
-namespace {
+namespace details {
 constexpr auto create_exception_msg = [](auto const& url, auto const& response) {
   return std::string{"Error fetching data from url \""} + url + std::string{"\".\n\n Response status: "} +
          response.reason() + std::string{" ("} + std::to_string(response.status()) + std::string{")."};
 };
-} // namespace
+
+} // namespace details
+
+// Implementation
 
 template <typename ClientType>
 std::vector<RegionInfo> CoronaAPIClientType<ClientType>::request_regions() const
@@ -97,8 +98,7 @@ std::vector<RegionInfo> CoronaAPIClientType<ClientType>::request_regions() const
   }
   else
   {
-    auto const exception_msg = create_exception_msg(regions_url, http_response);
-    throw HTTPClientException{exception_msg};
+    throw HTTPClientException{details::create_exception_msg(regions_url, http_response)};
   }
 }
 template <typename ClientType>
@@ -112,8 +112,7 @@ std::vector<ProvinceInfo> CoronaAPIClientType<ClientType>::request_provinces(std
   }
   else
   {
-    auto const exception_msg = create_exception_msg(provinces_url, http_response);
-    throw HTTPClientException{exception_msg};
+    throw HTTPClientException{details::create_exception_msg(provinces_url, http_response)};
   }
 }
 
@@ -126,6 +125,7 @@ CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_c
       date.has_value() ? fmt::format("date={:%Y-%m-%d}&", std::chrono::sys_days(date.value())) : std::string{""};
   auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                  std::string{"iso="} + std::string{country_code};
+
   auto const http_response = ClientType::get(region_report_url);
   if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
   {
@@ -147,7 +147,7 @@ CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_c
   }
   else
   {
-    auto const exception_msg = create_exception_msg(region_report_url, http_response);
+    auto const exception_msg = details::create_exception_msg(region_report_url, http_response);
     throw HTTPClientException{exception_msg};
   }
 }
@@ -169,7 +169,7 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
   for (auto day = start; day <= end; day += std::chrono::days{1})
   {
     days.emplace_back(day);
-    if (days.size() == number_of_parallel_get)
+    if (days.size() == details::number_of_parallel_get)
     {
       dates_to_parse.emplace_back(days);
       days = std::vector<std::chrono::sys_days>{};
@@ -200,9 +200,10 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
         }
         else
         {
-          return create_exception_msg(region_report_url, http_response);
+          return details::create_exception_msg(region_report_url, http_response);
         }
       };
+
       response_results.emplace_back(std::async(std::launch::async, get_covid_data));
     };
 
@@ -215,15 +216,15 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
     {
       auto const http_response = result.get();
 
-      std::visit(overloaded{[&](std::optional<CovidData> const& covid_data) {
-                              if (covid_data.has_value())
-                              {
-                                country_data.timeline.emplace_back(covid_data.value());
-                              }
-                            },
-                            [](std::string const& exception_msg) {
-                              fmt::print(stderr, "HTTPClientException {}\n", exception_msg);
-                            }},
+      std::visit(details::overloaded{[&](std::optional<CovidData> const& covid_data) {
+                                       if (covid_data.has_value())
+                                       {
+                                         country_data.timeline.emplace_back(covid_data.value());
+                                       }
+                                     },
+                                     [](std::string const& exception_msg) {
+                                       fmt::print(stderr, "HTTPClientException {}\n", exception_msg);
+                                     }},
                  http_response);
     }
   });

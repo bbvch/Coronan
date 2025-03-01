@@ -19,6 +19,7 @@ class CountryOverviewTablewModel;
 class CoronanWidget : public QWidget
 {
   Q_OBJECT
+
 public:
   explicit CoronanWidget(QWidget* parent = nullptr);
   ~CoronanWidget() override;
@@ -26,9 +27,6 @@ public:
   CoronanWidget& operator=(CoronanWidget const&) = delete;
   CoronanWidget(CoronanWidget&&) = delete;
   CoronanWidget& operator=(CoronanWidget&&) = delete;
-
-private Q_SLOTS:
-  void update_ui();
 
 private:
   coronan::CountryData get_country_data(std::string_view country_code, std::chrono::year_month_day const& start_date,
@@ -39,8 +37,11 @@ private:
   CountryChartView* chartView = nullptr;
   Ui_CoronanWidgetForm* ui = nullptr;
 
-  CountryOverviewTablewModel overview_model{};
-  CountryDataModel country_data_model{};
+  CountryOverviewTablewModel overview_model;
+  CountryDataModel country_data_model;
+
+private Q_SLOTS:
+  void update_ui();
 };
 
 } // namespace coronan_ui

@@ -39,7 +39,7 @@
 
 
 ### IMPORTANT NOTE
-Co\[ro\]nan was written during the pandemic of the Corona Virus. The API (__[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer) used for first version is no longer available. However an alternative was found. Unfortunately does not have the same data quality, but the application works again.
+Co\[ro\]nan was written during the pandemic of the Corona Virus. The API (__[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer) used for first version is no longer available. However an alternative was found. Unfortunately does not have the same data quality, and retrieving data is much slower, becuase the API does not support timeline data, i.e. every data fpor specific date requires a GET. But at least the application works again. And the name didn't have to change.
 
 </details>
 
@@ -75,14 +75,14 @@ _COVID-19 Statistics API_ provides statistics via REST API from The [Johns Hopki
 
 This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
 * C++ 20 Standard
-  * [GCC](https://gcc.gnu.org/)
+  * [GCC](https://gcc.gnu.org/) _(>= gcc 12)_
   * [Clang](https://clang.llvm.org/)
   * Visual Studio 2022
 
 * [conan](https://conan.io/) package Manager
 
 * Libraries used:
-  * [Qt6](https://www.qt.io/)
+  * [Qt6](https://www.qt.io/) _(minimal version required: 6.4)_
   * [Poco](https://pocoproject.org/) Networking library
   * [RapidJSON](https://rapidjson.org/)
   * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser

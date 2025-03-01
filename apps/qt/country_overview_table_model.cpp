@@ -34,6 +34,7 @@ void CountryOverviewTablewModel::populate_data(coronan::CountryData const& count
        std::make_pair("Recovered:", country_data.latest.recovered),
        std::make_pair("Active:", country_data.latest.active),
        std::make_pair("Death rate:", country_data.latest.fatality_rate)}};
+
   beginResetModel();
   country_overview_data.clear();
   for (auto const& pair : overview_table_entries)
@@ -63,7 +64,7 @@ QVariant CountryOverviewTablewModel::data(QModelIndex const& index, int role) co
 {
   if (!index.isValid() || role != Qt::DisplayRole)
   {
-    return QVariant();
+    return {};
   }
   if (index.column() == 0)
   {
@@ -73,7 +74,7 @@ QVariant CountryOverviewTablewModel::data(QModelIndex const& index, int role) co
   {
     return country_overview_data.at(index.row()).second;
   }
-  return QVariant();
+  return {};
 }
 
 } // namespace coronan_ui
