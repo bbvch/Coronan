@@ -7,14 +7,23 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <chrono>
+#include <fmt/base.h>
+#include <future>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace coronan {
 
 namespace {
 inline constexpr auto corona_api_url = "https://covid-api.com/api/";
-}
+
+template <class... Ts>
+struct overloaded : Ts...
+{
+  using Ts::operator()...;
+};
+} // namespace
 
 using HTTPClient = HTTPClientType<Poco::Net::HTTPSClientSession, Poco::Net::HTTPRequest, Poco::Net::HTTPResponse>;
 
@@ -112,7 +121,6 @@ CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_c
                                  std::string{"iso="} + std::string{country_code};
   auto const http_response = ClientType::get(region_report_url);
   if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
-
   {
     auto country_data = CountryData{};
     country_data.info.iso_code = country_code;
@@ -146,27 +154,52 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
   country_data.info.iso_code = country_code;
   auto start = std::chrono::sys_days{start_date};
   auto end = std::chrono::sys_days{end_date};
+
+  using GetDataResult = std::variant<std::optional<CovidData> const, std::string const>;
+
+  std::vector<std::future<GetDataResult>> response_results;
+
   for (auto day = start; day <= end; day += std::chrono::days{1})
   {
-    auto const date = std::chrono::year_month_day{day};
-    auto const date_query_string = std::format("date={:%Y-%m-%d}&", date);
-    auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
-                                   std::string{"iso="} + std::string{country_code};
-    auto const http_response = ClientType::get(region_report_url);
-    if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
-    {
-      auto const covid_data = coronan::api_parser::parse_region_total(http_response.response_body());
-      if (covid_data.has_value())
+    const auto get_covid_data = [day, country_code]() -> GetDataResult {
+      auto const date = std::chrono::year_month_day{day};
+      auto const date_query_string = std::format("date={:%Y-%m-%d}&", date);
+      auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
+                                     std::string{"iso="} + std::string{country_code};
+      auto const http_response = ClientType::get(region_report_url);
+      if (http_response.status() == Poco::Net::HTTPResponse::HTTP_OK)
       {
-        country_data.timeline.push_back(covid_data.value());
+        return coronan::api_parser::parse_region_total(http_response.response_body());
       }
-    }
-    else
-    {
-      auto const exception_msg = create_exception_msg(region_report_url, http_response);
-      throw HTTPClientException{exception_msg};
-    }
+      else
+      {
+        return create_exception_msg(region_report_url, http_response);
+      }
+    };
+    response_results.emplace_back(std::async(std::launch::async, get_covid_data));
   }
+
+  for (auto const& result : response_results)
+  {
+    result.wait();
+  }
+
+  for (auto& result : response_results)
+  {
+    auto const http_response = result.get();
+
+    std::visit(overloaded{[&](std::optional<CovidData> const& covid_data) {
+                            if (covid_data.has_value())
+                            {
+                              country_data.timeline.emplace_back(covid_data.value());
+                            }
+                          },
+                          [](std::string const& exception_msg) {
+                            fmt::print(stderr, "HTTPClientException {}\n", exception_msg);
+                          }},
+               http_response);
+  }
+  std::ranges::sort(country_data.timeline, [](auto const& lhs, auto const& rhs) { return lhs.date < rhs.date; });
 
   return country_data;
 }
