@@ -1,9 +1,11 @@
 #include "country_overview_table_model.hpp"
 
 #include <array>
+#include <date/date.h>
 #include <fmt/chrono.h>
 #include <variant>
 
+using namespace date;
 namespace {
 
 template <class... Ts>
@@ -11,6 +13,9 @@ struct overloaded : Ts...
 {
   using Ts::operator()...;
 };
+
+template <class... Ts>
+overloaded(Ts...) -> overloaded<Ts...>; // explicit deduction guide (not needed as of C++20)
 
 inline auto constexpr row_count = 6u;
 inline auto constexpr column_count = 2u;
@@ -28,7 +33,7 @@ void CountryOverviewTablewModel::populate_data(coronan::CountryData const& count
   using VariantT = std::variant<std::string, std::optional<uint32_t>, std::optional<double>>;
   using CaptionValuePair = std::pair<QString, VariantT>;
   std::array<CaptionValuePair, row_count> const overview_table_entries = {
-      {std::make_pair("Date:", fmt::format("{:%Y-%m-%d}", std::chrono::sys_days(country_data.latest.date))),
+      {std::make_pair("Date:", date::format("%Y-%m-%d", country_data.latest.date)),
        std::make_pair("Confirmed:", country_data.latest.confirmed),
        std::make_pair("Death:", country_data.latest.deaths),
        std::make_pair("Recovered:", country_data.latest.recovered),

@@ -6,7 +6,12 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>
 #include <chrono>
+#include <date/date.h>
+#include <mutex>
 #include <tuple>
+
+using namespace date;
+;
 
 namespace {
 
@@ -15,8 +20,9 @@ using Catch::Matchers::Equals;
 class TestHTTPClient
 {
 public:
-  static coronan::HTTPResponse get(std::string_view url)
+  static coronan::HTTPResponse get(std::string const& url)
   {
+    std::lock_guard<std::mutex> lk(TestHTTPClient::mtx);
     auto const& [response_status, response_payload] = responses.at(get_called);
     ++get_called;
     get_urls.emplace_back(url);
@@ -25,12 +31,13 @@ public:
 
   static std::tuple<bool, std::string> get_was_called_with(std::string_view url)
   {
+    std::lock_guard<std::mutex> lk(TestHTTPClient::mtx);
     return std::make_tuple((get_called == 1) && (get_urls.at(0) == url), get_urls.at(0));
   }
 
   static std::tuple<bool, std::string> get_was_called_with(std::vector<std::string> const& urls)
   {
-
+    std::lock_guard<std::mutex> lk(TestHTTPClient::mtx);
     for (auto const& expected_url : urls)
     {
       if (not std::ranges::any_of(get_urls, [expected_url](auto const& url) { return url == expected_url; }))
@@ -46,11 +53,13 @@ public:
 
   using Response_T = std::tuple<Poco::Net::HTTPResponse::HTTPStatus, std::string>;
   static std::vector<Response_T> responses;
+  static std::mutex mtx;
 };
 
 size_t TestHTTPClient::get_called = 0;
 std::vector<std::string> TestHTTPClient::get_urls = {};
 std::vector<TestHTTPClient::Response_T> TestHTTPClient::responses = {{Poco::Net::HTTPResponse::HTTP_CONTINUE, ""}};
+std::mutex TestHTTPClient::mtx = std::mutex{};
 
 SCENARIO("CoronaAPIClient retrieves region list", "[CoronaAPIClient]")
 {
@@ -221,7 +230,6 @@ SCENARIO("CoronaAPIClient retrieves latest country data for Switzerland", "[Coro
           } \
       }"}};
 
-      using namespace std::chrono;
       auto const country_data = testee.request_country_data("CHE", std::nullopt);
       auto const& [called, url] =
           TestHTTPClient::get_was_called_with("https://covid-api.com/api/reports/total?iso=CHE");
@@ -232,7 +240,7 @@ SCENARIO("CoronaAPIClient retrieves latest country data for Switzerland", "[Coro
 
       THEN("the country data is returned.")
       {
-        REQUIRE(country_data.latest.date == std::chrono::year_month_day{2023y, std::chrono::March, 9d});
+        REQUIRE(country_data.latest.date == 2023_y / March / 9_d);
         REQUIRE(country_data.latest.deaths == 14210);
         REQUIRE(country_data.latest.confirmed == 4413911);
         REQUIRE(country_data.latest.recovered == 0);
@@ -256,8 +264,7 @@ SCENARIO("CoronaAPIClient retrieves country data for Switzerland on 2020-03-01",
 
     auto testee = coronan::CoronaAPIClientType<TestHTTPClient>{};
 
-    using namespace std::chrono;
-    static constexpr std::chrono::year_month_day date = 2020y / March / 1d;
+    static constexpr year_month_day date = 2020_y / March / 1_d;
 
     WHEN("the http client returns an OK response status and a payload with no data for Switzerland")
     {
@@ -335,9 +342,8 @@ SCENARIO("CoronaAPIClient retrieves timeline country data for Switzerland", "[Co
     TestHTTPClient::get_urls = {};
     auto testee = coronan::CoronaAPIClientType<TestHTTPClient>{};
 
-    using namespace std::chrono;
-    static constexpr std::chrono::year_month_day start_date = 2020y / March / 1d;
-    static constexpr std::chrono::year_month_day end_date = 2020y / March / 3d;
+    static constexpr year_month_day start_date = 2020_y / March / 1_d;
+    static constexpr year_month_day end_date = 2020_y / March / 3_d;
 
     WHEN("the client retrieves data from to 2020-03-01 until the 2020-03-03")
     {
@@ -413,8 +419,7 @@ SCENARIO("CoronaAPIClient retrieves timeline country data for Switzerland", "[Co
         REQUIRE(country_data.timeline.at(0).active == 27);
         REQUIRE(country_data.timeline.at(0).active_diff == 9);
         REQUIRE(country_data.timeline.at(0).fatality_rate == 0.0);
-        REQUIRE(country_data.timeline.at(1).date ==
-                std::chrono::year_month_day{start_date.year(), start_date.month(), 2d});
+        REQUIRE(country_data.timeline.at(1).date == year_month_day{start_date.year(), start_date.month(), 2_d});
         REQUIRE(country_data.timeline.at(1).confirmed == 42);
         REQUIRE(country_data.timeline.at(1).confirmed_diff == 15);
         REQUIRE(country_data.timeline.at(1).deaths == 0);

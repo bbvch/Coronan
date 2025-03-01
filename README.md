@@ -86,7 +86,8 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * [Poco](https://pocoproject.org/) Networking library
   * [RapidJSON](https://rapidjson.org/)
   * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
-  * [{fmt}](https://github.com/fmtlib/fmt) formatting library
+  * [{fmt}](https://github.com/fmtlib/fmt) formatting library _(std::print is C++23 and therfore not used yet)_
+  * [date](https://github.com/HowardHinnant/date) date and time library _(std::chrono::year_month_day and simimmilar are not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 

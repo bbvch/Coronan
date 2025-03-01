@@ -8,6 +8,9 @@
 #include <QtWidgets/QWidget>
 #include <string>
 
+using date::year_month_day;
+// using std::chrono::year_month_day;
+
 QT_BEGIN_NAMESPACE
 class Ui_CoronanWidgetForm;
 QT_END_NAMESPACE
@@ -29,8 +32,8 @@ public:
   CoronanWidget& operator=(CoronanWidget&&) = delete;
 
 private:
-  coronan::CountryData get_country_data(std::string_view country_code, std::chrono::year_month_day const& start_date,
-                                        std::chrono::year_month_day const& end_date);
+  coronan::CountryData get_country_data(std::string const& country_code, year_month_day const& start_date,
+                                        year_month_day const& end_date);
   void populate_country_box();
   void populate_date_boxes();
 

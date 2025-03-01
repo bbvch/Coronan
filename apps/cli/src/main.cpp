@@ -6,6 +6,7 @@
 
 #include <chrono>
 #include <cstdlib>
+#include <date/date.h>
 #include <exception>
 #include <fmt/base.h>
 #include <fmt/chrono.h>
@@ -14,6 +15,9 @@
 #include <string_view>
 
 namespace {
+
+using date::year_month_day;
+// using std::chrono::year_month_day;
 
 void print_data(coronan::CountryData const& country_data);
 } // namespace
@@ -31,8 +35,8 @@ int main(int argc, char* argv[])
     auto const country_data = [&]() -> coronan::CountryData {
       auto const& [country, start_date, end_date] =
 
-          std::get<std::tuple<std::string, std::optional<std::chrono::year_month_day>,
-                              std::optional<std::chrono::year_month_day>>>(arguments_or_exit_code);
+          std::get<std::tuple<std::string, std::optional<year_month_day>, std::optional<year_month_day>>>(
+              arguments_or_exit_code);
 
       auto const latest_data = coronan::CoronaAPIClient{}.request_country_data(country, std::nullopt);
       const auto region_info =
@@ -83,14 +87,14 @@ namespace {
 void print_data(coronan::CountryData const& country_data)
 {
 
-  constexpr auto optional_to_string = [](auto const& value) -> std::string_view {
+  constexpr auto optional_to_string = [](auto const& value) -> std::string {
     return value.has_value() ? std::to_string(value.value()) : "--";
   };
   fmt::print("Covid Data for {}:\n", country_data.info.iso_code);
   fmt::print("datetime, confirmed, death, recovered, active\n");
   for (auto const& data_point : country_data.timeline)
   {
-    fmt::print("{}, {}, {}, {}, {}\n", fmt::format("{:%Y-%m-%d}", std::chrono::sys_days(data_point.date)),
+    fmt::print("{}, {}, {}, {}, {}\n", date::format("%Y-%m-%d", data_point.date),
                optional_to_string(data_point.confirmed), optional_to_string(data_point.deaths),
                optional_to_string(data_point.recovered), optional_to_string(data_point.active));
   }

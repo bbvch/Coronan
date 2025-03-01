@@ -7,12 +7,16 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <chrono>
+#include <date/date.h>
 #include <fmt/base.h>
 #include <fmt/chrono.h>
 #include <future>
 #include <string>
 #include <variant>
 #include <vector>
+
+using namespace date;
+// using namespace std::chrono;
 
 namespace coronan {
 
@@ -24,6 +28,9 @@ struct overloaded : Ts...
 {
   using Ts::operator()...;
 };
+
+template <class... Ts>
+overloaded(Ts...) -> overloaded<Ts...>; // explicit deduction guide (not needed as of C++20)
 
 // The number of conrurrent (asynch) http get calls
 // with a too large number you might get HTTP 502 errors
@@ -58,8 +65,8 @@ public:
    * @param date date, optional, if empty the latest data is returned
    * @return Covid-19 case data for country @p country_code on date @p date
    */
-  [[nodiscard]] CountryData request_country_data(std::string_view country_code,
-                                                 std::optional<std::chrono::year_month_day> const& date) const;
+  [[nodiscard]] CountryData request_country_data(std::string const& country_code,
+                                                 std::optional<year_month_day> const& date) const;
 
   /**
    *  Get the covid-19 case data for a specific date range
@@ -68,9 +75,8 @@ public:
    * @param end_date end date
    * @return Covid-19 case data from @p start_date to @p end_date for country @p country_code
    */
-  [[nodiscard]] CountryData request_country_data(std::string_view country_code,
-                                                 std::chrono::year_month_day const& start_date,
-                                                 std::chrono::year_month_day const& end_date) const;
+  [[nodiscard]] CountryData request_country_data(std::string const& country_code, year_month_day const& start_date,
+                                                 year_month_day const& end_date) const;
 
 private:
   std::unique_ptr<SSLClient> ssl_client = SSLClient::create_with_accept_certificate_handler();
@@ -117,12 +123,11 @@ std::vector<ProvinceInfo> CoronaAPIClientType<ClientType>::request_provinces(std
 }
 
 template <typename ClientType>
-CountryData
-CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_code,
-                                                      std::optional<std::chrono::year_month_day> const& date) const
+CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string const& country_code,
+                                                                  std::optional<year_month_day> const& date) const
 {
   auto const date_query_string =
-      date.has_value() ? fmt::format("date={:%Y-%m-%d}&", std::chrono::sys_days(date.value())) : std::string{""};
+      date.has_value() ? fmt::format("date={:%Y-%m-%d}&", sys_days(date.value())) : std::string{""};
   auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                  std::string{"iso="} + std::string{country_code};
 
@@ -153,43 +158,43 @@ CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_c
 }
 
 template <typename ClientType>
-CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_code,
-                                                                  std::chrono::year_month_day const& start_date,
-                                                                  std::chrono::year_month_day const& end_date) const
+CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string const& country_code,
+                                                                  year_month_day const& start_date,
+                                                                  year_month_day const& end_date) const
 {
   auto country_data = CountryData{};
   country_data.info.iso_code = country_code;
-  auto start = std::chrono::sys_days{start_date};
-  auto end = std::chrono::sys_days{end_date};
+  auto const start = sys_days{start_date};
+  auto const end = sys_days{end_date};
 
-  std::vector<std::vector<std::chrono::sys_days>> dates_to_parse;
+  std::vector<std::vector<sys_days>> days_to_parse;
 
-  std::vector<std::chrono::sys_days> days{};
+  std::vector<date::sys_days> days{};
 
-  for (auto day = start; day <= end; day += std::chrono::days{1})
+  for (auto day = start; day <= end; day += date::days{1})
   {
     days.emplace_back(day);
     if (days.size() == details::number_of_parallel_get)
     {
-      dates_to_parse.emplace_back(days);
-      days = std::vector<std::chrono::sys_days>{};
+      days_to_parse.emplace_back(days);
+      days = std::vector<date::sys_days>{};
     }
   }
 
   if (not days.empty())
   {
-    dates_to_parse.emplace_back(days);
+    days_to_parse.emplace_back(days);
   }
 
-  std::ranges::for_each(dates_to_parse, [&](const auto& dates) {
-    using GetDataResult = std::variant<std::optional<CovidData> const, std::string const>;
+  std::ranges::for_each(days_to_parse, [&](auto const& dates) {
+    using GetDataResult = std::variant<std::optional<CovidData>, std::string>;
     std::vector<std::future<GetDataResult>> response_results;
 
-    for (const auto& day : dates)
+    for (auto const& day : dates)
     {
-      const auto get_covid_data = [day, country_code]() -> GetDataResult {
-        auto const date = std::chrono::year_month_day{day};
-        auto const date_query_string = fmt::format("date={:%Y-%m-%d}&", std::chrono::sys_days(date));
+      auto const get_covid_data = [&]() -> GetDataResult {
+        auto const date = year_month_day{day};
+        auto const date_query_string = fmt::format("date={:%Y-%m-%d}&", date::sys_days(date));
         auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                        std::string{"iso="} + std::string{country_code};
 
@@ -206,11 +211,6 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
 
       response_results.emplace_back(std::async(std::launch::async, get_covid_data));
     };
-
-    for (auto const& result : response_results)
-    {
-      result.wait();
-    }
 
     for (auto& result : response_results)
     {

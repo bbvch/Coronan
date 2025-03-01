@@ -41,26 +41,3 @@ add_custom_target(
     COMMAND $<TARGET_FILE:coronan_cli::unittests>
     COMMENT "Run cli unittests"
 )
-
-find_package(Gcovr)
-if(ENABLE_COVERAGE AND Gcovr_FOUND)
-    if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-        set(GCOV_VERSION "llvm-cov gcov")
-    else(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        string(REGEX MATCH "^[0-9]+" compiler_major_version
-                     "${CMAKE_CXX_COMPILER_VERSION}"
-        )
-        set(GCOV_VERSION "gcov-${compiler_major_version}")
-    endif()
-
-    message(STATUS "gcov version used: ${GCOV_VERSION}")
-
-    add_custom_target(
-        report_coverage ALL
-        DEPENDS run_unittests
-        COMMAND ${GCOVR_EXECUTABLE} --gcov-executable "${GCOV_VERSION}" -r
-                ${CMAKE_SOURCE_DIR} -e ".*apps.*" -e ".*tests.*"
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        COMMENT "Report coverage"
-    )
-endif()

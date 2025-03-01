@@ -14,6 +14,9 @@
 
 namespace coronan_ui {
 
+using namespace date;
+// using std::chrono::year_month_day;
+
 inline constexpr auto default_country_code = "CHE";
 inline const QDate default_start_date = QDate{2020, 02, 15};
 
@@ -57,24 +60,20 @@ void CoronanWidget::populate_date_boxes()
 {
   auto const latest_country_data = coronan::CoronaAPIClient{}.request_country_data(default_country_code, std::nullopt);
   auto const latest_date = latest_country_data.latest.date;
-// Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++) does
-// not fully support C++ 20 even for Qt >= 6.4
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
+  // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++) does
+  // not fully support C++ 20 even for Qt >= 6.4
   auto const latest_qdate = QDate(static_cast<int>(latest_date.year()),       //
                                   static_cast<unsigned>(latest_date.month()), //
                                   static_cast<unsigned>(latest_date.day()));
 
-#pragma GCC diagnostic pop
   ui->startDate->setDate(default_start_date);
   ui->startDate->setMaximumDate(latest_qdate);
   ui->endDate->setDate(default_start_date.addDays(60));
   ui->endDate->setMaximumDate(latest_qdate);
 }
 
-coronan::CountryData CoronanWidget::get_country_data(std::string_view country_code,
-                                                     std::chrono::year_month_day const& start_date,
-                                                     std::chrono::year_month_day const& end_date)
+coronan::CountryData CoronanWidget::get_country_data(std::string const& country_code, year_month_day const& start_date,
+                                                     year_month_day const& end_date)
 {
   try
   {
@@ -103,12 +102,12 @@ void CoronanWidget::update_ui()
   this->setCursor(Qt::BusyCursor);
   auto const country_code = ui->countryComboBox->itemData(ui->countryComboBox->currentIndex()).toString();
   auto const country_name = ui->countryComboBox->itemText(ui->countryComboBox->currentIndex());
-  std::chrono::year_month_day const start_date{std::chrono::year{ui->startDate->date().year()},
-                                               std::chrono::month{static_cast<unsigned>(ui->startDate->date().month())},
-                                               std::chrono::day{static_cast<unsigned>(ui->startDate->date().day())}};
-  std::chrono::year_month_day const end_date{std::chrono::year{ui->endDate->date().year()},
-                                             std::chrono::month{static_cast<unsigned>(ui->endDate->date().month())},
-                                             std::chrono::day{static_cast<unsigned>(ui->endDate->date().day())}};
+  year_month_day const start_date{year{ui->startDate->date().year()},
+                                  month{static_cast<unsigned>(ui->startDate->date().month())},
+                                  day{static_cast<unsigned>(ui->startDate->date().day())}};
+  year_month_day const end_date{year{ui->endDate->date().year()},
+                                month{static_cast<unsigned>(ui->endDate->date().month())},
+                                day{static_cast<unsigned>(ui->endDate->date().day())}};
   auto const latest_country_data =
       coronan::CoronaAPIClient{}.request_country_data(country_code.toStdString(), std::nullopt);
   overview_model.populate_data(latest_country_data);

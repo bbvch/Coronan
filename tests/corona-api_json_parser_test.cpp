@@ -2,6 +2,9 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+using namespace date;
+// using namespace std::chrono;
+
 namespace {
 
 TEST_CASE("The corona-api parser parsing an empty region total json", "[corona-api parser]")
@@ -10,10 +13,37 @@ TEST_CASE("The corona-api parser parsing an empty region total json", "[corona-a
 
   auto const json_object = coronan::api_parser::parse_region_total(test_json);
 
-  SECTION("returns the no data")
+  SECTION("returns no data")
   {
-    using namespace std::chrono;
+
     REQUIRE(json_object.has_value() == false);
+  }
+}
+
+TEST_CASE("The corona-api parser parsing an invalid json", "[corona-api parser]")
+{
+  static constexpr auto test_json = "{ \"data\": }";
+
+  auto const json_object = coronan::api_parser::parse_region_total(test_json);
+
+  SECTION("returns no data")
+  {
+
+    REQUIRE(json_object.has_value() == false);
+  }
+}
+
+TEST_CASE("The corona-api parser parsing an region total json with invalide date", "[corona-api parser]")
+{
+  static constexpr auto test_json = "{ \
+  \"data\": { \
+        \"date\": \"2023-13-30\" \
+  } \
+}";
+
+  SECTION("throws exception")
+  {
+    REQUIRE_THROWS_AS(coronan::api_parser::parse_region_total(test_json), std::runtime_error);
   }
 }
 
@@ -39,8 +69,7 @@ TEST_CASE("The corona-api parser parsing a full region total json", "[corona-api
 
   SECTION("returns the latest data")
   {
-    using namespace std::chrono;
-    REQUIRE(json_object.date == std::chrono::year_month_day{2023y, std::chrono::March, 9d});
+    REQUIRE(json_object.date == 2023_y / March / 9_d);
     REQUIRE(json_object.deaths == 14210);
     REQUIRE(json_object.confirmed == 4413911);
     REQUIRE(json_object.recovered == 4013);
@@ -84,7 +113,31 @@ TEST_CASE("The corona-api country parser parsing a region list", "[corona-api pa
   }
 }
 
-TEST_CASE("The corona-api country parser parsing a provinces list", "[corona-api parser]")
+TEST_CASE("The corona-api country parser parsing a empty region list", "[corona-api parser]")
+{
+  static constexpr auto test_country_json = "{ \"data\": [ ] }";
+
+  auto const countries = coronan::api_parser::parse_regions(test_country_json);
+
+  SECTION("returns no regions")
+  {
+    REQUIRE(countries.empty());
+  }
+}
+
+TEST_CASE("The corona-api country parser parsing a invalid json", "[corona-api parser]")
+{
+  static constexpr auto test_country_json = "{ \"data\": }";
+
+  auto const countries = coronan::api_parser::parse_regions(test_country_json);
+
+  SECTION("returns no regions")
+  {
+    REQUIRE(countries.empty());
+  }
+}
+
+TEST_CASE("The corona-api provinces parser parsing a provinces list", "[corona-api parser]")
 {
   static constexpr auto test_country_json = "{ \
               \"data\": [ \
@@ -131,6 +184,30 @@ TEST_CASE("The corona-api country parser parsing a provinces list", "[corona-api
     REQUIRE(provinces[2].name == "Alameda County, CA");
     REQUIRE(provinces[2].latitude == "37.6017");
     REQUIRE(provinces[2].longitude == "-121.7195");
+  }
+}
+
+TEST_CASE("The corona-api provinces parser parsing a empty provinces list", "[corona-api parser]")
+{
+  static constexpr auto test_country_json = "{ \"data\": [ ] }";
+
+  auto const provinces = coronan::api_parser::parse_provinces(test_country_json);
+
+  SECTION("returns no provinces")
+  {
+    REQUIRE(provinces.empty());
+  }
+}
+
+TEST_CASE("The corona-api provinces parser parsing a invalid json", "[corona-api parser]")
+{
+  static constexpr auto test_country_json = "{ \"data\": }";
+
+  auto const provinces = coronan::api_parser::parse_provinces(test_country_json);
+
+  SECTION("returns no provinces")
+  {
+    REQUIRE(provinces.empty());
   }
 }
 

@@ -1,5 +1,6 @@
 #include "argument_parser.hpp"
 
+#include <date/date.h>
 #include <fmt/base.h>
 #include <fmt/chrono.h>
 #include <iomanip>
@@ -10,34 +11,28 @@
 #include <lyra/parser.hpp>
 #include <sstream>
 
+using date::year_month_day;
+// using std::chrono::year_month_day;
+
 namespace {
-std::chrono::year_month_day parse_date(std::string const& date_string)
+year_month_day parse_date(std::string const& date_string)
 {
-  std::tm date_time = {};
+  year_month_day ymd{};
   std::istringstream date_iss{date_string};
-  date_iss >> std::get_time(&date_time, "%Y-%m-%d");
+  date_iss >> parse("%Y-%m-%d", ymd);
 
   if (date_iss.fail())
   {
     return {};
   }
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wuseless-cast"
-  // Ugly but necessary, because std::parse is not available on compilers with only partial c++20 support
-  return std::chrono::year_month_day{std::chrono::year{date_time.tm_year + 1900},
-                                     std::chrono::month{static_cast<unsigned>(date_time.tm_mon + 1U)},
-                                     std::chrono::day{static_cast<unsigned>(date_time.tm_mday)}};
-#pragma GCC diagnostic pop
+  return ymd;
 }
 
 } // namespace
 
 namespace coronan_cli {
 
-std::variant<
-    std::tuple<std::string, std::optional<std::chrono::year_month_day>, std::optional<std::chrono::year_month_day>>,
-    int>
+std::variant<std::tuple<std::string, std::optional<year_month_day>, std::optional<year_month_day>>, int>
 parse_commandline_arguments(lyra::args const& args)
 {
   std::string country = "CHE";
@@ -65,7 +60,7 @@ parse_commandline_arguments(lyra::args const& args)
     return EXIT_SUCCESS;
   }
 
-  std::optional<std::chrono::year_month_day> start_date = std::nullopt;
+  std::optional<year_month_day> start_date = std::nullopt;
   if (not start_date_string.empty())
   {
     if (auto const ymd = parse_date(start_date_string); ymd.ok())
@@ -80,7 +75,7 @@ parse_commandline_arguments(lyra::args const& args)
     }
   }
 
-  std::optional<std::chrono::year_month_day> end_date = std::nullopt;
+  std::optional<year_month_day> end_date = std::nullopt;
   if (not end_date_string.empty())
   {
     if (auto const ymd = parse_date(end_date_string); ymd.ok())

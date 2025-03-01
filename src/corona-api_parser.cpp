@@ -3,6 +3,7 @@
 #include <chrono>
 #include <cstdint>
 #include <ctime>
+#include <date/date.h>
 #include <fmt/base.h>
 #include <iomanip>
 #include <optional>
@@ -13,6 +14,8 @@
 #include <rapidjson/reader.h>
 #include <vector>
 
+using namespace date;
+// using namespace std::chrono;
 namespace coronan::api_parser {
 
 namespace {
@@ -71,18 +74,16 @@ Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
   return "";
 }
 
-std::chrono::year_month_day parse_date(std::string const& date_string)
+year_month_day parse_date(std::string const& date_string)
 {
-  std::tm tm{};
+  year_month_day ymd{};
   std::istringstream iss{date_string};
-  iss >> std::get_time(&tm, "%Y-%m-%d");
+  iss >> parse("%Y-%m-%d", ymd);
   if (iss.fail())
   {
     return {};
   }
-  return std::chrono::year_month_day{std::chrono::year{tm.tm_year + 1900},
-                                     std::chrono::month{static_cast<unsigned>(tm.tm_mon + 1)},
-                                     std::chrono::day{static_cast<unsigned>(tm.tm_mday)}};
+  return ymd;
 }
 
 } // namespace
@@ -92,7 +93,7 @@ std::optional<CovidData> parse_region_total(std::string const& json)
   rapidjson::Document document;
   if (document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_region_total: JSON parse error: {} ({})", static_cast<int>(document.GetParseError()),
+    fmt::print(stderr, "parse_region_total: JSON parse error: {} ({})\n", static_cast<int>(document.GetParseError()),
                document.GetErrorOffset());
     return {};
   }
@@ -123,7 +124,7 @@ RegionListObject parse_regions(std::string const& json)
   rapidjson::Document document;
   if (document.Parse(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_regions: JSON parse error: {} ({})", static_cast<int>(document.GetParseError()),
+    fmt::print(stderr, "parse_regions: JSON parse error: {} ({})\n", static_cast<int>(document.GetParseError()),
                document.GetErrorOffset());
     return {};
   }
@@ -146,7 +147,7 @@ ProvinceListObject parse_provinces(std::string const& json)
   rapidjson::Document document;
   if (document.Parse(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_provinces: JSON parse error: {} ({})", static_cast<int>(document.GetParseError()),
+    fmt::print(stderr, "parse_provinces: JSON parse error: {} ({})\n", static_cast<int>(document.GetParseError()),
                document.GetErrorOffset());
     return {};
   }

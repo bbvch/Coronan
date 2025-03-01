@@ -1,12 +1,15 @@
 #pragma once
 
-#include <chrono>
 #include <cstdint>
+#include <date/date.h>
 #include <optional>
 #include <string>
 #include <vector>
 
 namespace coronan {
+
+using date::year_month_day;
+// using std::chrono::year_month_day;
 
 /**
  * Holds general country information
@@ -36,7 +39,7 @@ struct ProvinceInfo
  */
 struct CovidData
 {
-  std::chrono::year_month_day date;      /**< iso date string (last updated) */
+  year_month_day date;                   /**< iso date string (last updated) */
   std::optional<uint32_t> deaths;        /**< number of deaths */
   std::optional<int32_t> deaths_diff;    /**< number of death difference to previous data*/
   std::optional<uint32_t> confirmed;     /**< number of confirmed cases */

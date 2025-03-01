@@ -4,6 +4,7 @@ rapidjson/cci.20230929
 lyra/1.6.1
 catch2/3.8.0
 fmt/11.1.1
+date/3.0.3
 
 [generators]
 CMakeDeps

@@ -17,10 +17,12 @@ add_library(coronan_cli::arg_parser ALIAS cli_arg_parser)
 
 find_package(lyra REQUIRED CONFIG)
 find_package(fmt REQUIRED CONFIG)
+find_package(date REQUIRED CONFIG)
 
 target_link_libraries(
     cli_arg_parser
     PUBLIC bfg::lyra
+    PUBLIC date::date
     PRIVATE fmt::fmt
     PRIVATE coronan::compile_warnings
     PRIVATE coronan::compile_options

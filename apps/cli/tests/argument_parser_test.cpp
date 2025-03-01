@@ -1,14 +1,15 @@
 #include "argument_parser.hpp"
 
 #include <catch2/catch_test_macros.hpp>
-#include <chrono>
+#include <date/date.h>
 
 namespace {
+using namespace date;
+// using namespace std::chrono;
 
 TEST_CASE("argument parser called with ", "[HTTPClient]")
 {
-  using SuccessfullParse =
-      std::tuple<std::string, std::optional<std::chrono::year_month_day>, std::optional<std::chrono::year_month_day>>;
+  using SuccessfullParse = std::tuple<std::string, std::optional<year_month_day>, std::optional<year_month_day>>;
 
   SECTION("-h (help) exits with success")
   {
@@ -68,12 +69,11 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
 
     const auto result = coronan_cli::parse_commandline_arguments({"program_name", "-s", "2020-01-01"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHE");
     REQUIRE(start_date.has_value());
-    REQUIRE(start_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(start_date == year_month_day{2020_y / January / 1_d});
     REQUIRE_FALSE(end_date.has_value());
   }
 
@@ -82,12 +82,11 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
 
     const auto result = coronan_cli::parse_commandline_arguments({"program_name", "--start_date", "2020-01-01"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHE");
     REQUIRE(start_date.has_value());
-    REQUIRE(start_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(start_date == year_month_day{2020_y / January / 1_d});
     REQUIRE_FALSE(end_date.has_value());
   }
 
@@ -97,12 +96,11 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
     const auto result =
         coronan_cli::parse_commandline_arguments({"program_name", "--start_date", "2020-01-01", "-c", "CHN"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHN");
     REQUIRE(start_date.has_value());
-    REQUIRE(start_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(start_date == year_month_day{2020_y / January / 1_d});
     REQUIRE_FALSE(end_date.has_value());
   }
 
@@ -110,7 +108,6 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
   {
     const auto result = coronan_cli::parse_commandline_arguments({"program_name", "--start_date", "blabla"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<int>(result));
     REQUIRE(std::get<int>(result) == EXIT_FAILURE);
   }
@@ -120,12 +117,11 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
 
     const auto result = coronan_cli::parse_commandline_arguments({"program_name", "-e", "2020-01-01"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHE");
     REQUIRE(end_date.has_value());
-    REQUIRE(end_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(end_date == year_month_day{2020_y / January / 1_d});
     REQUIRE_FALSE(start_date.has_value());
   }
 
@@ -134,12 +130,11 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
 
     const auto result = coronan_cli::parse_commandline_arguments({"program_name", "--end_date", "2020-01-01"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHE");
     REQUIRE(end_date.has_value());
-    REQUIRE(end_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(end_date == year_month_day{2020_y / January / 1_d});
     REQUIRE_FALSE(start_date.has_value());
   }
 
@@ -149,12 +144,11 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
     const auto result =
         coronan_cli::parse_commandline_arguments({"program_name", "--end_date", "2020-01-01", "-c", "CHN"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHN");
     REQUIRE(end_date.has_value());
-    REQUIRE(end_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(end_date == year_month_day{2020_y / January / 1_d});
     REQUIRE_FALSE(start_date.has_value());
   }
 
@@ -162,7 +156,6 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
   {
     const auto result = coronan_cli::parse_commandline_arguments({"program_name", "--end_date", "blabla"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<int>(result));
     REQUIRE(std::get<int>(result) == EXIT_FAILURE);
   }
@@ -173,14 +166,13 @@ TEST_CASE("argument parser called with ", "[HTTPClient]")
     const auto result = coronan_cli::parse_commandline_arguments(
         {"program_name", "--start_date", "2019-01-01", "--end_date", "2020-01-01", "-c", "CHN"});
 
-    using namespace std::chrono;
     REQUIRE(std::holds_alternative<SuccessfullParse>(result));
     const auto& [country, start_date, end_date] = std::get<SuccessfullParse>(result);
     REQUIRE(country == "CHN");
     REQUIRE(start_date.has_value());
-    REQUIRE(start_date == std::chrono::year_month_day{2019y / January / 1d});
+    REQUIRE(start_date == year_month_day{2019_y / January / 1_d});
     REQUIRE(end_date.has_value());
-    REQUIRE(end_date == std::chrono::year_month_day{2020y / January / 1d});
+    REQUIRE(end_date == year_month_day{2020_y / January / 1_d});
   }
 }
 
