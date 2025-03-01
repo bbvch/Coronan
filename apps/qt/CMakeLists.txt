@@ -8,7 +8,7 @@ project(
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-option(DOWNLOAD_QT6 "Download Qt from https://github.com/qt/qt5.git" oFF)
+option(DOWNLOAD_QT6 "Download Qt from https://github.com/qt/qt5.git" OFF)
 
 if(DOWNLOAD_QT6)
     include(cmake/Qt.cmake)
@@ -24,7 +24,7 @@ else()
     set(CMAKE_AUTOUIC ON)
 
     find_package(
-        Qt6 6.4
+        Qt6
         COMPONENTS Charts Core
         REQUIRED
     )

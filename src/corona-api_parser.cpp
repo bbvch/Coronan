@@ -2,7 +2,9 @@
 
 #include <chrono>
 #include <cstdint>
+#include <ctime>
 #include <fmt/base.h>
+#include <iomanip>
 #include <optional>
 #include <rapidjson/allocators.h>
 #include <rapidjson/document.h>
@@ -69,6 +71,20 @@ Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
   return "";
 }
 
+std::chrono::year_month_day parse_date(std::string const& date_string)
+{
+  std::tm tm{};
+  std::istringstream iss{date_string};
+  iss >> std::get_time(&tm, "%Y-%m-%d");
+  if (iss.fail())
+  {
+    return {};
+  }
+  return std::chrono::year_month_day{std::chrono::year{tm.tm_year + 1900},
+                                     std::chrono::month{static_cast<unsigned>(tm.tm_mon + 1)},
+                                     std::chrono::day{static_cast<unsigned>(tm.tm_mday)}};
+}
+
 } // namespace
 
 std::optional<CovidData> parse_region_total(std::string const& json)
@@ -84,8 +100,7 @@ std::optional<CovidData> parse_region_total(std::string const& json)
   {
     auto covid_data = CovidData{};
     auto const covid_data_object = document["data"].GetObject();
-    std::istringstream date_iss{get_value<std::string>(covid_data_object, "date")};
-    if (not std::chrono::from_stream(date_iss, "%Y-%m-%d", covid_data.date))
+    if (covid_data.date = parse_date(get_value<std::string>(covid_data_object, "date")); not covid_data.date.ok())
     {
       throw std::runtime_error{"Failed to parse date."};
     }

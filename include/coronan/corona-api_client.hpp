@@ -8,6 +8,7 @@
 #include <Poco/Net/HTTPSClientSession.h>
 #include <chrono>
 #include <fmt/base.h>
+#include <fmt/chrono.h>
 #include <future>
 #include <string>
 #include <variant>
@@ -121,7 +122,8 @@ CountryData
 CoronaAPIClientType<ClientType>::request_country_data(std::string_view country_code,
                                                       std::optional<std::chrono::year_month_day> const& date) const
 {
-  auto const date_query_string = date.has_value() ? std::format("date={:%Y-%m-%d}&", date.value()) : std::string{""};
+  auto const date_query_string =
+      date.has_value() ? fmt::format("date={:%Y-%m-%d}&", std::chrono::sys_days(date.value())) : std::string{""};
   auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                  std::string{"iso="} + std::string{country_code};
   auto const http_response = ClientType::get(region_report_url);
@@ -179,15 +181,15 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string_vi
     dates_to_parse.emplace_back(days);
   }
 
-  std::ranges::for_each(dates_to_parse, [&](const auto& days) {
+  std::ranges::for_each(dates_to_parse, [&](const auto& dates) {
     using GetDataResult = std::variant<std::optional<CovidData> const, std::string const>;
     std::vector<std::future<GetDataResult>> response_results;
 
-    for (const auto& day : days)
+    for (const auto& day : dates)
     {
       const auto get_covid_data = [day, country_code]() -> GetDataResult {
         auto const date = std::chrono::year_month_day{day};
-        auto const date_query_string = std::format("date={:%Y-%m-%d}&", date);
+        auto const date_query_string = fmt::format("date={:%Y-%m-%d}&", std::chrono::sys_days(date));
         auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                        std::string{"iso="} + std::string{country_code};
 

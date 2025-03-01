@@ -257,7 +257,7 @@ SCENARIO("CoronaAPIClient retrieves country data for Switzerland on 2020-03-01",
     auto testee = coronan::CoronaAPIClientType<TestHTTPClient>{};
 
     using namespace std::chrono;
-    static constexpr auto date = std::chrono::year_month_day{2020y, std::chrono::March, 1d};
+    static constexpr std::chrono::year_month_day date = 2020y / March / 1d;
 
     WHEN("the http client returns an OK response status and a payload with no data for Switzerland")
     {
@@ -336,8 +336,8 @@ SCENARIO("CoronaAPIClient retrieves timeline country data for Switzerland", "[Co
     auto testee = coronan::CoronaAPIClientType<TestHTTPClient>{};
 
     using namespace std::chrono;
-    static constexpr auto start_date = std::chrono::year_month_day{2020y, std::chrono::March, 1d};
-    static constexpr auto end_date = std::chrono::year_month_day{2020y, std::chrono::March, 3d};
+    static constexpr std::chrono::year_month_day start_date = 2020y / March / 1d;
+    static constexpr std::chrono::year_month_day end_date = 2020y / March / 3d;
 
     WHEN("the client retrieves data from to 2020-03-01 until the 2020-03-03")
     {
