@@ -28,10 +28,10 @@ public:
   /**
    *  Return the exception message
    */
-  char const* what() const noexcept override;
+  [[nodiscard]] char const* what() const noexcept override;
 
 private:
-  std::string const msg{};
+  std::string const msg;
 };
 
 /**
@@ -50,21 +50,21 @@ public:
   /**
    * Return the HTTP status code
    */
-  Poco::Net::HTTPResponse::HTTPStatus status() const noexcept;
+  [[nodiscard]] Poco::Net::HTTPResponse::HTTPStatus status() const noexcept;
 
   /**
    * Return the HTTP reason phrase
    */
-  std::string const& reason() const noexcept;
+  [[nodiscard]] std::string const& reason() const noexcept;
 
   /**
    * Return the HTTP response body
    */
-  std::string const& response_body() const noexcept;
+  [[nodiscard]] std::string const& response_body() const noexcept;
 
 private:
-  Poco::Net::HTTPResponse response_{};
-  std::string response_body_{};
+  Poco::Net::HTTPResponse response_;
+  std::string response_body_;
 };
 
 /**
@@ -88,9 +88,9 @@ HTTPResponse HTTPClientType<SessionType, HTTPRequestType, HTTPResponseType>::get
     Poco::URI const uri{url};
     SessionType session(uri.getHost(), uri.getPort());
 
-    auto const path = std::invoke([uri]() {
-      auto const path_ = uri.getPathAndQuery();
-      return path_.empty() ? "/" : path_;
+    auto const path = std::invoke([&uri]() {
+      auto path_ = uri.getPathAndQuery();
+      return path_.empty() ? "/" : std::move(path_);
     });
 
     HTTPRequestType request{"GET", path, "HTTP/1.1"};
@@ -99,19 +99,19 @@ HTTPResponse HTTPClientType<SessionType, HTTPRequestType, HTTPResponseType>::get
     session.sendRequest(request);
     auto& response_stream = session.receiveResponse(response);
 
-    std::string const response_content = std::invoke([&response_stream]() {
+    std::string response_content = std::invoke([&response_stream]() {
       std::string content;
       Poco::StreamCopier::copyToString(response_stream, content);
       return content;
     });
 
-    return HTTPResponse{response, response_content};
+    return HTTPResponse{response, std::move(response_content)};
   }
   catch (std::exception const& ex)
   {
-    auto const exception_msg =
+    auto exception_msg =
         std::string{"Error fetching url \""} + url + std::string{"\".\n\n Exception occurred: "} + ex.what();
-    throw HTTPClientException{exception_msg};
+    throw HTTPClientException{std::move(exception_msg)};
   }
 }
 

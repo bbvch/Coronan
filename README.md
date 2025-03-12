@@ -2,7 +2,7 @@
 <summary>Project State</summary>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![version](https://img.shields.io/badge/version-v0.3.0-blue)
+![version](https://img.shields.io/badge/version-v1.0.0-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bbvch/Coronan)
 
 
@@ -39,17 +39,17 @@
 
 
 ### IMPORTANT NOTE
-
-___[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer. Therefore this application does not work properly anymore. An Alternative API must be looked for.___
+Co\[ro\]nan was written during the pandemic of the Corona Virus. The [The About Corona Covid-19 API](https://about-corona.net/documentation) used for the first version is no longer available. However with [COVID-19 Statistics API](https://covid-api.com/) an alternative was found. Unfortunately the [COVID-19 Statistics API](https://covid-api.com/api/) does have a different data structure, and retrieving data is much slower, because the API does not support timeline data, i.e. every data for specific date requires a GET. But at least the application works again. And the name didn't have to change.
 
 </details>
 
 # Documentation for Co\[ro\]nan
 
-Co\[ro\]nan is an example C++20 Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
-It reads the current data of Corona (Covid-19) cases for a country from the [The About Corona Covid-19 API](https://about-corona.net/documentation).
+Co\[ro\]nan is an example C++20 CLI and Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
+It reads the latest data of Corona (Covid-19) cases for a country from the [COVID-19 Statistics API](https://covid-api.com/).
 
-_The About Corona Covid-19_ provides statistics via REST API from The [World Health Organization Situation Reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), [Johns Hopkins CSSE](https://coronavirus.jhu.edu/map.html), [The U.S. Department of Health & Human Services](https://www.hhs.gov/), [The National Health Commission of the People’s Republic of China](http://en.nhc.gov.cn/), [The European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en), and [China CDC Weekly](http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm).
+
+_The COVID-19 Statistics API_ provides statistics via REST API from the [Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19).
 
 
 ![Screenshot of the qt application](docs/images/Screenshot-qt.png)
@@ -75,18 +75,19 @@ _The About Corona Covid-19_ provides statistics via REST API from The [World Hea
 
 This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
 * C++ 20 Standard
-  * [GCC](https://gcc.gnu.org/)
+  * [GCC](https://gcc.gnu.org/) _(>= gcc 12)_
   * [Clang](https://clang.llvm.org/)
   * Visual Studio 2022
 
 * [conan](https://conan.io/) package Manager
 
 * Libraries used:
-  * [Qt6](https://www.qt.io/)
+  * [Qt6](https://www.qt.io/) _(minimal version required: 6.4)_
   * [Poco](https://pocoproject.org/) Networking library
   * [RapidJSON](https://rapidjson.org/)
   * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
-  * [{fmt}](https://github.com/fmtlib/fmt) formatting library
+  * [{fmt}](https://github.com/fmtlib/fmt) formatting library _(std::print is C++23 and therefore not used yet)_
+  * [date](https://github.com/HowardHinnant/date) date and time library _(std::chrono::year_month_day is not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 

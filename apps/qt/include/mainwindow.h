@@ -8,6 +8,9 @@
 #include <QtWidgets/QWidget>
 #include <string>
 
+using date::year_month_day;
+// using std::chrono::year_month_day;
+
 QT_BEGIN_NAMESPACE
 class Ui_CoronanWidgetForm;
 QT_END_NAMESPACE
@@ -19,6 +22,7 @@ class CountryOverviewTablewModel;
 class CoronanWidget : public QWidget
 {
   Q_OBJECT
+
 public:
   explicit CoronanWidget(QWidget* parent = nullptr);
   ~CoronanWidget() override;
@@ -27,18 +31,20 @@ public:
   CoronanWidget(CoronanWidget&&) = delete;
   CoronanWidget& operator=(CoronanWidget&&) = delete;
 
-private Q_SLOTS:
-  void update_ui();
-
 private:
-  coronan::CountryData get_country_data(std::string_view country_code);
+  coronan::CountryData get_country_data(std::string const& country_code, year_month_day const& start_date,
+                                        year_month_day const& end_date);
   void populate_country_box();
+  void populate_date_boxes();
 
   CountryChartView* chartView = nullptr;
   Ui_CoronanWidgetForm* ui = nullptr;
 
-  CountryOverviewTablewModel overview_model{};
-  CountryDataModel country_data_model{};
+  CountryOverviewTablewModel overview_model;
+  CountryDataModel country_data_model;
+
+private Q_SLOTS:
+  void update_ui();
 };
 
 } // namespace coronan_ui

@@ -13,7 +13,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(
     Coronan
-    VERSION 0.3.0
+    VERSION 1.0.0
     DESCRIPTION "Conan example project showing Covid-19 cases."
     LANGUAGES CXX
 )
@@ -100,6 +100,9 @@ endif()
 # enable coverage if supported by compiler
 include(cmake/Coverage.cmake)
 enable_coverage(project_options)
+
+# configure files based on CMake configuration options
+add_subdirectory(configured_files)
 
 add_subdirectory(src)
 

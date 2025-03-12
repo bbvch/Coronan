@@ -29,6 +29,7 @@ set(QT_BUILD_TESTS OFF)
 set(QT_BUILD_DOCS OFF)
 
 set(QT_MODULES Core Widgets Charts)
+set(CMAKE_CXX_STANDARD 20)
 
 fetchcontent_declare(
     qt6

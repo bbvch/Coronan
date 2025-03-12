@@ -1,6 +1,11 @@
 #include "coronan/corona-api_parser.hpp"
 
+#include <chrono>
 #include <cstdint>
+#include <ctime>
+#include <date/date.h>
+#include <fmt/base.h>
+#include <iomanip>
 #include <optional>
 #include <rapidjson/allocators.h>
 #include <rapidjson/document.h>
@@ -8,6 +13,8 @@
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/reader.h>
 #include <vector>
+
+using namespace date;
 
 namespace coronan::api_parser {
 
@@ -67,97 +74,111 @@ Ret_T get_value(DOM_T const& json_dom_object, std::string const& name)
   return "";
 }
 
-constexpr auto parse_today_data = [](auto const& json_dom_object) {
-  CountryData::TodayData today{};
-  if (json_dom_object.HasMember("today"))
+year_month_day parse_date(std::string const& date_string)
+{
+  year_month_day ymd{};
+  std::istringstream iss{date_string};
+  iss >> parse("%Y-%m-%d", ymd);
+  if (iss.fail())
   {
-    auto const today_object = json_dom_object["today"].GetObject();
-    today.deaths = get_value<uint32_t>(today_object, "deaths");
-    today.confirmed = get_value<uint32_t>(today_object, "confirmed");
+    return {};
   }
-  return today;
-};
-
-constexpr auto parse_latest_data = [](auto const& json_dom_object) {
-  CountryData::LatestData latest{};
-  if (json_dom_object.HasMember("latest_data"))
-  {
-    auto const latest_data = json_dom_object["latest_data"].GetObject();
-    latest.deaths = get_value<uint32_t>(latest_data, "deaths");
-    latest.confirmed = get_value<uint32_t>(latest_data, "confirmed");
-    latest.recovered = get_value<uint32_t>(latest_data, "recovered");
-    latest.critical = get_value<uint32_t>(latest_data, "critical");
-    if (latest_data.HasMember("calculated"))
-    {
-      auto const calculated = latest_data["calculated"].GetObject();
-      latest.death_rate = get_value<double>(calculated, "death_rate");
-      latest.recovery_rate = get_value<double>(calculated, "recovery_rate");
-      latest.recovered_vs_death_ratio = get_value<double>(calculated, "recovered_vs_death_ratio");
-      latest.cases_per_million_population = get_value<uint32_t>(calculated, "cases_per_million_population");
-    }
-  }
-  return latest;
-};
-
-constexpr auto parse_timeline = [](auto const& json_dom_object) {
-  std::vector<CountryData::TimelineData> timeline;
-  if (json_dom_object.HasMember("timeline"))
-  {
-    for (auto const& data_point : json_dom_object["timeline"].GetArray())
-    {
-      CountryData::TimelineData timepoint;
-      timepoint.date = get_value<std::string>(data_point, "updated_at");
-      timepoint.deaths = get_value<uint32_t>(data_point, "deaths");
-      timepoint.confirmed = get_value<uint32_t>(data_point, "confirmed");
-      timepoint.recovered = get_value<uint32_t>(data_point, "recovered");
-      timepoint.active = get_value<uint32_t>(data_point, "active");
-      timepoint.new_confirmed = get_value<uint32_t>(data_point, "new_confirmed");
-      timepoint.new_recovered = get_value<uint32_t>(data_point, "new_recovered");
-      timepoint.new_deaths = get_value<uint32_t>(data_point, "new_deaths");
-      timeline.emplace_back(timepoint);
-    }
-  }
-  return timeline;
-};
+  return ymd;
+}
 
 } // namespace
 
-// cppcheck-suppress unusedFunction
-CountryData parse_country(std::string const& json)
+
+DateParseException::DateParseException(std::string exception_msg) : msg{std::move(exception_msg)}
+{
+}
+
+char const* DateParseException::what() const noexcept
+{
+  return msg.c_str();
+}
+
+
+
+std::optional<CovidData> parse_region_total(std::string const& json)
 {
   rapidjson::Document document;
-  document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str());
-  auto country_data = CountryData{};
+  if (document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str()).HasParseError())
+  {
+    fmt::print(stderr, "parse_region_total: JSON parse failure: {} ({})\n", static_cast<int>(document.GetParseError()),
+               document.GetErrorOffset());
+    return {};
+  }
+  if (document.HasMember("data") && document["data"].IsObject())
+  {
+    auto covid_data = CovidData{};
+    auto const covid_data_object = document["data"].GetObject();
+    covid_data.date = parse_date(get_value<std::string>(covid_data_object, "date"));
+    if (not covid_data.date.ok())
+    {
+      throw DateParseException{"Failed to parse date."};
+    }
+    covid_data.deaths = get_value<uint32_t>(covid_data_object, "deaths");
+    covid_data.confirmed = get_value<uint32_t>(covid_data_object, "confirmed");
+    covid_data.recovered = get_value<uint32_t>(covid_data_object, "recovered");
+    covid_data.active = get_value<uint32_t>(covid_data_object, "active");
+    covid_data.deaths_diff = get_value<int32_t>(covid_data_object, "deaths_diff");
+    covid_data.confirmed_diff = get_value<int32_t>(covid_data_object, "confirmed_diff");
+    covid_data.recovered_diff = get_value<int32_t>(covid_data_object, "recovered_diff");
+    covid_data.active_diff = get_value<int32_t>(covid_data_object, "active_diff");
+    covid_data.fatality_rate = get_value<double>(covid_data_object, "fatality_rate");
+    return covid_data;
+  }
+  return {};
+}
+
+RegionListObject parse_regions(std::string const& json)
+{
+  rapidjson::Document document;
+  if (document.Parse(json.c_str()).HasParseError())
+  {
+    fmt::print(stderr, "parse_regions: JSON parse error {} at position {}\n", static_cast<int>(document.GetParseError()),
+               document.GetErrorOffset());
+    return {};
+  }
+  auto region_list = RegionListObject{};
   if (document.HasMember("data"))
   {
-    auto const country_data_object = document["data"].GetObject();
-    country_data.info.name = get_value<std::string>(country_data_object, "name");
-    country_data.info.iso_code = get_value<std::string>(country_data_object, "code");
-    country_data.info.population = get_value<uint32_t>(country_data_object, "population");
-    country_data.today = parse_today_data(country_data_object);
-
-    auto const current_date = get_value<std::string>(country_data_object, "updated_at");
-    country_data.today.date = current_date;
-    country_data.latest = parse_latest_data(country_data_object);
-    country_data.latest.date = current_date;
-    country_data.timeline = parse_timeline(country_data_object);
+    for (auto const& region_data : document["data"].GetArray())
+    {
+      RegionInfo region;
+      region.name = get_value<std::string>(region_data, "name");
+      region.iso_code = get_value<std::string>(region_data, "iso");
+      region_list.emplace_back(region);
+    }
   }
-  return country_data;
+  return region_list;
 }
-// cppcheck-suppress unusedFunction
-CountryListObject parse_countries(std::string const& json)
+
+ProvinceListObject parse_provinces(std::string const& json)
 {
   rapidjson::Document document;
-  document.Parse(json.c_str());
-  auto country_list = CountryListObject{};
-  for (auto const& country_data : document["data"].GetArray())
+  if (document.Parse(json.c_str()).HasParseError())
   {
-    CountryInfo country;
-    country.name = get_value<std::string>(country_data, "name");
-    country.iso_code = get_value<std::string>(country_data, "code");
-    country_list.emplace_back(country);
+    fmt::print(stderr, "parse_provinces: JSON parse error {} at position {}\n", static_cast<int>(document.GetParseError()),
+               document.GetErrorOffset());
+    return {};
   }
-  return country_list;
+  auto province_list = ProvinceListObject{};
+  if (document.HasMember("data"))
+  {
+    for (auto const& province_data : document["data"].GetArray())
+    {
+      ProvinceInfo province;
+      province.country_name = get_value<std::string>(province_data, "name");
+      province.country_iso_code = get_value<std::string>(province_data, "iso");
+      province.name = get_value<std::string>(province_data, "province");
+      province.latitude = get_value<std::string>(province_data, "lat");
+      province.longitude = get_value<std::string>(province_data, "long");
+      province_list.emplace_back(province);
+    }
+  }
+  return province_list;
 }
 
 } // namespace coronan::api_parser

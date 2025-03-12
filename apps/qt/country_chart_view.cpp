@@ -1,32 +1,33 @@
 #include "country_chart_view.hpp"
 
-#include "coronan/corona-api_parser.hpp"
 #include "country_data_model.hpp"
 
 #include <QDateTime>
 #include <QDateTimeAxis>
 #include <QLatin1String>
 #include <QLineSeries>
+#include <QLogValueAxis>
 #include <QString>
 #include <QValueAxis>
+#include <qglobal.h>
 
 namespace {
-constexpr auto create_datetime_axis = []() {
+inline constexpr auto create_datetime_axis = []() {
   auto* const x_axis = new QDateTimeAxis{};
-  x_axis->setFormat(QStringLiteral("dd/MM  "));
+  x_axis->setFormat(QStringLiteral("yyyy-MM-dd  "));
   x_axis->setTitleText(QStringLiteral("Date"));
   return x_axis;
 };
 
-constexpr auto create_value_axis = [](qreal max) {
+inline constexpr auto create_value_axis = [](quint32 min, quint32 max) {
   auto* const y_axis = new QValueAxis{};
   y_axis->setTitleText(QStringLiteral("Cases"));
   y_axis->setLabelFormat(QStringLiteral("%i  "));
-  y_axis->setRange(0, max);
+  y_axis->setRange(min, max);
   return y_axis;
 };
 
-constexpr auto create_chart_title = [](auto const& country_name) {
+inline constexpr auto create_chart_title = [](auto const& country_name) {
   return QStringLiteral("Corona (Covid-19) Cases in ").append(country_name);
 };
 
@@ -39,7 +40,7 @@ CountryChartView::CountryChartView(CountryDataModel* const data_model, QWidget* 
   auto* const chart = new QChart{};
   chart->setTitle(create_chart_title(data_model->country()));
   auto* const x_axis = create_datetime_axis();
-  auto* const y_axis = create_value_axis(data_model->cases_confirmed());
+  auto* const y_axis = create_value_axis(data_model->min_value(), data_model->max_value());
 
   chart->addAxis(x_axis, Qt::AlignBottom);
   chart->addAxis(y_axis, Qt::AlignLeft);
@@ -47,7 +48,7 @@ CountryChartView::CountryChartView(CountryDataModel* const data_model, QWidget* 
   chart->legend()->setAlignment(Qt::AlignTop);
   chart->legend()->show();
 
-  const auto create_series = [&](int column_index) {
+  auto const create_series = [&](int column_index) {
     auto* const series = new QLineSeries{};
     series->setName(data_model->headerData(column_index).toString());
 
@@ -73,7 +74,8 @@ CountryChartView::CountryChartView(CountryDataModel* const data_model, QWidget* 
 void CountryChartView::update_ui(CountryDataModel const& data_model)
 {
   this->chart()->setTitle(create_chart_title(data_model.country()));
-  this->chart()->axes(Qt::Vertical).at(0)->setMax(data_model.cases_confirmed());
+  this->chart()->axes(Qt::Vertical).at(0)->setRange(data_model.min_value(), data_model.max_value());
+  this->chart()->axes(Qt::Horizontal).at(0)->setRange(data_model.min_date(), data_model.max_date());
 }
 
 } // namespace coronan_ui
