@@ -1,10 +1,10 @@
 Documentation for Co\[ro\]nan
 =====================================
 
-Co\[ro\]nan is an example C++20 Qt project using `conan <https://conan.io/>`_ and `CMake <https://cmake.org/>`_.
-It reads the current data of Corona (Covid-19) cases for a country from the `The About Corona Covid-19 API <https://about-corona.net/documentation>`_.
+Co\[ro\]nan is an example C++20 CLI and Qt project using `conan <https://conan.io/>`_ and `CMake <https://cmake.org/>`_.
+It reads the current data of Corona (Covid-19) cases for a country from the `COVID-19 Statistics API <hhttps://covid-api.com/>`_.
 
-*The About Corona Covid-19* provides statistics via REST API from The `World Health Organization Situation Reports <https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports>`_,  `Johns Hopkins CSSE <https://coronavirus.jhu.edu/map.html>`_, `The U.S. Department of Health & Human Services <https://www.hhs.gov/>`_, `The National Health Commission of the People’s Republic of China <http://en.nhc.gov.cn/>`_, `The European Centre for Disease Prevention and Control <https://www.ecdc.europa.eu/en>`_, and `China CDC Weekly <http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm>`_.
+*The COVID-19 Statistics API* provides statistics via REST API from the `Johns Hopkins CSSE <https://github.com/CSSEGISandData/COVID-19>`_.
 
 .. image:: images/Screenshot-qt.png
   :alt: Screenshot
@@ -12,7 +12,7 @@ It reads the current data of Corona (Covid-19) cases for a country from the `The
 Development
 -----------
 
-To build the project you need python and a recent `conan version <https://conan.io/>`_, a recent version of `CMake <https://cmake.org/>`_ (>= 3.22), a modern C++ compiler (C++20 support) and `Qt 6 <https://www.qt.io/>`_ with `QtCharts <https://doc.qt.io/qt-6/qtcharts-index.html>`_.
+To build the project you need python and a recent `conan version <https://conan.io/>`_, a recent version of `CMake <https://cmake.org/>`_ (>= 3.23), a modern C++ compiler (C++20 support) and `Qt 6 <https://www.qt.io/>`_ with `QtCharts <https://doc.qt.io/qt-6/qtcharts-index.html>`_.
 
 To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:
 

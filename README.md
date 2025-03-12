@@ -39,17 +39,17 @@
 
 
 ### IMPORTANT NOTE
-Co\[ro\]nan was written during the pandemic of the Corona Virus. The API (__[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer) used for first version is no longer available. However an alternative was found. Unfortunately does not have the same data quality, and retrieving data is much slower, becuase the API does not support timeline data, i.e. every data fpor specific date requires a GET. But at least the application works again. And the name didn't have to change.
+Co\[ro\]nan was written during the pandemic of the Corona Virus. The API (__[The About Corona Covid-19 API](https://about-corona.net/documentation) ist not available any longer) used for first version is no longer available. However an alternative was found. Unfortunately does not have the same data quality, and retrieving data is much slower, becuase the API does not support timeline data, i.e. every data for specific date requires a GET. But at least the application works again. And the name didn't have to change.
 
 </details>
 
 # Documentation for Co\[ro\]nan
 
-Co\[ro\]nan is an example C++20 Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
+Co\[ro\]nan is an example C++20 CLI and Qt project using [conan](https://conan.io/) and [CMake](https://cmake.org/).
 It reads the latest data of Corona (Covid-19) cases for a country from the [COVID-19 Statistics API](https://covid-api.com/).
 
 
-_COVID-19 Statistics API_ provides statistics via REST API from The [Johns Hopkins CSSE](hhttps://github.com/CSSEGISandData/COVID-19),
+_The COVID-19 Statistics API_ provides statistics via REST API from the [Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19).
 
 
 ![Screenshot of the qt application](docs/images/Screenshot-qt.png)
@@ -86,8 +86,8 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * [Poco](https://pocoproject.org/) Networking library
   * [RapidJSON](https://rapidjson.org/)
   * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
-  * [{fmt}](https://github.com/fmtlib/fmt) formatting library _(std::print is C++23 and therfore not used yet)_
-  * [date](https://github.com/HowardHinnant/date) date and time library _(std::chrono::year_month_day and simimmilar are not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_
+  * [{fmt}](https://github.com/fmtlib/fmt) formatting library _(std::print is C++23 and therefore not used yet)_
+  * [date](https://github.com/HowardHinnant/date) date and time library _(std::chrono::year_month_day is not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 
