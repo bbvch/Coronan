@@ -93,7 +93,7 @@ std::optional<CovidData> parse_region_total(std::string const& json)
   rapidjson::Document document;
   if (document.Parse<rapidjson::kParseFullPrecisionFlag>(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_region_total: JSON parse error: {} ({})\n", static_cast<int>(document.GetParseError()),
+    fmt::print(stderr, "parse_region_total: JSON parse failure: {} ({})\n", static_cast<int>(document.GetParseError()),
                document.GetErrorOffset());
     return {};
   }
@@ -124,7 +124,7 @@ RegionListObject parse_regions(std::string const& json)
   rapidjson::Document document;
   if (document.Parse(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_regions: JSON parse error: {} ({})\n", static_cast<int>(document.GetParseError()),
+    fmt::print(stderr, "parse_regions: JSON parse error {} at position {}\n", static_cast<int>(document.GetParseError()),
                document.GetErrorOffset());
     return {};
   }
@@ -147,7 +147,7 @@ ProvinceListObject parse_provinces(std::string const& json)
   rapidjson::Document document;
   if (document.Parse(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_provinces: JSON parse error: {} ({})\n", static_cast<int>(document.GetParseError()),
+    fmt::print(stderr, "parse_provinces: JSON parse error {} at position {}\n", static_cast<int>(document.GetParseError()),
                document.GetErrorOffset());
     return {};
   }
