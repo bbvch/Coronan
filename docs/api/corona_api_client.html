@@ -48,9 +48,11 @@
 <li class="toctree-l2"><a class="reference internal" href="http_client.html#ssl-client">SSL Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="corona_api_parser.html">Corona API JSON Parser</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Corona API client</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7coronan19CoronaAPIClientTypeE"><code class="docutils literal notranslate"><span class="pre">CoronaAPIClientType</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv"><code class="docutils literal notranslate"><span class="pre">CoronaAPIClientType::request_countries()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"><code class="docutils literal notranslate"><span class="pre">CoronaAPIClientType::request_country_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7coronan19CoronaAPIClientTypeE"><code class="docutils literal notranslate"><span class="pre">coronan::CoronaAPIClientType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType15request_regionsEv"><code class="docutils literal notranslate"><span class="pre">request_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_provincesENSt11string_viewE"><code class="docutils literal notranslate"><span class="pre">request_provinces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERKNSt8optionalI14year_month_dayEE"><code class="docutils literal notranslate"><span class="pre">request_country_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERK14year_month_dayRK14year_month_day"><code class="docutils literal notranslate"><span class="pre">request_country_data()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -89,12 +91,12 @@
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4I0EN7coronan19CoronaAPIClientTypeE">
 <span id="_CPPv3I0EN7coronan19CoronaAPIClientTypeE"></span><span id="_CPPv2I0EN7coronan19CoronaAPIClientTypeE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClientType</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classcoronan_1_1CoronaAPIClientType"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CoronaAPIClientType</span></span></span><a class="headerlink" href="#_CPPv4I0EN7coronan19CoronaAPIClientTypeE" title="Link to this definition"></a><br /></dt>
-<dd><p>A Client for retrieving data from <a class="reference external" href="https://corona-api.com">https://corona-api.com</a>. </p>
+<dd><p>A Client for retrieving data from <a class="reference external" href="https://covid-api.com">https://covid-api.com</a>. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv">
-<span id="_CPPv3NK7coronan19CoronaAPIClientType17request_countriesEv"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType17request_countriesEv"></span><span id="coronan::CoronaAPIClientType::request_countriesC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1ad0b2d5b06f838c9c40f94da798f951ef"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryInfoE" title="coronan::CountryInfo"><span class="n"><span class="pre">CountryInfo</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_countries</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_countriesEv" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType15request_regionsEv">
+<span id="_CPPv3NK7coronan19CoronaAPIClientType15request_regionsEv"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType15request_regionsEv"></span><span id="coronan::CoronaAPIClientType::request_regionsC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1ac7dd1e76c8a0802545b4f917d8ebca21"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">RegionInfo</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_regions</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType15request_regionsEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Get the list of available countries </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -104,15 +106,50 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE">
-<span id="_CPPv3NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE"></span><span id="coronan::CoronaAPIClientType::request_country_data__std::string_viewC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1a44f4813cdc0216f69c5031f32a29655b"></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryDataE" title="coronan::CountryData"><span class="n"><span class="pre">CountryData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_country_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">country_code</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataENSt11string_viewE" title="Link to this definition"></a><br /></dt>
-<dd><p>Get the covid-19 case data for a country </p>
+<dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType17request_provincesENSt11string_viewE">
+<span id="_CPPv3NK7coronan19CoronaAPIClientType17request_provincesENSt11string_viewE"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType17request_provincesENSt11string_viewE"></span><span id="coronan::CoronaAPIClientType::request_provinces__std::string_viewC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1a5fe54b0477ac4a2129021f69cd63b769"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ProvinceInfo</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_provinces</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iso_code</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType17request_provincesENSt11string_viewE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the list of available provinces of a region </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>country_code</strong> – ISO 3166-1 alpha-2 Country Code </p>
+<dd class="field-odd"><p><strong>iso_code</strong> – ISO Country Code of the region </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Covid-19 case data for country <code class="docutils literal notranslate"><span class="pre">country_code</span></code></p>
+<dd class="field-even"><p>List of available provinces with Covid-19 case data </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERKNSt8optionalI14year_month_dayEE">
+<span id="_CPPv3NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERKNSt8optionalI14year_month_dayEE"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERKNSt8optionalI14year_month_dayEE"></span><span id="coronan::CoronaAPIClientType::request_country_data__ssCR.std::optional:year_month_day:CRC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1acbcf644fc367c9151dcce2d517bc0c85"></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryDataE" title="coronan::CountryData"><span class="n"><span class="pre">CountryData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_country_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">country_code</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">year_month_day</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">date</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERKNSt8optionalI14year_month_dayEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the covid-19 case data for a country. latest or for a specific date </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country_code</strong> – Country Code </p></li>
+<li><p><strong>date</strong> – date, optional, if empty the latest data is returned </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Covid-19 case data for country <code class="docutils literal notranslate"><span class="pre">country_code</span></code> on date <code class="docutils literal notranslate"><span class="pre">date</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERK14year_month_dayRK14year_month_day">
+<span id="_CPPv3NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERK14year_month_dayRK14year_month_day"></span><span id="_CPPv2NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERK14year_month_dayRK14year_month_day"></span><span id="coronan::CoronaAPIClientType::request_country_data__ssCR.year_month_dayCR.year_month_dayCRC"></span><span class="target" id="classcoronan_1_1CoronaAPIClientType_1a378fa2281162d6b5d079fb961e754c30"></span><a class="reference internal" href="corona_api_parser.html#_CPPv4N7coronan11CountryDataE" title="coronan::CountryData"><span class="n"><span class="pre">CountryData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_country_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">country_code</span></span>, <span class="n"><span class="pre">year_month_day</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start_date</span></span>, <span class="n"><span class="pre">year_month_day</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">end_date</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7coronan19CoronaAPIClientType20request_country_dataERKNSt6stringERK14year_month_dayRK14year_month_day" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the covid-19 case data for a specific date range </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country_code</strong> – Country Code </p></li>
+<li><p><strong>start_date</strong> – start_date </p></li>
+<li><p><strong>end_date</strong> – end date </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Covid-19 case data from <code class="docutils literal notranslate"><span class="pre">start_date</span></code> to <code class="docutils literal notranslate"><span class="pre">end_date</span></code> for country <code class="docutils literal notranslate"><span class="pre">country_code</span></code></p>
 </dd>
 </dl>
 </dd></dl>

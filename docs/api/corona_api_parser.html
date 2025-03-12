@@ -49,12 +49,11 @@
 <li class="toctree-l2"><a class="reference internal" href="http_client.html#ssl-client">SSL Client</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Corona API JSON Parser</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-structs">Data Structs</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7coronan11CountryInfoE"><code class="docutils literal notranslate"><span class="pre">CountryInfo</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7coronan11CountryDataE"><code class="docutils literal notranslate"><span class="pre">CountryData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7coronan11CountryDataE"><code class="docutils literal notranslate"><span class="pre">coronan::CountryData</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#parser">Parser</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7coronan10api_parserE"><code class="docutils literal notranslate"><span class="pre">api_parser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7coronan10api_parserE"><code class="docutils literal notranslate"><span class="pre">coronan::api_parser</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -93,33 +92,10 @@
 <span id="api-coronan-api-parser"></span><h1>Corona API JSON Parser<a class="headerlink" href="#corona-api-json-parser" title="Link to this heading"></a></h1>
 <section id="data-structs">
 <h2>Data Structs<a class="headerlink" href="#data-structs" title="Link to this heading"></a></h2>
-<dl class="cpp struct">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryInfoE">
-<span id="_CPPv3N7coronan11CountryInfoE"></span><span id="_CPPv2N7coronan11CountryInfoE"></span><span id="coronan::CountryInfo"></span><span class="target" id="structcoronan_1_1CountryInfo"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CountryInfo</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryInfoE" title="Link to this definition"></a><br /></dt>
-<dd><p>Holds general country information </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryInfo4nameE">
-<span id="_CPPv3N7coronan11CountryInfo4nameE"></span><span id="_CPPv2N7coronan11CountryInfo4nameE"></span><span id="coronan::CountryInfo::name__ss"></span><span class="target" id="structcoronan_1_1CountryInfo_1a31140bd3d00867c1e44510d2bff37450"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryInfo4nameE" title="Link to this definition"></a><br /></dt>
-<dd><p>Country name </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryInfo8iso_codeE">
-<span id="_CPPv3N7coronan11CountryInfo8iso_codeE"></span><span id="_CPPv2N7coronan11CountryInfo8iso_codeE"></span><span id="coronan::CountryInfo::iso_code__ss"></span><span class="target" id="structcoronan_1_1CountryInfo_1ab9b44585ce121968622698f8b495aa59"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">iso_code</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryInfo8iso_codeE" title="Link to this definition"></a><br /></dt>
-<dd><p>ISO 3166-1 alpha-2 Country Code , e.g. ch </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryInfo10populationE">
-<span id="_CPPv3N7coronan11CountryInfo10populationE"></span><span id="_CPPv2N7coronan11CountryInfo10populationE"></span><span id="coronan::CountryInfo::population__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryInfo_1a68101b07dff0b1d1f67c6eaf64602d65"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">population</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryInfo10populationE" title="Link to this definition"></a><br /></dt>
-<dd><p>Country population </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenstruct: Cannot find class “coronan::CountryInfo” in doxygen xml output for project “Coronan” from directory: /home/runner/work/Coronan/Coronan/build/docs/xml</p>
 </div>
-</dd></dl>
-
 <dl class="cpp struct">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryDataE">
 <span id="_CPPv3N7coronan11CountryDataE"></span><span id="_CPPv2N7coronan11CountryDataE"></span><span id="coronan::CountryData"></span><span class="target" id="structcoronan_1_1CountryData"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CountryData</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryDataE" title="Link to this definition"></a><br /></dt>
@@ -128,176 +104,23 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData4infoE">
-<span id="_CPPv3N7coronan11CountryData4infoE"></span><span id="_CPPv2N7coronan11CountryData4infoE"></span><span id="coronan::CountryData::info__CountryInfo"></span><span class="target" id="structcoronan_1_1CountryData_1a9b75aa9170f38e00c69eee76d89185c7"></span><a class="reference internal" href="#_CPPv4N7coronan11CountryInfoE" title="coronan::CountryInfo"><span class="n"><span class="pre">CountryInfo</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">info</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData4infoE" title="Link to this definition"></a><br /></dt>
-<dd><p>country information (name, code, population) </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData5todayE">
-<span id="_CPPv3N7coronan11CountryData5todayE"></span><span id="_CPPv2N7coronan11CountryData5todayE"></span><span id="coronan::CountryData::today__TodayData"></span><span class="target" id="structcoronan_1_1CountryData_1adbf185ed647d11712d226d7b165a081f"></span><a class="reference internal" href="#_CPPv4N7coronan11CountryData9TodayDataE" title="coronan::CountryData::TodayData"><span class="n"><span class="pre">TodayData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">today</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData5todayE" title="Link to this definition"></a><br /></dt>
-<dd><p>Today data when retrieved. New cases of latest date </p>
+<span id="_CPPv3N7coronan11CountryData4infoE"></span><span id="_CPPv2N7coronan11CountryData4infoE"></span><span id="coronan::CountryData::info__RegionInfo"></span><span class="target" id="structcoronan_1_1CountryData_1ac159749deafb73f1792a0c8792037a80"></span><span class="n"><span class="pre">RegionInfo</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">info</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData4infoE" title="Link to this definition"></a><br /></dt>
+<dd><p>region information (name, code, location) </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData6latestE">
-<span id="_CPPv3N7coronan11CountryData6latestE"></span><span id="_CPPv2N7coronan11CountryData6latestE"></span><span id="coronan::CountryData::latest__LatestData"></span><span class="target" id="structcoronan_1_1CountryData_1ae1b6760a2ff47a333a65942f7e99c62b"></span><a class="reference internal" href="#_CPPv4N7coronan11CountryData10LatestDataE" title="coronan::CountryData::LatestData"><span class="n"><span class="pre">LatestData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">latest</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData6latestE" title="Link to this definition"></a><br /></dt>
-<dd><p>Lates actual cases </p>
+<span id="_CPPv3N7coronan11CountryData6latestE"></span><span id="_CPPv2N7coronan11CountryData6latestE"></span><span id="coronan::CountryData::latest__CovidData"></span><span class="target" id="structcoronan_1_1CountryData_1ab0d817b94b7ac8f3d238da79f7b85054"></span><span class="n"><span class="pre">CovidData</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">latest</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData6latestE" title="Link to this definition"></a><br /></dt>
+<dd><p>Holds the latest available covid-19 case data of the country Lates actual cases </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData8timelineE">
-<span id="_CPPv3N7coronan11CountryData8timelineE"></span><span id="_CPPv2N7coronan11CountryData8timelineE"></span><span id="coronan::CountryData::timeline__std::vector:TimelineData:"></span><span class="target" id="structcoronan_1_1CountryData_1ad835f07c3471cdde5db8ee7c5dd7b70c"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N7coronan11CountryData12TimelineDataE" title="coronan::CountryData::TimelineData"><span class="n"><span class="pre">TimelineData</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">timeline</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData8timelineE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N7coronan11CountryData8timelineE"></span><span id="_CPPv2N7coronan11CountryData8timelineE"></span><span id="coronan::CountryData::timeline__std::vector:CovidData:"></span><span class="target" id="structcoronan_1_1CountryData_1a5695b8743c5e54a254a69548124f8b80"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">CovidData</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">timeline</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData8timelineE" title="Link to this definition"></a><br /></dt>
 <dd><p>Timeline data (list of daily data) </p>
 </dd></dl>
 
 </div>
-<dl class="cpp struct">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestDataE">
-<span id="_CPPv3N7coronan11CountryData10LatestDataE"></span><span id="_CPPv2N7coronan11CountryData10LatestDataE"></span><span id="coronan::CountryData::LatestData"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LatestData</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestDataE" title="Link to this definition"></a><br /></dt>
-<dd><p>Holds the latest available covid-19 case data of the country </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData4dateE">
-<span id="_CPPv3N7coronan11CountryData10LatestData4dateE"></span><span id="_CPPv2N7coronan11CountryData10LatestData4dateE"></span><span id="coronan::CountryData::LatestData::date__ss"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1ab339fa63ed216ef67b0fe533bd24d72b"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">date</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData4dateE" title="Link to this definition"></a><br /></dt>
-<dd><p>iso date string (last updated) </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData6deathsE">
-<span id="_CPPv3N7coronan11CountryData10LatestData6deathsE"></span><span id="_CPPv2N7coronan11CountryData10LatestData6deathsE"></span><span id="coronan::CountryData::LatestData::deaths__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1aaf0660e97bb2991d22c7027ea6e85834"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deaths</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData6deathsE" title="Link to this definition"></a><br /></dt>
-<dd><p>latest number of deaths </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData9confirmedE">
-<span id="_CPPv3N7coronan11CountryData10LatestData9confirmedE"></span><span id="_CPPv2N7coronan11CountryData10LatestData9confirmedE"></span><span id="coronan::CountryData::LatestData::confirmed__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a863d25cb7188957986adcb109a0de827"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">confirmed</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData9confirmedE" title="Link to this definition"></a><br /></dt>
-<dd><p>latest number of confirmed cases </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData9recoveredE">
-<span id="_CPPv3N7coronan11CountryData10LatestData9recoveredE"></span><span id="_CPPv2N7coronan11CountryData10LatestData9recoveredE"></span><span id="coronan::CountryData::LatestData::recovered__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a931bedc45212607617e197738bfc42f3"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">recovered</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData9recoveredE" title="Link to this definition"></a><br /></dt>
-<dd><p>latest number of recovered cases </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData8criticalE">
-<span id="_CPPv3N7coronan11CountryData10LatestData8criticalE"></span><span id="_CPPv2N7coronan11CountryData10LatestData8criticalE"></span><span id="coronan::CountryData::LatestData::critical__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a866b2cbcef2657fb48d8f779c64e45e9"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">critical</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData8criticalE" title="Link to this definition"></a><br /></dt>
-<dd><p>latest number of critical cases </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData10death_rateE">
-<span id="_CPPv3N7coronan11CountryData10LatestData10death_rateE"></span><span id="_CPPv2N7coronan11CountryData10LatestData10death_rateE"></span><span id="coronan::CountryData::LatestData::death_rate__std::optional:double:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a9ef6a7c5db9524fa7b488c8e912393bd"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">death_rate</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData10death_rateE" title="Link to this definition"></a><br /></dt>
-<dd><p>calculated death rate </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData13recovery_rateE">
-<span id="_CPPv3N7coronan11CountryData10LatestData13recovery_rateE"></span><span id="_CPPv2N7coronan11CountryData10LatestData13recovery_rateE"></span><span id="coronan::CountryData::LatestData::recovery_rate__std::optional:double:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a2552a3bed1df68c0fd919d4cf1dde40c"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">recovery_rate</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData13recovery_rateE" title="Link to this definition"></a><br /></dt>
-<dd><p>calculated recovery rate </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData24recovered_vs_death_ratioE">
-<span id="_CPPv3N7coronan11CountryData10LatestData24recovered_vs_death_ratioE"></span><span id="_CPPv2N7coronan11CountryData10LatestData24recovered_vs_death_ratioE"></span><span id="coronan::CountryData::LatestData::recovered_vs_death_ratio__std::optional:double:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a123a7a85686dda45416c7d9942eb35b8"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">recovered_vs_death_ratio</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData24recovered_vs_death_ratioE" title="Link to this definition"></a><br /></dt>
-<dd><p>calculated recovered vs death rate </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData10LatestData28cases_per_million_populationE">
-<span id="_CPPv3N7coronan11CountryData10LatestData28cases_per_million_populationE"></span><span id="_CPPv2N7coronan11CountryData10LatestData28cases_per_million_populationE"></span><span id="coronan::CountryData::LatestData::cases_per_million_population__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1LatestData_1a6d32ac30bc02702c6d2ef83ee5ae0609"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cases_per_million_population</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData10LatestData28cases_per_million_populationE" title="Link to this definition"></a><br /></dt>
-<dd><p>calculated cases per millions of the population </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="cpp struct">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineDataE">
-<span id="_CPPv3N7coronan11CountryData12TimelineDataE"></span><span id="_CPPv2N7coronan11CountryData12TimelineDataE"></span><span id="coronan::CountryData::TimelineData"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TimelineData</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineDataE" title="Link to this definition"></a><br /></dt>
-<dd><p>Holds the the covid-19 case data of the country for a specific date/time </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData4dateE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData4dateE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData4dateE"></span><span id="coronan::CountryData::TimelineData::date__ss"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1afa7f30e94f10766fb1a933a99ff487b6"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">date</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData4dateE" title="Link to this definition"></a><br /></dt>
-<dd><p>iso date string </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData6deathsE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData6deathsE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData6deathsE"></span><span id="coronan::CountryData::TimelineData::deaths__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1a1ccc035b1e87b55f63c9d7458b45a4f4"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deaths</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData6deathsE" title="Link to this definition"></a><br /></dt>
-<dd><p>number of deaths </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData9confirmedE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData9confirmedE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData9confirmedE"></span><span id="coronan::CountryData::TimelineData::confirmed__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1a85e937446a3384546f5b12a0bc8c38ea"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">confirmed</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData9confirmedE" title="Link to this definition"></a><br /></dt>
-<dd><p>number of confirmed cases </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData6activeE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData6activeE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData6activeE"></span><span id="coronan::CountryData::TimelineData::active__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1aaa20ba8caf4974ecd59ea426259544a1"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">active</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData6activeE" title="Link to this definition"></a><br /></dt>
-<dd><p>number of current covid-19 cases </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData9recoveredE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData9recoveredE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData9recoveredE"></span><span id="coronan::CountryData::TimelineData::recovered__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1a657989860911eefd3c2cf614d30c545f"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">recovered</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData9recoveredE" title="Link to this definition"></a><br /></dt>
-<dd><p>number of recovered cases </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData10new_deathsE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData10new_deathsE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData10new_deathsE"></span><span id="coronan::CountryData::TimelineData::new_deaths__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1a8fbe9edebc783649ce95b63390a5f275"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">new_deaths</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData10new_deathsE" title="Link to this definition"></a><br /></dt>
-<dd><p>new death since last time data </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData13new_confirmedE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData13new_confirmedE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData13new_confirmedE"></span><span id="coronan::CountryData::TimelineData::new_confirmed__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1a038308904a1e0919b162a7dfcfffa1b0"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">new_confirmed</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData13new_confirmedE" title="Link to this definition"></a><br /></dt>
-<dd><p>new confirmed cases since last time data </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData12TimelineData13new_recoveredE">
-<span id="_CPPv3N7coronan11CountryData12TimelineData13new_recoveredE"></span><span id="_CPPv2N7coronan11CountryData12TimelineData13new_recoveredE"></span><span id="coronan::CountryData::TimelineData::new_recovered__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TimelineData_1a5a39976f2e50006ee047c4a9e39f06b3"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">new_recovered</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData12TimelineData13new_recoveredE" title="Link to this definition"></a><br /></dt>
-<dd><p>new recovered cases since last time data </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="cpp struct">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData9TodayDataE">
-<span id="_CPPv3N7coronan11CountryData9TodayDataE"></span><span id="_CPPv2N7coronan11CountryData9TodayDataE"></span><span id="coronan::CountryData::TodayData"></span><span class="target" id="structcoronan_1_1CountryData_1_1TodayData"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TodayData</span></span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData9TodayDataE" title="Link to this definition"></a><br /></dt>
-<dd><p>Holds the available covid-19 case data of the country for today </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData9TodayData4dateE">
-<span id="_CPPv3N7coronan11CountryData9TodayData4dateE"></span><span id="_CPPv2N7coronan11CountryData9TodayData4dateE"></span><span id="coronan::CountryData::TodayData::date__ss"></span><span class="target" id="structcoronan_1_1CountryData_1_1TodayData_1a81af9f3ec9ae669f5de739ace5a44967"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">date</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData9TodayData4dateE" title="Link to this definition"></a><br /></dt>
-<dd><p>iso date string </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData9TodayData6deathsE">
-<span id="_CPPv3N7coronan11CountryData9TodayData6deathsE"></span><span id="_CPPv2N7coronan11CountryData9TodayData6deathsE"></span><span id="coronan::CountryData::TodayData::deaths__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TodayData_1a3489458060f61c49781e585611075df7"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deaths</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData9TodayData6deathsE" title="Link to this definition"></a><br /></dt>
-<dd><p>todays death cased </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan11CountryData9TodayData9confirmedE">
-<span id="_CPPv3N7coronan11CountryData9TodayData9confirmedE"></span><span id="_CPPv2N7coronan11CountryData9TodayData9confirmedE"></span><span id="coronan::CountryData::TodayData::confirmed__std::optional:uint32_t:"></span><span class="target" id="structcoronan_1_1CountryData_1_1TodayData_1ab210220c2bb2822780c4ecbbc831cae7"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">confirmed</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N7coronan11CountryData9TodayData9confirmedE" title="Link to this definition"></a><br /></dt>
-<dd><p>todays confirmed cases </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -309,12 +132,12 @@
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser13parse_countryERKNSt6stringE">
-<span id="_CPPv3N7coronan10api_parser13parse_countryERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser13parse_countryERKNSt6stringE"></span><span id="coronan::api_parser::parse_country__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1aa67cfb1a38338a211ad29e73dd433be7"></span><a class="reference internal" href="#_CPPv4N7coronan11CountryDataE" title="coronan::CountryData"><span class="n"><span class="pre">CountryData</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_country</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser13parse_countryERKNSt6stringE" title="Link to this definition"></a><br /></dt>
-<dd><p>Parse a json string for country data. </p>
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18parse_region_totalERKNSt6stringE">
+<span id="_CPPv3N7coronan10api_parser18parse_region_totalERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser18parse_region_totalERKNSt6stringE"></span><span id="coronan::api_parser::parse_region_total__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1a0e2d0e662d422162c99697692977898d"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">CovidData</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_region_total</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18parse_region_totalERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Parse a json string for region total data </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://about-corona.net/documentation">https://about-corona.net/documentation</a></p>
+<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://covid-api.com/api/">https://covid-api.com/api/</a></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Parsed Covid-19 case data </p>
@@ -323,20 +146,87 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser15parse_countriesERKNSt6stringE">
-<span id="_CPPv3N7coronan10api_parser15parse_countriesERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser15parse_countriesERKNSt6stringE"></span><span id="coronan::api_parser::parse_countries__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1aa5b270b17fb8970703aa53e4af9ea679"></span><span class="n"><span class="pre">CountryListObject</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_countries</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser15parse_countriesERKNSt6stringE" title="Link to this definition"></a><br /></dt>
-<dd><p>Parse a json string for a list of country information </p>
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser13parse_regionsERKNSt6stringE">
+<span id="_CPPv3N7coronan10api_parser13parse_regionsERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser13parse_regionsERKNSt6stringE"></span><span id="coronan::api_parser::parse_regions__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1aa5aa5a91384e1f431f80417aeab17b09"></span><span class="n"><span class="pre">RegionListObject</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_regions</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser13parse_regionsERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Parse a json string for a list of region information </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://about-corona.net/documentation">https://about-corona.net/documentation</a></p>
+<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://covid-api.com/api/">https://covid-api.com/api/</a></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Country list parsed </p>
+<dd class="field-even"><p>Region list parsed </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser15parse_provincesERKNSt6stringE">
+<span id="_CPPv3N7coronan10api_parser15parse_provincesERKNSt6stringE"></span><span id="_CPPv2N7coronan10api_parser15parse_provincesERKNSt6stringE"></span><span id="coronan::api_parser::parse_provinces__ssCR"></span><span class="target" id="corona-api__parser_8hpp_1a623092bb76873a52ceb9f426fac1c498"></span><span class="n"><span class="pre">ProvinceListObject</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_provinces</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser15parse_provincesERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Parse a json string for a list of province information </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json</strong> – json string. Must have the format as described at <a class="reference external" href="https://covid-api.com/api/">https://covid-api.com/api/</a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Province list parsed </p>
 </dd>
 </dl>
 </dd></dl>
 
 </div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseExceptionE">
+<span id="_CPPv3N7coronan10api_parser18DateParseExceptionE"></span><span id="_CPPv2N7coronan10api_parser18DateParseExceptionE"></span><span id="coronan::api_parser::DateParseException"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DateParseException</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">exception</span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseExceptionE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;corona-api_parser.hpp&gt;</em></div>
+<p>A <a class="reference internal" href="#classcoronan_1_1api__parser_1_1DateParseException"><span class="std std-ref">DateParseException</span></a> thrown when a date string could not parsed. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionENSt6stringE">
+<span id="_CPPv3N7coronan10api_parser18DateParseException18DateParseExceptionENSt6stringE"></span><span id="_CPPv2N7coronan10api_parser18DateParseException18DateParseExceptionENSt6stringE"></span><span id="coronan::api_parser::DateParseException::DateParseException__ss"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1a3c92a2a292cf6df4047793956309d3cf"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DateParseException</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">exception_msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exception_msg</strong> – exception message </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseExceptionD0Ev">
+<span id="_CPPv3N7coronan10api_parser18DateParseExceptionD0Ev"></span><span id="_CPPv2N7coronan10api_parser18DateParseExceptionD0Ev"></span><span id="coronan::api_parser::DateParseException::~DateParseException"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1abcab1555df699dc8879551c8ae9331b5"></span><span class="sig-name descname"><span class="n"><span class="pre">~DateParseException</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseExceptionD0Ev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionERK18DateParseException">
+<span id="_CPPv3N7coronan10api_parser18DateParseException18DateParseExceptionERK18DateParseException"></span><span id="_CPPv2N7coronan10api_parser18DateParseException18DateParseExceptionERK18DateParseException"></span><span id="coronan::api_parser::DateParseException::DateParseException__DateParseExceptionCR"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1a4441a5a27dfa7ea65be58c2c87f5347b"></span><span class="sig-name descname"><span class="n"><span class="pre">DateParseException</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionERK18DateParseException" title="coronan::api_parser::DateParseException::DateParseException"><span class="n"><span class="pre">DateParseException</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionERK18DateParseException" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionERR18DateParseException">
+<span id="_CPPv3N7coronan10api_parser18DateParseException18DateParseExceptionERR18DateParseException"></span><span id="_CPPv2N7coronan10api_parser18DateParseException18DateParseExceptionERR18DateParseException"></span><span id="coronan::api_parser::DateParseException::DateParseException__DateParseExceptionRR"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1aa364bde7f4fa191ec5960f77d2ff291e"></span><span class="sig-name descname"><span class="n"><span class="pre">DateParseException</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionERR18DateParseException" title="coronan::api_parser::DateParseException::DateParseException"><span class="n"><span class="pre">DateParseException</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseException18DateParseExceptionERR18DateParseException" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseExceptionaSERK18DateParseException">
+<span id="_CPPv3N7coronan10api_parser18DateParseExceptionaSERK18DateParseException"></span><span id="_CPPv2N7coronan10api_parser18DateParseExceptionaSERK18DateParseException"></span><span id="coronan::api_parser::DateParseException::assign-operator__DateParseExceptionCR"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1a8c266c3fe89a5bcc957a609c3ddb04bb"></span><a class="reference internal" href="#_CPPv4N7coronan10api_parser18DateParseExceptionE" title="coronan::api_parser::DateParseException"><span class="n"><span class="pre">DateParseException</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N7coronan10api_parser18DateParseExceptionE" title="coronan::api_parser::DateParseException"><span class="n"><span class="pre">DateParseException</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseExceptionaSERK18DateParseException" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7coronan10api_parser18DateParseExceptionaSERR18DateParseException">
+<span id="_CPPv3N7coronan10api_parser18DateParseExceptionaSERR18DateParseException"></span><span id="_CPPv2N7coronan10api_parser18DateParseExceptionaSERR18DateParseException"></span><span id="coronan::api_parser::DateParseException::assign-operator__DateParseExceptionRR"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1a5f903a99c1be726ab6d292899c99b99d"></span><a class="reference internal" href="#_CPPv4N7coronan10api_parser18DateParseExceptionE" title="coronan::api_parser::DateParseException"><span class="n"><span class="pre">DateParseException</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N7coronan10api_parser18DateParseExceptionE" title="coronan::api_parser::DateParseException"><span class="n"><span class="pre">DateParseException</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N7coronan10api_parser18DateParseExceptionaSERR18DateParseException" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7coronan10api_parser18DateParseException4whatEv">
+<span id="_CPPv3NK7coronan10api_parser18DateParseException4whatEv"></span><span id="_CPPv2NK7coronan10api_parser18DateParseException4whatEv"></span><span id="coronan::api_parser::DateParseException::whatC"></span><span class="target" id="classcoronan_1_1api__parser_1_1DateParseException_1acf094a25b682344f2d394269f5ab80de"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">what</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK7coronan10api_parser18DateParseException4whatEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Return the exception message </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </section>
