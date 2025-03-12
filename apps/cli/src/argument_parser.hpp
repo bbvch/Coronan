@@ -9,7 +9,6 @@
 #include <variant>
 
 using namespace date;
-// using namespace std::chrono;
 
 namespace coronan_cli {
 

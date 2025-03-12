@@ -8,6 +8,34 @@
 namespace coronan {
 
 namespace api_parser {
+
+/**
+ * A DateParseException thrown when a date string could not parsed.
+ */
+class DateParseException : public std::exception
+{
+public:
+  /**
+   *  Constructor
+   * @param exception_msg exception message
+   */
+  explicit DateParseException(std::string exception_msg);
+  ~DateParseException() override = default;
+  DateParseException(DateParseException const&) = default;
+  DateParseException(DateParseException&&) = default;
+  DateParseException& operator=(DateParseException const&) = delete;
+  DateParseException& operator=(DateParseException&&) = delete;
+  /**
+   *  Return the exception message
+   */
+  [[nodiscard]] char const* what() const noexcept override;
+
+private:
+  std::string const msg;
+};
+
+
+
 /**
  * Parse a json string for region total data
  * @param json json string. Must have the format as described at

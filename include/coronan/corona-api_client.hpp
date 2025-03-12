@@ -16,7 +16,6 @@
 #include <vector>
 
 using namespace date;
-// using namespace std::chrono;
 
 namespace coronan {
 

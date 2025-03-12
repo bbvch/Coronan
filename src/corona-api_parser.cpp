@@ -15,7 +15,7 @@
 #include <vector>
 
 using namespace date;
-// using namespace std::chrono;
+
 namespace coronan::api_parser {
 
 namespace {
@@ -88,6 +88,18 @@ year_month_day parse_date(std::string const& date_string)
 
 } // namespace
 
+
+DateParseException::DateParseException(std::string exception_msg) : msg{std::move(exception_msg)}
+{
+}
+
+char const* DateParseException::what() const noexcept
+{
+  return msg.c_str();
+}
+
+
+
 std::optional<CovidData> parse_region_total(std::string const& json)
 {
   rapidjson::Document document;
@@ -101,9 +113,10 @@ std::optional<CovidData> parse_region_total(std::string const& json)
   {
     auto covid_data = CovidData{};
     auto const covid_data_object = document["data"].GetObject();
-    if (covid_data.date = parse_date(get_value<std::string>(covid_data_object, "date")); not covid_data.date.ok())
+    covid_data.date = parse_date(get_value<std::string>(covid_data_object, "date"));
+    if (not covid_data.date.ok())
     {
-      throw std::runtime_error{"Failed to parse date."};
+      throw DateParseException{"Failed to parse date."};
     }
     covid_data.deaths = get_value<uint32_t>(covid_data_object, "deaths");
     covid_data.confirmed = get_value<uint32_t>(covid_data_object, "confirmed");

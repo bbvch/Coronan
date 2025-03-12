@@ -3,7 +3,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 using namespace date;
-// using namespace std::chrono;
+
 
 namespace {
 
@@ -43,7 +43,7 @@ TEST_CASE("The corona-api parser parsing an region total json with invalide date
 
   SECTION("throws exception")
   {
-    REQUIRE_THROWS_AS(coronan::api_parser::parse_region_total(test_json), std::runtime_error);
+    REQUIRE_THROWS_AS(coronan::api_parser::parse_region_total(test_json), coronan::api_parser::DateParseException);
   }
 }
 

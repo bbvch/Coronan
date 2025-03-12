@@ -5,7 +5,6 @@
 
 namespace {
 using namespace date;
-// using namespace std::chrono;
 
 TEST_CASE("argument parser called with ", "[HTTPClient]")
 {
