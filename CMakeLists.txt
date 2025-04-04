@@ -73,7 +73,6 @@ endif()
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(cmake/Doxygen.cmake)
-    enable_doxygen()
 
     if(ENABLE_DOXYGEN)
         set_property(GLOBAL PROPERTY USE_FOLDERS ON)

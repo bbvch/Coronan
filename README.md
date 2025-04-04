@@ -115,8 +115,6 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * [Memory Sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
 
 * Documentation Generation using
-  * [Sphinx](https://www.sphinx-doc.org/)
-  * [Breath](https://breathe.readthedocs.io/)
   * [Doxygen](https://www.doxygen.nl/index.html)
 
 * Code formatting:

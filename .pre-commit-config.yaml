@@ -1,7 +1,7 @@
 ---
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v4.3.0
+      rev: v5.0.0
       hooks:
           - id: check-added-large-files
           - id: check-byte-order-marker
@@ -25,11 +25,11 @@ repos:
       hooks:
           - id: cmake-format
     - repo: https://github.com/adrienverge/yamllint.git
-      rev: v1.28.0
+      rev: v1.37.0
       hooks:
           - id: yamllint
             args: [--format, parsable, -d, relaxed]
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-      rev: 0.2.2
+      rev: 0.2.3
       hooks:
           - id: yamlfmt

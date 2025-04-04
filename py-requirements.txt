@@ -1,9 +1,5 @@
 cmake>=3.31.4
 conan>=2.11
-Sphinx>=7.4.7
-sphinx_rtd_theme>=3.0.2
-breathe>=4.35.0
-sphinx_mdinclude>=0.6.0
 gcovr>=8.2
 pre-commit>=4.0.1
 cmake-format>=0.6.13
