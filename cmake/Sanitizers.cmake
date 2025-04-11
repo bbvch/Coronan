@@ -1,17 +1,11 @@
 macro(supports_sanitizers)
-    if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID
-                                                     MATCHES ".*GNU.*")
-       AND NOT WIN32
-    )
+    if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID MATCHES ".*GNU.*") AND NOT WIN32)
         set(SUPPORTS_UBSAN ON)
     else()
         set(SUPPORTS_UBSAN OFF)
     endif()
 
-    if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID
-                                                     MATCHES ".*GNU.*")
-       AND WIN32
-    )
+    if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID MATCHES ".*GNU.*") AND WIN32)
         set(SUPPORTS_ASAN OFF)
     else()
         set(SUPPORTS_ASAN ON)
@@ -25,15 +19,11 @@ function(enable_sanitizers project_name)
     # Sanitizer options
     option(ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
     option(ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR
-           "Enable undefined behavior sanitizer" ${SUPPORTS_UBSAN}
-    )
+    option(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR "Enable undefined behavior sanitizer" ${SUPPORTS_UBSAN})
     option(ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
     option(ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
 
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES
-                                               ".*Clang"
-    )
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
         set(SANITIZERS "")
 
         if(ENABLE_SANITIZER_ADDRESS)
@@ -50,10 +40,7 @@ function(enable_sanitizers project_name)
 
         if(ENABLE_SANITIZER_THREAD)
             if("address" IN_LIST SANITIZERS OR "leak" IN_LIST SANITIZERS)
-                message(
-                    WARNING
-                        "Thread sanitizer does not work with Address and Leak sanitizer enabled"
-                )
+                message(WARNING "Thread sanitizer does not work with Address and Leak sanitizer enabled")
             else()
                 list(APPEND SANITIZERS "thread")
             endif()
@@ -64,10 +51,7 @@ function(enable_sanitizers project_name)
                OR "thread" IN_LIST SANITIZERS
                OR "leak" IN_LIST SANITIZERS
             )
-                message(
-                    WARNING
-                        "Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled"
-                )
+                message(WARNING "Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled")
             else()
                 list(APPEND SANITIZERS "memory")
             endif()
@@ -90,12 +74,8 @@ function(enable_sanitizers project_name)
 
     if(LIST_OF_SANITIZERS)
         if(NOT "${LIST_OF_SANITIZERS}" STREQUAL "")
-            target_compile_options(
-                ${project_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS}
-            )
-            target_link_options(
-                ${project_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS}
-            )
+            target_compile_options(${project_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS})
+            target_link_options(${project_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS})
         endif()
     endif()
 

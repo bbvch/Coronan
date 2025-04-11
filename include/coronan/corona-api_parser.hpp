@@ -34,8 +34,6 @@ private:
   std::string const msg;
 };
 
-
-
 /**
  * Parse a json string for region total data
  * @param json json string. Must have the format as described at

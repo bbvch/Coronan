@@ -1,17 +1,12 @@
 # general settings
 set(CPACK_PACKAGE_NAME "Coronan")
 set(CPACK_PACKAGE_VENDOR "bbv Software Services AG")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
-    "Present the current data of Corona (Covid-19) cases for a country."
-)
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Present the current data of Corona (Covid-19) cases for a country.")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 set(CPACK_VERBATIM_VARIABLES YES)
 
 # WIX installer needs a licence file with .txt ending
-configure_file(
-    ${PROJECT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt
-    COPYONLY
-)
+configure_file(${PROJECT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt COPYONLY)
 set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt)
 
 # versions
@@ -41,13 +36,9 @@ if(DPKG_PROGRAM)
     set(CPACK_DEBIAN_PACKAGE_NAME "coronan")
 
     set(CPACK_PACKAGE_CONTACT "michel.estermann@bbv.ch")
-    set(CPACK_DEBIAN_PACKAGE_MAINTAINER
-        "Michel Estermann <michel.estermann@bbv.ch>"
-    )
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Michel Estermann <michel.estermann@bbv.ch>")
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/bbvch/Coronan")
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libqt6widgets6 (>=6.2.4),libqt6charts6 (>=6.2.4)"
-    )
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6widgets6 (>=6.2.4),libqt6charts6 (>=6.2.4)")
 endif(DPKG_PROGRAM)
 
 # IFW (Qt Installer Framework) config

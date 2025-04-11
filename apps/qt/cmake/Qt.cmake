@@ -31,7 +31,7 @@ set(QT_BUILD_DOCS OFF)
 set(QT_MODULES Core Widgets Charts)
 set(CMAKE_CXX_STANDARD 20)
 
-fetchcontent_declare(
+FetchContent_Declare(
     qt6
     GIT_REPOSITORY "https://github.com/qt/qt5.git"
     GIT_TAG "${QT_VERSION}"
@@ -40,7 +40,7 @@ fetchcontent_declare(
     GIT_SUBMODULES ${QT_BUILD_SUBMODULES}
 )
 
-fetchcontent_makeavailable(qt6)
+FetchContent_MakeAvailable(qt6)
 
 # Qt needs to be compiled in a mode that enables `INT128`
 set_target_properties(Core PROPERTIES CXX_EXTENSIONS ON)

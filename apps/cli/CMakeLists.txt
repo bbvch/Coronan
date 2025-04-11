@@ -8,10 +8,7 @@ project(
 
 set(HEADER_LIST "${CMAKE_CURRENT_LIST_DIR}/src/argument_parser.hpp")
 
-add_library(
-    cli_arg_parser STATIC ${CMAKE_CURRENT_LIST_DIR}/src/argument_parser.cpp
-                          ${HEADER_LIST}
-)
+add_library(cli_arg_parser STATIC ${CMAKE_CURRENT_LIST_DIR}/src/argument_parser.cpp ${HEADER_LIST})
 
 add_library(coronan_cli::arg_parser ALIAS cli_arg_parser)
 
@@ -47,9 +44,7 @@ source_group(
 add_executable(coronan_cli ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp)
 
 add_executable(coronan::coronan_cli ALIAS coronan_cli)
-set_target_properties(
-    coronan_cli PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronan
-)
+set_target_properties(coronan_cli PROPERTIES CXX_EXTENSIONS OFF OUTPUT_NAME coronan)
 
 target_link_libraries(
     coronan_cli
@@ -70,6 +65,4 @@ if(ENABLE_TESTING)
     add_subdirectory(tests)
 endif()
 
-install(TARGETS coronan_cli RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                                    COMPONENT Coronan_Runtime_CLI
-)
+install(TARGETS coronan_cli RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT Coronan_Runtime_CLI)

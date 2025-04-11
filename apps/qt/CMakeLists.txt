@@ -45,8 +45,7 @@ message(STATUS "CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}")
 set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table_model.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
 )
 # AUTOMOC and AUTOUIC dows not work when Qt is built from source
 if(DOWNLOAD_QT6)
@@ -66,10 +65,7 @@ qt6_add_executable(
 )
 
 add_executable(coronan::coronan_gui ALIAS coronan_gui)
-set_target_properties(
-    coronan_gui PROPERTIES CXX_EXTENSIONS ${DOWNLOAD_QT6} OUTPUT_NAME
-                                                          coronanApp
-)
+set_target_properties(coronan_gui PROPERTIES CXX_EXTENSIONS ${DOWNLOAD_QT6} OUTPUT_NAME coronanApp)
 
 target_include_directories(
     coronan_gui PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -90,6 +86,4 @@ target_link_libraries(
 
 include(CMakePackageConfigHelpers)
 
-install(TARGETS coronan_gui RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                                    COMPONENT Coronan_Runtime_GUI
-)
+install(TARGETS coronan_gui RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT Coronan_Runtime_GUI)
