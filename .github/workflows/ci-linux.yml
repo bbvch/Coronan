@@ -181,7 +181,7 @@ jobs:
               run: ctest -C Debug
               working-directory: ./build
             - name: CMake build docs
-              run: cmake --build ./build --target docs --config ${{ matrix.build_type }}
+              run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
             - name: CMake build package
               run: cmake --build ./build --target package --config ${{ matrix.build_type }}
             - name: Coverage
