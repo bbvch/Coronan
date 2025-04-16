@@ -116,6 +116,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
 
 * Documentation Generation using
   * [Doxygen](https://www.doxygen.nl/index.html)
+  * [doxygen-awesome-css](https://github.com/jothepro/doxygen-awesome-css)
 
 * Code formatting:
   * [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files
