@@ -19,7 +19,7 @@ jobs:
                     - name: ubuntu-22.04-clang-13
                       os: ubuntu-22.04
                       build_type: Release
-                      compiler: clang++-13
+                      cppcompiler: clang++-13
                       ccompiler: clang-13
                       clang-tidy: clang-tidy-13
                       generator: Ninja
@@ -28,7 +28,7 @@ jobs:
                     - name: ubuntu-22.04-clang-14
                       os: ubuntu-22.04
                       build_type: Release
-                      compiler: clang++-14
+                      cppcompiler: clang++-14
                       ccompiler: clang-14
                       clang-tidy: clang-tidy-14
                       generator: Ninja
@@ -37,7 +37,7 @@ jobs:
                     - name: ubuntu-22.04-clang-15
                       os: ubuntu-22.04
                       build_type: Release
-                      compiler: clang++-15
+                      cppcompiler: clang++-15
                       ccompiler: clang-15
                       clang-tidy: clang-tidy-15
                       generator: Ninja
@@ -46,7 +46,7 @@ jobs:
                     - name: ubuntu-22.04-gcc-12
                       os: ubuntu-22.04
                       build_type: Debug
-                      compiler: g++-12
+                      cppcompiler: g++-12
                       ccompiler: gcc-12
                       clang-tidy: clang-tidy
                       generator: Ninja
@@ -55,7 +55,7 @@ jobs:
                     - name: ubuntu-24.04-clang-16
                       os: ubuntu-24.04
                       build_type: Release
-                      compiler: clang++-16
+                      cppcompiler: clang++-16
                       ccompiler: clang-16
                       clang-tidy: clang-tidy-16
                       generator: Ninja
@@ -64,7 +64,7 @@ jobs:
                     - name: ubuntu-24.04-clang-17
                       os: ubuntu-24.04
                       build_type: Release
-                      compiler: clang++-17
+                      cppcompiler: clang++-17
                       ccompiler: clang-17
                       clang-tidy: clang-tidy-17
                       generator: Ninja
@@ -73,7 +73,7 @@ jobs:
                     - name: ubuntu-24.04-clang-18
                       os: ubuntu-24.04
                       build_type: Release
-                      compiler: clang++-18
+                      cppcompiler: clang++-18
                       ccompiler: clang-18
                       clang-tidy: clang-tidy-18
                       generator: Ninja
@@ -82,7 +82,7 @@ jobs:
                     - name: ubuntu-24.04-clang-18-download-qt
                       os: ubuntu-24.04
                       build_type: Release
-                      compiler: clang++-18
+                      cppcompiler: clang++-18
                       ccompiler: clang-18
                       clang-tidy: clang-tidy-18
                       generator: Ninja
@@ -91,7 +91,7 @@ jobs:
                     - name: ubuntu-24.04-gcc-13
                       os: ubuntu-24.04
                       build_type: Debug
-                      compiler: g++-13
+                      cppcompiler: g++-13
                       ccompiler: gcc-13
                       clang-tidy: clang-tidy
                       generator: Ninja
@@ -100,7 +100,7 @@ jobs:
                     - name: ubuntu-24.04-gcc-14
                       os: ubuntu-24.04
                       build_type: Debug
-                      compiler: g++-14
+                      cppcompiler: g++-14
                       ccompiler: gcc-14
                       clang-tidy: clang-tidy
                       generator: Ninja
@@ -109,7 +109,7 @@ jobs:
                     - name: ubuntu-24.04-gcc-14-download-qt
                       os: ubuntu-24.04
                       build_type: Debug
-                      compiler: g++-14
+                      cppcompiler: g++-14
                       ccompiler: gcc-14
                       clang-tidy: clang-tidy
                       generator: Ninja
@@ -118,7 +118,7 @@ jobs:
                     - name: ubuntu-latest
                       os: ubuntu-latest
                       build_type: Debug
-                      compiler: g++
+                      cppcompiler: g++
                       ccompiler: gcc
                       clang-tidy: clang-tidy
                       generator: Ninja
@@ -126,7 +126,7 @@ jobs:
                       download_qt: OFF
 
         env:
-            CXX: ${{ matrix.compiler }}
+            CXX: ${{ matrix.cppcompiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
@@ -135,18 +135,18 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: ~/.conan2/p
-                  key: cache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-conan-${{ hashFiles('conanfile.txt') }}
+                  key: cache-${{ matrix.os }}-${{ matrix.cppcompiler }}-${{ matrix.build_type }}-conan-${{ hashFiles('conanfile.txt') }}
                   restore-keys: |
-                      cache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-conan
+                      cache-${{ matrix.os }}-${{ matrix.cppcompiler }}-${{ matrix.build_type }}-conan
             - name: Cache (ccache)
               uses: actions/cache@v4
               with:
                   path: |
                       ~/.cache/ccache
-                  key: ccache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-${{ matrix.generator }}-${{ hashFiles('**/CMakeLists.txt')
+                  key: ccache-${{ matrix.os }}-${{ matrix.cppcompiler }}-${{ matrix.build_type }}-${{ matrix.generator }}-${{ hashFiles('**/CMakeLists.txt')
                       }}
                   restore-keys: |
-                      ccache-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}
+                      ccache-${{ matrix.os }}-${{ matrix.cppcompiler }}-${{ matrix.build_type }}
             - name: Install dependencies
               run: |
                   sudo apt-get update

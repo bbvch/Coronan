@@ -16,21 +16,33 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: windows-VS-2022
+                    - name: windows-2022-VS-2022
                       os: windows-2022
                       build_type: Release
-                      compiler: cl
+                      cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
-                    - name: windows-VS-2025
+                    - name: windows-2022-gcc
+                      os: windows-2022
+                      build_type: Release
+                      cppcompiler: g++
+                      ccompiler: gcc
+                      generators: Ninja
+                    - name: windows-2025-VS-2022
                       os: windows-2025
                       build_type: Release
-                      compiler: cl
+                      cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
+                    - name: windows-2025-gcc
+                      os: windows-2025
+                      build_type: Release
+                      cppcompiler: g++
+                      ccompiler: gcc
+                      generators: Ninja
 
         env:
-            CXX: ${{ matrix.compiler }}
+            CXX: ${{ matrix.cppcompiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
@@ -49,13 +61,14 @@ jobs:
             - name: Install Qt
               uses: jurplel/install-qt-action@v4
               with:
-                  version: 6.8.2
+                  version: 6.8.3
                   host: windows
                   target: desktop
                   arch: win64_msvc2022_64
                   modules: qtcharts
                   tools: tools_ifw
             - name: setup-msvc-dev
+              if: matrix.cppcompiler == 'cl'
               uses: TheMrMilchmann/setup-msvc-dev@v3
               with:
                   arch: x64
