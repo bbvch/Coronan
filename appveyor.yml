@@ -28,7 +28,7 @@ before_build:
 build_script:
     - cmd: |-
           cmake --build --preset=visual-studio-release
-          cmake --build build --target package
+          cmake --build build --target package --config Release
 
 test_script:
     - cmd: ctest --preset=unittest-vs-2022
