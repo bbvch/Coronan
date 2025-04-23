@@ -3,7 +3,6 @@ include(Doxygen)
 
 if(EXISTS "${PROJECT_SOURCE_DIR}/README.md")
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
-    set(DOXYGEN_HTML_EXTRA_FILES "${PROJECT_SOURCE_DIR}/images/*.png")
 endif()
 
 # enable doxygen documentaion with the "awesome-sidebar" theme
