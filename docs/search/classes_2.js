@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sslclient_16',['SSLClient',['../classcoronan_1_1SSLClient.html',1,'coronan']]]
+  ['example_0',['Example',['../classMyLibrary_1_1Example.html',1,'MyLibrary']]]
 ];
