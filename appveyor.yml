@@ -26,7 +26,9 @@ before_build:
           cmake -S %APPVEYOR_BUILD_FOLDER% --preset=visual-studio-2022-release
 
 build_script:
-    - cmd: cmake --build --preset=package-windows
+    - cmd: |-
+          cmake --build --preset=visual-studio-release
+          cmake --build build --target package
 
 test_script:
     - cmd: ctest --preset=unittest-vs-2022
@@ -34,4 +36,7 @@ test_script:
 artifacts:
     - path: \build\Coronan-*.msi
       name: Coronan_installer
+      type: File
+    - path: \build\Coronan-*.exe
+      name: Coronan_qt_installer
       type: File
