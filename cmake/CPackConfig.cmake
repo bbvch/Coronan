@@ -31,7 +31,12 @@ endif()
 find_program(DPKG_PROGRAM dpkg)
 if(DPKG_PROGRAM)
     list(APPEND CPACK_GENERATOR DEB)
-    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+    find_program(SHLIBDEPS_PROGRAMM dpkg-shlibdeps)
+    if(SHLIBDEPS_PROGRAMM)
+        set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+    else()
+        message(WARNING "dpkg-shlibdeps not found, skipping shlibdeps")
+    endif()
     # DEB package config
     set(CPACK_DEBIAN_PACKAGE_NAME "coronan")
 
@@ -41,14 +46,24 @@ if(DPKG_PROGRAM)
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6widgets6 (>=6.2.4),libqt6charts6 (>=6.2.4)")
 endif(DPKG_PROGRAM)
 
-# IFW (Qt Installer Framework) config
-set(CPACK_IFW_VERBOSE ON)
-set(CPACK_IFW_PACKAGE_TITLE "Co[ro]nan")
+find_program(
+    BINARYCREATOR_EXECUTABLE
+    NAMES binarycreator
+    HINTS ${CPACK_IFW_ROOT}/bin
+)
+if(BINARYCREATOR_EXECUTABLE)
+    message(STATUS "Found binarycreator: ${BINARYCREATOR_EXECUTABLE}")
+    list(APPEND CPACK_GENERATOR IFW)
+    # IFW (Qt Installer Framework) config
+    set(CPACK_IFW_VERBOSE ON)
+    set(CPACK_IFW_PACKAGE_TITLE "Co[ro]nan")
+    include(CPackIFW)
+endif()
+
 include(CPack)
-include(CPackIFW)
 
 cpack_add_component(
-    Coronan_Development
+    Coronan_Development DISABLED
     DISPLAY_NAME "coronan SDK"
     DESCRIPTION "Development components"
     INSTALL_TYPES Full Developer
@@ -62,11 +77,17 @@ cpack_add_component(
 )
 
 cpack_add_component(
-    Coronan_Runtime_CLI
+    Coronan_Runtime_CLI DISABLED
     DISPLAY_NAME "coronan command line interface"
     DESCRIPTION "Gui executables"
     INSTALL_TYPES Full Developer Minimal
 )
+
+if(BINARYCREATOR_EXECUTABLE)
+    cpack_ifw_configure_component(Coronan_Development VIRTUAL)
+    cpack_ifw_configure_component(Coronan_Runtime_GUI ESSENTIAL)
+    cpack_ifw_configure_component(Coronan_Runtime_CLI VIRTUAL)
+endif()
 
 cpack_add_install_type(Full)
 cpack_add_install_type(Minimal)
