@@ -80,7 +80,8 @@ RUN pip3 install gcovr==8.3
 
 # Qt Installer Framework
 RUN pip3 install aqtinstall
-RUN aqt install-tool linux desktop tools_ifw
+RUN aqt install-tool linux desktop tools_ifw qt.tools.ifw.47
+ENV PATH="/Tools/QtInstallerFramework/4.7/bin:$PATH"
 
 USER gitpod
 
