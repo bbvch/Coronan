@@ -4,7 +4,6 @@
 
 using namespace date;
 
-
 namespace {
 
 TEST_CASE("The corona-api parser parsing an empty region total json", "[corona-api parser]")

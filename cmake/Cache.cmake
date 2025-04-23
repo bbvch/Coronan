@@ -24,7 +24,5 @@ if(CACHE_BINARY)
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CACHE_BINARY})
     set(CMAKE_C_COMPILER_LAUNCHER ${CACHE_BINARY})
 else()
-    message(
-        WARNING "${CACHE_OPTION} is enabled but was not found. Not using it"
-    )
+    message(WARNING "${CACHE_OPTION} is enabled but was not found. Not using it")
 endif()

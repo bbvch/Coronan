@@ -47,9 +47,8 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install -r py-requirements.txt
             - name: Install Qt
-              uses: jurplel/install-qt-action@v3
+              uses: jurplel/install-qt-action@v4
               with:
-                  aqtversion: ==3.1.*
                   version: 6.8.2
                   host: windows
                   target: desktop
@@ -73,7 +72,7 @@ jobs:
               run: ctest -C Debug
               working-directory: ./build
             - name: CMake build docs
-              run: cmake --build ./build --target docs --config ${{ matrix.build_type }}
+              run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
             - name: CMake build package
               run: cmake --build ./build --target package --config ${{ matrix.build_type }}
             - uses: actions/upload-artifact@v4

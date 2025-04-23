@@ -8,6 +8,4 @@ find_program(
 include(FindPackageHandleStandardArgs)
 
 # Handle standard arguments to find_package like REQUIRED and QUIET
-find_package_handle_standard_args(
-    Gcovr "Failed to find gcovr executable" GCOVR_EXECUTABLE
-)
+find_package_handle_standard_args(Gcovr "Failed to find gcovr executable" GCOVR_EXECUTABLE)

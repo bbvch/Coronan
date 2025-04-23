@@ -88,7 +88,6 @@ year_month_day parse_date(std::string const& date_string)
 
 } // namespace
 
-
 DateParseException::DateParseException(std::string exception_msg) : msg{std::move(exception_msg)}
 {
 }
@@ -97,8 +96,6 @@ char const* DateParseException::what() const noexcept
 {
   return msg.c_str();
 }
-
-
 
 std::optional<CovidData> parse_region_total(std::string const& json)
 {
@@ -137,8 +134,8 @@ RegionListObject parse_regions(std::string const& json)
   rapidjson::Document document;
   if (document.Parse(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_regions: JSON parse error {} at position {}\n", static_cast<int>(document.GetParseError()),
-               document.GetErrorOffset());
+    fmt::print(stderr, "parse_regions: JSON parse error {} at position {}\n",
+               static_cast<int>(document.GetParseError()), document.GetErrorOffset());
     return {};
   }
   auto region_list = RegionListObject{};
@@ -160,8 +157,8 @@ ProvinceListObject parse_provinces(std::string const& json)
   rapidjson::Document document;
   if (document.Parse(json.c_str()).HasParseError())
   {
-    fmt::print(stderr, "parse_provinces: JSON parse error {} at position {}\n", static_cast<int>(document.GetParseError()),
-               document.GetErrorOffset());
+    fmt::print(stderr, "parse_provinces: JSON parse error {} at position {}\n",
+               static_cast<int>(document.GetParseError()), document.GetErrorOffset());
     return {};
   }
   auto province_list = ProvinceListObject{};

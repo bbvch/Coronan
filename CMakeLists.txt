@@ -30,9 +30,7 @@ if(CMAKE_CONFIGURATION_TYPES)
     list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_BINARY_DIR}/generators")
 else()
     # Single-configuration generator
-    list(APPEND CMAKE_PREFIX_PATH
-         "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/generators"
-    )
+    list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/generators")
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -43,10 +41,7 @@ add_library(coronan::compile_options ALIAS project_options)
 target_compile_features(project_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
 
 if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-    option(ENABLE_BUILD_WITH_TIME_TRACE
-           "Enable -ftime-trace to generate time tracing .json files on clang"
-           OFF
-    )
+    option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
     if(ENABLE_BUILD_WITH_TIME_TRACE)
         target_compile_options(project_options INTERFACE -ftime-trace)
     endif()
@@ -73,7 +68,6 @@ endif()
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(cmake/Doxygen.cmake)
-    enable_doxygen()
 
     if(ENABLE_DOXYGEN)
         set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -86,10 +80,7 @@ option(ENABLE_PCH "Enable Precompiled Headers" OFF)
 if(ENABLE_PCH)
 
     if(ENABLE_CLANG_TIDY)
-        message(
-            WARNING
-                "Using ENABLE_CLANG_TIDY together with ENABLE_PCH will give compiler errors."
-        )
+        message(WARNING "Using ENABLE_CLANG_TIDY together with ENABLE_PCH will give compiler errors.")
     endif(ENABLE_CLANG_TIDY)
     # This sets a global PCH parameter, each project will build its own PCH,
     # which is a good idea if any #define's change
@@ -126,14 +117,11 @@ add_subdirectory(apps/qt)
 if(MSVC)
     get_all_installable_targets(all_targets)
     message("all_targets=${all_targets}")
-    set_target_properties(
-        ${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT
-                                  "PATH=$(VC_ExecutablePath_x64);%PATH%"
-    )
+    set_target_properties(${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=$(VC_ExecutablePath_x64);%PATH%")
 endif()
 
 # set the startup project for the "play" button in MSVC
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT intro)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT coronan_gui)
 
 if(CMAKE_SKIP_INSTALL_RULES)
     return()

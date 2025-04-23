@@ -39,7 +39,7 @@ jobs:
             - name: cmake-configuration
               run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
             - name: build-documentation
-              run: cmake --build build --target docs
+              run: cmake --build build --target doxygen-docs
             - name: Deploy to GitHub Pages
               if: github.ref == 'refs/heads/master'
               uses: JamesIves/github-pages-deploy-action@3.4.9

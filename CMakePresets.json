@@ -336,8 +336,7 @@
             "configuration": "Release",
             "jobs": 16,
             "targets": [
-                "doxygen",
-                "docs"
+                "doxygen-docs"
             ]
         },
         {
@@ -348,8 +347,7 @@
             "configuration": "Release",
             "jobs": 16,
             "targets": [
-                "doxygen",
-                "docs"
+                "doxygen-docs"
             ]
         },
         {
@@ -360,7 +358,7 @@
             "configurePreset": "linux-gcc-release",
             "configuration": "Release",
             "targets": [
-                "docs",
+                "doxygen-docs",
                 "package"
             ]
         },
@@ -372,7 +370,7 @@
             "configurePreset": "linux-clang-release",
             "configuration": "Release",
             "targets": [
-                "docs",
+                "doxygen-docs",
                 "package"
             ]
         },
@@ -384,7 +382,7 @@
             "configurePreset": "visual-studio-2022-release",
             "configuration": "Release",
             "targets": [
-                "docs",
+                "doxygen-docs",
                 "package"
             ]
         }

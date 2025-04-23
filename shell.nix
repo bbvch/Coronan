@@ -9,19 +9,6 @@ let
     ps.gcovr
   ]);
 
-  sphinx-env = python3.withPackages(ps: [
-    ps.sphinx
-    ps.sphinx_rtd_theme
-    ps.breathe
-  ]);
-
-  full-sphinx-env = buildEnv {
-  name = "full-sphinx-env";
-  paths = [
-    sphinx-env
-  ] ++ (lib.optional withPdf latex);
-};
-
 in stdenvNoCC.mkDerivation {
   name = "shell";
   hardeningDisable = [ "all" ];
@@ -51,7 +38,6 @@ in stdenvNoCC.mkDerivation {
     pkg-config
     pre-commit
     python3
-    sphinx-env
     cmake-format
     python3Packages.setuptools
     python3Packages.pip

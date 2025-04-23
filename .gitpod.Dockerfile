@@ -36,13 +36,13 @@ RUN apt-get update \
 RUN pyenv install 3.12.7 && pyenv global 3.12.7
 
 #install cmake
-RUN pip3 install cmake==3.31.4
+RUN pip3 install cmake==4.0.0
 #install conan
 RUN pip3 install conan==2.11
 RUN pip3  install python-dateutil==2.9.0
 
 # pre-commit
-RUN pip3 install pre-commit==4.0.1
+RUN pip3 install pre-commit==4.2.0
 RUN pip3 install yamlfmt==1.1.1
 
 USER gitpod
@@ -52,12 +52,7 @@ USER gitpod
 RUN pip3 install cmake-format==0.6.13
 
 # gcovr
-RUN pip3 install gcovr==8.2
+RUN pip3 install gcovr==8.3
 
-# docu stuff
-RUN pip3 install Sphinx==8.1.3
-RUN pip3 install sphinx_rtd_theme==3.0.2
-RUN pip3 install breathe==4.35.0
-RUN pip3 install sphinx_mdinclude==0.6.2
 
 RUN echo 'export PIP_USER=false' >> ~/.bashrc
