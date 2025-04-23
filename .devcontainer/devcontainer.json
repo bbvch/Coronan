@@ -9,15 +9,14 @@
 		}
 	},
 	"mounts": [
-        "source=${localEnv:HOME}/.ssh,target=/home/ubuntu/.ssh,type=bind",
-		"source=${localEnv:HOME}/.conan2,target=/home/ubuntu/.conan2,type=bind",
+        "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind",
+		"source=${localEnv:HOME}/.conan2,target=/home/vscode/.conan2,type=bind",
 		"source=native-ccache,target=/opt/.native-ccache,type=volume"
 	],
     "updateRemoteUserUID": true,
-    "containerUser": "ubuntu",
 	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
 
-	"postAttachCommand": "pre-commit install -f --hook-type pre-commit && conan profile detect --force",
+	"postAttachCommand": "pre-commit install -f --hook-type pre-commit && conan profile detect --force && conan install . --build=missing --settings=build_type=Debug && conan install . --build=missing --settings=build_type=Release",
 	"customizations": {
 		"vscode": {
 			"extensions": [

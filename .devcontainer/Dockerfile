@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM mcr.microsoft.com/devcontainers/base:dev-ubuntu24.04
 
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 
@@ -134,5 +134,3 @@ RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-${CLANG_VERSION}
 RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-${CLANG_VERSION} 100
 RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-${CLANG_VERSION} 100
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${CLANG_VERSION} 100
-
-USER ubuntu
