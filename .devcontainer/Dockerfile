@@ -5,8 +5,6 @@ LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
 ARG CLANG_VERSION=18
 ARG GCC_VERSION=14
 
-USER root
-
 RUN apt-get update \
     && apt-get -qq install -y --no-install-recommends \
     make \
@@ -50,8 +48,8 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY py-requirements.txt requirements.txt
 
-RUN pip3 install -Ur requirements.txt
-RUN pip3 install aqtinstall
+RUN pip3 install --requirement requirements.txt
+RUN pip3 install aqtinstall==3.2.1
 
 #install qt
 RUN apt-get update \
