@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
               arguments_or_exit_code);
 
       auto const latest_data = coronan::CoronaAPIClient{}.request_country_data(country, std::nullopt);
-      const auto region_info =
+      auto region_info =
           coronan::RegionInfo{.name = "", .iso_code = country, .latitude = std::nullopt, .longitude = std::nullopt};
       if (start_date.has_value() && end_date.has_value())
       {
-        return coronan::CountryData{.info = region_info,
+        return coronan::CountryData{.info = std::move(region_info),
                                     .latest = latest_data.latest,
                                     .timeline = coronan::CoronaAPIClient{}
                                                     .request_country_data(country, start_date.value(), end_date.value())
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
       }
       else if (start_date.has_value() && not end_date.has_value())
       {
-        return coronan::CountryData{.info = region_info,
+        return coronan::CountryData{.info = std::move(region_info),
                                     .latest = latest_data.latest,
                                     .timeline =
                                         coronan::CoronaAPIClient{}
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
                                             .timeline};
       }
       return coronan::CountryData{
-          .info = region_info, .latest = latest_data.latest, .timeline = {{latest_data.latest}}};
+          .info = std::move(region_info), .latest = latest_data.latest, .timeline = {{latest_data.latest}}};
     }();
 
     print_data(country_data);
