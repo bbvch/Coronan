@@ -182,8 +182,12 @@ jobs:
               working-directory: ./build
             - name: CMake build docs
               run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
-            - name: CMake build package
-              run: cmake --build ./build --target package --config ${{ matrix.build_type }}
+            - name: CMake build packages
+              run: cpack
+              working-directory: ./build
+            - name: CMake build source package
+              run: cpack --config CPackSourceConfig.cmake
+              working-directory: ./build
             - name: Coverage
               if: matrix.coverage == 'ON'
               run: |

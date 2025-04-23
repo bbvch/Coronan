@@ -74,10 +74,11 @@ jobs:
             - name: CTest
               run: ctest -C Debug
               working-directory: ./build
-            - name: CMake build docs and package
+            - name: CMake build packages
               run: |
-                  cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
-                  cmake --build ./build --target package --config ${{ matrix.build_type }}
+                  cpack
+                  cpack --config CPackSourceConfig.cmake
+              working-directory: ./build
             - uses: actions/upload-artifact@v4
               with:
                   name: ${{ matrix.name }}-artifacts

@@ -4,6 +4,20 @@ set(CPACK_PACKAGE_VENDOR "bbv Software Services AG")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Present the current data of Corona (Covid-19) cases for a country.")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 set(CPACK_VERBATIM_VARIABLES YES)
+set(CPACK_ARCHIVE_THREADS 0)
+set(CPACK_SOURCE_GENERATOR TGZ)
+set(CPACK_SOURCE_IGNORE_FILES
+    \\.git/
+    build/
+    \\.devcontainer/
+    \\.github/
+    \\.venv/
+    \\.vscode/
+    \\.cache/
+    appveyor.yml
+    \\.gitpod.yml
+    \\.codecov.yml
+)
 
 # WIX installer needs a licence file with .txt ending
 configure_file(${PROJECT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt COPYONLY)
@@ -20,6 +34,7 @@ if(WIN32)
     # replace existing installations that use the same GUID.
     set(CPACK_WIX_UPGRADE_GUID "e2b63053-6f9d-4bd1-97b6-97ec70b70a7d")
     set(CPACK_GENERATOR ZIP WIX)
+    set(CPACK_SOURCE_GENERATOR ZIP)
 elseif(APPLE)
     set(CPACK_GENERATOR TGZ productbuild)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -84,6 +99,7 @@ cpack_add_component(
 )
 
 if(BINARYCREATOR_EXECUTABLE)
+    # Only allow to install qt application
     cpack_ifw_configure_component(Coronan_Development VIRTUAL)
     cpack_ifw_configure_component(Coronan_Runtime_GUI ESSENTIAL)
     cpack_ifw_configure_component(Coronan_Runtime_CLI VIRTUAL)

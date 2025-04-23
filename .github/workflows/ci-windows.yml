@@ -73,8 +73,11 @@ jobs:
               working-directory: ./build
             - name: CMake build docs
               run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
-            - name: CMake build package
-              run: cmake --build ./build --target package --config ${{ matrix.build_type }}
+            - name: CMake build packages
+              run: |
+                  cpack --config ${{ matrix.build_type }}
+                  cpack --config CPackSourceConfig.cmake
+              working-directory: ./build
             - uses: actions/upload-artifact@v4
               with:
                   name: ${{ matrix.name }}-artifacts
