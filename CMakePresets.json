@@ -349,42 +349,6 @@
             "targets": [
                 "doxygen-docs"
             ]
-        },
-        {
-            "name": "package-gcc",
-            "description": "build package (gcc).",
-            "displayName": "Package (gcc)",
-            "inherits": "gcc-release",
-            "configurePreset": "linux-gcc-release",
-            "configuration": "Release",
-            "targets": [
-                "doxygen-docs",
-                "package"
-            ]
-        },
-        {
-            "name": "package-clang",
-            "description": "build package (clang).",
-            "displayName": "Package (clang)",
-            "inherits": "clang-release",
-            "configurePreset": "linux-clang-release",
-            "configuration": "Release",
-            "targets": [
-                "doxygen-docs",
-                "package"
-            ]
-        },
-        {
-            "name": "package-windows",
-            "description": "build package (Visual Studio 2022).",
-            "displayName": "Package (win)",
-            "inherits": "visual-studio-release",
-            "configurePreset": "visual-studio-2022-release",
-            "configuration": "Release",
-            "targets": [
-                "doxygen-docs",
-                "package"
-            ]
         }
     ],
     "testPresets": [
@@ -417,6 +381,72 @@
             "description": "Unittest (Visual Studio",
             "displayName": "Unittest",
             "configurePreset": "visual-studio-2022-debug"
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "tgz-gcc",
+            "displayName": "Tar GZip",
+            "configurePreset": "linux-gcc-release",
+            "generators": [
+                "TGZ"
+            ]
+        },
+        {
+            "name": "tgz-clang",
+            "displayName": "Tar GZip",
+            "configurePreset": "linux-clang-release",
+            "generators": [
+                "TGZ"
+            ]
+        },
+        {
+            "name": "debian-gcc",
+            "displayName": "Debian package",
+            "configurePreset": "linux-gcc-release",
+            "generators": [
+                "DEB"
+            ]
+        },
+        {
+            "name": "debian-clang",
+            "displayName": "Debian package",
+            "configurePreset": "linux-clang-release",
+            "generators": [
+                "DEB"
+            ]
+        },
+        {
+            "name": "ifw-gcc",
+            "displayName": "Qt installer",
+            "configurePreset": "linux-gcc-release",
+            "generators": [
+                "IFW"
+            ]
+        },
+        {
+            "name": "ifw-gclang",
+            "displayName": "Qt installer",
+            "configurePreset": "linux-clang-release",
+            "generators": [
+                "IFW"
+            ]
+        },
+        {
+            "name": "ifw-visual-studio-2022",
+            "displayName": "Windows Wix",
+            "configurePreset": "visual-studio-2022-release",
+            "generators": [
+                "IFW"
+            ]
+        },
+        {
+            "name": "wix-visual-studio-2022",
+            "displayName": "Windows Wix",
+            "configurePreset": "visual-studio-2022-release",
+            "generators": [
+                "WIX"
+            ]
         }
     ]
 }
