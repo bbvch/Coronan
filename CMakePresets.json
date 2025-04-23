@@ -434,7 +434,7 @@
         },
         {
             "name": "ifw-visual-studio-2022",
-            "displayName": "Windows Wix",
+            "displayName": "Windows IFW",
             "configurePreset": "visual-studio-2022-release",
             "generators": [
                 "IFW"

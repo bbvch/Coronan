@@ -22,24 +22,12 @@ jobs:
                       cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
-                    - name: windows-2022-gcc
-                      os: windows-2022
-                      build_type: Release
-                      cppcompiler: g++
-                      ccompiler: gcc
-                      generators: Ninja
                     - name: windows-2025-VS-2022
                       os: windows-2025
                       build_type: Release
                       cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
-                    - name: windows-2025-gcc
-                      os: windows-2025
-                      build_type: Release
-                      cppcompiler: g++
-                      ccompiler: gcc
-                      generators: Ninja
 
         env:
             CXX: ${{ matrix.cppcompiler }}
@@ -68,7 +56,6 @@ jobs:
                   modules: qtcharts
                   tools: tools_ifw
             - name: setup-msvc-dev
-              if: matrix.cppcompiler == 'cl'
               uses: TheMrMilchmann/setup-msvc-dev@v3
               with:
                   arch: x64
@@ -94,3 +81,4 @@ jobs:
                   path: |
                       ./build/Coronan-*.zip
                       ./build/Coronan-*.msi
+                      ./build/Coronan-*.exe

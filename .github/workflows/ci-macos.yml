@@ -84,3 +84,4 @@ jobs:
                   path: |
                       ./build/Coronan-*.tar.gz
                       ./build/Coronan-*.pkg
+                      ./build/Coronan-*.dmg

@@ -198,3 +198,4 @@ jobs:
                   path: |
                       ./build/Coronan-*.deb
                       ./build/Coronan-*.tar.gz
+                      ./build/Coronan-*.run
