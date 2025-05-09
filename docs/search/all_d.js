@@ -1,19 +1,16 @@
 var searchData=
 [
-  ['page_20navigation_0',['Page Navigation',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#extension-page-navigation',1,'']]],
-  ['paragraph_20linking_1',['Paragraph Linking',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#extension-para',1,'']]],
-  ['parse_5fcommandline_5farguments_2',['parse_commandline_arguments',['../namespacecoronan__cli.html#a50b2801fe6a6f91343b1c5d999a90ea7',1,'coronan_cli']]],
-  ['parse_5fprovinces_3',['parse_provinces',['../namespacecoronan_1_1api__parser.html#a623092bb76873a52ceb9f426fac1c498',1,'coronan::api_parser']]],
-  ['parse_5fregion_5ftotal_4',['parse_region_total',['../namespacecoronan_1_1api__parser.html#a0e2d0e662d422162c99697692977898d',1,'coronan::api_parser']]],
-  ['parse_5fregions_5',['parse_regions',['../namespacecoronan_1_1api__parser.html#aa5aa5a91384e1f431f80417aeab17b09',1,'coronan::api_parser']]],
-  ['populate_5fdata_6',['populate_data',['../classcoronan__ui_1_1CountryDataModel.html#a7c839ac06475245c2ce0675493d19114',1,'coronan_ui::CountryDataModel::populate_data()'],['../classcoronan__ui_1_1CountryOverviewTablewModel.html#a166737b000aed2b12c1ed50d5c76d8ab',1,'coronan_ui::CountryOverviewTablewModel::populate_data()']]],
-  ['pre_20commit_20hooks_7',['Pre-Commit Hooks',['../index.html#autotoc_md49',1,'']]],
-  ['project_20features_8',['Project Features',['../index.html#autotoc_md44',1,'']]],
-  ['project_5fname_9',['project_name',['../namespacecoronan_1_1config.html#a5f81ca4bdc51e9ea76fb33c9fd09c768',1,'coronan::config']]],
-  ['project_5fversion_10',['project_version',['../namespacecoronan_1_1config.html#a4ed4c22249b10f3d5838c4ca88d1b6c1',1,'coronan::config']]],
-  ['project_5fversion_5fmajor_11',['project_version_major',['../namespacecoronan_1_1config.html#aa067584bed59390cdd89117e7d6cb643',1,'coronan::config']]],
-  ['project_5fversion_5fminor_12',['project_version_minor',['../namespacecoronan_1_1config.html#ac0932b2fbfa32df4b068e839519f8f07',1,'coronan::config']]],
-  ['project_5fversion_5fpatch_13',['project_version_patch',['../namespacecoronan_1_1config.html#a89ac4d86a9e6b28524883da9bf508fe8',1,'coronan::config']]],
-  ['provinceinfo_14',['ProvinceInfo',['../structcoronan_1_1ProvinceInfo.html',1,'coronan']]],
-  ['provincelistobject_15',['ProvinceListObject',['../namespacecoronan.html#ad9a86b3f583b820cddd467139aa0b026',1,'coronan']]]
+  ['readme_2emd_0',['README.md',['../README_8md.html',1,'']]],
+  ['reason_1',['reason',['../classcoronan_1_1HTTPResponse.html#ad62fda136345d0205134e89d535c2c86',1,'coronan::HTTPResponse']]],
+  ['recovered_2',['recovered',['../structcoronan_1_1CovidData.html#a5a7431dd1ecb035feede65cc6e8066dd',1,'coronan::CovidData']]],
+  ['recovered_5fcolumn_5findex_3',['recovered_column_index',['../classcoronan__ui_1_1CountryDataModel.html#ad55df91041eea5e356eeadf10a11e8ac',1,'coronan_ui::CountryDataModel']]],
+  ['recovered_5fdiff_4',['recovered_diff',['../structcoronan_1_1CovidData.html#ae872b54661730a2b634f9ea3bfd916f4',1,'coronan::CovidData']]],
+  ['regioninfo_5',['RegionInfo',['../structcoronan_1_1RegionInfo.html',1,'coronan']]],
+  ['regionlistobject_6',['RegionListObject',['../namespacecoronan.html#aecb665d89ccb25344dd78b8b48acfa9c',1,'coronan']]],
+  ['request_5fcountry_5fdata_7',['request_country_data',['../classcoronan_1_1CoronaAPIClientType.html#acbcf644fc367c9151dcce2d517bc0c85',1,'coronan::CoronaAPIClientType::request_country_data(std::string const &amp;country_code, std::optional&lt; year_month_day &gt; const &amp;date) const'],['../classcoronan_1_1CoronaAPIClientType.html#a378fa2281162d6b5d079fb961e754c30',1,'coronan::CoronaAPIClientType::request_country_data(std::string const &amp;country_code, year_month_day const &amp;start_date, year_month_day const &amp;end_date) const']]],
+  ['request_5fprovinces_8',['request_provinces',['../classcoronan_1_1CoronaAPIClientType.html#a5fe54b0477ac4a2129021f69cd63b769',1,'coronan::CoronaAPIClientType']]],
+  ['request_5fregions_9',['request_regions',['../classcoronan_1_1CoronaAPIClientType.html#ac7dd1e76c8a0802545b4f917d8ebca21',1,'coronan::CoronaAPIClientType']]],
+  ['response_5fbody_10',['response_body',['../classcoronan_1_1HTTPResponse.html#a3e3cd9e54bca05d12c0a8e834ad2c150',1,'coronan::HTTPResponse']]],
+  ['ro_20nan_11',['Documentation for Co[ro]nan',['../index.html#autotoc_md1',1,'']]],
+  ['rowcount_12',['rowcount',['../classcoronan__ui_1_1CountryDataModel.html#a3a9557bb24a8a75b6eaa0954cd9aa5ae',1,'coronan_ui::CountryDataModel::rowCount()'],['../classcoronan__ui_1_1CountryOverviewTablewModel.html#ad63a1c579f97c61794f5f4f10cd7c0d5',1,'coronan_ui::CountryOverviewTablewModel::rowCount()']]]
 ];

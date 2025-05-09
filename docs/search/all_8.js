@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['important_20note_0',['IMPORTANT NOTE',['../index.html#autotoc_md41',1,'']]],
-  ['info_1',['info',['../structcoronan_1_1CountryData.html#ac159749deafb73f1792a0c8792037a80',1,'coronan::CountryData']]],
-  ['installation_2',['installation',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#autotoc_md7',1,'Installation'],['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#autotoc_md9',1,'Installation'],['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#autotoc_md11',1,'Installation'],['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#autotoc_md13',1,'Installation'],['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#autotoc_md15',1,'Installation'],['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#autotoc_md17',1,'Installation'],['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2README.html#autotoc_md33',1,'Installation']]],
-  ['installation_20instructions_3',['Further installation instructions',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2README.html#autotoc_md38',1,'']]],
-  ['instructions_4',['Further installation instructions',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2README.html#autotoc_md38',1,'']]],
-  ['interactive_20toc_5',['Interactive TOC',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#extension-toc',1,'']]],
-  ['iso_5fcode_6',['iso_code',['../structcoronan_1_1RegionInfo.html#a7e04322764ad58745fee08224f2d90aa',1,'coronan::RegionInfo']]]
+  ['latest_0',['latest',['../structcoronan_1_1CountryData.html#ab0d817b94b7ac8f3d238da79f7b85054',1,'coronan::CountryData']]],
+  ['latitude_1',['latitude',['../structcoronan_1_1RegionInfo.html#a8a6e94b2802f62f7af51d4ec525ea7ee',1,'coronan::RegionInfo::latitude'],['../structcoronan_1_1ProvinceInfo.html#ab8c938d6dc828cb7b0f2373c2c8aa00f',1,'coronan::ProvinceInfo::latitude']]],
+  ['longitude_2',['longitude',['../structcoronan_1_1RegionInfo.html#a073a8102a465127bf10ce81e9ccbdcbe',1,'coronan::RegionInfo::longitude'],['../structcoronan_1_1ProvinceInfo.html#ab34d3cdf9ab7376c8d4c4d99b787dc16',1,'coronan::ProvinceInfo::longitude']]]
 ];

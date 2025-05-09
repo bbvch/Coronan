@@ -1,15 +1,8 @@
 var searchData=
 [
-  ['main_0',['main',['../cli_2src_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../qt_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp']]],
-  ['main_2ecpp_1',['main.cpp',['../cli_2src_2main_8cpp.html',1,'(Global Namespace)'],['../qt_2main_8cpp.html',1,'(Global Namespace)']]],
-  ['mainwindow_2ecpp_2',['mainwindow.cpp',['../mainwindow_8cpp.html',1,'']]],
-  ['mainwindow_2eh_3',['mainwindow.h',['../mainwindow_8h.html',1,'']]],
-  ['max_5fdate_4',['max_date',['../classcoronan__ui_1_1CountryDataModel.html#a120a19363805aea3141563f3e10de24e',1,'coronan_ui::CountryDataModel']]],
-  ['max_5fvalue_5',['max_value',['../classcoronan__ui_1_1CountryDataModel.html#aa81fb3de8a3ac166118d1f1f925536eb',1,'coronan_ui::CountryDataModel']]],
-  ['min_5fdate_6',['min_date',['../classcoronan__ui_1_1CountryDataModel.html#a3179ccf0970bf24152d35868d6208f55',1,'coronan_ui::CountryDataModel']]],
-  ['min_5fvalue_7',['min_value',['../classcoronan__ui_1_1CountryDataModel.html#a055c2ef25aac35370512e577f003effc',1,'coronan_ui::CountryDataModel']]],
-  ['mode_8',['Disable Dark Mode',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2tricks.html#tricks-darkmode',1,'']]],
-  ['mode_20toggle_9',['Dark Mode Toggle',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#extension-dark-mode-toggle',1,'']]],
-  ['motivation_10',['Motivation',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2README.html#autotoc_md30',1,'']]],
-  ['mylibrary_11',['MyLibrary',['../namespaceMyLibrary.html',1,'']]]
+  ['name_0',['name',['../structcoronan_1_1RegionInfo.html#abd5b4d1201c81aafed67c6fe9b180ed2',1,'coronan::RegionInfo::name'],['../structcoronan_1_1ProvinceInfo.html#a26f78adbde986be23256801b364ae876',1,'coronan::ProvinceInfo::name']]],
+  ['nan_1',['Documentation for Co[ro]nan',['../index.html#autotoc_md1',1,'']]],
+  ['nix_2',['direnv &amp; nix',['../index.html#autotoc_md10',1,'']]],
+  ['note_3',['IMPORTANT NOTE',['../index.html#autotoc_md0',1,'']]],
+  ['number_5fof_5fparallel_5fget_4',['number_of_parallel_get',['../namespacecoronan_1_1details.html#afcf768903afc4b4a6d67573a2af3fb6d',1,'coronan::details']]]
 ];

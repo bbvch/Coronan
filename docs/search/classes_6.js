@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['regioninfo_0',['RegionInfo',['../structcoronan_1_1RegionInfo.html',1,'coronan']]]
+  ['sslclient_0',['SSLClient',['../classcoronan_1_1SSLClient.html',1,'coronan']]]
 ];

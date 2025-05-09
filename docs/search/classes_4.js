@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['overloaded_0',['overloaded',['../structcoronan_1_1details_1_1overloaded.html',1,'coronan::details']]]
+  ['provinceinfo_0',['ProvinceInfo',['../structcoronan_1_1ProvinceInfo.html',1,'coronan']]]
 ];

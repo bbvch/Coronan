@@ -22,10 +22,5 @@ var annotated_dup =
       [ "CountryChartView", "classcoronan__ui_1_1CountryChartView.html", "classcoronan__ui_1_1CountryChartView" ],
       [ "CountryDataModel", "classcoronan__ui_1_1CountryDataModel.html", "classcoronan__ui_1_1CountryDataModel" ],
       [ "CountryOverviewTablewModel", "classcoronan__ui_1_1CountryOverviewTablewModel.html", "classcoronan__ui_1_1CountryOverviewTablewModel" ]
-    ] ],
-    [ "MyLibrary", "namespaceMyLibrary.html", [
-      [ "Example", "classMyLibrary_1_1Example.html", "classMyLibrary_1_1Example" ],
-      [ "SecondExample", "classMyLibrary_1_1SecondExample.html", null ],
-      [ "SubclassExample", "classMyLibrary_1_1SubclassExample.html", "classMyLibrary_1_1SubclassExample" ]
     ] ]
 ];

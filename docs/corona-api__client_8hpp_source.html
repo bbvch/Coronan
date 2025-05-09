@@ -213,7 +213,7 @@ $(document).ready(function(){initNavTree('corona-api__client_8hpp_source.html','
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="classcoronan_1_1CoronaAPIClientType.html#acbcf644fc367c9151dcce2d517bc0c85">  125</a></span><a class="code hl_struct" href="structcoronan_1_1CountryData.html">CountryData</a> <a class="code hl_function" href="classcoronan_1_1CoronaAPIClientType.html#acbcf644fc367c9151dcce2d517bc0c85">CoronaAPIClientType&lt;ClientType&gt;::request_country_data</a>(std::string <span class="keyword">const</span>&amp; country_code,</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                                                                  std::optional&lt;year_month_day&gt; <span class="keyword">const</span>&amp; date)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  <span class="keyword">auto</span> <span class="keyword">const</span> date_query_string =</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  <span class="keyword">auto</span> <span class="keyword">const</span>&amp; date_query_string =</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      date.has_value() ? fmt::format(<span class="stringliteral">&quot;date={:%Y-%m-%d}&amp;&quot;</span>, sys_days(date.value())) : std::string{<span class="stringliteral">&quot;&quot;</span>};</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  <span class="keyword">auto</span> <span class="keyword">const</span> region_report_url = <a class="code hl_variable" href="namespacecoronan.html#a69f3eed1369dac95410a659f53807fa6">corona_api_url</a> + std::string{<span class="stringliteral">&quot;reports/total?&quot;</span>} + date_query_string +</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                                 std::string{<span class="stringliteral">&quot;iso=&quot;</span>} + std::string{country_code};</div>
@@ -239,8 +239,8 @@ $(document).ready(function(){initNavTree('corona-api__client_8hpp_source.html','
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  }</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  {</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">auto</span> <span class="keyword">const</span> exception_msg = details::create_exception_msg(region_report_url, http_response);</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classcoronan_1_1HTTPClientException.html">HTTPClientException</a>{exception_msg};</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">auto</span> exception_msg = details::create_exception_msg(region_report_url, http_response);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classcoronan_1_1HTTPClientException.html">HTTPClientException</a>{std::move(exception_msg)};</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  }</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>}</div>
 </div>

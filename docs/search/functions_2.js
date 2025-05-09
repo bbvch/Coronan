@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['function_5ftemplate_5ftest_0',['function_template_test',['../classMyLibrary_1_1SubclassExample.html#ad2432fe3b060789f6f7052c515d515f4',1,'MyLibrary::SubclassExample']]]
+  ['get_0',['get',['../structcoronan_1_1HTTPClientType.html#a0ff0248a01f86b82fef565d6cd6cdcce',1,'coronan::HTTPClientType']]]
 ];

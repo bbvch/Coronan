@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['latest_0',['latest',['../structcoronan_1_1CountryData.html#ab0d817b94b7ac8f3d238da79f7b85054',1,'coronan::CountryData']]],
-  ['latitude_1',['latitude',['../structcoronan_1_1RegionInfo.html#a8a6e94b2802f62f7af51d4ec525ea7ee',1,'coronan::RegionInfo::latitude'],['../structcoronan_1_1ProvinceInfo.html#ab8c938d6dc828cb7b0f2373c2c8aa00f',1,'coronan::ProvinceInfo::latitude']]],
-  ['layout_2',['Choosing a layout',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2README.html#autotoc_md37',1,'']]],
-  ['linking_3',['Paragraph Linking',['../md__2home_2runner_2work_2Coronan_2Coronan_2build_2__deps_2__doxygen__theme-src_2docs_2extensions.html#extension-para',1,'']]],
-  ['list_4',['list',['../bug.html',1,'Bug List'],['../deprecated.html',1,'Deprecated List'],['../todo.html',1,'Todo List']]],
-  ['lists_5',['Lists',['../classMyLibrary_1_1Example.html#autotoc_md25',1,'']]],
-  ['long_5ffunction_5fwith_5fmany_5fparameters_6',['long_function_with_many_parameters',['../classMyLibrary_1_1SubclassExample.html#a92227fff4f72a11be0e21d88914ba63e',1,'MyLibrary::SubclassExample']]],
-  ['longitude_7',['longitude',['../structcoronan_1_1RegionInfo.html#a073a8102a465127bf10ce81e9ccbdcbe',1,'coronan::RegionInfo::longitude'],['../structcoronan_1_1ProvinceInfo.html#ab34d3cdf9ab7376c8d4c4d99b787dc16',1,'coronan::ProvinceInfo::longitude']]]
+  ['main_0',['main',['../cli_2src_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../qt_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp']]],
+  ['main_2ecpp_1',['main.cpp',['../cli_2src_2main_8cpp.html',1,'(Global Namespace)'],['../qt_2main_8cpp.html',1,'(Global Namespace)']]],
+  ['mainwindow_2ecpp_2',['mainwindow.cpp',['../mainwindow_8cpp.html',1,'']]],
+  ['mainwindow_2eh_3',['mainwindow.h',['../mainwindow_8h.html',1,'']]],
+  ['max_5fdate_4',['max_date',['../classcoronan__ui_1_1CountryDataModel.html#a120a19363805aea3141563f3e10de24e',1,'coronan_ui::CountryDataModel']]],
+  ['max_5fvalue_5',['max_value',['../classcoronan__ui_1_1CountryDataModel.html#aa81fb3de8a3ac166118d1f1f925536eb',1,'coronan_ui::CountryDataModel']]],
+  ['min_5fdate_6',['min_date',['../classcoronan__ui_1_1CountryDataModel.html#a3179ccf0970bf24152d35868d6208f55',1,'coronan_ui::CountryDataModel']]],
+  ['min_5fvalue_7',['min_value',['../classcoronan__ui_1_1CountryDataModel.html#a055c2ef25aac35370512e577f003effc',1,'coronan_ui::CountryDataModel']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['provinceinfo_0',['ProvinceInfo',['../structcoronan_1_1ProvinceInfo.html',1,'coronan']]]
+  ['regioninfo_0',['RegionInfo',['../structcoronan_1_1RegionInfo.html',1,'coronan']]]
 ];

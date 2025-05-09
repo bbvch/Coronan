@@ -113,15 +113,15 @@ Project State</summary>
 <p><a href="https://gitpod.io/#https://github.com/bbvch/Coronan"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" style="pointer-events: none;" class="inline"/></a></p>
 <p></p>
 </details>
-<h3><a class="anchor" id="autotoc_md41"></a>
+<h3><a class="anchor" id="autotoc_md0"></a>
 IMPORTANT NOTE</h3>
 <p>Co[ro]nan was written during the pandemic of the Corona Virus. The <a href="https://about-corona.net/documentation">The About Corona Covid-19 API</a> used for the first version is no longer available. However with <a href="https://covid-api.com/">COVID-19 Statistics API</a> an alternative was found. Unfortunately the <a href="https://covid-api.com/api/">COVID-19 Statistics API</a> does have a different data structure, and retrieving data is much slower, because the API does not support timeline data, i.e. every data for specific date requires a GET. But at least the application works again. And the name didn't have to change.</p>
-<h1><a class="anchor" id="autotoc_md42"></a>
+<h1><a class="anchor" id="autotoc_md1"></a>
 Documentation for Co[ro]nan</h1>
 <p>Co[ro]nan is an example C++20 CLI and Qt project using <a href="https://conan.io/">conan</a> and <a href="https://cmake.org/">CMake</a>. It reads the latest data of Corona (Covid-19) cases for a country from the <a href="https://covid-api.com/">COVID-19 Statistics API</a>.</p>
 <p><em>The COVID-19 Statistics API</em> provides statistics via REST API from the <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins CSSE</a>.</p>
-<p><img src="docs/images/Screenshot-qt.png" alt="Screenshot of the qt application" class="inline"/></p>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<p><img src="images/Screenshot-qt.png" alt="Screenshot of the qt application" class="inline"/></p>
+<h2><a class="anchor" id="autotoc_md2"></a>
 Table of content</h2>
 <details >
 <summary >
@@ -141,28 +141,36 @@ Expand contents</summary>
 </ul>
 <p></p>
 </details>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<h2><a class="anchor" id="autotoc_md3"></a>
 Project Features</h2>
 <p>This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:</p><ul>
 <li>C++ 20 Standard<ul>
-<li><a href="https://gcc.gnu.org/">GCC</a> _(&gt;= gcc 12)_</li>
-<li><a href="https://clang.llvm.org/">Clang</a></li>
+<li><a href="https://gcc.gnu.org/">GCC</a> _(&gt;= gcc-12)_</li>
+<li><a href="https://clang.llvm.org/">Clang</a> _(&gt;= clang-13)_</li>
 <li>Visual Studio 2022</li>
 </ul>
 </li>
 <li><a href="https://conan.io/">conan</a> package Manager</li>
-<li>Libraries used:<ul>
+<li>Dependencies:<ul>
+<li>to install:<ul>
 <li><a href="https://www.qt.io/">Qt6</a> _(minimal version required: 6.4)_</li>
+</ul>
+</li>
+<li>with conan:<ul>
 <li><a href="https://pocoproject.org/">Poco</a> Networking library</li>
 <li><a href="https://rapidjson.org/">RapidJSON</a></li>
 <li><a href="https://github.com/bfgroup/Lyra">Lyra</a> command line arguments parser</li>
 <li><a href="https://github.com/fmtlib/fmt">{fmt}</a> formatting library _(std::print is C++23 and therefore not used yet)_</li>
 <li><a href="https://github.com/HowardHinnant/date">date</a> date and time library _(std::chrono::year_month_day is not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_</li>
+<li><a href="https://github.com/catchorg/Catch2">Catch2</a> _(for unittests)__</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Unittests with Coverage using <a href="https://github.com/catchorg/Catch2">Catch2</a></li>
 <li>CMake with <a href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">CMakePresets</a> _(CMake &gt;= 3.23)_</li>
 <li>CPack packaging:<ul>
+<li>tar gzip archive</li>
 <li>Debian package</li>
 <li><a href="https://doc.qt.io/qtinstallerframework/">Qt Installer Framework</a></li>
 <li><a href="https://wixtoolset.org/">WIX</a></li>
@@ -177,6 +185,7 @@ Project Features</h2>
 <li><a href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a></li>
 <li><a href="http://cppcheck.sourceforge.net/">cppcheck</a></li>
 <li><a href="https://include-what-you-use.org/">include-what-you-use</a></li>
+<li><a href="https://cmake.org/cmake/help/latest/prop_tgt/LINK_WHAT_YOU_USE.html">link-what-you-use</a></li>
 </ul>
 </li>
 <li>Sanitizers support:<ul>
@@ -188,8 +197,8 @@ Project Features</h2>
 </ul>
 </li>
 <li>Documentation Generation using<ul>
-<li><a href="https://www.doxygen.nl/index.html">Doxygen</a></li>
-<li><a href="https://github.com/jothepro/doxygen-awesome-css">doxygen-awesome-css</a></li>
+<li><a href="https://www.doxygen.nl/index.html">Doxygen</a> using the _"doxygen-awesome-sidebar-only"_ theme by</li>
+<li><a href="https://github.com/jothepro/doxygen-awesome-css">doxygen-awesome-css</a> by default</li>
 </ul>
 </li>
 <li>Code formatting:<ul>
@@ -241,12 +250,12 @@ Project Features</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md45"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Development</h2>
 <p>To build the project you need python and a recent <a href="https://conan.io/">conan version</a>, a recent version of <a href="https://cmake.org/">CMake</a> (&gt;= 3.23), a modern C++ compiler (C++20 support) and <a href="https://www.qt.io/">Qt6</a> with <a href="https://doc.qt.io/qt-6/qtcharts-index.html">QtCharts</a>.</p>
 <p>To install all python requirements for documentation generation, build and coverage generation (including conan and cmake) use:</p>
 <div class="fragment"><div class="line">pip3 install -r py-requirements.txt</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md46"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
 How to build</h3>
 <p>You have the following options to build the project</p>
 <p><b>Use build script</b>:</p>
@@ -270,84 +279,71 @@ How to build</h3>
 </div><!-- fragment --><p class="startli">or any other <a href="CMakePresets.json">CMakePresets</a>.</p>
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md47"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 Source Code Formatting</h3>
 <p>For source code formatting <a href="https://clang.llvm.org/docs/ClangFormat.html">clang-format</a> for C++ files and <a href="https://pypi.org/project/cmake-format/">cmake-format</a> for the CMake files are used. Run <code>format_source_files.sh</code> to format all C++ and CMake files.</p>
 <p><em>Note: Delete the build directory before formatting, otherwise all CMake files in the build folder will be formatted as well, what may take a while.</em></p>
-<h3><a class="anchor" id="autotoc_md48"></a>
+<h3><a class="anchor" id="autotoc_md7"></a>
 CMake options</h3>
 <ul>
-<li><code>DOWNLOAD_QT6</code>: Download and build Qt6 otherwise use installed. <em>Default</em>: <code>OFF</code></li>
-<li><code>ENABLE_TESTING</code>: Build (and run) unittests. <em>Default</em>: <code>ON</code></li>
+<li><code>DOWNLOAD_QT6</code>: Download and build Qt6 otherwise use installed. <em>Default: <code>OFF</code></em></li>
+<li><code>ENABLE_TESTING</code>: Build (and run) unittests. <em>Default: <code>ON</code></em></li>
 <li><code>ENABLE_BUILD_WITH_TIME_TRACE</code>: Enable <a href="https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature">Clang Time Trace Feature</a>. <em>Default: <code>OFF</code></em></li>
 <li><code>ENABLE_PCH</code>: Enable <a href="https://en.wikipedia.org/wiki/Precompiled_header">Precompiled Headers</a>. <em>Default: <code>OFF</code></em></li>
 <li><code>ENABLE_CACHE</code>: Enable caching if available, e.g. <a href="https://ccache.dev/">ccache</a> or <a href="https://github.com/mozilla/sccache">sccache</a>. <em>Default: <code>ON</code></em></li>
 <li><code>ENABLE_COVERAGE</code>: Enable coverage reporting for gcc/clang. <em>Default: <code>OFF</code></em></li>
-<li><code>ENABLE_DOXYGEN</code>: Enable doxygen documentation build (<a href="https://www.doxygen.nl/index.html">Doxygen</a> must be installed). <em>Default: <code>ON</code></em> if Doxygen is installed <code>OFF</code> otherwise._</li>
-<li><code>ENABLE_SPHINX</code>: Enable sphinx documentation build (<a href="https://www.sphinx-doc.org/">Sphinx</a> with <a href="https://breathe.readthedocs.io/">Breath</a> and <a href="https://github.com/omnilib/sphinx-mdinclude">sphinx-mdinclude</a> must be installed). <em>Default: <code>ON</code></em> if Sphinx is installed <code>OFF</code> otherwise._</li>
-<li><code>ENABLE_SANITIZERS</code>: Enable supported sanitizers". &lt;em&gt;Default: &lt;tt&gt;OFF&lt;/tt&gt;&lt;/em&gt;
-* &lt;tt&gt;ENABLE_SANITIZER_ADDRESS&lt;/tt&gt;: Enable &lt;a href="<a href="https://clang.llvm.org/docs/AddressSanitizer.html">https://clang.llvm.org/docs/AddressSanitizer.html</a>" &gt;address sanitizer&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;ON&lt;/tt&gt; if supported by the compiler and &lt;tt&gt;ENABLE_SANITIZERS&lt;/tt&gt; == &lt;tt&gt;ON&lt;/tt&gt; otherwise &lt;tt&gt;OFF&lt;/tt&gt;.&lt;/em&gt;
-* &lt;tt&gt;ENABLE_SANITIZER_LEAK&lt;/tt&gt;: Enable &lt;a href="<a href="https://clang.llvm.org/docs/LeakSanitizer.html">https://clang.llvm.org/docs/LeakSanitizer.html</a>" &gt;leak sanitizer&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;OFF&lt;/tt&gt;&lt;/em&gt;
-* &lt;tt&gt;ENABLE_SANITIZER_UNDEFINED_BEHAVIOR&lt;/tt&gt;: Enable &lt;a href="<a href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html</a>" &gt;undefined behavior sanitizer&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;ON&lt;/tt&gt; if supported by the compiler and &lt;tt&gt;ENABLE_SANITIZERS&lt;/tt&gt; == &lt;tt&gt;ON&lt;/tt&gt; otherwise &lt;tt&gt;OFF&lt;/tt&gt;.&lt;/em&gt;
-* &lt;tt&gt;ENABLE_SANITIZER_THREAD&lt;/tt&gt;: Enable &lt;a href="<a href="https://clang.llvm.org/docs/ThreadSanitizer.html">https://clang.llvm.org/docs/ThreadSanitizer.html</a>" &gt;thread sanitizer&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;OFF&lt;/tt&gt;&lt;/em&gt;
-* &lt;tt&gt;ENABLE_SANITIZER_MEMORY&lt;/tt&gt;: Enable &lt;a href="<a href="https://clang.llvm.org/docs/MemorySanitizer.html">https://clang.llvm.org/docs/MemorySanitizer.html</a>" &gt;memory sanitizer&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;OFF&lt;/tt&gt;&lt;/em&gt;
-* &lt;tt&gt;ENABLE_IPO&lt;/tt&gt;: Enable intermodular optimization, aka &lt;a href="<a href="https://llvm.org/docs/LinkTimeOptimization.html">https://llvm.org/docs/LinkTimeOptimization.html</a>" &gt;Link Time Optimization (LTO)&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;OFF&lt;/tt&gt;&lt;/em&gt;
-* &lt;tt&gt;ENABLE_CPPCHECK&lt;/tt&gt;: Enable static analysis with &lt;a href="<a href="http://cppcheck.sourceforge.net/">http://cppcheck.sourceforge.net/</a>" &gt;cppcheck&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;ON&lt;/tt&gt; if cppcheck is installed &lt;tt&gt;OFF&lt;/tt&gt; otherwise.&lt;/em&gt;
-* &lt;tt&gt;ENABLE_CLANG_TIDY&lt;/tt&gt;: Enable static analysis with &lt;a href="<a href="https://clang.llvm.org/extra/clang-tidy/">https://clang.llvm.org/extra/clang-tidy/</a>" &gt;clang-tidy&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;ON&lt;/tt&gt; if clang-tidy is installed &lt;tt&gt;OFF&lt;/tt&gt; otherwise.&lt;/em&gt;
-* &lt;tt&gt;ENABLE_INCLUDE_WHAT_YOU_USE&lt;/tt&gt;: Enable static analysis with &lt;a href="<a href="https://include-what-you-use.org/">https://include-what-you-use.org/</a>" &gt;include-what-you-use&lt;/a&gt;. &lt;em&gt;Default: &lt;tt&gt;ON&lt;/tt&gt; if include-what-you-use is installed &lt;tt&gt;OFF&lt;/tt&gt; otherwise&lt;/em&gt;.
-* &lt;tt&gt;ENABLE_LINK_WHAT_YOU_USE&lt;/tt&gt; : Enable &lt;em&gt;link what you use&lt;/em&gt; cmake built-in static analysis. _Default: &lt;tt&gt;OFF&lt;/tt&gt;
-* &lt;tt&gt;WARNINGS_AS_ERRORS&lt;/tt&gt;: Treat compiler warnings as errors. _Default: &lt;tt&gt;OFF&lt;/tt&gt;
-
-@subsection autotoc_md49 Pre-Commit Hooks
-
-The following &lt;a href="<a href="https://github.com/pre-commit/pre-commit-hooks">https://github.com/pre-commit/pre-commit-hooks</a>" &gt;Pre-commit-hooks&lt;/a&gt; are used to check and format files before committing:
-
-* &lt;tt&gt;check-added-large-files&lt;/tt&gt;: Prevent giant files (&gt; 500kB) from being committed.
-* &lt;tt&gt;fix-byte-order-marker&lt;/tt&gt;: Forbid files which have a UTF-8 byte-order marker
-* &lt;tt&gt;check-case-conflict&lt;/tt&gt;: Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT.
-* &lt;tt&gt;check-merge-conflict&lt;/tt&gt;: Check for files that contain merge conflict strings.
-* &lt;tt&gt;check-symlinks&lt;/tt&gt;: Checks for symlinks which do not point to anything.
-* &lt;tt&gt;check-yaml&lt;/tt&gt;: Attempts to load all yaml files to verify syntax.
-* &lt;tt&gt;check-json&lt;/tt&gt;: Attempts to load all json files to verify syntax.
-* &lt;tt&gt;check-toml&lt;/tt&gt;: Attempts to load all TOML files to verify syntax.
-* &lt;tt&gt;check-executables-have-shebangs&lt;/tt&gt;: Checks that non-binary executables have a proper shebang.
-* &lt;tt&gt;end-of-file-fixer&lt;/tt&gt;: Makes sure files end in a newline and only a newline.
-* &lt;tt&gt;mixed-line-ending&lt;/tt&gt;: Replaces or checks mixed line ending.
-* &lt;tt&gt;trailing-whitespace&lt;/tt&gt;: Trims trailing whitespace in markdown
-* &lt;tt&gt;clang-format&lt;/tt&gt;: Format C++ files using clang-format
-* &lt;tt&gt;cmake-format&lt;/tt&gt;: Format CMake files using cmake-format
-* &lt;tt&gt;yamllint&lt;/tt&gt;: Linter for yaml files
-* &lt;tt&gt;yamlfmt&lt;/tt&gt;: Format yaml files
-
-Please install pre-commit hooks before committing any code.
-
-@icode{bash} 
-pre-commit install -f --hook-type pre-commit
-@endicode 
-
-To manually check all files run:
-@icode{bash} 
-pre-commit run --all-files
-@endicode 
-
-@subsection autotoc_md50 gitpod
-
-To start right away without installing anything on your local machine, you can simply use the &lt;img src="<a href="https://gitpod.io/button/open-in-gitpod.svg">https://gitpod.io/button/open-in-gitpod.svg</a>" height="15"&gt; button in the Project State section at the top of this README.
-
-@subsection autotoc_md51 direnv &amp; nix
-
-If you have &lt;a href="<a href="https://direnv.net/">https://direnv.net/</a>" &gt;direnv&lt;/a&gt; and &lt;a href="<a href="https://nixos.org/">https://nixos.org/</a>" &gt;nix&lt;/a&gt; installed everything should be setup to start upon entering the project folder, if &lt;tt&gt;use nix&lt;/tt&gt; is not commented out in &lt;a href=".envrc" &gt;.envrc&lt;/a&gt;. gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang_18) change it in &lt;a href=".envrc" &gt;.envrc&lt;/a&gt;
-
-You can also use &lt;tt&gt;nix-shell&lt;/tt&gt; directly to build when &lt;tt&gt;use nix&lt;/tt&gt; is disabled, e.g.:
-
-  @icode{bash} 
-  nix-shell --command "conan profile detect"
-  nix-shell --command "conan install . --build=missing --settings=build_type=Debug"
-  nix-shell --command "cmake -S . --preset=linux-debug-ninja nix-shell --command "cmake --build --preset=ninja-debug
-  @endicode 
-
-When using nix, a new cmake is available and therefore configure and build &lt;a href="<a href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html</a>" &gt;CMakePresets can be used. </li>
+<li><code>ENABLE_DOXYGEN</code>: Enable doxygen documentation build (<a href="https://www.doxygen.nl/index.html">Doxygen</a> must be installed). <em>Default: <code>ON</code> if Doxygen is installed <code>OFF</code> otherwise.</em></li>
+<li><code>ENABLE_SANITIZERS</code>: Enable supported sanitizers. <em>Default: <code>OFF</code></em><ul>
+<li><code>ENABLE_SANITIZER_ADDRESS</code>: Enable <a href="https://clang.llvm.org/docs/AddressSanitizer.html">address sanitizer</a>. <em>Default: <code>ON</code> if supported by the compiler and <code>ENABLE_SANITIZERS</code> is <code>ON</code> otherwise <code>OFF</code>.</em></li>
+<li><code>ENABLE_SANITIZER_LEAK</code>: Enable <a href="https://clang.llvm.org/docs/LeakSanitizer.html">leak sanitizer</a>. <em>Default: <code>OFF</code></em></li>
+<li><code>ENABLE_SANITIZER_UNDEFINED_BEHAVIOR</code>: Enable <a href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">undefined behavior sanitizer</a>. <em>Default: <code>ON</code> if supported by the compiler and <code>ENABLE_SANITIZERS</code> is <code>ON</code> otherwise <code>OFF</code>.</em></li>
+<li><code>ENABLE_SANITIZER_THREAD</code>: Enable <a href="https://clang.llvm.org/docs/ThreadSanitizer.html">thread sanitizer</a>. <em>Default: <code>OFF</code></em></li>
+<li><code>ENABLE_SANITIZER_MEMORY</code>: Enable <a href="https://clang.llvm.org/docs/MemorySanitizer.html">memory sanitizer</a>. <em>Default: <code>OFF</code></em></li>
 </ul>
+</li>
+<li><code>ENABLE_IPO</code>: Enable intermodular optimization, aka <a href="https://llvm.org/docs/LinkTimeOptimization.html">Link Time Optimization (LTO)</a>. <em>Default: <code>OFF</code></em></li>
+<li><code>ENABLE_CPPCHECK</code>: Enable static analysis with <a href="http://cppcheck.sourceforge.net/">cppcheck</a>. <em>Default: <code>ON</code> if cppcheck is installed <code>OFF</code> otherwise.</em></li>
+<li><code>ENABLE_CLANG_TIDY</code>: Enable static analysis with <a href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a>. <em>Default: <code>ON</code> if clang-tidy is installed <code>OFF</code> otherwise.</em></li>
+<li><code>ENABLE_INCLUDE_WHAT_YOU_USE</code>: Enable static analysis with <a href="https://include-what-you-use.org/">include-what-you-use</a>. <em>Default: <code>ON</code> if include-what-you-use is installed <code>OFF</code> otherwise</em>.</li>
+<li><code>ENABLE_LINK_WHAT_YOU_USE</code> : Enable <em>link what you use</em> cmake built-in static analysis. _Default: <code>OFF</code></li>
+<li><code>WARNINGS_AS_ERRORS</code>: Treat compiler warnings as errors. _Default: <code>OFF</code></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Pre-Commit Hooks</h2>
+<p>The following <a href="https://github.com/pre-commit/pre-commit-hooks">Pre-commit-hooks</a> are used to check and format files before committing:</p>
+<ul>
+<li><code>check-added-large-files</code>: Prevent giant files (&gt; 500kB) from being committed.</li>
+<li><code>fix-byte-order-marker</code>: Forbid files which have a UTF-8 byte-order marker</li>
+<li><code>check-case-conflict</code>: Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT.</li>
+<li><code>check-merge-conflict</code>: Check for files that contain merge conflict strings.</li>
+<li><code>check-symlinks</code>: Checks for symlinks which do not point to anything.</li>
+<li><code>check-yaml</code>: Attempts to load all yaml files to verify syntax.</li>
+<li><code>check-json</code>: Attempts to load all json files to verify syntax.</li>
+<li><code>check-toml</code>: Attempts to load all TOML files to verify syntax.</li>
+<li><code>check-executables-have-shebangs</code>: Checks that non-binary executables have a proper shebang.</li>
+<li><code>end-of-file-fixer</code>: Makes sure files end in a newline and only a newline.</li>
+<li><code>mixed-line-ending</code>: Replaces or checks mixed line ending.</li>
+<li><code>trailing-whitespace</code>: Trims trailing whitespace in markdown</li>
+<li><code>clang-format</code>: Format C++ files using clang-format</li>
+<li><code>cmake-format</code>: Format CMake files using cmake-format</li>
+<li><code>yamllint</code>: Linter for yaml files</li>
+<li><code>yamlfmt</code>: Format yaml files</li>
+</ul>
+<p>Please install pre-commit hooks before committing any code.</p>
+<div class="fragment"><div class="line">pre-commit install -f --hook-type pre-commit</div>
+</div><!-- fragment --><p>To manually check all files run: </p><div class="fragment"><div class="line">pre-commit run --all-files</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+gitpod</h2>
+<p>To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" alt="" style="pointer-events: none;" height="15" class="inline"/> button in the Project State section at the top of this README.</p>
+<h2><a class="anchor" id="autotoc_md10"></a>
+direnv &amp; nix</h2>
+<p>If you have <a href="https://direnv.net/">direnv</a> and <a href="https://nixos.org/">nix</a> installed everything should be setup to start upon entering the project folder, if <code>use nix</code> is not commented out in <a href=".envrc">.envrc</a>. gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang_18) change it in <a href=".envrc">.envrc</a></p>
+<p>You can also use <code>nix-shell</code> directly to build when <code>use nix</code> is disabled, e.g.:</p>
+<div class="fragment"><div class="line">nix-shell --command &quot;conan profile detect&quot;</div>
+<div class="line">nix-shell --command &quot;conan install . --build=missing --settings=build_type=Debug&quot;</div>
+<div class="line">nix-shell --command &quot;cmake -S . --preset=linux-debug-ninja</div>
+<div class="line">nix-shell --command &quot;cmake --build --preset=ninja-debug</div>
+</div><!-- fragment --><p>When using nix, a new cmake is available and therefore configure and build <a href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">CMakePresets</a> can be used. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

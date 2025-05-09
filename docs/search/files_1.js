@@ -12,6 +12,5 @@ var searchData=
   ['country_5fdata_5fmodel_2ecpp_9',['country_data_model.cpp',['../country__data__model_8cpp.html',1,'']]],
   ['country_5fdata_5fmodel_2ehpp_10',['country_data_model.hpp',['../country__data__model_8hpp.html',1,'']]],
   ['country_5foverview_5ftable_5fmodel_2ecpp_11',['country_overview_table_model.cpp',['../country__overview__table__model_8cpp.html',1,'']]],
-  ['country_5foverview_5ftable_5fmodel_2ehpp_12',['country_overview_table_model.hpp',['../country__overview__table__model_8hpp.html',1,'']]],
-  ['customization_2emd_13',['customization.md',['../customization_8md.html',1,'']]]
+  ['country_5foverview_5ftable_5fmodel_2ehpp_12',['country_overview_table_model.hpp',['../country__overview__table__model_8hpp.html',1,'']]]
 ];
