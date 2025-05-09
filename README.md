@@ -52,7 +52,7 @@ It reads the latest data of Corona (Covid-19) cases for a country from the [COVI
 _The COVID-19 Statistics API_ provides statistics via REST API from the [Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19).
 
 
-![Screenshot of the qt application](docs/images/Screenshot-qt.png)
+![Screenshot of the qt application](images/Screenshot-qt.png)
 
 
 ## Table of content
@@ -75,25 +75,29 @@ _The COVID-19 Statistics API_ provides statistics via REST API from the [Johns H
 
 This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:
 * C++ 20 Standard
-  * [GCC](https://gcc.gnu.org/) _(>= gcc 12)_
-  * [Clang](https://clang.llvm.org/)
+  * [GCC](https://gcc.gnu.org/) _(>= gcc-12)_
+  * [Clang](https://clang.llvm.org/) _(>= clang-13)_
   * Visual Studio 2022
 
 * [conan](https://conan.io/) package Manager
 
-* Libraries used:
-  * [Qt6](https://www.qt.io/) _(minimal version required: 6.4)_
-  * [Poco](https://pocoproject.org/) Networking library
-  * [RapidJSON](https://rapidjson.org/)
-  * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
-  * [{fmt}](https://github.com/fmtlib/fmt) formatting library _(std::print is C++23 and therefore not used yet)_
-  * [date](https://github.com/HowardHinnant/date) date and time library _(std::chrono::year_month_day is not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_
+* Dependencies:
+  * to install:
+    * [Qt6](https://www.qt.io/) _(minimal version required: 6.4)_
+  * with conan:
+    * [Poco](https://pocoproject.org/) Networking library
+    * [RapidJSON](https://rapidjson.org/)
+    * [Lyra](https://github.com/bfgroup/Lyra) command line arguments parser
+    * [{fmt}](https://github.com/fmtlib/fmt) formatting library _(std::print is C++23 and therefore not used yet)_
+    * [date](https://github.com/HowardHinnant/date) date and time library _(std::chrono::year_month_day is not fully supported in older c++20 compilers (gcc 12, 13 and clang 13-16) therefor it is not used yet)_
+    * [Catch2](https://github.com/catchorg/Catch2) _(for unittests)__
 
 * Unittests with Coverage using [Catch2](https://github.com/catchorg/Catch2)
 
 * CMake with [CMakePresets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) _(CMake >= 3.23)_
 
 * CPack packaging:
+  * tar gzip archive
   * Debian package
   * [Qt Installer Framework](https://doc.qt.io/qtinstallerframework/)
   * [WIX](https://wixtoolset.org/)
@@ -106,6 +110,7 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
   * [cppcheck](http://cppcheck.sourceforge.net/)
   * [include-what-you-use](https://include-what-you-use.org/)
+  * [link-what-you-use](https://cmake.org/cmake/help/latest/prop_tgt/LINK_WHAT_YOU_USE.html)
 
 * Sanitizers support:
   * [Address Sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
@@ -115,8 +120,8 @@ This projects is a C++ project template. It includes everything a "Modern" C++ p
   * [Memory Sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
 
 * Documentation Generation using
-  * [Doxygen](https://www.doxygen.nl/index.html)
-  * [doxygen-awesome-css](https://github.com/jothepro/doxygen-awesome-css)
+  * [Doxygen](https://www.doxygen.nl/index.html) using the _"doxygen-awesome-sidebar-only"_ theme by
+  * [doxygen-awesome-css](https://github.com/jothepro/doxygen-awesome-css) by default
 
 * Code formatting:
   * [clang-format](https://clang.llvm.org/docs/ClangFormat.html) for C++ files
@@ -222,20 +227,19 @@ _Note: Delete the build directory before formatting, otherwise all CMake files i
 
 ### CMake options
 
-* `DOWNLOAD_QT6`: Download and build Qt6 otherwise use installed. _Default_: `OFF`
-* `ENABLE_TESTING`: Build (and run) unittests. _Default_: `ON`
+* `DOWNLOAD_QT6`: Download and build Qt6 otherwise use installed. _Default: `OFF`_
+* `ENABLE_TESTING`: Build (and run) unittests. _Default: `ON`_
 * `ENABLE_BUILD_WITH_TIME_TRACE`: Enable [Clang Time Trace Feature](https://www.snsystems.com/technology/tech-blog/clang-time-trace-feature). _Default: `OFF`_
 * `ENABLE_PCH`: Enable [Precompiled Headers](https://en.wikipedia.org/wiki/Precompiled_header). _Default: `OFF`_
 * `ENABLE_CACHE`: Enable caching if available, e.g. [ccache](https://ccache.dev/) or [sccache](https://github.com/mozilla/sccache). _Default: `ON`_
 * `ENABLE_COVERAGE`: Enable coverage reporting for gcc/clang. _Default: `OFF`_
-* `ENABLE_DOXYGEN`: Enable doxygen documentation build ([Doxygen](https://www.doxygen.nl/index.html) must be installed). _Default: `ON`_ if Doxygen is installed `OFF` otherwise._
-* `ENABLE_SPHINX`: Enable sphinx documentation build ([Sphinx](https://www.sphinx-doc.org/) with [Breath](https://breathe.readthedocs.io/) and [sphinx-mdinclude](https://github.com/omnilib/sphinx-mdinclude) must be installed). _Default: `ON`_ if Sphinx is installed `OFF` otherwise._
-* `ENABLE_SANITIZERS`: Enable supported sanitizers". _Default: `OFF`_
-* `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `ON` if supported by the compiler and `ENABLE_SANITIZERS` == `ON` otherwise `OFF`._
-* `ENABLE_SANITIZER_LEAK`: Enable [leak sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html). _Default: `OFF`_
-* `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `ON` if supported by the compiler and `ENABLE_SANITIZERS` == `ON` otherwise `OFF`._
-* `ENABLE_SANITIZER_THREAD`: Enable [thread sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html). _Default: `OFF`_
-* `ENABLE_SANITIZER_MEMORY`: Enable [memory sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html). _Default: `OFF`_
+* `ENABLE_DOXYGEN`: Enable doxygen documentation build ([Doxygen](https://www.doxygen.nl/index.html) must be installed). _Default: `ON` if Doxygen is installed `OFF` otherwise._
+* `ENABLE_SANITIZERS`: Enable supported sanitizers. _Default: `OFF`_
+    * `ENABLE_SANITIZER_ADDRESS`: Enable [address sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html). _Default: `ON` if supported by the compiler and `ENABLE_SANITIZERS` is `ON` otherwise `OFF`._
+    * `ENABLE_SANITIZER_LEAK`: Enable [leak sanitizer](https://clang.llvm.org/docs/LeakSanitizer.html). _Default: `OFF`_
+    * `ENABLE_SANITIZER_UNDEFINED_BEHAVIOR`: Enable [undefined behavior sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). _Default: `ON` if supported by the compiler and `ENABLE_SANITIZERS` is `ON` otherwise `OFF`._
+    * `ENABLE_SANITIZER_THREAD`: Enable [thread sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html). _Default: `OFF`_
+    * `ENABLE_SANITIZER_MEMORY`: Enable [memory sanitizer](https://clang.llvm.org/docs/MemorySanitizer.html). _Default: `OFF`_
 * `ENABLE_IPO`: Enable intermodular optimization, aka [Link Time Optimization (LTO)](https://llvm.org/docs/LinkTimeOptimization.html). _Default: `OFF`_
 * `ENABLE_CPPCHECK`: Enable static analysis with [cppcheck](http://cppcheck.sourceforge.net/). _Default: `ON` if cppcheck is installed `OFF` otherwise._
 * `ENABLE_CLANG_TIDY`: Enable static analysis with [clang-tidy](https://clang.llvm.org/extra/clang-tidy/). _Default: `ON` if clang-tidy is installed `OFF` otherwise._

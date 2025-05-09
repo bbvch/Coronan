@@ -45,12 +45,12 @@ void CountryOverviewTablewModel::populate_data(coronan::CountryData const& count
   for (auto const& pair : overview_table_entries)
   {
     auto const label = QString{pair.first};
-    auto const value = std::visit(
+    auto value = std::visit(
         overloaded{[](std::string const& arg) { return QString{arg.c_str()}; },
                    [](auto const& arg) { return arg.has_value() ? QString::number(arg.value()) : QString{"--"}; }},
         pair.second);
 
-    country_overview_data.push_back(qMakePair(label, value));
+    country_overview_data.push_back(qMakePair(label, std::move(value)));
   }
   endResetModel();
 }

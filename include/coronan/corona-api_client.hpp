@@ -125,7 +125,7 @@ template <typename ClientType>
 CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string const& country_code,
                                                                   std::optional<year_month_day> const& date) const
 {
-  auto const date_query_string =
+  auto const& date_query_string =
       date.has_value() ? fmt::format("date={:%Y-%m-%d}&", sys_days(date.value())) : std::string{""};
   auto const region_report_url = corona_api_url + std::string{"reports/total?"} + date_query_string +
                                  std::string{"iso="} + std::string{country_code};
@@ -151,8 +151,8 @@ CountryData CoronaAPIClientType<ClientType>::request_country_data(std::string co
   }
   else
   {
-    auto const exception_msg = details::create_exception_msg(region_report_url, http_response);
-    throw HTTPClientException{exception_msg};
+    auto exception_msg = details::create_exception_msg(region_report_url, http_response);
+    throw HTTPClientException{std::move(exception_msg)};
   }
 }
 

@@ -4,11 +4,6 @@ if(Doxygen_FOUND)
 endif()
 
 function(enable_doxygen DOXYGEN_THEME)
-
-    if((NOT DOXYGEN_USE_MDFILE_AS_MAINPAGE) AND EXISTS "${PROJECT_SOURCE_DIR}/README.md")
-        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
-    endif()
-
     set(DOXYGEN_CALLER_GRAPH YES)
     set(DOXYGEN_CALL_GRAPH YES)
     set(DOXYGEN_EXTRACT_ALL YES)
@@ -16,6 +11,7 @@ function(enable_doxygen DOXYGEN_THEME)
     set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
     set(DOXYGEN_DOT_IMAGE_FORMAT svg)
     set(DOXYGEN_DOT_TRANSPARENT YES)
+    set(DOXYGEN_EXCLUDE "${CMAKE_BINARY_DIR}")
 
     if("${DOXYGEN_THEME}" STREQUAL "")
         set(DOXYGEN_THEME "awesome-sidebar")

@@ -19,24 +19,24 @@ jobs:
                     - name: macOS-13-clang
                       os: macOS-13
                       build_type: Release
-                      compiler: clang++
+                      cppcompiler: clang++
                       ccompiler: clang
                       generators: Ninja
                     - name: macOS-14-clang
                       os: macOS-14
                       build_type: Release
-                      compiler: clang++
+                      cppcompiler: clang++
                       ccompiler: clang
                       generators: Ninja
                     - name: macOS-15-clang
                       os: macOS-15
                       build_type: Release
-                      compiler: clang++
+                      cppcompiler: clang++
                       ccompiler: clang
                       generators: Ninja
 
         env:
-            CXX: ${{ matrix.compiler }}
+            CXX: ${{ matrix.cppcompiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
@@ -54,7 +54,7 @@ jobs:
             - name: Install Qt
               uses: jurplel/install-qt-action@v4
               with:
-                  version: 6.8.2
+                  version: 6.8.3
                   host: mac
                   target: desktop
                   arch: clang_64
@@ -74,13 +74,15 @@ jobs:
             - name: CTest
               run: ctest -C Debug
               working-directory: ./build
-            - name: CMake build docs and package
+            - name: CMake build packages
               run: |
-                  cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
-                  cmake --build ./build --target package --config ${{ matrix.build_type }}
+                  cpack
+                  cpack --config CPackSourceConfig.cmake
+              working-directory: ./build
             - uses: actions/upload-artifact@v4
               with:
                   name: ${{ matrix.name }}-artifacts
                   path: |
                       ./build/Coronan-*.tar.gz
                       ./build/Coronan-*.pkg
+                      ./build/Coronan-*.dmg

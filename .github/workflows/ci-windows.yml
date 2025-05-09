@@ -16,21 +16,21 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: windows-VS-2022
+                    - name: windows-2022-VS-2022
                       os: windows-2022
                       build_type: Release
-                      compiler: cl
+                      cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
-                    - name: windows-VS-2025
+                    - name: windows-2025-VS-2022
                       os: windows-2025
                       build_type: Release
-                      compiler: cl
+                      cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
 
         env:
-            CXX: ${{ matrix.compiler }}
+            CXX: ${{ matrix.cppcompiler }}
             CC: ${{ matrix.ccompiler }}
 
         steps:
@@ -49,7 +49,7 @@ jobs:
             - name: Install Qt
               uses: jurplel/install-qt-action@v4
               with:
-                  version: 6.8.2
+                  version: 6.8.3
                   host: windows
                   target: desktop
                   arch: win64_msvc2022_64
@@ -73,11 +73,15 @@ jobs:
               working-directory: ./build
             - name: CMake build docs
               run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
-            - name: CMake build package
-              run: cmake --build ./build --target package --config ${{ matrix.build_type }}
+            - name: CMake build packages
+              run: |
+                  cpack --config ${{ matrix.build_type }}
+                  cpack --config CPackSourceConfig.cmake
+              working-directory: ./build
             - uses: actions/upload-artifact@v4
               with:
                   name: ${{ matrix.name }}-artifacts
                   path: |
                       ./build/Coronan-*.zip
                       ./build/Coronan-*.msi
+                      ./build/Coronan-*.exe

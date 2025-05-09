@@ -90,7 +90,11 @@ HTTPResponse HTTPClientType<SessionType, HTTPRequestType, HTTPResponseType>::get
 
     auto const path = std::invoke([&uri]() {
       auto path_ = uri.getPathAndQuery();
-      return path_.empty() ? "/" : std::move(path_);
+      if (path_.empty())
+      {
+        path_ = "/";
+      }
+      return path_;
     });
 
     HTTPRequestType request{"GET", path, "HTTP/1.1"};

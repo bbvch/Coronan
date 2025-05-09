@@ -1,6 +1,6 @@
 ---
 image:
-    file: .gitpod.Dockerfile
+    file: .devcontainer/Dockerfile
 
 tasks:
     - before: |
@@ -9,7 +9,7 @@ tasks:
           export CXX=clang++-18
           export CC=clang-18
           conan profile detect
-      init: conan install . -pr:a conan_profiles/clang_debug_linux --build=missing
+      init: conan install . --build=missing --settings=build_type=Debug
       command: cmake -S . -B build --preset=linux-clang-debug
 
 vscode:
