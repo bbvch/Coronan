@@ -22,13 +22,27 @@ jobs:
                       cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
+                      arch: x64
+                      qt-host: windows
+                      qt-arch: win64_msvc2022_64
                     - name: windows-2025-VS-2022
                       os: windows-2025
                       build_type: Release
                       cppcompiler: cl
                       ccompiler: cl
                       generators: Visual Studio 17 2022
-
+                      arch: x64
+                      qt-host: windows
+                      qt-arch: win64_msvc2022_64
+                    - name: windows-11-arm-VS-2022
+                      os: windows-11-arm
+                      build_type: Release
+                      cppcompiler: cl
+                      ccompiler: cl
+                      generators: Visual Studio 17 2022
+                      arch: arm64
+                      qt-host: windows_arm64
+                      qt-arch: win64_msvc2022_arm64
         env:
             CXX: ${{ matrix.cppcompiler }}
             CC: ${{ matrix.ccompiler }}
@@ -50,19 +64,25 @@ jobs:
               uses: jurplel/install-qt-action@v4
               with:
                   version: 6.8.3
+                  host: ${{ matrix.qt-host }}
+                  target: desktop
+                  arch: ${{ matrix.qt-arch }}
+                  modules: qtcharts
+            - name: Install Qt ifw
+              uses: jurplel/install-qt-action@v4
+              if: matrix.qt-host == 'windows'
+              with:
                   host: windows
                   target: desktop
-                  arch: win64_msvc2022_64
-                  modules: qtcharts
                   tools: tools_ifw
             - name: setup-msvc-dev
               uses: TheMrMilchmann/setup-msvc-dev@v3
               with:
-                  arch: x64
+                  arch: ${{ matrix.arch }}
             - name: Set conan compiler env
               run: conan profile detect
             - name: conan install
-              run: conan install . --build=missing --settings=build_type=${{ matrix.build_type }} --settings=compiler.cppstd=17
+              run: conan install . --build=missing --settings build_type=${{ matrix.build_type }} --settings compiler.cppstd=17
             - name: CMake configure
               run: |
                   cmake -S . -B ./build -G "${{ matrix.generators }}"

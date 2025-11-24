@@ -35,7 +35,7 @@ jobs:
             - name: Set conan compiler env
               run: conan profile detect
             - name: conan install
-              run: conan install . --build=missing --settings=build_type=Debug
+              run: conan install . --build=missing --settings build_type=Debug
             - name: cmake-configuration
               run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
             - name: build-documentation

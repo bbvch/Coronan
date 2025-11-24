@@ -21,20 +21,29 @@ jobs:
                       build_type: Release
                       cppcompiler: clang++
                       ccompiler: clang
+                      libcxx: libc++
+                      generators: Ninja
+                    - name: macOS-15-intel-clang
+                      os: macos-15-intel
+                      build_type: Release
+                      cppcompiler: clang++
+                      ccompiler: clang
+                      libcxx: libc++
                       generators: Ninja
                     - name: macOS-14-clang
                       os: macOS-14
                       build_type: Release
                       cppcompiler: clang++
                       ccompiler: clang
+                      libcxx: libc++
                       generators: Ninja
                     - name: macOS-15-clang
                       os: macOS-15
                       build_type: Release
                       cppcompiler: clang++
                       ccompiler: clang
+                      libcxx: libc++
                       generators: Ninja
-
         env:
             CXX: ${{ matrix.cppcompiler }}
             CC: ${{ matrix.ccompiler }}
@@ -63,7 +72,7 @@ jobs:
             - name: Set conan compiler env
               run: conan profile detect
             - name: conan install
-              run: conan install . --build=missing --settings=build_type=${{ matrix.build_type }}
+              run: conan install . --build=missing --settings build_type=${{ matrix.build_type }} --settings compiler.libcxx=${{ matrix.libcxx }}
             - name: CMake configure
               run: |
                   cmake -S . -B ./build -G "${{ matrix.generators }}" \

@@ -1,7 +1,7 @@
 [nixpkgs]
-ref = "25.05"
-rev = "11cb3517b3af6af300dd6c055aeda73c9bf52c48"
-sha256 = "1915r28xc4znrh2vf4rrjnxldw2imysz819gzhk9qlrkqanmfsxd"
+ref = "24.11"
+rev = "63dacb46bf939521bdc93981b4cbb7ecb58427a0"
+sha256 = "1lr1h35prqkd1mkmzriwlpvxcb34kmhc9dnr48gkm8hh089hifmx"
 
 [cmake]
 ref = "3.31.10"

@@ -2,7 +2,7 @@ with (import ./sources.nix);
 with nixpkgs;
 let
   gcc = gcc14;
-  clang = clang_19;
+  clang = clang_18;
   cmake_331 = (import ./cmake.nix).cmake;
 
 in stdenvNoCC.mkDerivation {
@@ -43,7 +43,7 @@ in stdenvNoCC.mkDerivation {
   shellHook = ''
     pre-commit install -f --hook-type pre-commit
     virtualenv venv
-    source venv/bin/activate
-    python3 -m pip install -r py-requirements.txt
+    venv/bin/python3 -m pip install conan
+    venv/bin/python3 -m pip install python-dateutil
   '';
 }

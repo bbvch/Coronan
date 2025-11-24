@@ -133,6 +133,24 @@ jobs:
                       generator: Ninja
                       coverage: OFF
                       download_qt: OFF
+                    - name: ubuntu-24.04-arm-clang
+                      os: ubuntu-24.04-arm
+                      build_type: Release
+                      cppcompiler: clang++
+                      ccompiler: clang
+                      clang-tidy: clang-tidy
+                      generator: Ninja
+                      coverage: OFF
+                      download_qt: OFF
+                    - name: ubuntu-24.04-arm-gcc
+                      os: ubuntu-24.04-arm
+                      build_type: Release
+                      cppcompiler: g++
+                      ccompiler: gcc
+                      clang-tidy: clang-tidy
+                      generator: Ninja
+                      coverage: OFF
+                      download_qt: OFF
 
         env:
             CXX: ${{ matrix.cppcompiler }}
@@ -177,7 +195,7 @@ jobs:
             - name: Set conan compiler env
               run: conan profile detect
             - name: conan install
-              run: conan install . --build=missing --settings=build_type=${{ matrix.build_type }} --settings=compiler.cppstd=17
+              run: conan install . --build=missing --settings build_type=${{ matrix.build_type }} --settings compiler.cppstd=17
             - name: CMake configure
               run: |
                   cmake -S . -B ./build -G "${{ matrix.generator }}" \

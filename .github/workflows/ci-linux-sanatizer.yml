@@ -156,7 +156,7 @@ jobs:
             - name: Set conan compiler env
               run: conan profile detect
             - name: conan install
-              run: conan install . --build=missing --settings=build_type=Debug --settings=compiler.cppstd=17
+              run: conan install . --build=missing --settings build_type=Debug --settings=compiler.cppstd=17
             - name: CMake configure
               run: |
                   cmake -S . --preset=${{ matrix.profile }}
