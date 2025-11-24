@@ -62,9 +62,9 @@ void CoronanWidget::populate_date_boxes()
   auto const latest_date = latest_country_data.latest.date;
   // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++) does
   // not fully support C++ 20 even for Qt >= 6.4
-  auto const latest_qdate = QDate(static_cast<int>(latest_date.year()),       //
-                                  static_cast<unsigned>(latest_date.month()), //
-                                  static_cast<unsigned>(latest_date.day()));
+  auto const latest_qdate = QDate(static_cast<int>(latest_date.year()),            //
+                                  static_cast<int>(unsigned(latest_date.month())), //
+                                  static_cast<int>(unsigned(latest_date.day())));
 
   ui->startDate->setDate(default_start_date);
   ui->startDate->setMaximumDate(latest_qdate);
