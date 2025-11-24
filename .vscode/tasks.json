@@ -1,55 +1,135 @@
 {
     "version": "2.0.0",
     "tasks": [
-      {
-        "label": "build",
-        "command": "cmake --build build",
-        "group": {
-          "kind": "build",
-          "isDefault": true
+        {
+            "label": "conan install",
+            "command": "conan",
+            "args": [
+                "install",
+                ".",
+                "--build=missing",
+                "--settings",
+                "build_type=${input:buildType}",
+                "--settings",
+                "compiler=${input:compiler}",
+                "--settings",
+                "compiler.version=${input:compilerversion}",
+                "--settings",
+                "compiler.cppstd=gnu17",
+                "--settings",
+                "compiler.libcxx=libstdc++11",
+                "--update"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "type": "shell",
+            "presentation": {
+                "clear": true
+            }
         },
-        "problemMatcher": {
-          "base": "$gcc"
+        {
+            "label": "build",
+            "command": "cmake --build build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "base": "$gcc"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "type": "shell",
+            "presentation": {
+                "clear": true
+            }
         },
-        "options": {
-          "cwd": "${workspaceFolder}/"
+        {
+            "label": "clean",
+            "command": "/usr/bin/rm -rf build",
+            "group": "build",
+            "problemMatcher": [],
+            "type": "shell"
         },
-        "type": "shell",
-        "presentation": {
-          "clear": true
+        {
+            "label": "unittests",
+            "command": "cmake --build --preset=run-unittests",
+            "group": {
+                "isDefault": true,
+                "kind": "test"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "type": "shell"
+        },
+        {
+            "label": "format files",
+            "command": "./format_source_files.sh",
+            "problemMatcher": [],
+            "type": "shell"
+        },
+        {
+            "label": "run pre-commit hooks",
+            "command": "pre-commit run --all-files",
+            "problemMatcher": [],
+            "type": "shell"
         }
-      },
-      {
-        "label": "clean",
-        "command": "/usr/bin/rm -rf build",
-        "group": "build",
-        "problemMatcher": [],
-        "type": "shell"
-      },
-      {
-        "label": "unittests",
-        "command": "cmake --build --preset=run-unittests",
-        "group": {
-          "isDefault": true,
-          "kind": "test"
+    ],
+    "inputs": [
+        {
+            "id": "buildType",
+            "type": "pickString",
+            "description": "Choose an option",
+            "options": [
+                "Debug",
+                "Release"
+            ]
         },
-        "options": {
-          "cwd": "${workspaceFolder}"
+        {
+            "id": "compiler",
+            "type": "pickString",
+            "description": "Choose an option",
+            "options": [
+                {
+                    "label": "GCC",
+                    "value": "gcc"
+                },
+                {
+                    "label": "Clang",
+                    "value": "clang"
+                }
+            ]
         },
-        "problemMatcher": [],
-        "type": "shell"
-      },
-      {
-        "label": "format files",
-        "command": "./format_source_files.sh",
-        "problemMatcher": [],
-        "type": "shell"
-      },
-      {
-        "label": "run pre-commit hooks",
-        "command": "pre-commit run --all-files",
-        "problemMatcher": [],
-        "type": "shell"
-      }
+        {
+            "id": "compilerversion",
+            "type": "pickString",
+            "description": "Choose an option",
+            "options": [
+                {
+                    "label": "13 (gcc)",
+                    "value": "13"
+                },
+                {
+                    "label": "14 (gcc)",
+                    "value": "14"
+                },
+                {
+                    "label": "18 (clang)",
+                    "value": "18"
+                },
+                {
+                    "label": "19 (clang)",
+                    "value": "19"
+                }
+            ]
+        }
     ]
-  }
+}
