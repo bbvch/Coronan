@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
-#include "coronan/corona-api_client.hpp"
-#include "country_chart_view.hpp"
+#include "coronan/corona-api_client.h"
+#include "country_chart_view.h"
 #include "ui_mainwindow.h"
 
 #include <QDebug>

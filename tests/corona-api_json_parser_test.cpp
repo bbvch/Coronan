@@ -1,4 +1,4 @@
-#include "coronan/corona-api_parser.hpp"
+#include "coronan/corona-api_parser.h"
 
 #include <catch2/catch_test_macros.hpp>
 

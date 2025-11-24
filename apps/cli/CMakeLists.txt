@@ -6,7 +6,7 @@ project(
     LANGUAGES CXX
 )
 
-set(HEADER_LIST "${CMAKE_CURRENT_LIST_DIR}/src/argument_parser.hpp")
+set(HEADER_LIST "${CMAKE_CURRENT_LIST_DIR}/src/argument_parser.h")
 
 add_library(cli_arg_parser STATIC ${CMAKE_CURRENT_LIST_DIR}/src/argument_parser.cpp ${HEADER_LIST})
 

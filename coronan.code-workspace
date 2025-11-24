@@ -37,7 +37,7 @@
         "[cpp]": {
             "editor.defaultFormatter": "xaver.clang-format"
         },
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": false,
         "editor.inlayHints.enabled": "offUnlessPressed",
         "editor.quickSuggestions": {
             "other": true,

@@ -1,8 +1,8 @@
-#include "argument_parser.hpp"
-#include "coronan/corona-api_client.hpp"
-#include "coronan/corona-api_datatypes.hpp"
-#include "coronan/http_client.hpp"
-#include "coronan/ssl_client.hpp"
+#include "argument_parser.h"
+#include "coronan/corona-api_client.h"
+#include "coronan/corona-api_datatypes.h"
+#include "coronan/http_client.h"
+#include "coronan/ssl_client.h"
 
 #include <chrono>
 #include <cstdlib>

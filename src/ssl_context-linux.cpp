@@ -1,4 +1,4 @@
-#include "coronan/ssl_context.hpp"
+#include "coronan/ssl_context.h"
 
 #include <Poco/Net/Context.h>
 

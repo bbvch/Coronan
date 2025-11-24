@@ -1,4 +1,4 @@
-#include "coronan/http_client.hpp"
+#include "coronan/http_client.h"
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>

@@ -1,4 +1,4 @@
-#include "country_data_model.hpp"
+#include "country_data_model.h"
 
 namespace {
 inline constexpr auto columns = 5u;

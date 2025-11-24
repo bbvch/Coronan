@@ -1,7 +1,7 @@
 
-#include "coronan/ssl_client.hpp"
+#include "coronan/ssl_client.h"
 
-#include "coronan/ssl_context.hpp"
+#include "coronan/ssl_context.h"
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/NetSSL.h>

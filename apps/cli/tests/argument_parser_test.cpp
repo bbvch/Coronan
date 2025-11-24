@@ -1,4 +1,4 @@
-#include "argument_parser.hpp"
+#include "argument_parser.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <date/date.h>

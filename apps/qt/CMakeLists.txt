@@ -43,9 +43,9 @@ set(CMAKE_INSTALL_RPATH $ORIGIN $ORIGIN/${relDir})
 message(STATUS "CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}")
 
 set(HEADER_LIST
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table_model.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_overview_table_model.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
 )
 # AUTOMOC and AUTOUIC dows not work when Qt is built from source
 if(DOWNLOAD_QT6)
@@ -80,6 +80,7 @@ target_link_libraries(
     PRIVATE coronan::library
     PRIVATE coronan::compile_warnings
     PRIVATE coronan::compile_options
+    PRIVATE coronan::version
 )
 
 # include(StaticAnalyzers) enable_static_analysis(${PROJECT_NAME})
