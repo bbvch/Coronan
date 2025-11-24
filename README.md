@@ -26,12 +26,12 @@
 
 [![codecov](https://codecov.io/gh/bbvch/Coronan/branch/master/graph/badge.svg)](https://codecov.io/gh/bbvch/Coronan)
 
-[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/overall?id=bbvch_Coronann)
 
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=bbvch_Coronan)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=bugs)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=code_smells)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=coverage)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
 
 
 
@@ -200,7 +200,7 @@ You can also build it yourself using CMake and conan
 * __Install dependencies with conan__
 
   ```bash
-  conan install . --build=missing --settings=build_type=Debug
+  conan install . --build=missing --settings build_type=Debug
   ```
   Because the conan [cmake_layout](https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#) and the  [`CMakeDeps`](https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html) generator is used, the necessary cmake files used with `find_packages()` are generated into `build\<build_type>\generators`. `CMAKE_PREFIX_PATH` is adapted accordingly in the root `CMakeLists.txt`.
 
@@ -285,7 +285,7 @@ To start right away without installing anything on your local machine, you can s
 
 ## direnv & nix
 
-If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder, if `use nix` is not commented out in [.envrc](.envrc). gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang_18) change it in [.envrc](.envrc)
+If you have [direnv](https://direnv.net/) and [nix](https://nixos.org/) installed everything should be setup to start upon entering the project folder, if `use nix` is not commented out in [.envrc](.envrc). gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang-19) change it in [.envrc](.envrc)
 
 You can also use `nix-shell` directly to build when `use nix` is disabled, e.g.:
 
