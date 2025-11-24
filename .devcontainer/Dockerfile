@@ -1,11 +1,14 @@
-FROM mcr.microsoft.com/devcontainers/base:dev-ubuntu24.04
+
+ARG BASE_IMAGE=mcr.microsoft.com/devcontainers/base:ubuntu
+
+FROM $BASE_IMAGE
 
 LABEL maintainer="Michel Estermann <estermann.michel@gmail.com>"
-
 ARG CLANG_VERSION=18
 ARG GCC_VERSION=14
 
 RUN apt-get update \
+    && apt-get clean \
     && apt-get -qq install -y --no-install-recommends \
     make \
     build-essential \
@@ -25,6 +28,7 @@ RUN apt-get update \
     gcc-14 \
     file \
     ssh-client \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install locales package and generate en_US.UTF-8 locale
@@ -132,3 +136,17 @@ RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-${CLANG_VERSION}
 RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-${CLANG_VERSION} 100
 RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-${CLANG_VERSION} 100
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${CLANG_VERSION} 100
+
+# Install packages
+RUN apt-get update \
+    && apt-get -qq install -y --no-install-recommends \
+    ubuntu-desktop \
+    tightvncserver \
+    novnc \
+    websockify \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 5901 6080
+
+CMD ["sh", "-c", "/usr/share/novnc/utils/launch.sh --vnc localhost:5901 & vncserver :1 -geometry 1400x1000 -depth 24 && tail -f /dev/null"]

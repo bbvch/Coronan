@@ -1,0 +1,19 @@
+---
+tasks:
+    before-000:
+        command: |
+            pre-commit install -f --hook-type pre-commit
+            rm -rf build
+            export CXX=clang++-19
+            export CC=clang-19
+            conan profile detect
+        description: before task migrated from .gitpod.yml
+        name: 'Task 0: before'
+    init-000:
+        command: conan install . --build=missing --settings=build_type=Debug
+        dependsOn:
+            - before-000
+        description: init task migrated from .gitpod.yml
+        name: 'Task 0: init'
+        triggeredBy:
+            - postDevcontainerStart
