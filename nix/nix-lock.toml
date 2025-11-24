@@ -1,0 +1,9 @@
+[nixpkgs]
+ref = "25.05"
+rev = "11cb3517b3af6af300dd6c055aeda73c9bf52c48"
+sha256 = "1915r28xc4znrh2vf4rrjnxldw2imysz819gzhk9qlrkqanmfsxd"
+
+[cmake]
+ref = "3.31.10"
+rev = "3.31.10"
+sha256 = "0a9y7nqr27rl8acvjyj8s57q87bdjxa9w2g5mphsh7ylsvgzl1ng"

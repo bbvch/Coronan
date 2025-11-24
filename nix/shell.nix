@@ -2,12 +2,8 @@ with (import ./sources.nix);
 with nixpkgs;
 let
   gcc = gcc14;
-  clang = clang_18;
+  clang = clang_19;
   cmake_331 = (import ./cmake.nix).cmake;
-
-  gcovr = python3.withPackages(ps: [
-    ps.gcovr
-  ]);
 
 in stdenvNoCC.mkDerivation {
   name = "shell";
@@ -31,7 +27,6 @@ in stdenvNoCC.mkDerivation {
     qt6.qtbase
     qt6.qtcharts
     lcov
-    gcovr
     perl
     doxygen
     graphviz
@@ -39,6 +34,7 @@ in stdenvNoCC.mkDerivation {
     pre-commit
     python3
     cmake-format
+    gcovr
     python3Packages.setuptools
     python3Packages.pip
     python3Packages.virtualenv
