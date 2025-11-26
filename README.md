@@ -28,6 +28,7 @@
 
 [![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/overall?id=bbvch_Coronann)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=alert_status)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=bugs)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=code_smells)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bbvch_Coronan&metric=coverage)](https://sonarcloud.io/summary/overall?id=bbvch_Coronan)
