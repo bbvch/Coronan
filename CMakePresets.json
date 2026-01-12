@@ -119,8 +119,8 @@
         },
         {
             "name": "linux-gcc-release",
-            "displayName": "Release (gcc)",
-            "description": "Configure Release (gcc)",
+            "displayName": "Release (gnu)",
+            "description": "Configure Release (gnu)",
             "hidden": false,
             "inherits": [
                 "linux-gcc",

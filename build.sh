@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -11,6 +11,7 @@ BUILD_TARGET="--target all"
 CXX_COMPILER="g++"
 C_COMPILER="gcc"
 COMPILER_VERSION="$(g++ -dumpversion)"
+LIBCXX="libstdc++11"
 CLEAR_BUILD=false
 CONAN=conan
 
@@ -112,7 +113,7 @@ if [[ "${CLEAR_BUILD}" = true ]] ; then
 fi
 
 echo "run conan install"
-"${CONAN}" install . --build=missing --settings=build_type="${BUILD_TYPE}" --settings=compiler="${C_COMPILER}" --settings=compiler.version="${COMPILER_VERSION}" --settings=compiler.cppstd=17
+"${CONAN}" install . --build=missing --settings build_type="${BUILD_TYPE}" --settings compiler="${C_COMPILER}" --settings compiler.version="${COMPILER_VERSION}" --settings compiler.libcxx="${LIBCXX}" --settings compiler.cppstd=17
 
 if [[ "${COVERAGE}" = true ]] ; then
     "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug

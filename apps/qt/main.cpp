@@ -1,6 +1,6 @@
-#include "coronan/config.hpp"
-#include "coronan/http_client.hpp"
-#include "coronan/ssl_client.hpp"
+#include "coronan/http_client.h"
+#include "coronan/ssl_client.h"
+#include "coronan/version.h"
 #include "mainwindow.h"
 
 #include <QDebug>

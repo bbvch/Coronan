@@ -1,8 +1,8 @@
 #pragma once
 
-#include "coronan/corona-api_parser.hpp"
-#include "coronan/http_client.hpp"
-#include "coronan/ssl_client.hpp"
+#include "coronan/corona-api_parser.h"
+#include "coronan/http_client.h"
+#include "coronan/ssl_client.h"
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPSClientSession.h>

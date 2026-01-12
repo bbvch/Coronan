@@ -1,4 +1,4 @@
-#include "country_data_model.hpp"
+#include "country_data_model.h"
 
 namespace {
 inline constexpr auto columns = 5u;
@@ -20,18 +20,14 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
 
   if (not country_data.timeline.empty())
   {
-// Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
-// does not fully support C++ 20 even for Qt >= 6.4
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
+    // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
+    // does not fully support C++ 20 even for Qt >= 6.4
     auto const start_qdate = QDate(static_cast<int>(country_data.timeline.front().date.year()),
-                                   static_cast<unsigned>(country_data.timeline.front().date.month()),
-                                   static_cast<unsigned>(country_data.timeline.front().date.day()));
+                                   static_cast<int>(unsigned(country_data.timeline.front().date.month())),
+                                   static_cast<int>(unsigned(country_data.timeline.front().date.day())));
     auto const end_qdate = QDate(static_cast<int>(country_data.timeline.back().date.year()),
-                                 static_cast<int>(static_cast<unsigned>(country_data.timeline.back().date.month())),
-                                 static_cast<int>(static_cast<unsigned>(country_data.timeline.back().date.day())));
-
-#pragma GCC diagnostic pop
+                                 static_cast<int>(unsigned(country_data.timeline.back().date.month())),
+                                 static_cast<int>(unsigned(country_data.timeline.back().date.day())));
 
     start_date = QDateTime{start_qdate, QTime(1, 0)};
     end_date = QDateTime{end_qdate, QTime(1, 0)};
@@ -44,9 +40,9 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
     CountryTimelineData timeline_data;
     // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
     // does not fully support C++ 20 even for Qt >= 6.4
-    auto const qdate = QDate(static_cast<int>(data_point.date.year()),
-                             static_cast<int>(static_cast<unsigned>(data_point.date.month())),
-                             static_cast<int>(static_cast<unsigned>(data_point.date.day())));
+    auto const qdate =
+        QDate(static_cast<int>(data_point.date.year()), static_cast<int>(unsigned(data_point.date.month())),
+              static_cast<int>(unsigned(data_point.date.day())));
     timeline_data.date = QDateTime{qdate, QTime(1, 0)};
     timeline_data.deaths = data_point.deaths.has_value() ? QVariant{data_point.deaths.value()} : QVariant{};
     min = std::min(min, data_point.deaths.value_or(min));

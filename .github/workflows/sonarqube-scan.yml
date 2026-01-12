@@ -59,17 +59,17 @@ jobs:
             - name: CMake configure
               run: cmake -S . -B ./build -G Ninja -DENABLE_COVERAGE=${{ env.WITH_COVERAGE }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
             - name: Run Build Wrapper
-              run: build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config ${{ env.BUILD_TYPE }}
+              run: build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} ninja -C ./build
             - name: Collect coverage into one XML report
               if: env.WITH_COVERAGE == 'ON'
               run: |
                   gcovr --sonarqube > coverage.xml
             - name: SonarQube Scan
-              uses: SonarSource/sonarqube-scan-action@v4
+              uses: sonarsource/sonarqube-scan-action@v6
               env:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Generate a token on SonarQube, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
               with:
                   # Additional arguments for the sonarcloud scanner
                   args: >
-                      --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
+                      --define sonar.cfamily.compile-commands=${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json
                       --define sonar.coverageReportPaths=coverage.xml

@@ -1,4 +1,4 @@
-#include "country_overview_table_model.hpp"
+#include "country_overview_table_model.h"
 
 #include <array>
 #include <date/date.h>

@@ -1,7 +1,7 @@
 #pragma once
-#include "coronan/corona-api_datatypes.hpp"
-#include "country_data_model.hpp"
-#include "country_overview_table_model.hpp"
+#include "coronan/corona-api_datatypes.h"
+#include "country_data_model.h"
+#include "country_overview_table_model.h"
 
 #include <QTableView>
 #include <QtCharts/QChartGlobal>

@@ -7,12 +7,12 @@ project(
 )
 
 set(HEADER_LIST
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_datatypes.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_client.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_client.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_context.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/http_client.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_datatypes.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_parser.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/corona-api_client.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_client.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/coronan/ssl_context.h"
 )
 
 add_library(coronan STATIC ${HEADER_LIST})

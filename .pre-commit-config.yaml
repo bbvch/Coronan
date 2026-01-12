@@ -1,10 +1,9 @@
 ---
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v5.0.0
+      rev: v6.0.0
       hooks:
           - id: check-added-large-files
-          - id: check-byte-order-marker
           - id: check-case-conflict
           - id: check-merge-conflict
           - id: check-symlinks
@@ -25,7 +24,7 @@ repos:
       hooks:
           - id: cmake-format
     - repo: https://github.com/adrienverge/yamllint.git
-      rev: v1.37.0
+      rev: v1.37.1
       hooks:
           - id: yamllint
             args: [--format, parsable, -d, relaxed]

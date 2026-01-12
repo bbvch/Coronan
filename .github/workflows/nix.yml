@@ -41,13 +41,13 @@ jobs:
                       ccache-${{ matrix.name }}
             - uses: cachix/install-nix-action@v27
               with:
-                  nix_path: nixpkgs=channel:nixos-24.11
+                  nix_path: nixpkgs=channel:nixos-25.05
             - uses: cachix/cachix-action@v15
               with:
                   name: bbvch
                   authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
             - run: |
-                  nix-shell --command "conan profile detect"
-                  nix-shell --command "conan install . --build=missing --settings=build_type=Debug"
+                  nix-shell --command "source venv/bin/activate && conan profile detect"
+                  nix-shell --command "source venv/bin/activate && conan install . --build=missing --settings build_type=Debug"
                   nix-shell --command "cmake -S ${GITHUB_WORKSPACE} --preset=${{ matrix.configure_preset }}"
                   nix-shell --command "cmake --build --preset=${{ matrix.build_preset }}"

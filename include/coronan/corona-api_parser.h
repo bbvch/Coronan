@@ -1,6 +1,6 @@
 #pragma once
 
-#include "coronan/corona-api_datatypes.hpp"
+#include "coronan/corona-api_datatypes.h"
 
 #include <optional>
 #include <string>

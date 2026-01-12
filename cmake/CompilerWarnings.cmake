@@ -1,5 +1,5 @@
 function(set_project_warnings project_name)
-    option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
+    option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
 
     set(MSVC_WARNINGS
         /W4 # Baseline reasonable warnings
@@ -38,7 +38,6 @@ function(set_project_warnings project_name)
     )
 
     set(CLANG_WARNINGS
-        -march=native
         -Wall
         -Wextra # reasonable and standard
         -Wshadow # warn the user if a variable declaration shadows one from a

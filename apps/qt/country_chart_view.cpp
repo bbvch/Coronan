@@ -1,6 +1,6 @@
-#include "country_chart_view.hpp"
+#include "country_chart_view.h"
 
-#include "country_data_model.hpp"
+#include "country_data_model.h"
 
 #include <QDateTime>
 #include <QDateTimeAxis>

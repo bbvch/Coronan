@@ -1,4 +1,4 @@
-#include "coronan/corona-api_client.hpp"
+#include "coronan/corona-api_client.h"
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
