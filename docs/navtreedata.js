@@ -69,7 +69,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespacecoronan__cli.html#a50b2801fe6a6f91343b1c5d999a90ea7"
+"namespacecoronan__ui.html#a34c2625f95928c9d8d7d8807d9164a05"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

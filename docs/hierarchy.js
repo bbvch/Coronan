@@ -22,6 +22,9 @@ var hierarchy =
     ] ],
     [ "coronan::RegionInfo", "structcoronan_1_1RegionInfo.html", null ],
     [ "coronan::SSLClient", "classcoronan_1_1SSLClient.html", null ],
+    [ "ConanFile", null, [
+      [ "conanfile.CoronanRecipe", "classconanfile_1_1CoronanRecipe.html", null ]
+    ] ],
     [ "coronan::details::Ts", null, [
       [ "coronan::details::overloaded< Ts >", "structcoronan_1_1details_1_1overloaded.html", null ]
     ] ]

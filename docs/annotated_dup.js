@@ -1,5 +1,8 @@
 var annotated_dup =
 [
+    [ "conanfile", "namespaceconanfile.html", [
+      [ "CoronanRecipe", "classconanfile_1_1CoronanRecipe.html", "classconanfile_1_1CoronanRecipe" ]
+    ] ],
     [ "coronan", "namespacecoronan.html", [
       [ "api_parser", "namespacecoronan_1_1api__parser.html", [
         [ "DateParseException", "classcoronan_1_1api__parser_1_1DateParseException.html", "classcoronan_1_1api__parser_1_1DateParseException" ]

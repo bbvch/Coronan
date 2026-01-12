@@ -1,13 +1,6 @@
 var namespacecoronan =
 [
     [ "api_parser", "namespacecoronan_1_1api__parser.html", "namespacecoronan_1_1api__parser" ],
-    [ "config", "namespacecoronan_1_1config.html", [
-      [ "project_name", "namespacecoronan_1_1config.html#a5f81ca4bdc51e9ea76fb33c9fd09c768", null ],
-      [ "project_version", "namespacecoronan_1_1config.html#a4ed4c22249b10f3d5838c4ca88d1b6c1", null ],
-      [ "project_version_major", "namespacecoronan_1_1config.html#aa067584bed59390cdd89117e7d6cb643", null ],
-      [ "project_version_minor", "namespacecoronan_1_1config.html#ac0932b2fbfa32df4b068e839519f8f07", null ],
-      [ "project_version_patch", "namespacecoronan_1_1config.html#a89ac4d86a9e6b28524883da9bf508fe8", null ]
-    ] ],
     [ "details", "namespacecoronan_1_1details.html", "namespacecoronan_1_1details" ],
     [ "ssl_context", "namespacecoronan_1_1ssl__context.html", [
       [ "create_ssl_context", "namespacecoronan_1_1ssl__context.html#a539ece42c098358caff0a46c2b34d62b", null ]
