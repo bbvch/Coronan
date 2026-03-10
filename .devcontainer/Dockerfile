@@ -12,20 +12,11 @@ RUN apt-get update \
     && apt-get -qq install -y --no-install-recommends \
     make \
     build-essential \
-    ninja-build \
     cmake \
-    ccache \
-    clang-18 \
-    clang-tidy-18 \
-    clang-format-18 \
-    clangd-18 \
     dpkg \
     pkg-config \
-    doxygen  \
-    lcov \
     git \
     python3-full \
-    gcc-14 \
     file \
     ssh-client \
     && apt-get clean \
