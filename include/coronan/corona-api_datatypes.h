@@ -63,7 +63,7 @@ struct CountryData
    * Holds the latest available covid-19 case data of the country
    */
 
-  CovidData latest{}; /**< Lates actual cases  */
+  CovidData latest{}; /**< Latest actual cases  */
 
   std::vector<CovidData> timeline; /**< Timeline data (list of daily data) */
 };

@@ -15,9 +15,8 @@ LIBCXX="libstdc++11"
 CLEAR_BUILD=false
 CONAN=conan
 
-
 print_usage() {
-cat << EOM
+    cat <<EOM
 Usage: build.sh [options] [build_dir]
   Available options:
     -h|--help          Print this help
@@ -36,7 +35,7 @@ EOM
 }
 
 if [ $# -ge 1 ]; then
-    while [[ $# -gt 0 ]] ; do
+    while [[ $# -gt 0 ]]; do
         key="$1"
 
         case "$key" in
@@ -45,11 +44,11 @@ if [ $# -ge 1 ]; then
             COVERAGE_OUT="${key#*=}"
             shift # past argument=value
             ;;
-        -r|--release)
+        -r | --release)
             BUILD_TYPE=Release
             shift # past argument
             ;;
-        -c|--clear)
+        -c | --clear)
             CLEAR_BUILD=true
             shift # past argument
             ;;
@@ -73,7 +72,7 @@ if [ $# -ge 1 ]; then
             CONAN="${key#*=}"
             shift # past argument=value
             ;;
-        -h|--help)
+        -h | --help)
             print_usage
             exit 1
             ;;
@@ -96,26 +95,26 @@ fi
 export CXX=${CXX_COMPILER}-${COMPILER_VERSION}
 export CC=${C_COMPILER}-${COMPILER_VERSION}
 
-if [ "${COVERAGE}" = true -a -z "${COVERAGE_OUT}" ] ; then
+if [ "${COVERAGE}" = true ] && [ -z "${COVERAGE_OUT}" ]; then
     echo "Error: Please specify the coverage output_file."
     echo ""
     print_usage
     exit 1
 fi
 
-if [[ $(command -v ninja) ]] ; then
+if [[ $(command -v ninja) ]]; then
     echo "Ninja found. Use it."
     CMAKE_GENERATOR="-G Ninja"
 fi
 
-if [[ "${CLEAR_BUILD}" = true ]] ; then
+if [[ ${CLEAR_BUILD} == true ]]; then
     rm -rf "${BUILD_DIR}"
 fi
 
 echo "run conan install"
 "${CONAN}" install . --build=missing --settings build_type="${BUILD_TYPE}" --settings compiler="${C_COMPILER}" --settings compiler.version="${COMPILER_VERSION}" --settings compiler.libcxx="${LIBCXX}" --settings compiler.cppstd=17
 
-if [[ "${COVERAGE}" = true ]] ; then
+if [[ ${COVERAGE} == true ]]; then
     "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
 else
     "${CMAKE}" -S . -B "${BUILD_DIR}" "${CMAKE_GENERATOR}" -DENABLE_COVERAGE=OFF -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
@@ -124,7 +123,7 @@ fi
 num_threads=$(grep -c '^processor' /proc/cpuinfo)
 "${CMAKE}" --build "${BUILD_DIR}" "${BUILD_TARGET}" --parallel "${num_threads}"
 
-if [[ "${COVERAGE}" = true ]] ; then
+if [[ ${COVERAGE} == true ]]; then
     echo "generate coverage dat to ${COVERAGE_OUT}"
     lcov --no-external --capture --directory . --output-file "/tmp/${COVERAGE_OUT}.info"
     lcov --remove "/tmp/${COVERAGE_OUT}.info" '/usr/*' --output-file "/tmp/${COVERAGE_OUT}.info"
