@@ -49,7 +49,7 @@ parse_commandline_arguments(lyra::args const& args)
 
   if (auto const result = command_line_parser.parse(args); !result)
   {
-    fmt::print(stderr, "Error in comman line: {}\n", result.message());
+    fmt::print(stderr, "Error in commandline: {}\n", result.message());
     fmt::print("{}\n", usage.str());
     return EXIT_FAILURE;
   }

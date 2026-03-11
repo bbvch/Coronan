@@ -1,0 +1,7 @@
+[default]
+locale = "en-us"
+check-filename = true
+check-file = true
+
+[default.extend-words]
+THA = "THA"

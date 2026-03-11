@@ -47,7 +47,7 @@ set(HEADER_LIST
     "${CMAKE_CURRENT_SOURCE_DIR}/include/country_data_model.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/country_chart_view.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/mainwindow.h"
 )
-# AUTOMOC and AUTOUIC dows not work when Qt is built from source
+# AUTOMOC and AUTOUIC does not work when Qt is built from source
 if(DOWNLOAD_QT6)
     qt6_wrap_ui(APP_UI_FILES ${CMAKE_CURRENT_LIST_DIR}/mainwindow.ui)
     qt6_wrap_cpp(MOC_FILES ${HEADER_LIST})

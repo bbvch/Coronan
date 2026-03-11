@@ -4,31 +4,78 @@ repos:
       rev: v6.0.0
       hooks:
           - id: check-added-large-files
+            stages: [pre-commit]
           - id: check-case-conflict
+            stages: [pre-commit]
           - id: check-merge-conflict
+            stages: [pre-commit]
           - id: check-symlinks
+            stages: [pre-commit]
           - id: check-yaml
+            stages: [pre-commit]
           - id: check-json
+            stages: [pre-commit]
           - id: check-toml
+            stages: [pre-commit]
           - id: check-executables-have-shebangs
+            stages: [pre-commit]
+          - id: check-shebang-scripts-are-executable
+            stages: [pre-commit]
           - id: end-of-file-fixer
+            stages: [pre-commit]
           - id: mixed-line-ending
+            stages: [pre-commit]
           - id: trailing-whitespace
-    - repo: https://github.com/pocc/pre-commit-hooks
-      rev: v1.3.5
+            stages: [pre-commit]
+            args: [--markdown-linebreak-ext=md]
+          - id: detect-private-key
+            stages: [pre-commit]
+    - repo: https://github.com/pre-commit/mirrors-clang-format
+      rev: v22.1.0
       hooks:
           - id: clang-format
-            args: [--style=file, -i]
+            stages: [pre-commit]
     - repo: https://github.com/iconmaster5326/cmake-format-pre-commit-hook
       rev: v0.6.13
       hooks:
           - id: cmake-format
+            stages: [pre-commit]
     - repo: https://github.com/adrienverge/yamllint.git
       rev: v1.37.1
       hooks:
           - id: yamllint
+            stages: [pre-commit]
             args: [--format, parsable, -d, relaxed]
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
       rev: 0.2.3
       hooks:
           - id: yamlfmt
+            stages: [pre-commit]
+        # typos uses typos.toml to find and fix typos
+    - repo: https://github.com/crate-ci/typos
+      rev: v1.44.0
+      hooks:
+          - id: typos
+            stages: [pre-commit]
+    - repo: https://github.com/shellcheck-py/shellcheck-py
+      rev: v0.11.0.1
+      hooks:
+          - id: shellcheck
+            stages: [pre-commit]
+            exclude: \.envrc
+            args: [--severity=warning]
+    - repo: https://github.com/scop/pre-commit-shfmt
+      rev: v3.12.0-2
+      hooks:
+          - id: shfmt
+            stages: [pre-commit]
+            args: [--indent=4, --simplify, --write]
+    # markdownlint-cli uses .markdownlint.yaml to lint markdown files
+    - repo: https://github.com/igorshubovych/markdownlint-cli
+      rev: v0.48.0
+      hooks:
+          - id: markdownlint-docker
+            stages: [pre-commit]
+            args: [--fix]
+
+default_install_hook_types: [pre-commit]

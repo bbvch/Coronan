@@ -19,7 +19,7 @@ set(CPACK_SOURCE_IGNORE_FILES
     \\.codecov.yml
 )
 
-# WIX installer needs a licence file with .txt ending
+# WIX installer needs a license file with .txt ending
 configure_file(${PROJECT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt COPYONLY)
 set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE.txt)
 
@@ -46,8 +46,8 @@ endif()
 find_program(DPKG_PROGRAM dpkg)
 if(DPKG_PROGRAM)
     list(APPEND CPACK_GENERATOR DEB)
-    find_program(SHLIBDEPS_PROGRAMM dpkg-shlibdeps)
-    if(SHLIBDEPS_PROGRAMM)
+    find_program(SHLIBDEPS_PROGRAM dpkg-shlibdeps)
+    if(SHLIBDEPS_PROGRAM)
         set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
     else()
         message(WARNING "dpkg-shlibdeps not found, skipping shlibdeps")

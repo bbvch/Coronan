@@ -5,7 +5,7 @@ if(EXISTS "${PROJECT_SOURCE_DIR}/README.md")
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
 endif()
 
-# enable doxygen documentaion with the "awesome-sidebar" theme
+# enable doxygen documentation with the "awesome-sidebar" theme
 enable_doxygen("awesome-sidebar")
 
 add_custom_command(
