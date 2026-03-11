@@ -83,6 +83,8 @@ jobs:
             - name: CTest
               run: ctest -C Debug
               working-directory: ./build
+            - name: CMake build docs
+              run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
             - name: CMake build packages
               run: |
                   cpack
