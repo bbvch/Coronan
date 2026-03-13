@@ -32,7 +32,7 @@ TEST_CASE("The corona-api parser parsing an invalid json", "[corona-api parser]"
   }
 }
 
-TEST_CASE("The corona-api parser parsing an region total json with invalide date", "[corona-api parser]")
+TEST_CASE("The corona-api parser parsing an region total json with invalid date", "[corona-api parser]")
 {
   static constexpr auto test_json = "{ \
   \"data\": { \

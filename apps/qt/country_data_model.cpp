@@ -20,7 +20,7 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
 
   if (not country_data.timeline.empty())
   {
-    // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
+    // Unfortunately QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
     // does not fully support C++ 20 even for Qt >= 6.4
     auto const start_qdate = QDate(static_cast<int>(country_data.timeline.front().date.year()),
                                    static_cast<int>(unsigned(country_data.timeline.front().date.month())),
@@ -38,7 +38,7 @@ void CountryDataModel::populate_data(coronan::CountryData const& country_data)
   for (auto const& data_point : country_data.timeline)
   {
     CountryTimelineData timeline_data;
-    // Unfortunatelly QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
+    // Unfortunately QDate(std::chrono::year_month_weekday_last date) can not be used when the compiler (libstdc++)
     // does not fully support C++ 20 even for Qt >= 6.4
     auto const qdate =
         QDate(static_cast<int>(data_point.date.year()), static_cast<int>(unsigned(data_point.date.month())),

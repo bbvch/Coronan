@@ -1,56 +1,60 @@
 {
-    "name": "C++ noVNC",
-    "build": {
-        "context": "..",
-        "dockerfile": "Dockerfile",
-        "args": {
-            "CLANG_VERSION": "19",
-            "GCC_VERSION": "14",
-            "BASE_IMAGE": "mcr.microsoft.com/devcontainers/base:ubuntu"
-        }
-    },
-    "mounts": [
-        "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind"
-    ],
-    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/Coronan,type=bind",
-    "updateRemoteUserUID": true,
-    "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-    "postAttachCommand": "pre-commit install -f --hook-type pre-commit && conan profile detect --force",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-vscode.cpptools",
-                "ms-vscode.cpptools-extension-pack",
-                "ms-vscode.cmake-tools",
-                "xaver.clang-format",
-                "ms-python.python",
-                "ms-python.autopep8",
-                "jeff-hykin.better-cpp-syntax",
-                "matepek.vscode-catch2-test-adapter",
-                "mhutchie.git-graph",
-                "cs128.cs128-clang-tidy",
-                "donjayamanne.githistory",
-                "webfreak.debug",
-                "jnoortheen.nix-ide",
-                "hbenl.vscode-test-explorer",
-                "ms-azuretools.vscode-docker",
-                "actboy168.tasks",
-                "streetsidesoftware.code-spell-checker",
-                "github.vscode-pull-request-github"
-            ]
-        }
-    },
-    "features": {
-        "ghcr.io/devcontainers/features/nix:1": {},
-        "ghcr.io/ChristopherMacGown/devcontainer-features/direnv:1": {}
-    },
-    "forwardPorts": [
-        6080
-    ],
-    "portsAttributes": {
-        "6080": {
-            "label": "noVNC",
-            "onAutoForward": "openPreview"
-        }
+  "name": "C++ noVNC",
+  "build": {
+    "context": "..",
+    "dockerfile": "Dockerfile",
+    "args": {
+      "CLANG_VERSION": "19",
+      "GCC_VERSION": "14",
+      "BASE_IMAGE": "mcr.microsoft.com/devcontainers/base:ubuntu"
     }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/Coronan,type=bind",
+  "updateRemoteUserUID": true,
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "postAttachCommand": "pre-commit install -f --hook-type pre-commit && conan profile detect --force",
+  "containerEnv": {
+    "DISPLAY": ":0"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "xaver.clang-format",
+        "ms-python.python",
+        "ms-python.autopep8",
+        "jeff-hykin.better-cpp-syntax",
+        "matepek.vscode-catch2-test-adapter",
+        "mhutchie.git-graph",
+        "cs128.cs128-clang-tidy",
+        "donjayamanne.githistory",
+        "webfreak.debug",
+        "jnoortheen.nix-ide",
+        "hbenl.vscode-test-explorer",
+        "ms-azuretools.vscode-docker",
+        "actboy168.tasks",
+        "streetsidesoftware.code-spell-checker",
+        "github.vscode-pull-request-github"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {},
+    "ghcr.io/ChristopherMacGown/devcontainer-features/direnv:1": {}
+  },
+  "forwardPorts": [
+    5901,
+    6080
+  ],
+  "portsAttributes": {
+    "6080": {
+      "label": "noVNC",
+      "onAutoForward": "openPreview"
+    }
+  }
 }

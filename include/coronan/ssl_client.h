@@ -18,8 +18,8 @@ class SSLClient final
 {
 public:
   /**
-   * Return a SSLClient with an accept all certifcates handler
-   * @return SSLClient which must be hold by the caler until no longer needed.
+   * Return a SSLClient with an accept all certificates handler
+   * @return SSLClient which must be hold by the caller until no longer needed.
    */
   [[nodiscard]] static std::unique_ptr<SSLClient> create_with_accept_certificate_handler();
 

@@ -47,7 +47,7 @@ function(enable_doxygen DOXYGEN_THEME)
 
     # Must be defined after setting the DOXYGEN_GENERATE_* flags
     doxygen_add_docs(
-        doxygen-docs ALL ${PROJECT_SOURCE_DIR}
+        doxygen-docs ${PROJECT_SOURCE_DIR}
         COMMENT "Generating API documentation with Doxygen - entry file: ${CMAKE_CURRENT_BINARY_DIR}/html/index.html"
     )
 endfunction()

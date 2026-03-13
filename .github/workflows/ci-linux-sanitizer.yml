@@ -1,5 +1,5 @@
 ---
-name: Linux Sanatizer Builds
+name: Linux Sanitizer Builds
 
 on:
     push:

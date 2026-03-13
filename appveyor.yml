@@ -27,6 +27,7 @@ before_build:
 build_script:
     - cmd: |-
           cmake --build --preset=visual-studio-release
+          cmake --build --preset=doc-windows
           cmake --build build --target package --config Release
 
 test_script:

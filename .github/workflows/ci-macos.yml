@@ -16,13 +16,6 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: macOS-13-clang
-                      os: macOS-13
-                      build_type: Release
-                      cppcompiler: clang++
-                      ccompiler: clang
-                      libcxx: libc++
-                      generators: Ninja
                     - name: macOS-15-intel-clang
                       os: macos-15-intel
                       build_type: Release
@@ -83,6 +76,8 @@ jobs:
             - name: CTest
               run: ctest -C Debug
               working-directory: ./build
+            - name: CMake build docs
+              run: cmake --build ./build --target doxygen-docs --config ${{ matrix.build_type }}
             - name: CMake build packages
               run: |
                   cpack

@@ -1,0 +1,9 @@
+---
+# Disable first-line-heading
+MD041: false
+# Disable line checking
+MD013: false
+# Disable checking for the multiple headings with the same content.
+MD024: false
+# Allow inline HTML, useful for positioning images.
+MD033: false

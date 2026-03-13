@@ -16,8 +16,8 @@ int main(int argc, char* argv[])
   try
   {
     window.show();
-    auto const titel = "Co[ro]nan " + std::string{coronan::config::project_version} + " by bbv Software Services AG";
-    window.setWindowTitle(titel.c_str());
+    auto const title = "Co[ro]nan " + std::string{coronan::config::project_version} + " by bbv Software Services AG";
+    window.setWindowTitle(title.c_str());
     auto const window_width = 1600;
     auto const window_height = 1200;
     window.resize(window_width, window_height);
