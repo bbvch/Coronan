@@ -143,7 +143,8 @@ Expand contents</summary>
 </details>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Project Features</h2>
-<p>This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:</p><ul>
+<p>This projects is a C++ project template. It includes everything a "Modern" C++ project possibly needs:</p>
+<ul>
 <li>C++ 20 Standard<ul>
 <li><a href="https://gcc.gnu.org/">GCC</a> _(&gt;= gcc-12)_</li>
 <li><a href="https://clang.llvm.org/">Clang</a> _(&gt;= clang-13)_</li>
@@ -267,7 +268,7 @@ How to build</h3>
 <ul>
 <li><p class="startli"><b>Install dependencies with conan</b></p>
 <div class="fragment"><div class="line">conan install . --build=missing --settings build_type=Debug</div>
-</div><!-- fragment --><p> Because the conan <a href="https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#">cmake_layout</a> and the <a href="https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html"><code>CMakeDeps</code></a> generator is used, the necessary cmake files used with <code>find_packages()</code> are generated into <code>build\&lt;build_type&gt;\generators</code>. <code>CMAKE_PREFIX_PATH</code> is adapted accordingly in the root <code>CMakeLists.txt</code>.</p>
+</div><!-- fragment --><p class="startli">Because the conan <a href="https://docs.conan.io/2/reference/tools/cmake/cmake_layout.html#">cmake_layout</a> and the <a href="https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html"><code>CMakeDeps</code></a> generator is used, the necessary cmake files used with <code>find_packages()</code> are generated into <code>build\&lt;build_type&gt;\generators</code>. <code>CMAKE_PREFIX_PATH</code> is adapted accordingly in the root <code>CMakeLists.txt</code>.</p>
 </li>
 <li><p class="startli"><b>Without CMake Presets</b></p>
 <div class="fragment"><div class="line">cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Debug</div>
@@ -331,10 +332,11 @@ Pre-Commit Hooks</h2>
 </ul>
 <p>Please install pre-commit hooks before committing any code.</p>
 <div class="fragment"><div class="line">pre-commit install -f --hook-type pre-commit</div>
-</div><!-- fragment --><p>To manually check all files run: </p><div class="fragment"><div class="line">pre-commit run --all-files</div>
+</div><!-- fragment --><p>To manually check all files run:</p>
+<div class="fragment"><div class="line">pre-commit run --all-files</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
 gitpod</h2>
-<p>To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" alt="" style="pointer-events: none;" height="15" class="inline"/> button in the Project State section at the top of this README.</p>
+<p>To start right away without installing anything on your local machine, you can simply use the <img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" style="pointer-events: none;" height="15" class="inline"/> button in the Project State section at the top of this README.</p>
 <h2><a class="anchor" id="autotoc_md10"></a>
 direnv &amp; nix</h2>
 <p>If you have <a href="https://direnv.net/">direnv</a> and <a href="https://nixos.org/">nix</a> installed everything should be setup to start upon entering the project folder, if <code>use nix</code> is not commented out in <a href=".envrc">.envrc</a>. gcc (gcc14) is set as default C and C++ compiler. If you prefer clang (clang-19) change it in <a href=".envrc">.envrc</a></p>
